@@ -18,6 +18,10 @@
     "next": "13.1.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "scss-reset": "^1.2.2",
     "typescript": "4.9.4"
+  },
+  "devDependencies": {
+    "sass": "^1.57.1"
   }
 }
