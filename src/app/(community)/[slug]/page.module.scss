@@ -2,5 +2,10 @@
   width: 100%;
   max-width: var(--max-width);
   height: 200vh;
-  background-color: darkgray;
+}
+
+.write_button_section {
+  padding: 30px;
+  border: var(--border);
+  border-top: none;
 }

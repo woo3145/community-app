@@ -1,5 +1,6 @@
 import { Inter } from '@next/font/google';
 import { IoChevronForwardOutline } from 'react-icons/io5';
+import { WriteButton } from '../components/write_button';
 
 import styles from './page.module.scss';
 
@@ -14,7 +15,9 @@ interface Props {
 export default function CommunitySlug({ params }: Props) {
   return (
     <div className={styles.wrapper}>
-      <section>글쓰기</section>
+      <section className={styles.write_button_section}>
+        <WriteButton />
+      </section>
       <section>{params.slug}</section>
     </div>
   );
