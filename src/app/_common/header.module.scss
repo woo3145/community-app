@@ -9,31 +9,38 @@
 
   .container {
     max-width: var(--max-width);
+    height: 54px;
     margin: 0 auto;
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+
+      .logo {
+        font-size: 20px;
+        color: var(--primary-rgb);
+        b {
+          font-weight: 600;
+        }
+      }
+
+      .signup_button {
+        padding: 0 10px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+    }
   }
 }
 
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-
-  .logo {
-    font-size: 20px;
-    color: var(--primary-rgb);
-    b {
-      font-weight: 600;
-    }
-  }
-
-  .signup_button {
-    padding: 0 10px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.2;
-  }
+.padding {
+  max-width: var(--max-width);
+  height: 54px;
+  margin: 0 auto;
 }
 
 @include tablet {
