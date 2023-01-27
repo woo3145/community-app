@@ -55,32 +55,35 @@ export default function CommunityTemplate({
           </div>
         </div>
       </aside>
+
       <main className={styles.main}>
         <div className={styles.categories}>
           <div className={styles.categories_container}>
-            <CategoryButton
-              name="추천"
-              href=""
-              onClick={() => onClickCategoryButton(0)}
-              selected={curCategory === 0}
-            />
-            <CategoryButton
-              name="전체"
-              href="/all"
-              onClick={() => onClickCategoryButton(1)}
-              selected={curCategory === 1}
-            />
-            {categories.map((category) => {
-              return (
-                <CategoryButton
-                  key={category.id}
-                  name={category.name}
-                  href={`/${category.id}`}
-                  onClick={() => onClickCategoryButton(category.id)}
-                  selected={curCategory === category.id}
-                />
-              );
-            })}
+            <div className={styles.category_list}>
+              <CategoryButton
+                name="추천"
+                href=""
+                onClick={() => onClickCategoryButton(0)}
+                selected={curCategory === 0}
+              />
+              <CategoryButton
+                name="전체"
+                href="/all"
+                onClick={() => onClickCategoryButton(1)}
+                selected={curCategory === 1}
+              />
+              {categories.map((category) => {
+                return (
+                  <CategoryButton
+                    key={category.id}
+                    name={category.name}
+                    href={`/${category.id}`}
+                    onClick={() => onClickCategoryButton(category.id)}
+                    selected={curCategory === category.id}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className={styles.contents_wrapper}>{children}</div>

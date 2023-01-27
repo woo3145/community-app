@@ -16,28 +16,31 @@
   .main {
     width: 100%;
     height: 100%;
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
 
     position: relative;
 
     .categories {
-      width: 782px;
-      border: var(--border);
-      border-radius: 5px 5px 0 0;
-
       position: fixed;
+      background-color: var(--background-end-rgb);
 
       &_container {
+        width: 782px;
+        border: var(--border);
+        border-radius: 5px 5px 0 0;
         padding: 20px 30px;
-        display: flex;
-        gap: 8px;
+        margin-top: 50px;
+
+        .category_list {
+          display: flex;
+          gap: 8px;
+        }
       }
     }
 
     .contents_wrapper {
-      margin-top: 77px;
+      margin-top: 127px;
     }
   }
 }
