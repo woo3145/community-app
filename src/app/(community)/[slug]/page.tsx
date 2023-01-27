@@ -18,7 +18,9 @@ export default function CommunitySlug({ params }: Props) {
       <section className={styles.write_button_section}>
         <WriteButton />
       </section>
-      <section>{params.slug}</section>
+      <section className={styles.article_list_section}>
+        글목록 {params.slug}
+      </section>
     </div>
   );
 }

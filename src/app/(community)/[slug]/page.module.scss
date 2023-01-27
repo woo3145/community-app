@@ -8,4 +8,11 @@
   padding: 30px;
   border: var(--border);
   border-top: none;
+
+  background-color: var(--card-color);
+}
+
+.article_list_section {
+  background-color: var(--card-color);
+  height: 200vh;
 }
