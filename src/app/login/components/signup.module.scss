@@ -13,14 +13,26 @@
 
   padding: 20px;
 
-  .title {
+  .header {
     width: 100%;
+    margin-bottom: 28px;
     display: flex;
-    justify-content: center;
-    margin: 20px 0 28px 0;
-    span {
-      font-size: 24px;
+    justify-content: space-between;
+    align-items: center;
+
+    .left {
+      width: 80px;
+      svg {
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+    .center {
+      font-size: 18px;
       font-weight: 700;
+    }
+    .right {
+      width: 80px;
     }
   }
 
@@ -45,7 +57,13 @@
         border: var(--border);
         border-radius: var(--border-radius);
 
-        margin-bottom: 20px;
+        margin-bottom: 12px;
+      }
+
+      p {
+        color: var(--gray-100);
+        font-size: 14px;
+        margin-bottom: 16px;
       }
     }
 

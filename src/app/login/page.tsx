@@ -1,9 +1,36 @@
+'use client';
+
 import { Inter } from '@next/font/google';
+import { useState } from 'react';
+import { EmailLogin } from './components/emailLogin';
+import { Signup } from './components/signup';
 import styles from './page.module.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function LogIn() {
+  const [email, setEmail] = useState<string | null>();
+  const [type, setType] = useState<string | null>(null);
+
+  const onPrevPage = () => {
+    setEmail(null);
+    setType(null);
+  };
+
+  const onClick = () => {
+    // email 체크 후 존재하면 로그인,
+    // 없으면 가입 컴포넌트로 이동하여 다음 절차 수행
+    setType('emailLogin');
+  };
+
+  if (type === 'signup' && email) {
+    return <Signup onPrevPage={onPrevPage} email={email} />;
+  }
+
+  if (type === 'emailLogin' && email) {
+    return <EmailLogin onPrevPage={onPrevPage} email={email} />;
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -12,18 +39,17 @@ export default function LogIn() {
         </div>
 
         <form>
-          <h1>로그인</h1>
-
           <div className={styles.inputBox}>
             <label htmlFor="email">이메일</label>
             <input
               id="email"
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="이메일을 입력해주세요."
             />
           </div>
 
-          <button>이메일로 계속하기</button>
+          <button onClick={onClick}>이메일로 계속하기</button>
         </form>
       </div>
     </div>
