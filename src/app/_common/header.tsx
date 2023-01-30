@@ -13,7 +13,9 @@ export const Header = () => {
               </Link>
             </div>
             <div className={styles.nav_right}>
-              <button className={styles.signup_button}>회원가입/로그인</button>
+              <Link href={'/login'} className={styles.signup_button}>
+                회원가입/로그인
+              </Link>
             </div>
           </nav>
         </div>
