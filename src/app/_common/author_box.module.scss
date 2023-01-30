@@ -1,10 +1,12 @@
+.wrapper {
+  display: inline-block;
+}
+
 .author_box {
   display: flex;
   align-items: center;
 
   .userAvatar {
-    width: 34px;
-    height: 34px;
     background-color: rgb(216, 216, 216);
     border-radius: 100%;
     flex-shrink: 0;
@@ -20,7 +22,6 @@
         font-weight: 700;
       }
       .user_career {
-        font-size: 12px;
         color: var(--gray-200);
         font-weight: 700;
         span:first-child {
@@ -30,8 +31,44 @@
       }
     }
     .createAt {
-      font-size: 14px;
       color: var(--gray-200);
     }
+  }
+}
+
+// 사이즈
+
+.sm {
+  .userAvatar {
+    width: 28px;
+    height: 28px;
+  }
+  .userInfo {
+    .user_name {
+      font-size: 14px;
+    }
+    .user_career {
+      font-size: 12px;
+    }
+  }
+
+  .createAt {
+    font-size: 12px;
+  }
+}
+
+.md {
+  .userAvatar {
+    width: 34px;
+    height: 34px;
+  }
+  .user_name {
+    font-size: 16px;
+  }
+  .user_career {
+    font-size: 12px;
+  }
+  .createAt {
+    font-size: 14px;
   }
 }

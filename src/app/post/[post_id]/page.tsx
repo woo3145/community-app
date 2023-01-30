@@ -39,7 +39,7 @@ export default function PostDetail() {
         <article className={styles.contentsBox}>
           <div className={styles.header}>
             <div className={styles.autor}>
-              <AuthorBox author={author} createAt={'7시간 전'} />
+              <AuthorBox author={author} createAt={'7시간 전'} href={'/'} />
             </div>
 
             <h1 className={styles.title}>title</h1>
@@ -81,7 +81,7 @@ export default function PostDetail() {
 
           <div className={styles.commentWrite}>
             <div className={styles.commentWrite_top}>
-              <AuthorBox author={{ name: '이창우' }} />
+              <AuthorBox author={{ name: '이창우' }} href={'/'} />
             </div>
             <div className={styles.commentWrite_bottom}>
               <form>

@@ -5,12 +5,14 @@ import styles from './author_box.module.scss';
 interface Props {
   author: IAuthor;
   createAt?: string;
+  href: string;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export const AuthorBox = ({ author, createAt }: Props) => {
+export const AuthorBox = ({ author, createAt, href, size = 'md' }: Props) => {
   return (
-    <Link href={'/'}>
-      <div className={styles.author_box}>
+    <Link href={href} className={styles.wrapper}>
+      <div className={`${styles.author_box} ${styles[size]}`}>
         <div className={styles.userAvatar}></div>
 
         <div className={styles.verticleBox}>

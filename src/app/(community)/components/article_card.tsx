@@ -1,3 +1,4 @@
+import { AuthorBox } from '@/app/_common/author_box';
 import Link from 'next/link';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
@@ -5,20 +6,23 @@ import styles from './article_card.module.scss';
 
 export const ArticleCard = () => {
   const images = '';
+
+  const author: IAuthor = {
+    name: 'woo3145',
+    job: '개발',
+    carrer: '신입',
+  };
   return (
     <article className={styles.wrapper}>
       <div className={styles.container}>
-        <Link href={`/profile/24`} className={styles.autor_box}>
-          <div className={styles.autor_box_inner}>
-            <div className={styles.user_avatar}></div>
-            <div>
-              <div className={styles.user_info}>
-                <p className={styles.username}>woo3145</p>
-              </div>
-              <span className={styles.date}>2023.01.27</span>
-            </div>
-          </div>
-        </Link>
+        <div className={styles.header}>
+          <AuthorBox
+            size={'sm'}
+            author={author}
+            href={'/profile/24'}
+            createAt={'2023.01.27'}
+          />
+        </div>
 
         <Link href={`/post/14`} className={styles.body}>
           <h3>제목</h3>

@@ -5,6 +5,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import styles from './template.module.scss';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const categories = [
   {
@@ -47,11 +48,11 @@ export default function CommunityTemplate({
         <div className={styles.aside_container}>
           <div className={styles.myProfile}>
             <p>MY 커뮤니티</p>
-            <button>
+            <Link href="/login" className={styles.loginButton}>
               <div className={styles.userAvatar}></div>
               <span>로그인 해주세요</span>
               <IoChevronForwardOutline size={20} />
-            </button>
+            </Link>
           </div>
         </div>
       </aside>
