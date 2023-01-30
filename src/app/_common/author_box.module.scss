@@ -1,0 +1,37 @@
+.author_box {
+  display: flex;
+  align-items: center;
+
+  .userAvatar {
+    width: 34px;
+    height: 34px;
+    background-color: rgb(216, 216, 216);
+    border-radius: 100%;
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+
+  .verticleBox {
+    .userInfo {
+      display: flex;
+      align-items: center;
+      .user_name {
+        margin-right: 8px;
+        font-weight: 700;
+      }
+      .user_career {
+        font-size: 12px;
+        color: var(--gray-200);
+        font-weight: 700;
+        span:first-child {
+          color: var(--primary-rgb);
+          margin-right: 8px;
+        }
+      }
+    }
+    .createAt {
+      font-size: 14px;
+      color: var(--gray-200);
+    }
+  }
+}
