@@ -1,47 +1,51 @@
 @import '../mixins';
 
+$headerHeight: 54px;
+
 .wrapper {
-  width: 100%;
   position: fixed;
   top: 0;
   z-index: 400;
-  box-shadow: 0 1px 0 0 rgb(0, 0, 0, 10%);
 
+  width: 100%;
+
+  box-shadow: 0 1px 0 0 rgb(0, 0, 0, 10%);
   background-color: var(--header-rgb);
 
   .container {
     max-width: var(--max-width);
-    height: 54px;
     margin: 0 auto;
 
     .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 0;
+      @include flex_between;
 
-      .logo {
-        font-size: 20px;
-        color: var(--primary-rgb);
-        b {
-          font-weight: 600;
-        }
-      }
-
-      .signup_button {
-        padding: 0 10px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 1.2;
-      }
+      height: $headerHeight;
     }
   }
 }
 
-.padding {
+.logo {
+  @include text_xl;
+
+  color: var(--primary-rgb);
+
+  b {
+    font-weight: 600;
+  }
+}
+
+.signup_button {
+  padding: 0 10px;
+
+  @include text_sm;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.paddingBox {
   max-width: var(--max-width);
-  height: 54px;
+  height: $headerHeight;
   margin: 0 auto;
 }
 
