@@ -1,0 +1,14 @@
+@import '../mixins';
+
+.badge {
+  @include text-xs;
+  font-weight: 700;
+
+  span:nth-child(1) {
+    color: var(--primary-rgb);
+    margin-right: 8px;
+  }
+  span:nth-child(2) {
+    color: var(--gray-200);
+  }
+}

@@ -1,0 +1,22 @@
+.defaultAvatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background-color: var(--default-avator-rgb);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+// wrapper에서 사이즈 조절
+
+// .avatarWrapper {
+//   flex-shrink: 0;
+//   width: 38px;
+//   height: 38px;
+//   margin-right: 4px;
+// }

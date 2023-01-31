@@ -1,22 +1,22 @@
+@import '../mixins';
+
 .wrapper {
   display: inline-block;
 }
 
-.author_box {
-  display: flex;
-  align-items: center;
+.authorBox {
+  @include flex_center;
 
-  .userAvatar {
-    background-color: rgb(216, 216, 216);
-    border-radius: 100%;
+  .avatarWrapper {
     flex-shrink: 0;
-    margin-right: 12px;
   }
 
   .verticleBox {
+    margin-left: 12px;
+
     .userInfo {
-      display: flex;
-      align-items: center;
+      @include flex_center;
+
       .user_name {
         margin-right: 8px;
         font-weight: 700;
@@ -24,6 +24,7 @@
       .user_career {
         color: var(--gray-200);
         font-weight: 700;
+
         span:first-child {
           color: var(--primary-rgb);
           margin-right: 8px;
@@ -39,36 +40,36 @@
 // 사이즈
 
 .sm {
-  .userAvatar {
-    width: 28px;
-    height: 28px;
+  .avatarWrapper {
+    width: 1.75rem;
+    height: 1.75rem;
   }
   .userInfo {
     .user_name {
-      font-size: 14px;
+      @include text_sm;
     }
     .user_career {
-      font-size: 12px;
+      @include text_xs;
     }
   }
 
   .createAt {
-    font-size: 12px;
+    @include text_xs;
   }
 }
 
 .md {
-  .userAvatar {
-    width: 34px;
-    height: 34px;
+  .avatarWrapper {
+    width: 2.125rem;
+    height: 2.125rem;
   }
   .user_name {
-    font-size: 16px;
+    @include text_md;
   }
   .user_career {
-    font-size: 12px;
+    @include text_xs;
   }
   .createAt {
-    font-size: 14px;
+    @include text_xs;
   }
 }

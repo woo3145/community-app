@@ -4,37 +4,36 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import styles from './article_card.module.scss';
 
-export const ArticleCard = () => {
+interface Props {
+  article: IArticle;
+}
+
+export const ArticleCard = ({ article }: Props) => {
   const images = '';
 
-  const author: IAuthor = {
-    name: 'woo3145',
-    job: '개발',
-    carrer: '신입',
-  };
   return (
-    <article className={styles.wrapper}>
-      <div className={styles.container}>
+    <article className={styles.container}>
+      <div className={styles.verticleBox}>
         <div className={styles.header}>
           <AuthorBox
             size={'sm'}
-            author={author}
-            href={'/profile/24'}
-            createAt={'2023.01.27'}
+            author={article.author}
+            href={`/profile/${article.author.id}`}
+            createAt={article.createAt}
           />
         </div>
 
-        <Link href={`/post/14`} className={styles.body}>
-          <h3>제목</h3>
-          <p>내용</p>
+        <Link href={`/post/${article.id}`} className={styles.body}>
+          <h3>{article.title}</h3>
+          <p>{article.contents}</p>
           <div className={styles.bottom}>
             <div className={styles.icon}>
               <AiOutlineLike />
-              <span>0</span>
+              <span>{article.like_count}</span>
             </div>
             <div className={styles.icon}>
               <IoChatbubbleOutline />
-              <span>0</span>
+              <span>{article.comment_count}</span>
             </div>
           </div>
         </Link>

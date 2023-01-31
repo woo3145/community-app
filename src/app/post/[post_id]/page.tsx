@@ -9,9 +9,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function PostDetail() {
   const author: IAuthor = {
+    id: 1,
     name: '이창우',
     job: '개발',
-    carrer: '신입',
+    career: '신입',
   };
 
   return (
@@ -81,7 +82,7 @@ export default function PostDetail() {
 
           <div className={styles.commentWrite}>
             <div className={styles.commentWrite_top}>
-              <AuthorBox author={{ name: '이창우' }} href={'/'} />
+              <AuthorBox author={{ id: 1, name: '이창우' }} href={'/'} />
             </div>
             <div className={styles.commentWrite_bottom}>
               <form>

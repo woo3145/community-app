@@ -1,6 +1,7 @@
 interface IAuthor {
-  avatarUrl?: string;
+  id: number;
   name: string;
+  avatarUrl?: string;
   job?: string;
-  carrer?: string;
+  career?: string;
 }
