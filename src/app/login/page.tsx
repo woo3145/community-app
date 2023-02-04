@@ -1,12 +1,9 @@
 'use client';
 
-import { Inter } from '@next/font/google';
 import { useState } from 'react';
 import { EmailLogin } from './components/emailLogin';
 import { Signup } from './components/signup';
 import styles from './page.module.scss';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export default function LogIn() {
   const [email, setEmail] = useState<string | null>();
@@ -20,7 +17,7 @@ export default function LogIn() {
   const onClick = () => {
     // email 체크 후 존재하면 로그인,
     // 없으면 가입 컴포넌트로 이동하여 다음 절차 수행
-    setType('emailLogin');
+    setType('signup');
   };
 
   if (type === 'signup' && email) {

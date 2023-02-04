@@ -1,3 +1,5 @@
+@import '../../mixins';
+
 .wrapper {
   width: 100%;
   padding: 40px 0;
@@ -7,28 +9,25 @@
   width: 100%;
   max-width: 400px;
   margin: auto;
-  border: var(--border);
-  background-color: var(--card-color);
-  border-radius: var(--border-radius);
-
   padding: 20px;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  background-color: var(--card-color);
 
   .header {
+    @include flex_between;
     width: 100%;
     margin-bottom: 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
     .left {
       width: 80px;
       svg {
-        font-size: 20px;
+        @include text_2xl;
         cursor: pointer;
       }
     }
     .center {
-      font-size: 18px;
+      @include text_xl;
       font-weight: 700;
     }
     .right {
@@ -37,44 +36,45 @@
   }
 
   form {
-    display: flex;
+    @include flex_center;
     flex-direction: column;
-    align-items: center;
 
     .inputBox {
-      width: 100%;
       display: flex;
       flex-direction: column;
+      width: 100%;
+
       label {
-        font-size: 14px;
+        margin-bottom: 10px;
+        @include text_sm;
         font-weight: 700;
         color: var(--gray-100);
-        margin-bottom: 10px;
       }
       input {
         padding: 14px 20px;
-        font-size: 16px;
+        margin-bottom: 12px;
         border: var(--border);
         border-radius: var(--border-radius);
 
-        margin-bottom: 12px;
+        @include text_sm;
       }
 
       p {
-        color: var(--gray-100);
-        font-size: 14px;
         margin-bottom: 16px;
+
+        color: var(--gray-100);
+        @include text_sm;
       }
     }
 
     button {
       width: 100%;
       padding: 16px 0;
+      border-radius: 28px;
       background-color: var(--primary-rgb);
+      @include text_md;
       color: white;
       font-weight: 700;
-      font-size: 16px;
-      border-radius: 28px;
     }
   }
 }

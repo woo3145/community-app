@@ -1,3 +1,5 @@
+@import '../mixins';
+
 .wrapper {
   width: 100%;
   padding: 40px 0;
@@ -7,45 +9,44 @@
   width: 100%;
   max-width: 400px;
   margin: auto;
+  padding: 20px;
   border: var(--border);
-  background-color: var(--card-color);
   border-radius: var(--border-radius);
 
-  padding: 20px;
+  background-color: var(--card-color);
 
   .title {
+    @include flex_center;
     width: 100%;
-    display: flex;
-    justify-content: center;
     margin: 20px 0 28px 0;
     span {
-      font-size: 24px;
+      @include text_2xl;
       font-weight: 700;
     }
   }
 
   form {
-    display: flex;
+    @include flex_center;
     flex-direction: column;
-    align-items: center;
 
     .inputBox {
-      width: 100%;
       display: flex;
       flex-direction: column;
+
+      width: 100%;
       label {
-        font-size: 14px;
+        margin-bottom: 10px;
+        @include text_sm;
         font-weight: 700;
         color: var(--gray-100);
-        margin-bottom: 10px;
       }
       input {
+        margin-bottom: 20px;
         padding: 14px 20px;
-        font-size: 16px;
         border: var(--border);
         border-radius: var(--border-radius);
 
-        margin-bottom: 20px;
+        @include text_md;
       }
     }
 
@@ -53,10 +54,11 @@
       width: 100%;
       padding: 16px 0;
       background-color: var(--primary-rgb);
+      border-radius: 28px;
+
+      @include text_md;
       color: white;
       font-weight: 700;
-      font-size: 16px;
-      border-radius: 28px;
     }
   }
 }
