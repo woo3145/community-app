@@ -1,5 +1,6 @@
+import { mockArticles } from '@/mocks/mockArticles';
 import { Inter } from '@next/font/google';
-import { IoChevronForwardOutline } from 'react-icons/io5';
+import { ArticleCard } from '../components/article_card';
 import { WriteButton } from '../components/write_button';
 
 import styles from './page.module.scss';
@@ -19,7 +20,9 @@ export default function CommunitySlug({ params }: Props) {
         <WriteButton />
       </section>
       <section className={styles.article_list_section}>
-        글목록 {params.slug}
+        {mockArticles.map((article) => {
+          return <ArticleCard key={article.id} article={article} />;
+        })}
       </section>
     </div>
   );

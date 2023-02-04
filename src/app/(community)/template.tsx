@@ -1,22 +1,11 @@
 'use client';
 
 import { CategoryButton } from '../_common/category_button';
-import { IoChevronForwardOutline } from 'react-icons/io5';
+import { useEffect, useState } from 'react';
+import { MyCommunityProfile } from './components/myCommunityProfile';
+import { mockCategories } from '@/mocks/mockCategories';
 
 import styles from './template.module.scss';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-
-const categories = [
-  {
-    id: 1001,
-    name: '고민',
-  },
-  {
-    id: 1002,
-    name: '개발',
-  },
-];
 
 export default function CommunityTemplate({
   children,
@@ -46,14 +35,7 @@ export default function CommunityTemplate({
     <div className={styles.wrapper}>
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
-          <div className={styles.myProfile}>
-            <p>MY 커뮤니티</p>
-            <Link href="/login" className={styles.loginButton}>
-              <div className={styles.userAvatar}></div>
-              <span>로그인 해주세요</span>
-              <IoChevronForwardOutline size={20} />
-            </Link>
-          </div>
+          <MyCommunityProfile />
         </div>
       </aside>
 
@@ -73,7 +55,7 @@ export default function CommunityTemplate({
                 onClick={() => onClickCategoryButton(1)}
                 selected={curCategory === 1}
               />
-              {categories.map((category) => {
+              {mockCategories.map((category) => {
                 return (
                   <CategoryButton
                     key={category.id}
