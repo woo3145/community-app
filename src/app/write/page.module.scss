@@ -1,8 +1,82 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+@import '../mixins';
+@import '../variables';
+
+.wrapper {
+  width: 100%;
+  padding: 60px 0;
+}
+
+.writeHeaderWrapper {
+  position: fixed;
+  top: $headerHeight;
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+
+  border-bottom: var(--border);
+
+  .writeHeader {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: $breakpoint-desktop;
+
+    margin: auto;
+
+    button {
+      @include button_md;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  padding: 40px;
+  border: var(--border);
+  border-top: none;
+  border-radius: var(--border-radius);
+
+  background-color: var(--card-color);
+}
+
+.tagSection {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 40px;
+  background-color: blue;
+}
+
+.title {
+  padding-bottom: 16px;
+  border-bottom: var(--border);
+  border-bottom-width: 2px;
+
+  input {
+    width: 100%;
+    border: none;
+
+    @include text_2xl;
+    font-weight: 700;
+
+    &::placeholder {
+      opacity: 50%;
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  height: auto;
+  padding-top: 32px;
+
+  textarea {
+    width: 100%;
+    height: auto;
+    border: none;
+    resize: none;
+
+    @include text_lg;
+  }
 }

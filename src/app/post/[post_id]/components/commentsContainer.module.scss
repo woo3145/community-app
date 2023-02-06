@@ -45,14 +45,7 @@
           padding: 20px 14px;
 
           button {
-            padding: 8px 24px;
-            border: var(--border);
-            border-radius: 20px;
-
-            background-color: var(--primary-rgb);
-            @include text_sm;
-            color: white;
-            font-weight: 700;
+            @include button_sm;
           }
         }
       }

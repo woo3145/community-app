@@ -1,6 +1,5 @@
 @import '../mixins';
-
-$headerHeight: 54px;
+@import '../variables';
 
 .wrapper {
   position: fixed;
