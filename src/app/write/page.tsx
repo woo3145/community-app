@@ -1,6 +1,24 @@
+'use client';
+
+import Image from 'next/image';
+import { useRef } from 'react';
+import { IoClose, IoImageOutline } from 'react-icons/io5';
 import styles from './page.module.scss';
 
 export default function Write() {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const hiddenTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const resize = () => {
+    if (!textareaRef.current) return;
+    if (!hiddenTextareaRef.current) return;
+
+    const textarea = textareaRef.current;
+    const hiddenTextarea = hiddenTextareaRef.current;
+    hiddenTextarea.value = textarea.value;
+    hiddenTextarea.style.height = 'auto';
+    textarea.style.height = `${hiddenTextarea.scrollHeight}px`;
+  };
   return (
     <main className={styles.wrapper}>
       <div className={styles.writeHeaderWrapper}>
@@ -14,8 +32,44 @@ export default function Write() {
           <input type="text" placeholder="제목을 입력해주세요." />
         </div>
         <div className={styles.content}>
-          <textarea name="" id="" placeholder="내용을 작성해주세요."></textarea>
+          <textarea
+            name=""
+            id=""
+            placeholder="내용을 작성해주세요."
+            ref={textareaRef}
+            onChange={resize}
+          ></textarea>
+          <textarea
+            className={styles.hiddenTextarea}
+            ref={hiddenTextareaRef}
+          ></textarea>
+          <div className={styles.imageContainer}>
+            <button>
+              <IoClose />
+            </button>
+
+            <Image
+              src={
+                'https://images.unsplash.com/photo-1661956602116-aa6865609028'
+              }
+              width={800}
+              height={800}
+              alt="image"
+            />
+          </div>
         </div>
+      </div>
+      <div className={styles.addImageButtonContainer}>
+        <div className={styles.tooltip}>
+          <span>사진을 추가해 보세요!</span>
+          <div className={styles.bubblePoint}></div>
+        </div>
+        <button>
+          <IoImageOutline />
+          <span>
+            (<em>0</em>/1)
+          </span>
+        </button>
       </div>
     </main>
   );
