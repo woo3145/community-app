@@ -2,7 +2,13 @@
 
 import Image from 'next/image';
 import { useRef } from 'react';
-import { IoClose, IoImageOutline } from 'react-icons/io5';
+import {
+  IoAdd,
+  IoClose,
+  IoCloseOutline,
+  IoCloseSharp,
+  IoImageOutline,
+} from 'react-icons/io5';
 import styles from './page.module.scss';
 
 export default function Write() {
@@ -27,7 +33,33 @@ export default function Write() {
         </div>
       </div>
       <div className={styles.container}>
-        <div className={styles.tagSection}></div>
+        <div className={styles.tagSection}>
+          <div className={styles.tagMessage}>
+            <span>태그 선택</span>
+            <span>(1~3개)</span>
+            <span>*</span>
+          </div>
+          <div className={styles.tagSelectorContainer}>
+            <button className={styles.tagAddButton}>
+              <IoAdd />
+            </button>
+            <button className={styles.tagPlaceholder}></button>
+            <div className={styles.selectedTagList}>
+              <div className={styles.selectedTag}>
+                <span>개발</span>
+                <button>
+                  <IoCloseOutline />
+                </button>
+              </div>
+              <div className={styles.selectedTag}>
+                <span>고민</span>
+                <button>
+                  <IoCloseOutline />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className={styles.title}>
           <input type="text" placeholder="제목을 입력해주세요." />
         </div>
