@@ -38,7 +38,7 @@
   form {
     @include flex_center;
     flex-direction: column;
-
+    color: var(--gray-100);
     .inputBox {
       display: flex;
       flex-direction: column;
@@ -48,7 +48,6 @@
         margin-bottom: 10px;
         @include text_sm;
         font-weight: 700;
-        color: var(--gray-100);
       }
       input {
         padding: 14px 20px;
@@ -58,12 +57,17 @@
 
         @include text_sm;
       }
+      .focusInput:focus {
+        border-color: var(--focus-rgb);
+      }
+      .inValid {
+        border-color: var(--error-rgb);
+      }
 
-      p {
-        margin-bottom: 16px;
-
-        color: var(--gray-100);
+      .helpText {
+        margin-bottom: 12px;
         @include text_sm;
+        color: var(--gray-100);
       }
     }
 
@@ -71,10 +75,27 @@
       width: 100%;
       padding: 16px 0;
       border-radius: 28px;
-      background-color: var(--primary-rgb);
       @include text_md;
-      color: white;
       font-weight: 700;
+      background-color: var(--gray-200);
+      color: black;
+      opacity: 30%;
+    }
+    .validButton {
+      background-color: var(--primary-rgb);
+      color: white;
+      opacity: 100%;
     }
   }
+}
+
+.errorMessage {
+  margin-bottom: 12px;
+  color: var(--error-rgb);
+  @include text_sm;
+}
+.successMessage {
+  margin-bottom: 12px;
+  color: var(--focus-rgb);
+  @include text_sm;
 }
