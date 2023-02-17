@@ -12,30 +12,27 @@ interface CreateUserBody {
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    try {
-      const { email, password, name } = req.body as CreateUserBody;
+    const { email, password, name } = req.body as CreateUserBody;
 
-      const user = await client.user.findUnique({
-        where: { email },
-      });
+    const user = await client.user.findUnique({
+      where: { email },
+    });
 
-      if (!!user) {
-        throw new HttpError(401, 'Email is already registed');
-      }
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const newUser = await client.user.create({
-        data: {
-          email,
-          password: hashedPassword,
-          name,
-        },
-      });
-
-      return res.status(200).json({ registed: !!user });
-    } catch (e) {
-      throw new HttpError(400, 'Bad Request');
+    if (!!user) {
+      throw new HttpError(401, 'Email is already registed');
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await client.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        name,
+      },
+    });
+    const { password: _, ...loggedInUser } = newUser;
+
+    return res.status(200).json({ user: loggedInUser });
   }
   throw new HttpError(404, 'Not found');
 }
