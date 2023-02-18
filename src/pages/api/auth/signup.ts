@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import client from '@/libs/server/prismaClient';
@@ -30,9 +31,25 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         name,
       },
     });
+    const accessToken = jwt.sign(
+      { userId: newUser.id },
+      process.env.JWT_ACCESS_TOKEN_SECRET || 'default',
+      { expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRATION }
+    );
+
+    const refreshToken = jwt.sign(
+      { userId: newUser.id },
+      process.env.JWT_REFRESH_TOKEN_SECRET || 'default',
+      { expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRATION }
+    );
     const { password: _, ...loggedInUser } = newUser;
 
-    return res.status(200).json({ user: loggedInUser });
+    return res.status(200).json({
+      message: 'successful',
+      user: loggedInUser,
+      accessToken,
+      refreshToken,
+    });
   }
   throw new HttpError(404, 'Not found');
 }
