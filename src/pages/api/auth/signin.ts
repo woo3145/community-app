@@ -21,7 +21,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!user) {
       throw new HttpError(401, 'Invalid email or password');
     }
-    console.log(process.env.JWT_ACCESS_TOKEN_SECRET);
 
     const passwordMatches = await bcrypt.compare(password, user.password);
     if (!passwordMatches) {
@@ -48,14 +47,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     const { password: _, ...loggedInUser } = user;
-    return res
-      .status(200)
-      .json({
-        message: 'successful',
-        user: loggedInUser,
-        accessToken,
-        refreshToken,
-      });
+    res.setHeader('Set-Cookie', [
+      `accessToken=${accessToken}; HttpOnly`,
+      `refreshToken=${refreshToken}; HttpOnly`,
+    ]);
+    return res.status(200).json({
+      message: 'successful',
+      user: loggedInUser,
+    });
   }
   throw new HttpError(404, 'Not found');
 }

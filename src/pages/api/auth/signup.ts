@@ -42,13 +42,24 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       process.env.JWT_REFRESH_TOKEN_SECRET || 'default',
       { expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRATION }
     );
-    const { password: _, ...loggedInUser } = newUser;
 
+    client.user.update({
+      where: {
+        id: newUser.id,
+      },
+      data: {
+        refreshToken: refreshToken,
+      },
+    });
+    const { password: _, refreshToken: __, ...loggedInUser } = newUser;
+
+    res.setHeader('Set-Cookie', [
+      `accessToken=${accessToken}; HttpOnly`,
+      `refreshToken=${refreshToken}; HttpOnly`,
+    ]);
     return res.status(200).json({
       message: 'successful',
       user: loggedInUser,
-      accessToken,
-      refreshToken,
     });
   }
   throw new HttpError(404, 'Not found');

@@ -25,7 +25,6 @@ export default function LogIn() {
       method: 'GET',
     });
     const data: CheckEmailResponse = await response.json();
-    console.log(data);
     if (data.registed) {
       // 기존 유저
       setType('emailLogin');
