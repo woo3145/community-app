@@ -1,3 +1,5 @@
+'use client';
+
 import { mockArticles } from '@/mocks/mockArticles';
 import { ArticleCard } from './components/article_card';
 import { WriteButton } from './components/write_button';

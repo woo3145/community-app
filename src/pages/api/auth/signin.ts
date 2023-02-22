@@ -4,6 +4,12 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import client from '@/libs/server/prismaClient';
+import { setCookie } from 'nookies';
+import {
+  issueTokens,
+  refreshTokenExpiration,
+  setTokenCookie,
+} from '@/libs/server/tokenUtils';
 
 interface LoginUserBody {
   email: string;
@@ -26,19 +32,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!passwordMatches) {
       throw new HttpError(401, 'Invalid email or password');
     }
-    const accessToken = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_ACCESS_TOKEN_SECRET || 'default',
-      { expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRATION }
-    );
+    const { accessToken, refreshToken } = issueTokens(user);
 
-    const refreshToken = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_REFRESH_TOKEN_SECRET || 'default',
-      { expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRATION }
-    );
-
-    client.user.update({
+    await client.user.update({
       where: {
         id: user.id,
       },
@@ -46,14 +42,21 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         refreshToken: refreshToken,
       },
     });
-    const { password: _, ...loggedInUser } = user;
-    res.setHeader('Set-Cookie', [
-      `accessToken=${accessToken}; HttpOnly`,
-      `refreshToken=${refreshToken}; HttpOnly`,
-    ]);
+    const { password: _, refreshToken: __, ...loggedInUser } = user;
+
+    // refreshToken만 httpOnly cookie 저장
+    setTokenCookie(
+      res,
+      'refreshToken',
+      refreshToken,
+      60 * 60 * 24 * refreshTokenExpiration
+    );
+
+    // accessToken은 client 저장
     return res.status(200).json({
       message: 'successful',
       user: loggedInUser,
+      accessToken,
     });
   }
   throw new HttpError(404, 'Not found');

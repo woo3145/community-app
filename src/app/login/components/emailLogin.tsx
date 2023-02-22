@@ -42,7 +42,7 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
       }
 
       // 로그인 성공
-      console.log(response.user);
+      console.log(response.accessToken);
     } catch (e) {
       setMessage('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
     }
