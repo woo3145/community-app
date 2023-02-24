@@ -1,4 +1,9 @@
+'use client';
+
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import styles from './header.module.scss';
 
 const Logo = () => {
@@ -15,9 +20,29 @@ const SignupButton = () => {
     </Link>
   );
 };
+const SignoutButton = () => {
+  const onClick = () => {
+    signOut();
+  };
+  return (
+    <div onClick={onClick} className={styles.signup_button}>
+      로그아웃
+    </div>
+  );
+};
 
 export const Header = () => {
-  const isLogin = false;
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  // refreshToken이 만료된 경우
+  useEffect(() => {
+    if (session?.error === 'RefreshAccessTokenError') {
+      signOut();
+      router.push('/login');
+    }
+  }, [session, router]);
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -26,7 +51,7 @@ export const Header = () => {
             <div>
               <Logo />
             </div>
-            <div>{isLogin ? null : <SignupButton />}</div>
+            <div>{session?.user ? <SignoutButton /> : <SignupButton />}</div>
           </nav>
         </div>
       </div>

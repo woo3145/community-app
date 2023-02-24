@@ -1,3 +1,4 @@
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoChevronBackOutline } from 'react-icons/io5';
@@ -24,26 +25,16 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
   const onSubmit = async (data: FormData) => {
     try {
       const { password } = data;
-      const response = await (
-        await fetch('/api/auth/signin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        })
-      ).json();
-      if (response.error) {
-        setMessage('비밀번호가 일치하지 않습니다.');
-        return;
-      }
 
-      // 로그인 성공
-      console.log(response.accessToken);
+      const result = await signIn('credentials', {
+        email: email,
+        password: password,
+        redirect: true,
+        callbackUrl: '/',
+      });
+      console.log('result: ', result);
     } catch (e) {
+      console.log('error : ', e);
       setMessage('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
     }
   };

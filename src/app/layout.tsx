@@ -1,7 +1,9 @@
-import './globals.scss';
 import { Header } from './_common/header';
+import { SessionProviders } from './sessionProviders';
 
-export default function RootLayout({
+import './globals.scss';
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -10,8 +12,10 @@ export default function RootLayout({
     <html lang="ko">
       <head />
       <body>
-        <Header />
-        {children}
+        <SessionProviders>
+          <Header />
+          {children}
+        </SessionProviders>
       </body>
     </html>
   );

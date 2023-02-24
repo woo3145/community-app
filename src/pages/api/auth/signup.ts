@@ -37,31 +37,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         name,
       },
     });
-    const { accessToken, refreshToken } = issueTokens(newUser);
-
-    await client.user.update({
-      where: {
-        id: newUser.id,
-      },
-      data: {
-        refreshToken: refreshToken,
-      },
-    });
-    const { password: _, refreshToken: __, ...loggedInUser } = newUser;
-
-    // refreshToken만 httpOnly cookie 저장
-    setTokenCookie(
-      res,
-      'refreshToken',
-      refreshToken,
-      60 * 60 * 24 * refreshTokenExpiration
-    );
+    const { password: _, ...loggedInUser } = newUser;
 
     // accessToken은 client 저장
     return res.status(200).json({
       message: 'successful',
       user: loggedInUser,
-      accessToken,
     });
   }
   throw new HttpError(404, 'Not found');

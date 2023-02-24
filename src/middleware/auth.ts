@@ -23,28 +23,7 @@ export const authMiddleware = async (
   req: NextApiRequest,
   res: NextApiResponse,
   next: () => void
-) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    throw new HttpError(401, 'Authorization header missing');
-  }
-  const [_, token] = authHeader.split(' ');
-
-  try {
-    const { userId } = jwt.verify(token, accessTokenSecret) as TokenPayload;
-    const user = await client.user.findUnique({ where: { id: userId } });
-
-    if (!user) {
-      throw new HttpError(401, 'User not found');
-    }
-
-    const { password: _, refreshToken: __, ...loggedInUser } = user;
-    req.user = loggedInUser as User;
-    next();
-  } catch (e) {
-    throw new HttpError(401, 'Invalid access token');
-  }
-};
+) => {};
 
 export const config = {
   matcher: ['/api/:path*'],

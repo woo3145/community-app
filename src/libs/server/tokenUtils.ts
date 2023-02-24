@@ -8,6 +8,9 @@ interface Tokens {
   accessToken: string;
   refreshToken: string;
 }
+interface IssueTokens extends Tokens {
+  expires_in: number;
+}
 
 export const accessTokenSecret =
   process.env.JWT_ACCESS_TOKEN_SECRET || 'default';
@@ -21,14 +24,14 @@ export const refreshTokenExpiration = process.env.JWT_REFRESH_TOKEN_EXPIRATION
   ? parseInt(process.env.JWT_REFRESH_TOKEN_EXPIRATION)
   : 7;
 
-export const issueTokens = (user: User): Tokens => {
-  const accessToken = jwt.sign({ userId: user.id }, accessTokenSecret, {
+export const issueTokens = (email: string): IssueTokens => {
+  const accessToken = jwt.sign({ email: email }, accessTokenSecret, {
     expiresIn: `${accessTokenExpiration}m`,
   });
-  const refreshToken = jwt.sign({ userId: user.id }, refreshTokenSecret, {
+  const refreshToken = jwt.sign({ email: email }, refreshTokenSecret, {
     expiresIn: `${refreshTokenExpiration}d`,
   });
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken, expires_in: accessTokenExpiration };
 };
 
 export const setTokenCookie = (
