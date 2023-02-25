@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { accessTokenSecret } from '../libs/server/tokenUtils';
 
-import jwt from 'jsonwebtoken';
-import client from '@/libs/server/prismaClient';
-import { HttpError } from '@/libs/server/errorHandling';
 import { User } from '@prisma/client';
 
 interface TokenPayload {
