@@ -1,3 +1,5 @@
+@import '../../mixins';
+
 .myProfile {
   width: 100%;
   padding: 24px;
@@ -5,29 +7,64 @@
   border-radius: var(--border-radius);
   background-color: var(--card-color);
 
-  p {
-    font-size: 14px;
+  .title {
     margin-bottom: 16px;
+    @include text_sm;
   }
-  .loginButton {
+}
+
+.loginButton {
+  @include flex_center;
+
+  .avatarWrapper {
+    flex-shrink: 0;
+    width: 2.215rem;
+    height: 2.215rem;
+  }
+  span {
     width: 100%;
-    display: flex;
-    align-items: center;
-    .userAvatar {
-      width: 38px;
-      height: 38px;
-      background-color: rgb(216, 216, 216);
-      border-radius: 100%;
+    margin-left: 12px;
+    @include text_md;
+  }
+  svg {
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+}
+
+.myCommunityButton {
+  @include flex_between;
+
+  .authorBox {
+    @include flex_center;
+    .avatarWrapper {
       flex-shrink: 0;
+      width: 2.215rem;
+      height: 2.215rem;
     }
-    span {
-      width: 100%;
-      text-align: left;
+    .verticleBox {
       margin-left: 12px;
+
+      .user_name {
+        @include text_md;
+        margin-right: 8px;
+        font-weight: 700;
+      }
+      .user_career {
+        @include text_xs;
+        color: var(--gray-200);
+        font-weight: 700;
+
+        span:first-child {
+          color: var(--primary-rgb);
+          margin-right: 8px;
+        }
+      }
     }
-    svg {
-      flex-shrink: 0;
-      font-size: 20px;
-    }
+  }
+
+  svg {
+    flex-shrink: 0;
+    font-size: 20px;
   }
 }
