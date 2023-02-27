@@ -19,11 +19,11 @@ export const refreshTokenExpiration = process.env.JWT_REFRESH_TOKEN_EXPIRATION
   ? parseInt(process.env.JWT_REFRESH_TOKEN_EXPIRATION)
   : 7;
 
-export const issueTokens = (email: string): IssueTokens => {
-  const accessToken = jwt.sign({ email: email }, jwtTokenSecret, {
+export const issueTokens = (sub: string): IssueTokens => {
+  const accessToken = jwt.sign({ sub }, jwtTokenSecret, {
     expiresIn: `${accessTokenExpiration}m`,
   });
-  const refreshToken = jwt.sign({ email: email }, jwtTokenSecret, {
+  const refreshToken = jwt.sign({ sub }, jwtTokenSecret, {
     expiresIn: `${refreshTokenExpiration}d`,
   });
   return {

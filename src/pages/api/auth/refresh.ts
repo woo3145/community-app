@@ -3,15 +3,10 @@ import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
 
 import client from '@/libs/server/prismaClient';
 import jwt from 'jsonwebtoken';
-import {
-  issueTokens,
-  jwtTokenSecret,
-  refreshTokenExpiration,
-  setTokenCookie,
-} from '@/libs/server/tokenUtils';
+import { issueTokens, jwtTokenSecret } from '@/libs/server/tokenUtils';
 
 interface TokenPayload {
-  email: string;
+  sub: string;
   iat: number;
   exp: number;
 }
@@ -26,12 +21,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
       // refresh 토큰이 유효한지 확인
-      const { email } = jwt.verify(
-        refreshToken,
-        jwtTokenSecret
-      ) as TokenPayload;
+      const { sub } = jwt.verify(refreshToken, jwtTokenSecret) as TokenPayload;
 
-      const user = await client.user.findUnique({ where: { email } });
+      const user = await client.user.findUnique({ where: { id: sub } });
 
       if (!user) {
         return res.status(401).json({ message: 'User not found' });
@@ -41,7 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         accessToken,
         refreshToken: newRefreshToken,
         expires_in,
-      } = issueTokens(email);
+      } = issueTokens(user.id);
 
       return res
         .status(200)
