@@ -37,21 +37,64 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-}
-
 model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime?
+  password      String?
+  accounts      Account[]
+  sessions      Session[]
+  profile       Profile?
+  posts         Post[]
+}
+
+model Profile {
+  id           Int     @id @default(autoincrement())
+  name         String?
+  nickname     String?
+  avatar       String?
+  annual       Int     @default(0) // 경력
+  interestTags Tag[] // 관심있는 주제
+  jobs         Job[] // 직군,직무
+  user         User    @relation(fields: [userId], references: [id])
+  userId       String  @unique
+}
+
+model Job {
+  id Int @id @default(autoincrement())
+
+  user     Profile[]
+  parentId Int?
+  parent   Job?      @relation("JobSubJobs", fields: [parentId], references: [id]) // 직군
+  subJobs  Job[]     @relation("JobSubJobs") // 직무
+}
+
+model Tag {
+  id       Int       @id @default(autoincrement())
+  title    String
+  posts    Post[]
+  user     Profile[]
+  parentId Int?
+  parent   Tag?      @relation("TagSubTags", fields: [parentId], references: [id])
+  subTags  Tag[]     @relation("TagSubTags")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  title     String   @db.VarChar(255) // bite가 아니라 문자길이를 뜻함
+  content   String
+  published Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  tags      Tag[]
 }
