@@ -21,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw new HttpError(401, 'Invalid email or password');
     }
 
-    if (!user.password) {
+    if (user.password == null) {
       throw new HttpError(401, '비밀번호를 등록하지 않은 계정이에요.');
     }
 

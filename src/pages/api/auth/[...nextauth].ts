@@ -52,12 +52,11 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, account }) {
       // https://authjs.dev/guides/basics/refresh-token-rotation
-
       // 첫 로그인 시 토큰 발행
       if (account) {
         // credentials 공급자면 직접 발행
         if (account.type === 'credentials') {
-          const tokens = issueTokens(token.email as string);
+          const tokens = issueTokens(account.providerAccountId as string);
           return {
             ...token,
             expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in), // Date.now()의 단위를 ms => s로 변경 후 expires_in 적용
