@@ -10,7 +10,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { email },
     });
 
-    return res.status(200).json({ registed: !!user });
+    return res.status(200).json({
+      registed: !!user,
+    });
   }
   throw new HttpError(404, 'Not found');
 }

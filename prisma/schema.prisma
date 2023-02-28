@@ -64,7 +64,7 @@ model Profile {
   annual       Int     @default(0) // 경력
   interestTags Tag[] // 관심있는 주제
   jobs         Job[] // 직군,직무
-  user         User    @relation(fields: [userId], references: [id])
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String  @unique
 }
 
@@ -94,7 +94,16 @@ model Post {
   title     String   @db.VarChar(255) // bite가 아니라 문자길이를 뜻함
   content   String
   published Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: SetNull)
+  userId    String?
   tags      Tag[]
 }
+
+// onUpdate: Cascade   -> 참조중인 레코드의 식별자가 변경되면 해당 레코드도 변경 (ex. 참조중인 user레코드의 id필드가 변경되면 post의 userId도 변경)
+// onDelete: Cascade   -> 참조중인 레코드가 삭제되면 자신도 종속되어 삭제됨 (ex. user 삭제시 해당 유저를 참조하는 모든 post 삭제)
+
+// onUpdate: Restrict   -> 참조중인 레코드의 식별자 변경을 막음(ex. post가 있다면 참조중인 user레코드의 id필드 변경 불가)
+// onDelete: Restrict   -> 해당 레코드가 참조되어있다면 삭제를 막음(ex. 어떤 user를 참조하는 post가 있다면 해당 user레코드 삭제 불가)
+
+// onUpdate: SetNull   -> 참조중인 레코드의 식별자가 변경되면 null로 변경
+// onDelete: SetNull   -> 참조중인 레코드가 삭제되면 null로 변경

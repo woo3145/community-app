@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { AuthOptions, TokenSet } from 'next-auth';
+import { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import client from '@/libs/server/prismaClient';
 import { IssueTokens, issueTokens } from '@/libs/server/tokenUtils';
@@ -46,7 +46,6 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: '/login',
     error: '/error',
   },
   callbacks: {
@@ -134,7 +133,9 @@ export const authOptions: AuthOptions = {
   secret: process.env.JWT_TOKEN_SECRET,
 };
 
-declare module 'next-auth' {
+export default NextAuth(authOptions);
+
+declare module 'next-auth/core/types' {
   interface Session {
     error?: 'RefreshAccessTokenError';
   }
@@ -149,5 +150,3 @@ declare module 'next-auth/jwt' {
     error?: 'RefreshAccessTokenError';
   }
 }
-
-export default NextAuth(authOptions);

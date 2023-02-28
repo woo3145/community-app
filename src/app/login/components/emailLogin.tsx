@@ -32,7 +32,6 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
         redirect: true,
         callbackUrl: '/',
       });
-      console.log('result: ', result);
     } catch (e) {
       console.log('error : ', e);
       setMessage('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
