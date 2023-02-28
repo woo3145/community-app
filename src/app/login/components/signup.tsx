@@ -1,3 +1,4 @@
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoChevronBackOutline } from 'react-icons/io5';
@@ -23,13 +24,20 @@ export const Signup = ({ onPrevPage, email }: Props) => {
     handleSubmit,
     watch,
     formState: { isValid },
+    setValue,
   } = useForm<FormData>();
 
   const [message, setMessage] = useState('');
 
   const onSubmit = async (data: FormData) => {
     try {
-      const { password, name } = data;
+      const { password, checkPassword, name } = data;
+      if (password !== checkPassword) {
+        setValue('password', '');
+        setValue('checkPassword', '');
+        setMessage('비밀번호가 일치하지 않습니다.');
+        return;
+      }
       const response = await (
         await fetch('/api/auth/signup', {
           method: 'POST',
@@ -44,11 +52,18 @@ export const Signup = ({ onPrevPage, email }: Props) => {
         })
       ).json();
       if (response.error) {
+        setValue('password', '');
+        setValue('checkPassword', '');
         setMessage(response.error);
         return;
       }
       // 가입 성공
-      console.log(response.user);
+      await signIn('credentials', {
+        email: email,
+        password: password,
+        redirect: true,
+        callbackUrl: '/',
+      });
     } catch (e) {
       setMessage('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
     }
@@ -136,6 +151,8 @@ export const Signup = ({ onPrevPage, email }: Props) => {
               영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상으로
               입력해주세요.
             </p>
+
+            {message && <p className={styles.errorMessage}>{message}</p>}
           </div>
 
           <button

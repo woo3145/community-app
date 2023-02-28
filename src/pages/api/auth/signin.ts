@@ -3,6 +3,7 @@ import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
 import bcrypt from 'bcrypt';
 
 import client from '@/libs/server/prismaClient';
+import { User } from 'next-auth';
 
 interface LoginUserBody {
   email: string;
@@ -15,6 +16,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const user = await client.user.findUnique({
       where: { email },
+      include: {
+        profile: true,
+      },
     });
 
     if (!user) {
@@ -29,7 +33,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!passwordMatches) {
       throw new HttpError(401, 'Invalid email or password');
     }
-    const { password: _, ...loggedInUser } = user;
+    const loggedInUser: User = {
+      id: user.id,
+      email: user.email,
+      name: user.profile?.name,
+      image: user.profile?.avatar,
+    };
 
     return res.status(200).json({
       message: 'successful',

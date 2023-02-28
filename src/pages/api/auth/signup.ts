@@ -1,15 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import client from '@/libs/server/prismaClient';
-import { setCookie } from 'nookies';
-import {
-  issueTokens,
-  refreshTokenExpiration,
-  setTokenCookie,
-} from '@/libs/server/tokenUtils';
+import { User } from 'next-auth';
 
 interface CreateUserBody {
   email: string;
@@ -34,10 +28,24 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: {
         email,
         password: hashedPassword,
-        name,
+        profile: {
+          create: {
+            name,
+            annual: 0,
+          },
+        },
+      },
+      include: {
+        profile: true,
       },
     });
-    const { password: _, ...loggedInUser } = newUser;
+
+    const loggedInUser: User = {
+      id: newUser.id,
+      email: newUser.email,
+      name: newUser.profile?.name,
+      image: newUser.profile?.avatar,
+    };
 
     // accessToken은 client 저장
     return res.status(200).json({

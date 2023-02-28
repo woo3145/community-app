@@ -20,9 +20,9 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
 
 - [ ] 글 관련
 
-  - [ ] DB Schema 설계
+  - [x] DB Schema 설계
   - [ ] API
-    - [ ] Create
+    - [x] Create
     - [ ] Read
     - [ ] Update
     - [ ] Delete
