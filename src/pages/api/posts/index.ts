@@ -9,7 +9,7 @@ import { getServerSession } from 'next-auth';
 interface CreatePostBody {
   title: string;
   content: string;
-  published: string;
+  published: boolean;
   imageUrl: string;
   tags?: any; // 임시
 }
@@ -23,9 +23,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       include: {
         user: {
           select: {
+            id: true,
             profile: true,
           },
         },
+      },
+      orderBy: {
+        createAt: 'desc',
       },
     });
 
@@ -44,7 +48,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: {
         title,
         content,
-        published: published === 'true' ? true : false,
+        published: published === true ? true : false,
         imageUrl,
         user: {
           connect: {

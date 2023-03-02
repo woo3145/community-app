@@ -5,21 +5,27 @@ import Link from 'next/link';
 import styles from './sideAuthor_box.module.scss';
 
 interface Props {
-  author: IAuthor;
-  href: string;
+  author?: IAuthor;
 }
 
-export const SideAuthorBox = ({ author, href }: Props) => {
+export const SideAuthorBox = ({ author }: Props) => {
   return (
-    <Link href={href} className={styles.wrapper}>
+    <Link href={`/profile/${author?.id}`} className={styles.wrapper}>
       <div className={styles.authorBox}>
         <div className={styles.avatarWrapper}>
           <Avatar src={''} />
         </div>
 
         <div className={styles.verticleBox}>
-          <p className={styles.user_name}>{author.name}</p>
-          <CareerBadge job={author.job} career={author.career} />
+          <p className={styles.user_name}>
+            {author ? author.profile.name : '탈퇴한 유저'}
+          </p>
+          {author && (
+            <CareerBadge
+              job={author.profile.jobs}
+              annual={author.profile.annual}
+            />
+          )}
         </div>
       </div>
     </Link>

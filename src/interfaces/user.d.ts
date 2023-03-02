@@ -1,7 +1,14 @@
-interface IAuthor {
+interface IProfile {
   id: number;
-  name: string;
-  avatarUrl?: string;
-  job?: string;
-  career?: string;
+  name?: string;
+  nickname?: string;
+  avatar?: string;
+  jobs?: any; // 임시
+  annual: number;
+  userId?: string;
+}
+
+interface IAuthor {
+  id: string;
+  profile: IProfile;
 }
