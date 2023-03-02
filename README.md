@@ -26,7 +26,7 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
     - [x] Read
     - [x] Update
     - [x] Delete
-  - [ ] 글 작성 로직
+  - [x] 글 작성 로직
   - [ ] 이미지 업로드 기능 (하나의 이미지, 썸네일로 설정됨)
   - [ ] 태그 picker 컴포넌트
   - [ ] 좋아요 기능
@@ -34,9 +34,12 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
     - [ ] API
     - [ ] 댓글 컴포넌트
 
-- [ ] 게시글 로드 (태그 필터)
+- [ ] 게시글 로드
 
-  - [ ] 무한 스크롤링
+  - [ ] 전체
+    - [ ] 무한 스크롤링
+    - [ ] 태그필터
+  - [ ] 한개
 
 - [ ] 프로필 관련
 
