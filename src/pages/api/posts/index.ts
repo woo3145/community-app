@@ -9,7 +9,8 @@ import { getServerSession } from 'next-auth';
 interface CreatePostBody {
   title: string;
   content: string;
-  published: boolean;
+  published: string;
+  imageUrl: string;
   tags?: any; // 임시
 }
 
@@ -37,12 +38,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw new HttpError(401, 'Unauthorized');
     }
 
-    const { title, content, published, tags } = req.body as CreatePostBody;
+    const { title, content, published, tags, imageUrl } =
+      req.body as CreatePostBody;
     const newPost = await client.post.create({
       data: {
         title,
         content,
-        published: published === true ? true : false,
+        published: published === 'true' ? true : false,
+        imageUrl,
         user: {
           connect: {
             email: session.user?.email as string,
@@ -51,7 +54,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    return res.status(200).json({ message: 'successful', newPost });
+    return res.status(200).json({ message: 'successful', postId: newPost.id });
   }
 
   throw new HttpError(404, 'Not found');

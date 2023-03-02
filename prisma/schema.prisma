@@ -94,6 +94,7 @@ model Post {
   updateAt  DateTime  @updatedAt
   title     String    @db.VarChar(255) // bite가 아니라 문자길이를 뜻함
   content   String
+  imageUrl  String?
   published Boolean   @default(false)
   user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   userId    String?

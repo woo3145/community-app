@@ -13,8 +13,6 @@ export default function LogIn({ providers }: any) {
   const [email, setEmail] = useState<string | null>();
   const [type, setType] = useState<string | null>(null);
 
-  console.log(providers);
-
   const onPrevPage = () => {
     setEmail(null);
     setType(null);
