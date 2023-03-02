@@ -38,12 +38,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const { title, content, published, tags } = req.body as CreatePostBody;
-
     const newPost = await client.post.create({
       data: {
         title,
         content,
-        published: true,
+        published: published === true ? true : false,
         user: {
           connect: {
             email: session.user?.email as string,
