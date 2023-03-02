@@ -21,11 +21,11 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
 - [ ] 글 관련
 
   - [x] DB Schema 설계
-  - [ ] API
+  - [x] API
     - [x] Create
-    - [ ] Read
-    - [ ] Update
-    - [ ] Delete
+    - [x] Read
+    - [x] Update
+    - [x] Delete
   - [ ] 글 작성 로직
   - [ ] 이미지 업로드 기능 (하나의 이미지, 썸네일로 설정됨)
   - [ ] 태그 picker 컴포넌트

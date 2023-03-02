@@ -13,14 +13,12 @@ interface LoginUserBody {
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { email, password } = req.body as LoginUserBody;
-
     const user = await client.user.findUnique({
       where: { email },
       include: {
         profile: true,
       },
     });
-
     if (!user) {
       throw new HttpError(401, 'Invalid email or password');
     }
