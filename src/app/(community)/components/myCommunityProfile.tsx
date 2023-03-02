@@ -36,7 +36,7 @@ export const MyCommunityProfile = () => {
             <p className={styles.user_name}>
               {session?.user?.name ? session.user.name : '이름을 설정해주세요'}
             </p>
-            <CareerBadge job={'개발'} career={'신입'} />
+            <CareerBadge job={'개발'} annual={0} />
           </div>
         </div>
         <IoChevronForwardOutline />

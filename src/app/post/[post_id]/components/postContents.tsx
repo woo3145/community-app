@@ -11,22 +11,22 @@ export const PostContents = ({ article }: Props) => {
     <div>
       <div className={styles.header}>
         <div className={styles.autor}>
-          <AuthorBox author={article.author} createAt={'7시간 전'} href={'/'} />
+          <AuthorBox author={article.user} createAt={'7시간 전'} />
         </div>
 
         <h1 className={styles.title}>{article.title}</h1>
       </div>
 
-      <div className={styles.body}>{article.contents}</div>
+      <div className={styles.body}>{article.content}</div>
 
       <div className={styles.tags}>
-        {article.tags.map((tag) => {
+        {/* {article.tags.map((tag) => {
           return (
             <Link key={tag.id} href={`/${tag.id}`} className={styles.tag}>
               {tag.name}
             </Link>
           );
-        })}
+        })} */}
       </div>
     </div>
   );

@@ -16,6 +16,7 @@
 
     .userInfo {
       @include flex_center;
+      justify-content: flex-start;
 
       .user_name {
         margin-right: 8px;

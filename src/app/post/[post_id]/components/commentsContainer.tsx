@@ -3,6 +3,17 @@ import { IoChatbubbleOutline } from 'react-icons/io5';
 
 import styles from './commentsContainer.module.scss';
 
+const author: IAuthor = {
+  id: '',
+  profile: {
+    annual: 0,
+    avatar: '',
+    id: 1,
+    name: '3145',
+    nickname: '',
+    userId: 'cleod1rws0004zdqpojos5poj',
+  },
+};
 export const CommentsContainer = () => {
   return (
     <div className={styles.commentsContainer}>
@@ -13,7 +24,7 @@ export const CommentsContainer = () => {
 
       <div className={styles.commentWrite}>
         <div className={styles.commentWrite_top}>
-          <AuthorBox author={{ id: 1, name: '이창우' }} href={'/'} />
+          <AuthorBox author={author} />
         </div>
         <div className={styles.commentWrite_bottom}>
           <form>

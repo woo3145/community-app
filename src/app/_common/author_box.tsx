@@ -5,15 +5,14 @@ import { Avatar } from './avatar';
 import { CareerBadge } from './career_badge';
 
 interface Props {
-  author: IAuthor;
+  author?: IAuthor;
   createAt?: string;
-  href: string;
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const AuthorBox = ({ author, createAt, href, size = 'md' }: Props) => {
+export const AuthorBox = ({ author, createAt, size = 'md' }: Props) => {
   return (
-    <Link href={href} className={styles.wrapper}>
+    <Link href={`/profile/${author?.id}`} className={styles.wrapper}>
       <div className={`${styles.authorBox} ${styles[size]}`}>
         <div className={styles.avatarWrapper}>
           <Avatar src={''} />
@@ -21,8 +20,15 @@ export const AuthorBox = ({ author, createAt, href, size = 'md' }: Props) => {
 
         <div className={styles.verticleBox}>
           <div className={styles.userInfo}>
-            <p className={styles.user_name}>{author.name}</p>
-            <CareerBadge job={author.job} career={author.career} />
+            <p className={styles.user_name}>
+              {author ? author.profile.name : '탈퇴한 유저'}
+            </p>
+            {author && (
+              <CareerBadge
+                job={author.profile.jobs}
+                annual={author.profile.annual}
+              />
+            )}
           </div>
 
           {createAt && <div className={styles.createAt}>{createAt}</div>}

@@ -10,30 +10,29 @@ interface Props {
 
 export const ArticleCard = ({ article }: Props) => {
   const images = '';
-
+  console.log(article);
   return (
     <article className={styles.container}>
       <div className={styles.verticleBox}>
         <div className={styles.header}>
           <AuthorBox
             size={'sm'}
-            author={article.author}
-            href={`/profile/${article.author.id}`}
+            author={article.user}
             createAt={article.createAt}
           />
         </div>
 
         <Link href={`/post/${article.id}`} className={styles.body}>
           <h3>{article.title}</h3>
-          <p>{article.contents}</p>
+          <p>{article.content}</p>
           <div className={styles.bottom}>
             <div className={styles.icon}>
               <AiOutlineLike />
-              <span>{article.like_count}</span>
+              <span>{article.likeCount}</span>
             </div>
             <div className={styles.icon}>
               <IoChatbubbleOutline />
-              <span>{article.comment_count}</span>
+              <span>{article.commentCount}</span>
             </div>
           </div>
         </Link>

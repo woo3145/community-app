@@ -8,7 +8,7 @@ import { authOptions } from '../auth/[...nextauth]';
 interface UpdatePostBody {
   title?: string;
   content?: string;
-  published?: string;
+  published?: boolean;
   tags?: any; // 임시
 }
 
@@ -19,7 +19,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { id: parseInt(postId) },
       include: {
         user: {
-          include: {
+          select: {
+            id: true,
             profile: true,
           },
         },
@@ -72,9 +73,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       isChanged = true;
       updatedPost.content = content;
     }
-    if (published !== undefined && String(post.published) !== published) {
+    if (published !== undefined && post.published !== published) {
       isChanged = true;
-      updatedPost.published = published === 'true' ? true : false;
+      updatedPost.published = published === true ? true : false;
     }
 
     if (!isChanged) {

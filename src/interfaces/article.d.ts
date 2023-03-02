@@ -1,19 +1,20 @@
-interface ICategory {
+interface ITag {
   id: number;
-  name: string;
+  title: string;
 }
 
 interface IArticle {
   id: number;
   title: string;
-  contents: string;
-  tags: ICategory[];
-  thumbnailUrl?: string;
+  content: string;
+  tags: ITag[];
+  imageUrl?: string;
 
-  like_count: number;
-  comment_count: number;
+  likeCount: number;
+  commentCount: number;
 
-  author: IAuthor;
+  user?: IAuthor;
 
   createAt: string;
+  updateAt: string;
 }
