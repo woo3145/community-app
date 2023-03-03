@@ -37,7 +37,7 @@ export default function CommunityTemplate({
         <div className={styles.aside_container}>
           <div className={styles.myProfile}>
             <p className={styles.title}>MY 커뮤니티</p>
-            <MyProfile />
+            <MyProfile arrow />
           </div>
         </div>
       </aside>

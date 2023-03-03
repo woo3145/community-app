@@ -1,4 +1,5 @@
 import { AuthorProfile } from '@/app/_common/profile/author_profile';
+import { MyProfile } from '@/app/_common/profile/my_profile';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 
 import styles from './commentsContainer.module.scss';
@@ -13,7 +14,7 @@ export const CommentsContainer = () => {
 
       <div className={styles.commentWrite}>
         <div className={styles.commentWrite_top}>
-          <AuthorProfile userId={undefined} />
+          <MyProfile />
         </div>
         <div className={styles.commentWrite_bottom}>
           <form>

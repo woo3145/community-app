@@ -10,7 +10,6 @@ interface Props {
 
 export const ArticleCard = ({ article }: Props) => {
   const images = '';
-  console.log(article);
   return (
     <article className={styles.container}>
       <div className={styles.verticleBox}>

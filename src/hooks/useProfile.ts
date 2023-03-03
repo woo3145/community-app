@@ -6,9 +6,9 @@ interface UseProfileResponse {
   isError: boolean;
 }
 
-export const useProfile = (userId: string): UseProfileResponse => {
+export const useProfile = (userId?: string): UseProfileResponse => {
   const { data, error } = useSWR<{ profile: IProfile }>(
-    `/api/profile/${userId}`,
+    userId ? `/api/profile/${userId}` : null,
     async (url: string) => {
       const response = await fetch(url);
       if (!response.ok) {
@@ -17,6 +17,13 @@ export const useProfile = (userId: string): UseProfileResponse => {
       return response.json();
     }
   );
+  if (!userId) {
+    return {
+      profile: null,
+      isLoading: false,
+      isError: false,
+    };
+  }
 
   return {
     profile: data?.profile || null,

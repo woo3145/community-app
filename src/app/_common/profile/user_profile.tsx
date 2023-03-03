@@ -31,7 +31,7 @@ export const UserProfile = ({ userId, size = 'md' }: Props) => {
         </div>
 
         <div className={styles.verticleBox}>
-          <p className={styles.user_name}>{profile?.name}</p>
+          <p className={styles.user_name}>{profile.name}</p>
           <CareerBadge job={'개발'} annual={profile.annual} />
         </div>
       </div>

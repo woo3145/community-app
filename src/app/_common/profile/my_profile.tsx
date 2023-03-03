@@ -8,7 +8,11 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import styles from './my_profile.module.scss';
 
-export const MyProfile = () => {
+interface Props {
+  arrow?: boolean;
+}
+
+export const MyProfile = ({ arrow = false }: Props) => {
   const { me, isLoading, isError } = useMe();
   if (isLoading) {
     return <div>Loading...</div>;
@@ -21,7 +25,7 @@ export const MyProfile = () => {
           <Avatar src={''} />
         </div>
         <span>로그인 해주세요</span>
-        <IoChevronForwardOutline />
+        {arrow && <IoChevronForwardOutline />}
       </Link>
     );
   }
@@ -40,7 +44,7 @@ export const MyProfile = () => {
           <CareerBadge job={'개발'} annual={me.profile.annual} />
         </div>
       </div>
-      <IoChevronForwardOutline />
+      {arrow && <IoChevronForwardOutline />}
     </Link>
   );
 };
