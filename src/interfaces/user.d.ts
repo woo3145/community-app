@@ -11,3 +11,9 @@ interface IProfile {
 interface IMyProfile extends IProfile {
   interestTags: any;
 }
+
+interface IMe {
+  id: string;
+  email: string;
+  profile: IMyProfile;
+}
