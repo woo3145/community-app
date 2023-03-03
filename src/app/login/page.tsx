@@ -1,5 +1,7 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { EmailLogin } from './components/emailLogin';
 import { Signup } from './components/signup';
@@ -10,8 +12,13 @@ interface CheckEmailResponse {
 }
 
 export default function LogIn({ providers }: any) {
+  const { data: session } = useSession();
   const [email, setEmail] = useState<string | null>();
   const [type, setType] = useState<string | null>(null);
+
+  if (session) {
+    redirect('/');
+  }
 
   const onPrevPage = () => {
     setEmail(null);

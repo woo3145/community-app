@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
 interface UseMeResponse {
@@ -7,8 +8,9 @@ interface UseMeResponse {
 }
 
 export const useMe = (): UseMeResponse => {
+  const { data: session } = useSession();
   const { data, error } = useSWR<{ user: IMe }>(
-    `/api/me`,
+    session ? `/api/me` : null,
     async (url: string) => {
       const response = await fetch(url);
       if (!response.ok) {
@@ -17,6 +19,14 @@ export const useMe = (): UseMeResponse => {
       return response.json();
     }
   );
+
+  if (!session) {
+    return {
+      me: null,
+      isLoading: false,
+      isError: false,
+    };
+  }
 
   return {
     me: data?.user || null,

@@ -15,27 +15,25 @@ interface Props {
 }
 
 export const AuthorProfile = ({ userId, createAt, size = 'md' }: Props) => {
-  const { profile, isLoading, isError } = useProfile(userId || '');
+  const { profile, isLoading, isError } = useProfile(userId);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
+  if (isError || !profile) {
     return <DeletedProfile size={size} />;
   }
   return (
-    <Link href={`/profile/${profile?.userId}`} className={styles.wrapper}>
+    <Link href={`/profile/${profile.userId}`} className={styles.wrapper}>
       <div className={`${styles.authorBox} ${styles[size]}`}>
         <div className={styles.avatarWrapper}>
-          <Avatar src={''} />
+          <Avatar src={profile.avatar} />
         </div>
 
         <div className={styles.verticleBox}>
           <div className={styles.userInfo}>
-            <p className={styles.user_name}>
-              {profile ? profile.name : '탈퇴한 유저'}
-            </p>
+            <p className={styles.user_name}>{profile.name}</p>
             <CareerBadge job={'개발'} annual={profile?.annual || 0} />
           </div>
 
