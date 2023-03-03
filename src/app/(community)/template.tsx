@@ -2,10 +2,10 @@
 
 import { CategoryButton } from '../_common/category_button';
 import { useEffect, useState } from 'react';
-import { MyCommunityProfile } from './components/myCommunityProfile';
 import { mockCategories } from '@/mocks/mockCategories';
 
 import styles from './template.module.scss';
+import { MyProfile } from '../_common/profile/my_profile';
 
 export default function CommunityTemplate({
   children,
@@ -35,7 +35,10 @@ export default function CommunityTemplate({
     <div className={styles.wrapper}>
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
-          <MyCommunityProfile />
+          <div className={styles.myProfile}>
+            <p className={styles.title}>MY 커뮤니티</p>
+            <MyProfile />
+          </div>
         </div>
       </aside>
 

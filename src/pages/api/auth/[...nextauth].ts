@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { AuthOptions } from 'next-auth';
+import { AuthOptions, DefaultUser } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import client from '@/libs/server/prismaClient';
 import { IssueTokens, issueTokens } from '@/libs/server/tokenUtils';
@@ -124,6 +124,7 @@ export const authOptions: AuthOptions = {
     },
     async session({ session, token }) {
       session.error = token.error;
+      session.user.id = token.sub as string;
       return session;
     },
   },
@@ -135,9 +136,14 @@ export const authOptions: AuthOptions = {
 
 export default NextAuth(authOptions);
 
+interface SessionUser extends DefaultUser {
+  id: string;
+}
+
 declare module 'next-auth/core/types' {
   interface Session {
     error?: 'RefreshAccessTokenError';
+    user: SessionUser;
   }
 }
 

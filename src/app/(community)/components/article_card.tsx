@@ -1,4 +1,4 @@
-import { AuthorBox } from '@/app/_common/author_box';
+import { AuthorProfile } from '@/app/_common/profile/author_profile';
 import Link from 'next/link';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
@@ -15,9 +15,9 @@ export const ArticleCard = ({ article }: Props) => {
     <article className={styles.container}>
       <div className={styles.verticleBox}>
         <div className={styles.header}>
-          <AuthorBox
+          <AuthorProfile
             size={'sm'}
-            author={article.user}
+            userId={article.userId}
             createAt={article.createAt}
           />
         </div>

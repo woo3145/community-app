@@ -1,0 +1,53 @@
+@import '../../mixins';
+
+.wrapper {
+  display: inline-block;
+}
+
+.profileBox {
+  @include flex_center;
+
+  .avatarWrapper {
+    flex-shrink: 0;
+  }
+
+  .verticleBox {
+    margin-left: 12px;
+
+    .user_name {
+      margin-right: 8px;
+      font-weight: 700;
+    }
+  }
+}
+
+// 사이즈
+
+.sm {
+  .avatarWrapper {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .verticleBox {
+    @include text_sm;
+  }
+
+  .createAt {
+    @include text_xs;
+  }
+}
+
+.md {
+  .avatarWrapper {
+    width: 2.125rem;
+    height: 2.125rem;
+  }
+
+  .verticleBox {
+    @include text_md;
+  }
+
+  .createAt {
+    @include text_sm;
+  }
+}
