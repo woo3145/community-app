@@ -13,7 +13,7 @@ interface IArticle {
   likeCount: number;
   commentCount: number;
 
-  user?: IAuthor;
+  userId?: string;
 
   createAt: string;
   updateAt: string;

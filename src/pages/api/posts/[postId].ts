@@ -17,14 +17,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const post = await client.post.findUnique({
       where: { id: parseInt(postId) },
-      include: {
-        user: {
-          select: {
-            id: true,
-            profile: true,
-          },
-        },
-      },
     });
 
     if (!post) {

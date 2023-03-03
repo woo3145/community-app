@@ -1,19 +1,8 @@
-import { AuthorBox } from '@/app/_common/author_box';
+import { AuthorProfile } from '@/app/_common/profile/author_profile';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 
 import styles from './commentsContainer.module.scss';
 
-const author: IAuthor = {
-  id: '',
-  profile: {
-    annual: 0,
-    avatar: '',
-    id: 1,
-    name: '3145',
-    nickname: '',
-    userId: 'cleod1rws0004zdqpojos5poj',
-  },
-};
 export const CommentsContainer = () => {
   return (
     <div className={styles.commentsContainer}>
@@ -24,7 +13,7 @@ export const CommentsContainer = () => {
 
       <div className={styles.commentWrite}>
         <div className={styles.commentWrite_top}>
-          <AuthorBox author={author} />
+          <AuthorProfile userId={undefined} />
         </div>
         <div className={styles.commentWrite_bottom}>
           <form>

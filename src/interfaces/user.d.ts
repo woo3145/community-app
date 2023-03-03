@@ -5,10 +5,9 @@ interface IProfile {
   avatar?: string;
   jobs?: any; // 임시
   annual: number;
-  userId?: string;
+  userId: string;
 }
 
-interface IAuthor {
-  id: string;
-  profile: IProfile;
+interface IMyProfile extends IProfile {
+  interestTags: any;
 }

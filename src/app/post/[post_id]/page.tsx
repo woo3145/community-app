@@ -1,11 +1,12 @@
 'use client';
 
+import { DeletedProfile } from '@/app/_common/profile/deleted_profile';
+import { UserProfile } from '@/app/_common/profile/user_profile';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import useSWR, { Fetcher } from 'swr';
 import { CommentsContainer } from './components/commentsContainer';
 import { PostContents } from './components/postContents';
-import { SideAuthorBox } from './components/sideAuthor_box';
 import styles from './page.module.scss';
 
 interface GetPostsResponse {
@@ -25,13 +26,17 @@ export default function PostDetail({
   if (!data) {
     return <p>Loading...</p>;
   }
-  console.log(data.post);
+
   return (
     <main className={styles.main}>
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>
-            <SideAuthorBox author={data.post.user} />
+            {data.post.userId ? (
+              <UserProfile userId={data.post.userId} />
+            ) : (
+              <DeletedProfile />
+            )}
           </div>
         </div>
       </aside>

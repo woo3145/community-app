@@ -20,14 +20,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: {
         published: true,
       },
-      include: {
-        user: {
-          select: {
-            id: true,
-            profile: true,
-          },
-        },
-      },
       orderBy: {
         createAt: 'desc',
       },

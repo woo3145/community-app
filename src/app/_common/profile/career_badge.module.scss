@@ -1,7 +1,8 @@
-@import '../mixins';
+@import '../../mixins';
 
 .badge {
-  @include text-xs;
+  font-size: 0.8em;
+  line-height: 1rem;
   font-weight: 700;
 
   span:nth-child(1) {

@@ -1,4 +1,4 @@
-import { AuthorBox } from '@/app/_common/author_box';
+import { AuthorProfile } from '@/app/_common/profile/author_profile';
 import Link from 'next/link';
 import styles from './postContents.module.scss';
 
@@ -11,7 +11,7 @@ export const PostContents = ({ article }: Props) => {
     <div>
       <div className={styles.header}>
         <div className={styles.autor}>
-          <AuthorBox author={article.user} createAt={'7시간 전'} />
+          <AuthorProfile userId={article.userId} createAt={'7시간 전'} />
         </div>
 
         <h1 className={styles.title}>{article.title}</h1>
