@@ -9,13 +9,12 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import styles from './my_profile.module.scss';
 
 export const MyProfile = () => {
-  const { profile, isLoading, isError } = useMe();
-
+  const { me, isLoading, isError } = useMe();
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError || !profile) {
+  if (isError || !me) {
     return (
       <Link href="/login" className={styles.loginButton}>
         <div className={styles.avatarWrapper}>
@@ -31,14 +30,14 @@ export const MyProfile = () => {
     <Link href={'/my/recents'} className={styles.myCommunityButton}>
       <div className={styles.authorBox}>
         <div className={styles.avatarWrapper}>
-          <Avatar src={profile.avatar} />
+          <Avatar src={me.profile.avatar} />
         </div>
 
         <div className={styles.verticleBox}>
           <p className={styles.user_name}>
-            {profile.name ? profile.name : '이름을 설정해주세요'}
+            {me.profile.name ? me.profile.name : '이름을 설정해주세요'}
           </p>
-          <CareerBadge job={'개발'} annual={profile.annual} />
+          <CareerBadge job={'개발'} annual={me.profile.annual} />
         </div>
       </div>
       <IoChevronForwardOutline />
