@@ -6,51 +6,36 @@ import client from '@/libs/server/prismaClient';
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 
-interface CreatePostBody {
-  title: string;
+interface CreateCommentBody {
+  postId: string;
   content: string;
-  published: boolean;
-  imageUrl: string;
-  tags?: any; // 임시
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    const posts = await client.post.findMany({
-      where: {
-        published: true,
-      },
-      orderBy: {
-        createAt: 'desc',
-      },
-    });
-
-    return res.status(200).json({ posts });
-  }
-
   if (req.method === 'POST') {
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
       throw new HttpError(401, 'Unauthorized');
     }
 
-    const { title, content, published, tags, imageUrl } =
-      req.body as CreatePostBody;
-    const newPost = await client.post.create({
+    const { content, postId } = req.body as CreateCommentBody;
+    const newComment = await client.comment.create({
       data: {
-        title,
         content,
-        published: published === true ? true : false,
-        imageUrl,
         user: {
           connect: {
             id: session.user.id,
           },
         },
+        post: {
+          connect: {
+            id: parseInt(postId),
+          },
+        },
       },
     });
 
-    return res.status(200).json({ message: 'successful', postId: newPost.id });
+    return res.status(200).json({ message: 'successful', comment: newComment });
   }
 
   throw new HttpError(404, 'Not found');

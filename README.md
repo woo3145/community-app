@@ -31,7 +31,7 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
   - [ ] 태그 picker 컴포넌트
   - [ ] 좋아요 기능
   - [ ] 댓글 기능
-    - [ ] API
+    - [x] API
     - [ ] 댓글 컴포넌트
 
 - [ ] 게시글 로드
