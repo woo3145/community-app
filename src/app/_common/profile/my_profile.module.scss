@@ -5,8 +5,6 @@
 
   .avatarWrapper {
     flex-shrink: 0;
-    width: 2.215rem;
-    height: 2.215rem;
   }
   span {
     width: 100%;
@@ -26,26 +24,13 @@
     @include flex_center;
     .avatarWrapper {
       flex-shrink: 0;
-      width: 2.215rem;
-      height: 2.215rem;
     }
     .verticleBox {
       margin-left: 12px;
 
       .user_name {
-        @include text_md;
         margin-right: 8px;
         font-weight: 700;
-      }
-      .user_career {
-        @include text_xs;
-        color: var(--gray-200);
-        font-weight: 700;
-
-        span:first-child {
-          color: var(--primary-rgb);
-          margin-right: 8px;
-        }
       }
     }
   }
@@ -53,5 +38,32 @@
   svg {
     flex-shrink: 0;
     font-size: 20px;
+  }
+}
+
+.sm {
+  .avatarWrapper {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .user_name {
+    @include text_sm;
+  }
+
+  .createAt {
+    @include text_xs;
+  }
+}
+
+.md {
+  .avatarWrapper {
+    width: 2.125rem;
+    height: 2.125rem;
+  }
+  .user_name {
+    @include text_md;
+  }
+  .createAt {
+    @include text_sm;
   }
 }

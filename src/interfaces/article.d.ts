@@ -18,3 +18,13 @@ interface IArticle {
   createAt: string;
   updateAt: string;
 }
+
+interface IComment {
+  id: number;
+  content: string;
+
+  userId?: string;
+
+  createAt: string;
+  updateAt: string;
+}

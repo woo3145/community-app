@@ -32,7 +32,7 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
   - [ ] 좋아요 기능
   - [ ] 댓글 기능
     - [x] API
-    - [ ] 댓글 컴포넌트
+    - [x] 댓글 컴포넌트
 
 - [ ] 게시글 로드
 
@@ -40,7 +40,7 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
     - [ ] 무한 스크롤링
     - [ ] 태그필터
   - [x] 한개
-    - [ ] 댓글
+    - [x] 댓글
 
 - [ ] 프로필 관련
 

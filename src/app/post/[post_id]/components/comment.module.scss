@@ -1,0 +1,22 @@
+@import '../../../mixins';
+
+.wrapper {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .icon {
+    @include text_md;
+    cursor: pointer;
+  }
+}
+
+.content {
+  margin-bottom: 20px;
+  padding: 8px 24px 12px 40px;
+  border-bottom: var(--border);
+  @include text_md;
+}

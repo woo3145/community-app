@@ -60,7 +60,7 @@ export default function PostDetail({
           </div>
         </article>
 
-        <CommentsContainer />
+        <CommentsContainer postId={post_id} />
       </section>
     </main>
   );
