@@ -17,6 +17,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const comments = await client.comment.findMany({
       where: { postId: parseInt(postId) },
+      orderBy: {
+        createAt: 'desc',
+      },
     });
 
     return res.status(200).json({ message: 'successful', comments });

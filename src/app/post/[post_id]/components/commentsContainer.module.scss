@@ -21,7 +21,10 @@
 
   .commentWrite {
     &_top {
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+      .profileWrapper {
+        display: inline-block;
+      }
     }
 
     &_bottom {

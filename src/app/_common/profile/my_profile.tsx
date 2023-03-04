@@ -10,9 +10,10 @@ import styles from './my_profile.module.scss';
 
 interface Props {
   arrow?: boolean;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export const MyProfile = ({ arrow = false }: Props) => {
+export const MyProfile = ({ arrow = false, size = 'md' }: Props) => {
   const { me, isLoading, isError } = useMe();
   if (isLoading) {
     return <div>Loading...</div>;
@@ -32,7 +33,7 @@ export const MyProfile = ({ arrow = false }: Props) => {
 
   return (
     <Link href={'/my/recents'} className={styles.myCommunityButton}>
-      <div className={styles.authorBox}>
+      <div className={`${styles.authorBox} ${styles[size]}`}>
         <div className={styles.avatarWrapper}>
           <Avatar src={me.profile.avatar} />
         </div>
