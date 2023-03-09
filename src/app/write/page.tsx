@@ -69,6 +69,7 @@ export default function Write() {
             content,
             published: true,
             imageUrl: '',
+            tags: [4, 5, 6],
           }),
         })
       ).json();

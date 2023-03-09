@@ -1,11 +1,10 @@
-import { mockArticles } from '@/mocks/mockArticles';
-import { Inter } from '@next/font/google';
+'use client';
+
 import { ArticleCard } from '../components/article_card';
 import { WriteButton } from '../components/write_button';
 
 import styles from './page.module.scss';
-
-const inter = Inter({ subsets: ['latin'] });
+import { usePosts } from '@/hooks/usePosts';
 
 interface Props {
   params: {
@@ -14,13 +13,14 @@ interface Props {
 }
 
 export default function CommunitySlug({ params }: Props) {
+  const { posts } = usePosts(params.slug);
   return (
     <div className={styles.wrapper}>
       <section className={styles.write_button_section}>
         <WriteButton />
       </section>
       <section className={styles.article_list_section}>
-        {mockArticles.map((article) => {
+        {posts.map((article) => {
           return <ArticleCard key={article.id} article={article} />;
         })}
       </section>

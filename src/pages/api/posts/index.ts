@@ -5,25 +5,43 @@ import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
 import client from '@/libs/server/prismaClient';
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
+import { Post } from '@prisma/client';
 
 interface CreatePostBody {
   title: string;
   content: string;
   published: boolean;
   imageUrl: string;
-  tags?: any; // 임시
+  tags: number[];
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    const posts = await client.post.findMany({
-      where: {
-        published: true,
-      },
-      orderBy: {
-        createAt: 'desc',
-      },
-    });
+    const { tag_id } = req.query as { tag_id: string };
+    let posts: Post[] = [];
+
+    if (tag_id && tag_id !== 'all') {
+      const tag = await client.tag.findFirst({
+        where: { id: parseInt(tag_id) },
+        include: {
+          posts: {
+            orderBy: {
+              createAt: 'desc',
+            },
+          },
+        },
+      });
+      posts = tag ? tag.posts : [];
+    } else {
+      posts = await client.post.findMany({
+        where: {
+          published: true,
+        },
+        orderBy: {
+          createAt: 'desc',
+        },
+      });
+    }
 
     return res.status(200).json({ posts });
   }
@@ -36,6 +54,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const { title, content, published, tags, imageUrl } =
       req.body as CreatePostBody;
+
     const newPost = await client.post.create({
       data: {
         title,
@@ -46,6 +65,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           connect: {
             id: session.user.id,
           },
+        },
+        tags: {
+          connect: tags.splice(0, 3).map((tagId: number) => {
+            return {
+              id: tagId,
+            };
+          }),
         },
       },
     });

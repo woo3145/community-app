@@ -5,7 +5,7 @@ import { IoChatbubbleOutline } from 'react-icons/io5';
 import styles from './article_card.module.scss';
 
 interface Props {
-  article: IArticle;
+  article: Article;
 }
 
 export const ArticleCard = ({ article }: Props) => {
