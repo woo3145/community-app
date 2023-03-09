@@ -38,7 +38,7 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
 
   - [x] 전체
     - [ ] 무한 스크롤링
-    - [ ] 태그필터
+    - [x] 태그필터
   - [x] 한개
     - [x] 댓글
 

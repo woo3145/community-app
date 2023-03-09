@@ -10,7 +10,7 @@ import { PostContents } from './components/postContents';
 import styles from './page.module.scss';
 
 interface GetPostsResponse {
-  post: IArticle;
+  post: Article;
 }
 
 const fetcher: Fetcher<GetPostsResponse> = (url: string) =>
@@ -44,7 +44,9 @@ export default function PostDetail({
       <section className={styles.postDetail}>
         <article className={styles.contentsBox}>
           <PostContents article={data.post} />
-
+          {data.post.tags?.map((tag, key) => {
+            return <div key={key}>{tag.title}</div>;
+          })}
           <div className={styles.bottom}>
             {/* Like Button */}
             <div className={styles.icon}>
