@@ -1,0 +1,79 @@
+@import '../../mixins';
+
+.wrapper {
+  .container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    border: var(--border);
+    border-radius: 5px 5px 0 0;
+    padding: 20px 30px;
+    margin-top: 50px;
+    background-color: var(--card-color);
+
+    .flexBox {
+      width: calc(100% - 48px);
+      display: flex;
+      align-items: center;
+
+      .category_list {
+        display: flex;
+        gap: 8px;
+        overflow-x: scroll;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+      .leftButton {
+        @include flex_center;
+        position: absolute;
+        left: 30px;
+
+        width: 40px;
+        height: 40px;
+
+        border: var(--border);
+        border-radius: 20px;
+        background-color: var(--card-color);
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--hover-rgb);
+        }
+      }
+      .rightButton {
+        @include flex_center;
+        position: absolute;
+        right: 90px;
+
+        width: 40px;
+        height: 40px;
+
+        border: var(--border);
+        border-radius: 20px;
+        background-color: var(--card-color);
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--hover-rgb);
+        }
+      }
+    }
+    .moreButton {
+      @include flex_center;
+
+      width: 40px;
+      height: 40px;
+      margin-left: 8px;
+
+      border: var(--border);
+      border-radius: 4px;
+      background-color: var(--card-color);
+
+      cursor: pointer;
+    }
+  }
+}

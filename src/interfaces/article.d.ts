@@ -1,13 +1,8 @@
-interface ITag {
-  id: number;
-  title: string;
-}
-
 interface IArticle {
   id: number;
   title: string;
   content: string;
-  tags: ITag[];
+  tags: ChildTag[];
   imageUrl?: string;
 
   likeCount: number;
