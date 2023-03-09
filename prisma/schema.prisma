@@ -81,6 +81,7 @@ model Job {
 model Tag {
   id       Int       @id @default(autoincrement())
   title    String
+  icon     String?
   posts    Post[]
   user     Profile[]
   parentId Int?
