@@ -76,4 +76,15 @@
       cursor: pointer;
     }
   }
+
+  .moreContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 25px;
+
+    border: var(--border);
+    border-top: none;
+  }
 }
