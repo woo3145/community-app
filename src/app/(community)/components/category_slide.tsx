@@ -1,8 +1,9 @@
 'use client';
 
 import { CategoryButton } from '@/app/_common/category_button';
+import { useMountedRef } from '@/hooks/useMountedRef';
 import { useTags } from '@/hooks/useTags';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   IoChevronBack,
   IoChevronForwardSharp,
@@ -12,13 +13,21 @@ import {
 import styles from './category_slide.module.scss';
 
 export const CategorySlide = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [categoryId, setCategoryId] = useState<number>();
   const { tags, subTags, isLoading, isError } = useTags();
 
   const [leftVisible, setLeftVisible] = useState(false); // 슬라이드 왼쪽 버튼
   const [rightVisible, setRightVisible] = useState(true); // 슬라이드 오른쪽 버튼
   const [moreVisible, setMoreVisible] = useState(false); // 카테고리 펼치기 버튼
+
+  // 문제 : 새로고침 시 categoryId가 세팅되고 useRef는 아직 세팅되지 않아서 스크롤링 useEffect 작동안함
+  // (deps를 비우면 되지만 다른 상태값들도 많기 때문에 다른 방법 탐색)
+  // 해결 : ref가 마운트 될때 isMounted 상태값을 변경하는 커스텀 hook을 생성하여 isMounted값을 useEffect deps에 넣어 재실행시켜줌
+  const {
+    ref: scrollRef,
+    isMounted: isMountedScrollRef,
+    handleRef: handleScrollRef,
+  } = useMountedRef<any>();
 
   // 첫 로딩시 현재 페이지의 param으로 categoryId 설정
   useEffect(() => {
@@ -66,7 +75,7 @@ export const CategorySlide = () => {
     } else {
       setRightVisible(true);
     }
-  }, [categoryId]);
+  }, [categoryId, scrollRef, isMountedScrollRef]);
 
   // 링크 이동
   const onClickCategory = (categoryId: number) => {
@@ -113,7 +122,7 @@ export const CategorySlide = () => {
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.flexBox}>
-          <div className={styles.category_list} ref={scrollRef}>
+          <div className={styles.category_list} ref={handleScrollRef}>
             <CategoryButton
               id={`categoryButton_-1`}
               key={-1}
