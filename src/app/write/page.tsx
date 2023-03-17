@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { redirect, useRouter } from 'next/navigation';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   IoAdd,
@@ -11,6 +11,7 @@ import {
   IoCloseOutline,
   IoImageOutline,
 } from 'react-icons/io5';
+import { TagSelectorModal } from '../_modals/tag_selector_modal';
 import styles from './page.module.scss';
 
 interface FormData {
@@ -32,6 +33,11 @@ export default function Write() {
 
     formState: { isValid },
   } = useForm<FormData>();
+
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
 
   const {
     ref: contentRef,
@@ -108,10 +114,17 @@ export default function Write() {
               <span>*</span>
             </div>
             <div className={styles.tagSelectorContainer}>
-              <button className={styles.tagAddButton}>
+              <button className={styles.tagAddButton} onClick={openModal}>
                 <IoAdd />
               </button>
-              <button className={styles.tagPlaceholder}></button>
+              <button
+                className={styles.tagPlaceholder}
+                onClick={openModal}
+              ></button>
+              <TagSelectorModal
+                modalIsOpen={modalIsOpen}
+                setIsOpen={setIsOpen}
+              />
               <div className={styles.selectedTagList}>
                 <div className={styles.selectedTag}>
                   <span>개발</span>

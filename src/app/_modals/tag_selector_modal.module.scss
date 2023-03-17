@@ -1,0 +1,83 @@
+@import '../mixins';
+@import '../variables';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: $tagModalWidth;
+  max-height: $tagModalheight;
+}
+
+.header {
+  @include flex_center;
+  position: relative;
+  width: 100%;
+  padding-bottom: 20px;
+
+  .title {
+    @include text_lg;
+    font-weight: 700;
+  }
+  .titleBadge {
+    @include flex_center;
+    @include text_xs;
+    width: 20px;
+    height: 20px;
+    font-weight: 700;
+    background-color: var(--primary-rgb);
+    color: white;
+    border-radius: 100%;
+    padding-top: 1px;
+    padding-left: 1px;
+    margin-left: 4px;
+  }
+  .closeButton {
+    @include text_2xl;
+    position: absolute;
+    right: 0px;
+  }
+}
+
+.body {
+  padding: 8px 0;
+  overflow-y: auto;
+
+  .message {
+    @include text_md;
+    margin-bottom: 32px;
+    font-weight: 600;
+  }
+
+  .tagTitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-weight: 700;
+    span {
+      @include text_sm;
+      margin-right: 8px;
+    }
+  }
+
+  .subTagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    cursor: pointer;
+    margin-bottom: 16px;
+
+    li {
+      @include button_sm;
+      background-color: var(--background-start-rgb);
+      color: var(--foreground-rgb);
+    }
+  }
+}
+
+.bottom {
+  padding-top: 20px;
+  .submitButton {
+    @include button_md;
+    width: 100%;
+  }
+}
