@@ -20,19 +20,46 @@ const customStyles = {
 interface Props {
   modalIsOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  selectedTags: SubTag[];
+  setSelectedTags: Dispatch<SetStateAction<SubTag[]>>;
 }
 
-export const TagSelectorModal = ({ modalIsOpen, setIsOpen }: Props) => {
+export const TagSelectorModal = ({
+  modalIsOpen,
+  setIsOpen,
+  selectedTags,
+  setSelectedTags,
+}: Props) => {
   const { tags } = useTags();
   function closeModal() {
     setIsOpen(false);
   }
+  const [pickedTags, setPickedTags] = useState<SubTag[]>(selectedTags);
+
+  const onClickPickTag = (tag: SubTag) => {
+    if (pickedTags.includes(tag)) {
+      setPickedTags(pickedTags.filter((t) => t.id !== tag.id));
+      return;
+    }
+
+    if (3 <= pickedTags.length) {
+      console.log('최대 3개만 선택가능');
+      return;
+    }
+    setPickedTags([...pickedTags, tag]);
+  };
+
+  const onClickSelect = () => {
+    setSelectedTags(pickedTags);
+    closeModal();
+  };
   return (
     <ReactModal
       isOpen={modalIsOpen}
       onRequestClose={closeModal}
       style={customStyles}
       contentLabel="Example Modal"
+      ariaHideApp={false}
     >
       <div className={styles.container}>
         <div className={styles.header}>
@@ -56,21 +83,19 @@ export const TagSelectorModal = ({ modalIsOpen, setIsOpen }: Props) => {
                   </div>
                   <ul className={styles.subTagList}>
                     {tag.subTags.map((subTag, idx) => {
-                      return <li key={idx}>{subTag.title}</li>;
-                    })}
-                  </ul>
-                </li>
-              );
-            })}
-            {tags.map((tag, idx) => {
-              return (
-                <li key={idx}>
-                  <div className={styles.tagTitle}>
-                    <span>{tag.icon}</span> {tag.title}
-                  </div>
-                  <ul className={styles.subTagList}>
-                    {tag.subTags.map((subTag, idx) => {
-                      return <li key={idx}>{subTag.title}</li>;
+                      return (
+                        <li
+                          className={
+                            pickedTags.find((t) => t.id === subTag.id)
+                              ? styles.selected
+                              : ''
+                          }
+                          key={idx}
+                          onClick={() => onClickPickTag(subTag)}
+                        >
+                          {subTag.title}
+                        </li>
+                      );
                     })}
                   </ul>
                 </li>
@@ -80,7 +105,9 @@ export const TagSelectorModal = ({ modalIsOpen, setIsOpen }: Props) => {
         </div>
 
         <div className={styles.bottom}>
-          <button className={styles.submitButton}>완료</button>
+          <button className={styles.submitButton} onClick={onClickSelect}>
+            완료
+          </button>
         </div>
       </div>
     </ReactModal>

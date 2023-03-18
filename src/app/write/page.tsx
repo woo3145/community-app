@@ -38,6 +38,11 @@ export default function Write() {
   const openModal = () => {
     setIsOpen(true);
   };
+  const [selectedTags, setSelectedTags] = useState<SubTag[]>([]);
+
+  const onClickExcludeTag = (tagId: number) => {
+    setSelectedTags(selectedTags.filter((tag) => tag.id !== tagId));
+  };
 
   const {
     ref: contentRef,
@@ -75,7 +80,7 @@ export default function Write() {
             content,
             published: true,
             imageUrl: '',
-            tags: [4, 5, 6],
+            tags: selectedTags.map((tag) => tag.id),
           }),
         })
       ).json();
@@ -117,27 +122,32 @@ export default function Write() {
               <button className={styles.tagAddButton} onClick={openModal}>
                 <IoAdd />
               </button>
-              <button
-                className={styles.tagPlaceholder}
-                onClick={openModal}
-              ></button>
-              <TagSelectorModal
-                modalIsOpen={modalIsOpen}
-                setIsOpen={setIsOpen}
-              />
+              {selectedTags.length === 0 && (
+                <button
+                  className={styles.tagPlaceholder}
+                  onClick={openModal}
+                ></button>
+              )}
+              {modalIsOpen && (
+                <TagSelectorModal
+                  modalIsOpen={modalIsOpen}
+                  setIsOpen={setIsOpen}
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                />
+              )}
+
               <div className={styles.selectedTagList}>
-                <div className={styles.selectedTag}>
-                  <span>개발</span>
-                  <button>
-                    <IoCloseOutline />
-                  </button>
-                </div>
-                <div className={styles.selectedTag}>
-                  <span>고민</span>
-                  <button>
-                    <IoCloseOutline />
-                  </button>
-                </div>
+                {selectedTags.map((tag, idx) => {
+                  return (
+                    <div key={idx} className={styles.selectedTag}>
+                      <span>{tag.title}</span>
+                      <button onClick={() => onClickExcludeTag(tag.id)}>
+                        <IoCloseOutline />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

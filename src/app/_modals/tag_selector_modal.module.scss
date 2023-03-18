@@ -71,6 +71,10 @@
       background-color: var(--background-start-rgb);
       color: var(--foreground-rgb);
     }
+    .selected {
+      color: var(--primary-rgb);
+      border-color: var(--primary-rgb);
+    }
   }
 }
 
