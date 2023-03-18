@@ -26,6 +26,7 @@ export const issueTokens = (sub: string): IssueTokens => {
   const refreshToken = jwt.sign({ sub }, jwtTokenSecret, {
     expiresIn: `${refreshTokenExpiration}d`,
   });
+
   return {
     accessToken,
     refreshToken,

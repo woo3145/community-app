@@ -27,11 +27,11 @@ export const ArticleCard = ({ article }: Props) => {
           <div className={styles.bottom}>
             <div className={styles.icon}>
               <AiOutlineLike />
-              <span>{article.likeCount}</span>
+              <span>{article._count.likes}</span>
             </div>
             <div className={styles.icon}>
               <IoChatbubbleOutline />
-              <span>{article.commentCount}</span>
+              <span>{article._count.comments}</span>
             </div>
           </div>
         </Link>

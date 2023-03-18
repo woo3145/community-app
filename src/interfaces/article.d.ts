@@ -5,13 +5,15 @@ interface Article {
   tags: ChildTag[];
   imageUrl?: string;
 
-  likeCount: number;
-  commentCount: number;
-
   userId?: string;
 
   createAt: string;
   updateAt: string;
+
+  _count: {
+    comments: number;
+    likes: number;
+  };
 }
 
 interface IComment {

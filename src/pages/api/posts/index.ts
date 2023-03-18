@@ -28,6 +28,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             orderBy: {
               createAt: 'desc',
             },
+            include: {
+              _count: {
+                select: {
+                  comments: true,
+                  likes: true,
+                },
+              },
+            },
           },
         },
       });
@@ -39,6 +47,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
         orderBy: {
           createAt: 'desc',
+        },
+        include: {
+          _count: {
+            select: {
+              comments: true,
+              likes: true,
+            },
+          },
         },
       });
     }

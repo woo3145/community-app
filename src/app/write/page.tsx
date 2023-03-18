@@ -90,7 +90,6 @@ export default function Write() {
         return;
       }
       const { postId } = response as CreatePostResponse;
-      console.log(postId);
       router.push(`/post/${postId}`);
     } catch (e) {
       console.log('error : ', e);

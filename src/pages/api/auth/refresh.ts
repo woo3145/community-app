@@ -22,7 +22,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
       // refresh 토큰이 유효한지 확인
       const { sub } = jwt.verify(refreshToken, jwtTokenSecret) as TokenPayload;
-
       const user = await client.user.findUnique({ where: { id: sub } });
 
       if (!user) {

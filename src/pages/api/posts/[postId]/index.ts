@@ -13,23 +13,42 @@ interface UpdatePostBody {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getServerSession(req, res, authOptions);
   const { postId } = req.query as { postId: string };
+
   if (req.method === 'GET') {
     const post = await client.post.findUnique({
       where: { id: parseInt(postId) },
       include: {
         tags: true,
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
+          },
+        },
       },
     });
 
     if (!post) {
       throw new HttpError(404, '게시글을 찾을 수 없습니다.');
     }
-    return res.status(200).json({ message: 'successful', post });
+    let isLiked: boolean = false;
+
+    if (session?.user) {
+      const like = await client.likedPost.findFirst({
+        where: {
+          userId: session.user.id,
+          postId: post.id,
+        },
+      });
+
+      isLiked = !!like;
+    }
+    return res.status(200).json({ message: 'successful', post, isLiked });
   }
 
   if (req.method === 'PUT') {
-    const session = await getServerSession(req, res, authOptions);
     if (!session) {
       throw new HttpError(401, 'Unauthorized');
     }
