@@ -2,15 +2,6 @@ import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import client from '@/libs/server/prismaClient';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../../auth/[...nextauth]';
-
-interface UpdatePostBody {
-  title?: string;
-  content?: string;
-  published?: boolean;
-  tags?: any; // 임시
-}
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { postId } = req.query as { postId: string };

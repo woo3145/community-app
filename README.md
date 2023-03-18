@@ -30,7 +30,7 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
   - [ ] 이미지 업로드 기능 (하나의 이미지, 썸네일로 설정됨)
   - [x] 태그 picker 컴포넌트
   - [x] 좋아요 기능
-  - [ ] 댓글 기능
+  - [x] 댓글 기능
     - [x] API
     - [x] 댓글 컴포넌트
 

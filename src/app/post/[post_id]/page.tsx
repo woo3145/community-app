@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
+import { useSWRConfig } from 'swr';
 import { CommentsContainer } from './components/commentsContainer';
 import { PostContents } from './components/postContents';
 import styles from './page.module.scss';
@@ -18,16 +19,9 @@ export default function PostDetail({
   params: { post_id: number };
 }) {
   const { post, isLoading, isLiked } = usePost(post_id);
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const { mutate } = useSWRConfig();
   const [isApiLoading, setIsApiLoading] = useState(false);
   const { me } = useMe();
-
-  useEffect(() => {
-    if (isLoading || !post) return;
-    setLiked(isLiked);
-    setLikeCount(post._count.likes);
-  }, [isLoading, isLiked, post]);
 
   const onClickLike = async () => {
     if (isApiLoading) {
@@ -46,7 +40,7 @@ export default function PostDetail({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          isLiked: liked,
+          isLiked: isLiked,
         }),
       })
     ).json();
@@ -56,10 +50,7 @@ export default function PostDetail({
       setIsApiLoading(false);
       return;
     }
-    if (response.isLiked !== undefined) {
-      setLiked(response.isLiked);
-      setLikeCount(response.isLiked ? likeCount + 1 : likeCount - 1);
-    }
+    await mutate(`/api/posts/${post_id}`);
     setIsApiLoading(false);
   };
 
@@ -77,6 +68,24 @@ export default function PostDetail({
             ) : (
               <DeletedProfile />
             )}
+          </div>
+          <div className={styles.postCount}>
+            {/* Like Button */}
+            <div
+              onClick={onClickLike}
+              className={`${styles.likeButton} ${
+                isLiked ? styles.isLiked : ''
+              }`}
+            >
+              <AiOutlineLike />
+              <span>{post._count.likes}</span>
+            </div>
+
+            {/* Comment Button */}
+            <div className={styles.commentButton}>
+              <IoChatbubbleOutline />
+              <span>{post._count.comments}</span>
+            </div>
           </div>
         </div>
       </aside>
@@ -97,10 +106,12 @@ export default function PostDetail({
             {/* Like Button */}
             <div
               onClick={onClickLike}
-              className={`${styles.likeButton} ${liked ? styles.isLiked : ''}`}
+              className={`${styles.likeButton} ${
+                isLiked ? styles.isLiked : ''
+              }`}
             >
               <AiOutlineLike />
-              <span>{likeCount}</span>
+              <span>{post._count.likes}</span>
             </div>
 
             {/* Comment Button */}
