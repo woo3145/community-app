@@ -33,6 +33,19 @@
       padding: 54px 40px;
       border-bottom: var(--border);
     }
+
+    .tagList {
+      display: flex;
+      margin-bottom: 20px;
+      gap: 12px;
+      color: var(--gray-100);
+      .tagItem {
+        @include text_sm;
+        padding: 4px 12px;
+        border: var(--border);
+        border-radius: 20px;
+      }
+    }
   }
 }
 

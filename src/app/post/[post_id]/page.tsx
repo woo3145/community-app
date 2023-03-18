@@ -2,6 +2,7 @@
 
 import { DeletedProfile } from '@/app/_common/profile/deleted_profile';
 import { UserProfile } from '@/app/_common/profile/user_profile';
+import Link from 'next/link';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import useSWR, { Fetcher } from 'swr';
@@ -44,9 +45,15 @@ export default function PostDetail({
       <section className={styles.postDetail}>
         <article className={styles.contentsBox}>
           <PostContents article={data.post} />
-          {data.post.tags?.map((tag, key) => {
-            return <div key={key}>{tag.title}</div>;
-          })}
+          <div className={styles.tagList}>
+            {data.post.tags?.map((tag, key) => {
+              return (
+                <Link href={`/${tag.id}`} key={key} className={styles.tagItem}>
+                  {tag.title}
+                </Link>
+              );
+            })}
+          </div>
           <div className={styles.bottom}>
             {/* Like Button */}
             <div className={styles.icon}>
