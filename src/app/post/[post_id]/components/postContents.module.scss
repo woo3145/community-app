@@ -12,17 +12,3 @@
   @include text_md;
   margin-bottom: 60px;
 }
-.tags {
-  display: flex;
-  margin-bottom: 32px;
-  .tag {
-    @include flex_center;
-    padding: 4px 20px;
-    margin-right: 6px;
-    border: var(--border);
-    border-radius: 12px;
-
-    font-size: 14px;
-    color: var(--gray-100);
-  }
-}

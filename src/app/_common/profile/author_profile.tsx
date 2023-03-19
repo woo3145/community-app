@@ -7,21 +7,16 @@ import styles from './author_profile.module.scss';
 import { Avatar } from '../avatar';
 import { CareerBadge } from './career_badge';
 import { DeletedProfile } from './deleted_profile';
+import { formatDate } from '@/libs/client/dateUtils';
 
 interface Props {
-  userId?: string;
-  createAt?: string;
+  profile?: Profile;
+  createAt?: Date;
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const AuthorProfile = ({ userId, createAt, size = 'md' }: Props) => {
-  const { profile, isLoading, isError } = useProfile(userId);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError || !profile) {
+export const AuthorProfile = ({ profile, createAt, size = 'md' }: Props) => {
+  if (!profile) {
     return <DeletedProfile size={size} />;
   }
   return (
@@ -37,7 +32,9 @@ export const AuthorProfile = ({ userId, createAt, size = 'md' }: Props) => {
             <CareerBadge job={'개발'} annual={profile?.annual || 0} />
           </div>
 
-          {createAt && <div className={styles.createAt}>{createAt}</div>}
+          {createAt && (
+            <div className={styles.createAt}>{formatDate(createAt)}</div>
+          )}
         </div>
       </div>
     </Link>

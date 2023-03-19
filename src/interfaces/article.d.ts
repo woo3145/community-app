@@ -2,13 +2,17 @@ interface Article {
   id: number;
   title: string;
   content: string;
-  tags: ChildTag[];
+  tags: SubTag[];
   imageUrl?: string;
 
   userId?: string;
 
-  createAt: string;
-  updateAt: string;
+  user?: {
+    profile: Profile;
+  };
+
+  createAt: Date;
+  updateAt: Date;
 
   _count: {
     comments: number;
@@ -22,6 +26,10 @@ interface IComment {
 
   userId?: string;
 
-  createAt: string;
-  updateAt: string;
+  user?: {
+    profile: Profile;
+  };
+
+  createAt: Date;
+  updateAt: Date;
 }

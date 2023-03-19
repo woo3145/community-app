@@ -1,4 +1,4 @@
-interface IProfile {
+interface Profile {
   id: number;
   name?: string;
   nickname?: string;
@@ -8,11 +8,11 @@ interface IProfile {
   userId: string;
 }
 
-interface IMyProfile extends IProfile {
+interface MyProfile extends Profile {
   interestTags: any;
 }
 
-interface IMe {
+interface Me {
   id: string;
   email: string;
   profile: IMyProfile;

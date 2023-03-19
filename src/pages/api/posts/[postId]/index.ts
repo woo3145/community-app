@@ -21,6 +21,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { id: parseInt(postId) },
       include: {
         tags: true,
+        user: {
+          select: {
+            profile: true,
+          },
+        },
         _count: {
           select: {
             comments: true,

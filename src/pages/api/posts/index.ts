@@ -29,6 +29,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
               createAt: 'desc',
             },
             include: {
+              tags: true,
+              user: {
+                select: {
+                  profile: true,
+                },
+              },
               _count: {
                 select: {
                   comments: true,
@@ -49,6 +55,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           createAt: 'desc',
         },
         include: {
+          tags: true,
+          user: {
+            select: {
+              profile: true,
+            },
+          },
           _count: {
             select: {
               comments: true,

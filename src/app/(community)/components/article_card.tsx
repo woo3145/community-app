@@ -1,3 +1,4 @@
+import { Badge } from '@/app/_common/badge';
 import { AuthorProfile } from '@/app/_common/profile/author_profile';
 import Link from 'next/link';
 import { AiOutlineLike } from 'react-icons/ai';
@@ -16,7 +17,7 @@ export const ArticleCard = ({ article }: Props) => {
         <div className={styles.header}>
           <AuthorProfile
             size={'sm'}
-            userId={article.userId}
+            profile={article.user?.profile}
             createAt={article.createAt}
           />
         </div>
@@ -24,6 +25,11 @@ export const ArticleCard = ({ article }: Props) => {
         <Link href={`/post/${article.id}`} className={styles.body}>
           <h3>{article.title}</h3>
           <p>{article.content}</p>
+          <ul className={styles.tagList}>
+            {article.tags.map((tag, idx) => {
+              return <Badge key={idx} text={tag.title} size={'sm'} />;
+            })}
+          </ul>
           <div className={styles.bottom}>
             <div className={styles.icon}>
               <AiOutlineLike />

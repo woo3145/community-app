@@ -21,7 +21,7 @@ export const Comment = ({ comment }: Props) => {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <AuthorProfile
-          userId={comment.userId}
+          profile={comment.user?.profile}
           createAt={comment.createAt}
           size="sm"
         />

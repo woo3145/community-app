@@ -11,6 +11,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       orderBy: {
         createAt: 'desc',
       },
+      include: {
+        user: {
+          select: { profile: true },
+        },
+      },
     });
 
     return res.status(200).json({ message: 'successful', comments });

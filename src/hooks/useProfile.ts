@@ -1,13 +1,13 @@
 import useSWR from 'swr';
 
 interface UseProfileResponse {
-  profile: IProfile | null;
+  profile: Profile | null;
   isLoading: boolean;
   isError: boolean;
 }
 
 export const useProfile = (userId?: string): UseProfileResponse => {
-  const { data, error } = useSWR<{ profile: IProfile }>(
+  const { data, error } = useSWR<{ profile: Profile }>(
     userId ? `/api/profile/${userId}` : null,
     async (url: string) => {
       const response = await fetch(url);

@@ -1,5 +1,6 @@
 'use client';
 
+import { LinkBadge } from '@/app/_common/badge';
 import { DeletedProfile } from '@/app/_common/profile/deleted_profile';
 import { UserProfile } from '@/app/_common/profile/user_profile';
 import { useMe } from '@/hooks/useMe';
@@ -64,7 +65,7 @@ export default function PostDetail({
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>
             {post.userId ? (
-              <UserProfile userId={post.userId} />
+              <UserProfile profile={post.user?.profile} />
             ) : (
               <DeletedProfile />
             )}
@@ -94,11 +95,9 @@ export default function PostDetail({
         <article className={styles.contentsBox}>
           <PostContents article={post} />
           <div className={styles.tagList}>
-            {post.tags?.map((tag, key) => {
+            {post.tags?.map((tag, idx) => {
               return (
-                <Link href={`/${tag.id}`} key={key} className={styles.tagItem}>
-                  {tag.title}
-                </Link>
+                <LinkBadge key={idx} href={`/${tag.id}`} text={tag.title} />
               );
             })}
           </div>

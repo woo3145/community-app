@@ -1,0 +1,19 @@
+@import '../mixins';
+
+.badge {
+  @include text_sm;
+  padding: 4px 12px;
+  border: var(--border);
+  border-radius: 20px;
+  color: var(--gray-100);
+}
+
+.sm {
+  @include text_xs;
+}
+.md {
+  @include text_sm;
+}
+.lg {
+  @include text_md;
+}

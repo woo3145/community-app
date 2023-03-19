@@ -8,18 +8,12 @@ import Link from 'next/link';
 import styles from './user_profile.module.scss';
 
 interface Props {
-  userId: string;
+  profile?: Profile;
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const UserProfile = ({ userId, size = 'md' }: Props) => {
-  const { profile, isLoading, isError } = useProfile(userId);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError || !profile) {
+export const UserProfile = ({ profile, size = 'md' }: Props) => {
+  if (!profile) {
     return <div>Error loading profile</div>;
   }
 
