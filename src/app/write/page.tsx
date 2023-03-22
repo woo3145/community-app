@@ -3,18 +3,13 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { redirect, useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  IoAdd,
-  IoClose,
-  IoCloseOutline,
-  IoImageOutline,
-} from 'react-icons/io5';
-import { TagSelectorModal } from '../_modals/tag_selector_modal';
+import { IoClose, IoImageOutline } from 'react-icons/io5';
+import { TagPicker } from './components/tagPicker';
 import styles from './page.module.scss';
 
-interface FormData {
+interface PostFormData {
   title: string;
   content: string;
 }
@@ -27,22 +22,15 @@ interface CreatePostResponse {
 export default function Write() {
   const { data: session, status } = useSession();
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
-
     formState: { isValid },
-  } = useForm<FormData>();
-
-  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const openModal = () => {
-    setIsOpen(true);
-  };
+  } = useForm<PostFormData>();
   const [selectedTags, setSelectedTags] = useState<SubTag[]>([]);
-
-  const onClickExcludeTag = (tagId: number) => {
-    setSelectedTags(selectedTags.filter((tag) => tag.id !== tagId));
-  };
+  const [preview, setPreview] = useState('');
+  const [imageFile, setImageFile] = useState<File>();
 
   const {
     ref: contentRef,
@@ -65,9 +53,14 @@ export default function Write() {
     textarea.style.height = `${hiddenTextarea.scrollHeight}px`;
   };
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: PostFormData) => {
     try {
       const { title, content } = data;
+      if (!title) return console.log('제목을 입력해주세요.');
+      if (!content) return console.log('내용을 입력해주세요.');
+      if (!selectedTags.length) return console.log('태그를 선택해주세요.');
+
+      // (이미지 업로드 후 url받아오기)
 
       const response = await (
         await fetch(`/api/posts`, {
@@ -96,6 +89,26 @@ export default function Write() {
     }
   };
 
+  const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files?.length || !event.target.files[0]) {
+      console.log('선택된 이미지가 없습니다.');
+      return;
+    }
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e: any) => {
+      if (reader.readyState === 2) {
+        setPreview(e.target.result);
+      }
+    };
+
+    // const formData = new FormData();
+    // formData.append(event.target.name, file);
+    setImageFile(file);
+  };
+
   if (status !== 'loading' && !session) {
     redirect('/login');
   }
@@ -103,53 +116,20 @@ export default function Write() {
   return (
     <main className={styles.wrapper}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.writeHeaderWrapper}>
-          <div className={styles.writeHeader}>
+        <div className={styles.writeTopWrapper}>
+          <div className={styles.writeTop}>
             <button type="submit" className={isValid ? styles.validButton : ''}>
               등록하기
             </button>
           </div>
         </div>
         <div className={styles.container}>
-          <div className={styles.tagSection}>
-            <div className={styles.tagMessage}>
-              <span>태그 선택</span>
-              <span>(1~3개)</span>
-              <span>*</span>
-            </div>
-            <div className={styles.tagSelectorContainer}>
-              <button className={styles.tagAddButton} onClick={openModal}>
-                <IoAdd />
-              </button>
-              {selectedTags.length === 0 && (
-                <button
-                  className={styles.tagPlaceholder}
-                  onClick={openModal}
-                ></button>
-              )}
-              {modalIsOpen && (
-                <TagSelectorModal
-                  modalIsOpen={modalIsOpen}
-                  setIsOpen={setIsOpen}
-                  selectedTags={selectedTags}
-                  setSelectedTags={setSelectedTags}
-                />
-              )}
-
-              <div className={styles.selectedTagList}>
-                {selectedTags.map((tag, idx) => {
-                  return (
-                    <div key={idx} className={styles.selectedTag}>
-                      <span>{tag.title}</span>
-                      <button onClick={() => onClickExcludeTag(tag.id)}>
-                        <IoCloseOutline />
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          {/* 태그 */}
+          <TagPicker
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
+          />
+          {/* 제목 */}
           <div className={styles.title}>
             <input
               {...register('title', { required: true })}
@@ -157,6 +137,7 @@ export default function Write() {
               placeholder="제목을 입력해주세요."
             />
           </div>
+          {/* 내용 */}
           <div className={styles.content}>
             <textarea
               {...contentRefRest}
@@ -176,33 +157,39 @@ export default function Write() {
               ref={hiddenTextareaRef}
             ></textarea>
 
+            {/* 이미지 */}
             <div className={styles.imageContainer}>
               <button>
                 <IoClose />
               </button>
 
-              <Image
-                src={
-                  'https://images.unsplash.com/photo-1661956602116-aa6865609028'
-                }
-                width={800}
-                height={800}
-                alt="image"
-              />
+              {preview && (
+                <Image src={preview} width={800} height={800} alt="image" />
+              )}
             </div>
           </div>
         </div>
+
+        {/* 이미지 추가 버튼 */}
         <div className={styles.addImageButtonContainer}>
           <div className={styles.tooltip}>
             <span>사진을 추가해 보세요!</span>
             <div className={styles.bubblePoint}></div>
           </div>
-          <button>
+          <label htmlFor="input-image" className={styles.uploadImageButton}>
             <IoImageOutline />
             <span>
               (<em>0</em>/1)
             </span>
-          </button>
+          </label>
+          <input
+            type="file"
+            name="image"
+            id="input-image"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleImage}
+          />
         </div>
       </form>
     </main>

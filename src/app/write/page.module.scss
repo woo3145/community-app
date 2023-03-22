@@ -6,7 +6,7 @@
   padding: 60px 0 0 0;
 }
 
-.writeHeaderWrapper {
+.writeTopWrapper {
   position: fixed;
   top: $headerHeight;
   width: 100%;
@@ -18,7 +18,7 @@
 
   z-index: 20;
 
-  .writeHeader {
+  .writeTop {
     display: flex;
     justify-content: flex-end;
     width: 100%;
@@ -50,69 +50,6 @@
   border-radius: var(--border-radius);
 
   background-color: var(--card-color);
-}
-
-.tagSection {
-  width: 100%;
-  height: 100px;
-  margin-bottom: 20px;
-
-  .tagMessage {
-    margin-bottom: 12px;
-    @include text_md;
-    font-weight: 700;
-    span:nth-child(1) {
-      color: var(--gray-100);
-      margin-right: 4px;
-    }
-    span:nth-child(2) {
-      color: var(--gray-200);
-      margin-right: 4px;
-    }
-    span:nth-child(3) {
-      color: rgb(254, 67, 94);
-    }
-  }
-  .tagSelectorContainer {
-    display: flex;
-    .tagAddButton {
-      @include flex_center;
-      width: 32px;
-      height: 32px;
-      margin-right: 12px;
-      border: var(--border);
-      border-radius: 16px;
-    }
-    .tagPlaceholder {
-      width: 84px;
-      height: 32px;
-      border: dotted 3px var(--gray-200);
-      border-radius: 20px;
-      opacity: 40%;
-    }
-    .selectedTagList {
-      display: flex;
-      .selectedTag {
-        @include flex_center;
-        height: 32px;
-        padding: 0 10px;
-        margin-right: 8px;
-        border: solid 1px var(--primary-rgb);
-        border-radius: 20px;
-        color: var(--primary-rgb);
-
-        span {
-          @include text_sm;
-          font-weight: 700;
-          margin-right: 2px;
-        }
-        svg {
-          width: 1.125rem;
-          height: 1.125rem;
-        }
-      }
-    }
-  }
 }
 
 .title {
@@ -224,7 +161,7 @@
     }
   }
 
-  button {
+  .uploadImageButton {
     @include flex_center;
     flex-direction: column;
 
@@ -238,6 +175,9 @@
     font-weight: 700;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
       rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
+    pointer-events: auto;
+    cursor: pointer;
     svg {
       width: 24px;
       height: 24px;
