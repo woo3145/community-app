@@ -61,6 +61,21 @@ export default function Write() {
       if (!selectedTags.length) return console.log('태그를 선택해주세요.');
 
       // (이미지 업로드 후 url받아오기)
+      let imagePath = '';
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        console.log(imageFile, formData);
+        const imageResponse = await (
+          await fetch(`/api/upload/image`, {
+            method: 'POST',
+            body: formData,
+          })
+        ).json();
+
+        if (imageResponse.filePath) imagePath = imageResponse.filePath;
+      }
 
       const response = await (
         await fetch(`/api/posts`, {
@@ -72,7 +87,7 @@ export default function Write() {
             title,
             content,
             published: true,
-            imageUrl: '',
+            imageUrl: imagePath,
             tags: selectedTags.map((tag) => tag.id),
           }),
         })

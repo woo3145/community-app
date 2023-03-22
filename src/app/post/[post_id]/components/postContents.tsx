@@ -1,4 +1,5 @@
 import { AuthorProfile } from '@/app/_common/profile/author_profile';
+import Image from 'next/image';
 import styles from './postContents.module.scss';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 
 export const PostContents = ({ article }: Props) => {
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.autor}>
           <AuthorProfile
@@ -20,6 +21,10 @@ export const PostContents = ({ article }: Props) => {
       </div>
 
       <div className={styles.body}>{article.content}</div>
+
+      {article.imageUrl && (
+        <Image src={article.imageUrl} width={800} height={800} alt="image" />
+      )}
     </div>
   );
 };

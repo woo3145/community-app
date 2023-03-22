@@ -1,5 +1,6 @@
 import { Badge } from '@/app/_common/badge';
 import { AuthorProfile } from '@/app/_common/profile/author_profile';
+import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
@@ -10,7 +11,6 @@ interface Props {
 }
 
 export const ArticleCard = ({ article }: Props) => {
-  const images = '';
   return (
     <article className={styles.container}>
       <div className={styles.verticleBox}>
@@ -24,7 +24,7 @@ export const ArticleCard = ({ article }: Props) => {
 
         <Link href={`/post/${article.id}`} className={styles.body}>
           <h3>{article.title}</h3>
-          <p>{article.content}</p>
+          <p>{article.content} </p>
           <ul className={styles.tagList}>
             {article.tags.map((tag, idx) => {
               return <Badge key={idx} text={tag.title} size={'sm'} />;
@@ -42,7 +42,11 @@ export const ArticleCard = ({ article }: Props) => {
           </div>
         </Link>
       </div>
-      {images && <div>Image</div>}
+      {article.imageUrl && (
+        <Link href={`/post/${article.id}`} className={styles.imageContainer}>
+          <Image src={article.imageUrl} width={200} height={200} alt="image" />
+        </Link>
+      )}
     </article>
   );
 };

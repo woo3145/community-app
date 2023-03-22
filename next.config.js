@@ -9,7 +9,10 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ['images.unsplash.com'],
+    domains: [
+      'images.unsplash.com',
+      'woo3145-community-s3.s3.us-east-1.amazonaws.com',
+    ],
   },
 };
 

@@ -1,5 +1,9 @@
 @import '../../../mixins';
 
+.container {
+  padding-bottom: 32px;
+}
+
 .header {
   .title {
     margin: 32px 0;
@@ -10,5 +14,5 @@
 }
 .body {
   @include text_md;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }

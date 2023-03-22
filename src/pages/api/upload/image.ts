@@ -27,7 +27,6 @@ handler.use(upload.single('image'));
 
 handler.post((req: NextApiRequest & { file: any }, res: NextApiResponse) => {
   const filePath = req.file.location;
-
   return res.status(200).json({ message: 'successful', filePath });
 });
 

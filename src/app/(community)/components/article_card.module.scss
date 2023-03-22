@@ -17,17 +17,22 @@
 }
 .body {
   h3 {
-    margin-bottom: 6px;
-
     @include text_xl;
+    display: -webkit-box;
+    margin-bottom: 6px;
     font-weight: 700;
+    -webkit-line-clamp: 1;
   }
 
   p {
-    margin-bottom: 10px;
-
     @include text_md;
+    margin-bottom: 10px;
     color: var(--gray-100);
+
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
 
   .tagList {
@@ -55,5 +60,17 @@
         @include text_sm;
       }
     }
+  }
+}
+
+.imageContainer {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  padding-left: 20px;
+  img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
   }
 }

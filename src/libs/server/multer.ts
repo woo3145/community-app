@@ -18,7 +18,7 @@ export const upload = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (req, file, cb) => {
-      cb(null, `${Date.now()}_${file.originalname}`);
+      cb(null, `${Date.now()}_${Math.random().toString(36).substring(2, 11)}`);
     },
   }),
   limits: { fileSize: 10 * 1024 * 1024 },
