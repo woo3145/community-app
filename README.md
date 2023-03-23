@@ -7,6 +7,16 @@ JWT_TOKEN_SECRET=tasetaseeeee
 
 JWT_ACCESS_TOKEN_EXPIRATION=15 // minutes
 JWT_REFRESH_TOKEN_EXPIRATION=7 // days
+
+ADMIN_ID=aa12a1e123a123 // ADMIN API를 사용할 수 있는 user id
+
+// AWS-S3 관련
+AWS_ACCESS_KEY=
+AWS_SECRET_KEY=
+AWS_REGION=
+AWS_S3_BUCKET=
+
+
 ```
 
 ### todos
@@ -18,7 +28,7 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
     - [x] accessToken 만료 시 refresh
   - [x] Custom Credentials 인증
 
-- [ ] 글 관련
+- [x] 글 관련
 
   - [x] DB Schema 설계
   - [x] API
@@ -27,17 +37,17 @@ JWT_REFRESH_TOKEN_EXPIRATION=7 // days
     - [x] Update
     - [x] Delete
   - [x] 글 작성 로직
-  - [ ] 이미지 업로드 기능 (하나의 이미지, 썸네일로 설정됨)
+  - [x] 이미지 업로드 기능 (하나의 이미지, 썸네일로 설정됨)
   - [x] 태그 picker 컴포넌트
   - [x] 좋아요 기능
   - [x] 댓글 기능
     - [x] API
     - [x] 댓글 컴포넌트
 
-- [ ] 게시글 로드
+- [x] 게시글 로드
 
   - [x] 전체
-    - [ ] 무한 스크롤링
+    - [x] 무한 스크롤링
     - [x] 태그필터
   - [x] 한개
     - [x] 댓글

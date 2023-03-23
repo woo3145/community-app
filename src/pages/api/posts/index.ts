@@ -17,14 +17,22 @@ interface CreatePostBody {
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    const { tag_id } = req.query as { tag_id: string };
+    const { tag_id, page, limit } = req.query as {
+      tag_id: string | undefined;
+      page: string | undefined;
+      limit: string | undefined;
+    };
+    console.log(tag_id, page, limit);
     let posts: Post[] = [];
-
+    const intPage = page !== undefined ? parseInt(page) : 0;
+    const intLimit = limit !== undefined ? parseInt(limit) : 15;
     if (tag_id && tag_id !== 'all') {
       const tag = await client.tag.findFirst({
         where: { id: parseInt(tag_id) },
         include: {
           posts: {
+            skip: intPage * intLimit,
+            take: intLimit,
             orderBy: {
               createAt: 'desc',
             },
@@ -48,6 +56,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       posts = tag ? tag.posts : [];
     } else {
       posts = await client.post.findMany({
+        skip: intPage * intLimit,
+        take: intLimit,
         where: {
           published: true,
         },

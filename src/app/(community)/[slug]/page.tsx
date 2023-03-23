@@ -13,17 +13,24 @@ interface Props {
 }
 
 export default function CommunitySlug({ params }: Props) {
-  const { posts } = usePosts(params.slug);
+  const { data, isLoading, bottomRef, isReachedEnd } = usePosts(params.slug);
   return (
     <div className={styles.wrapper}>
       <section className={styles.write_button_section}>
         <WriteButton />
       </section>
       <section className={styles.article_list_section}>
-        {posts.map((article) => {
-          return <ArticleCard key={article.id} article={article} />;
-        })}
+        {data.map((page) =>
+          page.posts.map((article) => {
+            return <ArticleCard key={article.id} article={article} />;
+          })
+        )}
       </section>
+      {isLoading ? (
+        <div>loading..</div>
+      ) : (
+        !isReachedEnd && <div ref={bottomRef}></div>
+      )}
     </div>
   );
 }
