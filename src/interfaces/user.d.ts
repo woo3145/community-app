@@ -6,10 +6,7 @@ interface Profile {
   jobs?: any; // 임시
   annual: number;
   userId: string;
-}
-
-interface MyProfile extends Profile {
-  interestTags: any;
+  interestTags: SubTag[];
 }
 
 interface Me {

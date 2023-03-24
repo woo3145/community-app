@@ -10,7 +10,7 @@ interface LinkBadgeProps extends BadgeProps {
   href: string;
 }
 export const Badge = ({ text, size = 'md' }: BadgeProps) => {
-  return <li className={`${styles.badge} ${styles[size]}`}>{text}</li>;
+  return <div className={`${styles.badge} ${styles[size]}`}>{text}</div>;
 };
 
 export const LinkBadge = ({ text, href, size = 'md' }: LinkBadgeProps) => {

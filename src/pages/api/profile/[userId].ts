@@ -10,6 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { userId: userId },
       include: {
         jobs: true,
+        interestTags: true,
       },
     });
 

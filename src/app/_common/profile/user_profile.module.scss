@@ -31,10 +31,6 @@
   .verticleBox {
     @include text_sm;
   }
-
-  .createAt {
-    @include text_xs;
-  }
 }
 
 .md {
@@ -46,8 +42,19 @@
   .verticleBox {
     @include text_md;
   }
+}
 
-  .createAt {
-    @include text_sm;
+.lg {
+  .avatarWrapper {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .verticleBox {
+    @include text_xl;
+    margin-left: 20px;
+    .user_name {
+      margin-bottom: 8px;
+    }
   }
 }
