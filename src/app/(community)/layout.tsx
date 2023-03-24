@@ -1,8 +1,9 @@
-import styles from './template.module.scss';
 import { MyProfile } from '../_common/profile/my_profile';
 import { CategorySlide } from './components/category_slide';
 
-export default function CommunityTemplate({
+import styles from './layout.module.scss';
+
+export default function CommunityLayout({
   children,
 }: {
   children: React.ReactNode;

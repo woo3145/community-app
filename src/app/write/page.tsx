@@ -66,7 +66,7 @@ export default function Write() {
       if (imageFile) {
         const formData = new FormData();
         formData.append('image', imageFile);
-        console.log(imageFile, formData);
+        
         const imageResponse = await (
           await fetch(`/api/upload/image`, {
             method: 'POST',

@@ -12,5 +12,5 @@ interface Profile {
 interface Me {
   id: string;
   email: string;
-  profile: IMyProfile;
+  profile: Profile;
 }

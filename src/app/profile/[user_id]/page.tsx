@@ -46,7 +46,7 @@ export default function ProfilePage({ params: { user_id } }: Props) {
           </div>
         </div>
       </div>
-      <div className={styles.RecentActivity}>
+      <div className={styles.body}>
         <div className={styles.header}>
           <ul className={styles.tabs}>
             <li

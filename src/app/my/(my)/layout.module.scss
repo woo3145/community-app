@@ -35,33 +35,8 @@
 }
 
 .body {
-  margin-top: 20px;
+  margin-top: 12px;
   background-color: var(--card-color);
   border: var(--border);
   border-radius: var(border-radius);
-
-  .header {
-    padding: 30px 30px 0px 30px;
-    border-bottom: var(--border);
-
-    .tabs {
-      display: flex;
-      li {
-        @include text-md;
-        margin-right: 20px;
-        padding-bottom: 8px;
-        cursor: pointer;
-        color: var(--gray-200);
-        // border-bottom: solid 2px var(--primary-rgb);
-      }
-      li:hover {
-        border-bottom: solid 2px var(--gray-200);
-      }
-      .selected {
-        color: var(--primary-rgb);
-        border-bottom: solid 2px var(--primary-rgb);
-        font-weight: 700;
-      }
-    }
-  }
 }

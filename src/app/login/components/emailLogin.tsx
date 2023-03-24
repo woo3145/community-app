@@ -5,8 +5,8 @@ import { IoChevronBackOutline } from 'react-icons/io5';
 import styles from './signup.module.scss';
 
 interface Props {
-  onPrevPage: () => void;
   email: string;
+  onPrevPage: () => void;
 }
 
 interface FormData {
