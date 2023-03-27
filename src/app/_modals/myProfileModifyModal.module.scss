@@ -1,0 +1,132 @@
+@import '../mixins';
+@import '../variables';
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: $myProfileModifyModalWidth;
+  max-height: $myProfileModifyModalHeight;
+  form {
+    padding-bottom: 52px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.header {
+  @include flex_center;
+  position: relative;
+  width: 100%;
+  padding-bottom: 20px;
+
+  .title {
+    @include text_lg;
+    font-weight: 700;
+  }
+  .closeButton {
+    @include text_2xl;
+    position: absolute;
+    right: 0px;
+  }
+}
+
+.body {
+  padding: 8px 0;
+
+  h3 {
+    @include text-lg;
+    font-weight: 700;
+  }
+  p {
+    @include text_sm;
+    color: var(--gray-200);
+  }
+
+  h4 {
+    @include text-sm;
+    margin-bottom: 8px;
+    color: var(--gray-100);
+    font-weight: 700;
+    span {
+      color: red;
+    }
+  }
+  .avatarContainer {
+    @include flex-center;
+    padding: 30px 0;
+
+    .avatarPreview {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+.nameInputBox {
+  margin-bottom: 32px;
+
+  input {
+    width: 100%;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 12px;
+    &:focus {
+      border-color: var(--focus-rgb);
+    }
+  }
+  .nameTypeRadioBox {
+    display: flex;
+    align-items: center;
+    padding-bottom: 12px;
+    input {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    }
+    label {
+      @include text-sm;
+      padding-left: 8px;
+      margin-right: 12px;
+    }
+  }
+}
+
+.descriptionInputBox {
+  textarea {
+    @include text_md;
+    width: 100%;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    height: 140px;
+    padding: 12px;
+    resize: none;
+  }
+  p {
+    text-align: right;
+  }
+}
+
+.bottom {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+
+  .submitButton {
+    width: 100%;
+    padding: 8px 0;
+    border-radius: 28px;
+    @include text_md;
+    font-weight: 700;
+    color: black;
+    opacity: 30%;
+  }
+  .validButton {
+    background-color: var(--primary-rgb);
+    color: white;
+    opacity: 100%;
+  }
+}

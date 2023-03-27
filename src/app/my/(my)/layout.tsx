@@ -2,9 +2,12 @@
 
 import { Badge } from '@/app/_common/badge';
 import { UserProfile } from '@/app/_common/profile/user_profile';
+import { MyProfileModifyModal } from '@/app/_modals/myProfileModifyModal';
 import { useMe } from '@/hooks/useMe';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import { useState } from 'react';
+import { HiOutlinePencil } from 'react-icons/hi';
 
 import styles from './layout.module.scss';
 
@@ -14,14 +17,18 @@ export default function ProfilePageLayout({
   children: React.ReactNode;
 }) {
   const { me, isLoading } = useMe();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  if (status !== 'loading' && !session) {
+    redirect('/login');
+  }
 
   if (isLoading || !me) {
     return <div>로딩 ... </div>;
-  }
-
-  if (!session) {
-    redirect('/login');
   }
 
   return (
@@ -39,8 +46,15 @@ export default function ProfilePageLayout({
             })}
           </div>
         </div>
+        <div className={styles.editButton} onClick={openModal}>
+          <HiOutlinePencil />
+          <span>수정하기</span>
+        </div>
       </div>
       <div className={styles.body}>{children}</div>
+      {modalIsOpen && (
+        <MyProfileModifyModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+      )}
     </main>
   );
 }

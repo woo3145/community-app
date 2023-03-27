@@ -8,6 +8,7 @@
 }
 
 .profileContainer {
+  position: relative;
   padding: 30px;
   background-color: var(--card-color);
   border: var(--border);
@@ -31,6 +32,23 @@
   }
   .tagList {
     display: flex;
+  }
+}
+
+.editButton {
+  @include text_md;
+  position: absolute;
+  top: 64px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  border: var(--border);
+  border-radius: 28px;
+  padding: 8px 28px;
+  font-weight: 700;
+  cursor: pointer;
+  svg {
+    margin-right: 8px;
   }
 }
 
