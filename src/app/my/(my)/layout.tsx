@@ -35,7 +35,7 @@ export default function ProfilePageLayout({
     <main className={styles.wrapper}>
       <div className={styles.profileContainer}>
         <UserProfile profile={me.profile} size={'lg'} />
-        <div className={styles.description}>한줄 소개 ..... </div>
+        <div className={styles.description}>{me.profile.description}</div>
         <div className={styles.tagSection}>
           <p>관심 주제</p>
           <div className={styles.tagList}>
@@ -53,7 +53,11 @@ export default function ProfilePageLayout({
       </div>
       <div className={styles.body}>{children}</div>
       {modalIsOpen && (
-        <MyProfileModifyModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+        <MyProfileModifyModal
+          modalIsOpen={modalIsOpen}
+          setIsOpen={setIsOpen}
+          profile={me.profile}
+        />
       )}
     </main>
   );

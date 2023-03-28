@@ -40,7 +40,7 @@ export const MyProfile = ({ arrow = false, size = 'md' }: Props) => {
 
         <div className={styles.verticleBox}>
           <p className={styles.user_name}>
-            {me.profile.name ? me.profile.name : '이름을 설정해주세요'}
+            {me.profile.nameType ? me.profile.nickname : me.profile.name}
           </p>
           <CareerBadge job={'개발'} annual={me.profile.annual} />
         </div>

@@ -1,7 +1,9 @@
 interface Profile {
   id: number;
-  name?: string;
+  name: string;
   nickname?: string;
+  nameType: boolean;
+  description?: string;
   avatar?: string;
   jobs?: any; // 임시
   annual: number;

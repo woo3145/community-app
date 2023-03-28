@@ -1,9 +1,9 @@
 'use client';
-import { useMe } from '@/hooks/useMe';
 import { Dispatch, KeyboardEvent, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
+import { useSWRConfig } from 'swr';
 import { Avatar } from '../_common/avatar';
 
 import styles from './myProfileModifyModal.module.scss';
@@ -22,25 +22,34 @@ const customStyles = {
 interface Props {
   modalIsOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  profile: Profile;
 }
 
 interface FormData {
   nickname: string;
   description: string;
 }
-type NameType = 'default' | 'nickname';
 
-export const MyProfileModifyModal = ({ modalIsOpen, setIsOpen }: Props) => {
-  const [nameType, setNameType] = useState<NameType>('default');
+export const MyProfileModifyModal = ({
+  modalIsOpen,
+  setIsOpen,
+  profile,
+}: Props) => {
+  const [nameType, setNameType] = useState<boolean>(profile.nameType);
+  const { mutate } = useSWRConfig();
   const {
     register,
     handleSubmit,
     watch,
-    formState: { isValid },
     setValue,
-  } = useForm<FormData>();
+    formState: { isValid },
+  } = useForm<FormData>({
+    defaultValues: {
+      nickname: nameType ? profile.nickname : profile.name,
+      description: profile.description,
+    },
+  });
 
-  const { me, isLoading } = useMe();
   function closeModal() {
     setIsOpen(false);
   }
@@ -52,8 +61,44 @@ export const MyProfileModifyModal = ({ modalIsOpen, setIsOpen }: Props) => {
     }
   };
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data, nameType);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const { nickname, description } = data;
+
+      if (
+        nameType === profile.nameType &&
+        description === profile.description
+      ) {
+        if (!nameType || (nameType && nickname === profile.nickname)) {
+          // 변경할 내용 없음
+          closeModal();
+          return;
+        }
+      }
+
+      const response = await (
+        await fetch('/api/profile', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nameType,
+            nickname,
+            description,
+          }),
+        })
+      ).json();
+
+      if (response.error) {
+        return;
+      }
+      // 성공
+      mutate('/api/me');
+      closeModal();
+    } catch (e) {
+      console.log('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
+    }
   });
 
   return (
@@ -78,7 +123,7 @@ export const MyProfileModifyModal = ({ modalIsOpen, setIsOpen }: Props) => {
             <p>woo3145 커뮤니티에서 사용되는 정보입니다.</p>
             <div className={styles.avatarContainer}>
               <div className={styles.avatarPreview}>
-                <Avatar src={me?.profile.avatar} />
+                <Avatar src={profile.avatar} />
               </div>
             </div>
             <div className={styles.nameInputBox}>
@@ -92,8 +137,11 @@ export const MyProfileModifyModal = ({ modalIsOpen, setIsOpen }: Props) => {
                   name="userNameType"
                   id={'userNameDefault'}
                   value="default"
-                  checked={nameType === 'default'}
-                  onClick={() => setNameType('default')}
+                  checked={nameType === false}
+                  onClick={() => {
+                    setNameType(false);
+                    setValue('nickname', profile.name);
+                  }}
                   readOnly
                 />
                 <label htmlFor="userNameDefault">기본</label>
@@ -102,27 +150,21 @@ export const MyProfileModifyModal = ({ modalIsOpen, setIsOpen }: Props) => {
                   name="userNameType"
                   id={'userNameNickName'}
                   value="default"
-                  checked={nameType === 'nickname'}
+                  checked={nameType === true}
                   readOnly
-                  onClick={() => setNameType('nickname')}
+                  onClick={() => {
+                    setNameType(true);
+                    setValue('nickname', profile.nickname || '');
+                  }}
                 />
                 <label htmlFor="userNameNickName">닉네임</label>
               </div>
 
-              {nameType === 'default' && (
-                <input
-                  value={me?.profile.name}
-                  placeholder="한글/영어/숫자만 가능(2~8자)"
-                  disabled={true}
-                />
-              )}
-              {nameType === 'nickname' && (
-                <input
-                  {...register('nickname', { maxLength: 8, minLength: 2 })}
-                  placeholder="한글/영어/숫자만 가능(2~8자)"
-                  defaultValue={me?.profile.nickname}
-                />
-              )}
+              <input
+                {...register('nickname', { maxLength: 8, minLength: 2 })}
+                placeholder="한글/영어/숫자만 가능(2~8자)"
+                disabled={!nameType}
+              />
             </div>
 
             <div className={styles.descriptionInputBox}>

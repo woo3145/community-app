@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import useSWR from 'swr';
+import useSWR, { KeyedMutator } from 'swr';
 
 interface UseMeResponse {
   me: Me | null;
@@ -9,7 +9,7 @@ interface UseMeResponse {
 
 export const useMe = (): UseMeResponse => {
   const { data: session } = useSession();
-  const { data, error } = useSWR<{ user: Me }>(
+  const { data, error, mutate } = useSWR<{ user: Me }>(
     session ? `/api/me` : null,
     async (url: string) => {
       const response = await fetch(url);

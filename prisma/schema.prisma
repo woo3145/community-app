@@ -69,9 +69,11 @@ model LikedPost {
 
 model Profile {
   id           Int     @id @default(autoincrement())
-  name         String?
+  name         String
   nickname     String?
   avatar       String?
+  nameType     Boolean @default(false) // false: name, true: nickname
+  description  String?
   annual       Int     @default(0) // 경력
   interestTags Tag[] // 관심있는 주제
   jobs         Job[] // 직군,직무

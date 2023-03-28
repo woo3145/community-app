@@ -28,7 +28,9 @@ export const AuthorProfile = ({ profile, createAt, size = 'md' }: Props) => {
 
         <div className={styles.verticleBox}>
           <div className={styles.userInfo}>
-            <p className={styles.user_name}>{profile.name}</p>
+            <p className={styles.user_name}>
+              {profile.nameType ? profile.nickname : profile.name}
+            </p>
             <CareerBadge job={'개발'} annual={profile?.annual || 0} />
           </div>
 
