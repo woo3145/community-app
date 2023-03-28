@@ -1,10 +1,17 @@
 'use client';
-import { Dispatch, KeyboardEvent, SetStateAction, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 import { useSWRConfig } from 'swr';
 import { Avatar } from '../_common/avatar';
+import { AvatarCrop } from './avatarCrop/avatarCrop';
 
 import styles from './myProfileModifyModal.module.scss';
 
@@ -35,6 +42,14 @@ export const MyProfileModifyModal = ({
   setIsOpen,
   profile,
 }: Props) => {
+  const [preview, setPreview] = useState(profile.avatar || '');
+  const [previewForEdit, setPreviewForEdit] = useState('');
+  const [imageFile, setImageFile] = useState<File>();
+  const [cropModalIsOpen, setCropModalIsOpen] = useState<boolean>(false);
+  const openCropModal = () => {
+    setCropModalIsOpen(true);
+  };
+
   const [nameType, setNameType] = useState<boolean>(profile.nameType);
   const { mutate } = useSWRConfig();
   const {
@@ -49,6 +64,23 @@ export const MyProfileModifyModal = ({
       description: profile.description,
     },
   });
+
+  const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files?.length || !event.target.files[0]) {
+      console.log('선택된 이미지가 없습니다.');
+      return;
+    }
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e: any) => {
+      if (reader.readyState === 2) {
+        setPreviewForEdit(e.target.result);
+      }
+    };
+    openCropModal();
+  };
 
   function closeModal() {
     setIsOpen(false);
@@ -123,8 +155,26 @@ export const MyProfileModifyModal = ({
             <p>woo3145 커뮤니티에서 사용되는 정보입니다.</p>
             <div className={styles.avatarContainer}>
               <div className={styles.avatarPreview}>
-                <Avatar src={profile.avatar} />
+                <input
+                  type="file"
+                  name="image"
+                  id="input-image"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={handleImage}
+                />
+                <label htmlFor="input-image">
+                  <Avatar src={preview} />
+                </label>
               </div>
+              {previewForEdit && (
+                <AvatarCrop
+                  modalIsOpen={cropModalIsOpen}
+                  setIsOpen={setCropModalIsOpen}
+                  previewForEdit={previewForEdit}
+                  setPreviewForEdit={setPreviewForEdit}
+                />
+              )}
             </div>
             <div className={styles.nameInputBox}>
               <h4>
