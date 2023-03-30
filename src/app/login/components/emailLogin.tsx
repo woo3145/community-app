@@ -1,5 +1,6 @@
 import Button from '@/app/_components/atoms/Button';
 import InputField from '@/app/_components/atoms/InputField';
+import Message from '@/app/_components/atoms/Message';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -63,7 +64,14 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
               },
             })}
           />
-          {message && <p className={styles.errorMessage}>{message}</p>}
+          {message && (
+            <Message
+              text={message}
+              type="error"
+              position="center"
+              style={{ marginBottom: '12px' }}
+            />
+          )}
 
           <Button type="submit" text="다음" isValid={isValid} wide size="lg" />
         </form>

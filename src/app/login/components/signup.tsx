@@ -1,5 +1,6 @@
 import Button from '@/app/_components/atoms/Button';
 import InputField from '@/app/_components/atoms/InputField';
+import Message from '@/app/_components/atoms/Message';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -116,7 +117,12 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             })}
           />
           {password && !passwordValid && (
-            <p className={styles.errorMessage}>올바르지 않은 비밀번호입니다.</p>
+            <Message
+              text="올바르지 않은 비밀번호입니다."
+              type="error"
+              position="center"
+              style={{ marginBottom: '12px' }}
+            />
           )}
           <InputField
             label="비밀번호"
@@ -129,19 +135,36 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             })}
           />
           {checkPassword && !checkPasswordValid && (
-            <p className={styles.errorMessage}>
-              비밀번호가 서로 일치하지 않습니다.
-            </p>
+            <Message
+              text="비밀번호가 서로 일치하지 않습니다."
+              type="error"
+              position="center"
+              style={{ marginBottom: '12px' }}
+            />
           )}
           {passwordValid && checkPasswordValid && (
-            <p className={styles.successMessage}>사용 가능한 비밀번호입니다.</p>
+            <Message
+              text="사용 가능한 비밀번호입니다."
+              type="success"
+              position="center"
+              style={{ marginBottom: '12px' }}
+            />
           )}
-          <p className={styles.helpText}>
-            영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상으로
-            입력해주세요.
-          </p>
+          <Message
+            text="영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상으로 입력해주세요."
+            type="guide"
+            position="left"
+            style={{ marginBottom: '12px' }}
+          />
 
-          {message && <p className={styles.errorMessage}>{message}</p>}
+          {message && (
+            <Message
+              text={message}
+              type="error"
+              position="center"
+              style={{ marginBottom: '12px' }}
+            />
+          )}
 
           <Button
             type="submit"

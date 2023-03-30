@@ -39,22 +39,5 @@
     @include flex_center;
     flex-direction: column;
     color: var(--gray-100);
-
-    .helpText {
-      margin-bottom: 12px;
-      @include text_sm;
-      color: var(--gray-100);
-    }
   }
-}
-
-.errorMessage {
-  margin-bottom: 12px;
-  color: var(--error-rgb);
-  @include text_sm;
-}
-.successMessage {
-  margin-bottom: 12px;
-  color: var(--focus-rgb);
-  @include text_sm;
 }

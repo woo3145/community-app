@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
   selected?: boolean;
   size?: UISize;
   icon?: React.ReactNode;
+  style?: CSSProperties;
 }
 
 const Button = ({
@@ -24,6 +26,7 @@ const Button = ({
   selected = false,
   size = 'md',
   icon,
+  style,
 }: Props) => {
   return (
     <button
@@ -31,6 +34,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={!isValid}
+      style={style}
       className={`${styles.button} ${outlined ? styles.outlined : ''} ${
         selected ? styles.selected : ''
       } ${isValid ? styles.valid : ''}

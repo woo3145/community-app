@@ -1,18 +1,21 @@
 import Image from 'next/image';
+import { CSSProperties } from 'react';
 
 import styles from './styles.module.scss';
 
 interface Props {
   src?: string;
   size?: UISize;
+  style?: CSSProperties;
 }
 
-export const Avatar = ({ src, size = 'md' }: Props) => {
+export const Avatar = ({ src, size = 'md', style }: Props) => {
   if (!src) {
     return <div className={styles.defaultAvatar}></div>;
   }
   return (
     <Image
+      style={style}
       className={`${styles.avatar} ${styles[size]}`}
       src={src}
       alt="Profile Image"
