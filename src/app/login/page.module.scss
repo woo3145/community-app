@@ -48,15 +48,5 @@
         @include text_sm;
       }
     }
-
-    button {
-      width: 100%;
-      padding: 16px 0;
-      border-radius: 28px;
-      background-color: var(--primary-rgb);
-      @include text_md;
-      color: white;
-      font-weight: 700;
-    }
   }
 }

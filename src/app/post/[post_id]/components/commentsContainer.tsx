@@ -1,5 +1,6 @@
 import { AuthorProfile } from '@/app/_common/profile/author_profile';
 import { MyProfile } from '@/app/_common/profile/my_profile';
+import Button from '@/app/_components/atoms/Button';
 import { useComments } from '@/hooks/useComments';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -86,7 +87,7 @@ export const CommentsContainer = ({ postId }: Props) => {
               placeholder="댓글 남기기"
             />
             <div className={styles.button_wrapper}>
-              <button>등록</button>
+              <Button text="등록" type="submit" size="sm" />
             </div>
           </form>
         </div>

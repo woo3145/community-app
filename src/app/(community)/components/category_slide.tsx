@@ -1,8 +1,9 @@
 'use client';
 
-import { CategoryButton } from '@/app/_common/category_button';
+import Button from '@/app/_components/atoms/Button';
 import { useMountedRef } from '@/hooks/useMountedRef';
 import { useTags } from '@/hooks/useTags';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
   IoChevronBack,
@@ -15,13 +16,14 @@ import styles from './category_slide.module.scss';
 export const CategorySlide = () => {
   const [categoryId, setCategoryId] = useState<number>();
   const { tags, subTags, isLoading, isError } = useTags();
+  const router = useRouter();
 
   const [leftVisible, setLeftVisible] = useState(false); // 슬라이드 왼쪽 버튼
   const [rightVisible, setRightVisible] = useState(true); // 슬라이드 오른쪽 버튼
   const [moreVisible, setMoreVisible] = useState(false); // 카테고리 펼치기 버튼
 
   // 문제 : 새로고침 시 categoryId가 세팅되고 useRef는 아직 세팅되지 않아서 스크롤링 useEffect 작동안함
-  // (deps를 비우면 되지만 다른 상태값들도 많기 때문에 다른 방법 탐색)
+  // (deps를 없애서 매번 실행시키기 보다는 다른 방법 탐색)
   // 해결 : ref가 마운트 될때 isMounted 상태값을 변경하는 커스텀 hook을 생성하여 isMounted값을 useEffect deps에 넣어 재실행시켜줌
   const {
     ref: scrollRef,
@@ -81,6 +83,7 @@ export const CategorySlide = () => {
   const onClickCategory = (categoryId: number) => {
     setCategoryId(categoryId);
     setMoreVisible(false);
+    router.push(`/${categoryId}`);
   };
 
   // 슬라이드 왼쪽이동
@@ -123,29 +126,32 @@ export const CategorySlide = () => {
       <div className={styles.container}>
         <div className={styles.flexBox}>
           <div className={styles.category_list} ref={handleScrollRef}>
-            <CategoryButton
+            <Button
               id={`categoryButton_-1`}
+              outlined
               key={-1}
-              title="추천"
-              href=""
+              text="추천"
+              size="sm"
               onClick={() => onClickCategory(-1)}
               selected={categoryId === -1}
             />
-            <CategoryButton
+            <Button
               id={`categoryButton_0`}
+              outlined
               key={0}
-              title="전체"
-              href="/all"
+              text="전체"
+              size="sm"
               onClick={() => onClickCategory(0)}
               selected={categoryId === 0}
             />
             {subTags?.map((category) => {
               return (
-                <CategoryButton
+                <Button
                   id={`categoryButton_${category.id}`}
+                  outlined
                   key={category.id}
-                  title={category.title}
-                  href={`/${category.id}`}
+                  text={category.title}
+                  size="sm"
                   onClick={() => onClickCategory(category.id)}
                   selected={categoryId === category.id}
                 />
@@ -173,24 +179,27 @@ export const CategorySlide = () => {
       </div>
       {moreVisible && (
         <div className={styles.moreContainer}>
-          <CategoryButton
-            title="추천"
-            href=""
+          <Button
+            text="추천"
+            outlined
+            size="sm"
             onClick={() => onClickCategory(-1)}
             selected={categoryId === -1}
           />
-          <CategoryButton
-            title="전체"
-            href="/all"
+          <Button
+            text="전체"
+            outlined
+            size="sm"
             onClick={() => onClickCategory(0)}
             selected={categoryId === 0}
           />
           {subTags?.map((category) => {
             return (
-              <CategoryButton
+              <Button
                 key={category.id}
-                title={category.title}
-                href={`/${category.id}`}
+                text={category.title}
+                outlined
+                size="sm"
                 onClick={() => onClickCategory(category.id)}
                 selected={categoryId === category.id}
               />

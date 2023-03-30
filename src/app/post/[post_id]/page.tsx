@@ -1,11 +1,12 @@
 'use client';
 
-import { LinkBadge } from '@/app/_common/badge';
 import { DeletedProfile } from '@/app/_common/profile/deleted_profile';
 import { UserProfile } from '@/app/_common/profile/user_profile';
+import Badge from '@/app/_components/atoms/Badge';
 import { useMe } from '@/hooks/useMe';
 import { usePost } from '@/hooks/usePost';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
@@ -19,6 +20,7 @@ export default function PostDetail({
 }: {
   params: { post_id: number };
 }) {
+  const router = useRouter();
   const { post, isLoading, isLiked } = usePost(post_id);
   const { mutate } = useSWRConfig();
   const [isApiLoading, setIsApiLoading] = useState(false);
@@ -97,7 +99,11 @@ export default function PostDetail({
           <div className={styles.tagList}>
             {post.tags?.map((tag, idx) => {
               return (
-                <LinkBadge key={idx} href={`/${tag.id}`} text={tag.title} />
+                <Badge
+                  key={idx}
+                  onClick={() => router.push(`/${tag.id}`)}
+                  text={tag.title}
+                />
               );
             })}
           </div>

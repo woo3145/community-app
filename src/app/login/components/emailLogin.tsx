@@ -1,3 +1,4 @@
+import Button from '@/app/_components/atoms/Button';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -64,14 +65,7 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
             />
             {message && <p className={styles.errorMessage}>{message}</p>}
           </div>
-
-          <button
-            type="submit"
-            className={isValid ? styles.validButton : ''}
-            disabled={!isValid}
-          >
-            다음
-          </button>
+          <Button type="submit" text="다음" isValid={isValid} wide size="lg" />
         </form>
       </div>
     </div>

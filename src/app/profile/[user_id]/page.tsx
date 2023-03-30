@@ -1,8 +1,8 @@
 'use client';
 
 import { ArticleCard } from '@/app/(community)/components/article_card';
-import { Badge } from '@/app/_common/badge';
 import { UserProfile } from '@/app/_common/profile/user_profile';
+import Badge from '@/app/_components/atoms/Badge';
 import { usePost } from '@/hooks/usePost';
 import { useProfile } from '@/hooks/useProfile';
 import { useSession } from 'next-auth/react';

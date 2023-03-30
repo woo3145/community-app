@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
+import Button from '../_components/atoms/Button';
 import { EmailLogin } from './components/emailLogin';
 import { Signup } from './components/signup';
 import styles from './page.module.scss';
@@ -67,7 +68,13 @@ export default function LogIn({ providers }: any) {
             />
           </div>
 
-          <button>이메일로 계속하기</button>
+          <Button
+            type="submit"
+            text="이메일로 계속하기"
+            isValid={true}
+            wide
+            size="lg"
+          />
         </form>
       </div>
     </div>

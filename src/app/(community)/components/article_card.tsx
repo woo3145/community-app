@@ -1,5 +1,5 @@
-import { Badge } from '@/app/_common/badge';
 import { AuthorProfile } from '@/app/_common/profile/author_profile';
+import Badge from '@/app/_components/atoms/Badge';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineLike } from 'react-icons/ai';

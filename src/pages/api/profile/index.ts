@@ -48,7 +48,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       isChanged = true;
       updatedProfile.description = description;
     }
-    if (avatar !== profile.avatar) {
+    // 아바타는 업로드 할때만 들어옴
+    if (avatar) {
       isChanged = true;
       updatedProfile.avatar = avatar;
     }

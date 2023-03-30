@@ -70,22 +70,6 @@
         color: var(--gray-100);
       }
     }
-
-    button {
-      width: 100%;
-      padding: 16px 0;
-      border-radius: 28px;
-      @include text_md;
-      font-weight: 700;
-      background-color: var(--gray-200);
-      color: black;
-      opacity: 30%;
-    }
-    .validButton {
-      background-color: var(--primary-rgb);
-      color: white;
-      opacity: 100%;
-    }
   }
 }
 

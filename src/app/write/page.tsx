@@ -6,6 +6,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { ChangeEvent, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoClose, IoImageOutline } from 'react-icons/io5';
+import Button from '../_components/atoms/Button';
 import { TagPicker } from './components/tagPicker';
 import styles from './page.module.scss';
 
@@ -66,7 +67,7 @@ export default function Write() {
       if (imageFile) {
         const formData = new FormData();
         formData.append('image', imageFile);
-        
+
         const imageResponse = await (
           await fetch(`/api/upload/image`, {
             method: 'POST',
@@ -133,9 +134,7 @@ export default function Write() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.writeTopWrapper}>
           <div className={styles.writeTop}>
-            <button type="submit" className={isValid ? styles.validButton : ''}>
-              등록하기
-            </button>
+            <Button type="submit" text="등록하기" isValid={isValid} />
           </div>
         </div>
         <div className={styles.container}>

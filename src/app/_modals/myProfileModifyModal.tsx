@@ -11,6 +11,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 import { useSWRConfig } from 'swr';
 import { Avatar } from '../_common/avatar';
+import Button from '../_components/atoms/Button';
 import { AvatarCrop } from './avatarCrop/avatarCrop';
 
 import styles from './myProfileModifyModal.module.scss';
@@ -63,6 +64,7 @@ export const MyProfileModifyModal = ({
       nickname: nameType ? profile.nickname : profile.name,
       description: profile.description,
     },
+    mode: 'all',
   });
 
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +99,10 @@ export const MyProfileModifyModal = ({
     try {
       const { nickname, description } = data;
 
+      if (!nickname && nameType) {
+        console.log('닉네임 선택하고 닉네임을 입력안함');
+        return;
+      }
       if (
         nameType === profile.nameType &&
         description === profile.description &&
@@ -232,7 +238,10 @@ export const MyProfileModifyModal = ({
               </div>
 
               <input
-                {...register('nickname', { maxLength: 8, minLength: 2 })}
+                {...register('nickname', {
+                  maxLength: 8,
+                  minLength: 2,
+                })}
                 placeholder="한글/영어/숫자만 가능(2~8자)"
                 disabled={!nameType}
               />
@@ -249,14 +258,7 @@ export const MyProfileModifyModal = ({
           </div>
 
           <div className={styles.bottom}>
-            <button
-              className={`${styles.submitButton} ${
-                isValid ? styles.validButton : ''
-              }`}
-              disabled={!isValid}
-            >
-              완료
-            </button>
+            <Button type="submit" text="완료" wide isValid={isValid} />
           </div>
         </form>
       </div>

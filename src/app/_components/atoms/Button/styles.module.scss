@@ -1,0 +1,57 @@
+@import '../../../mixins';
+
+.button {
+  flex-shrink: 0;
+  opacity: 30%;
+  border-radius: 28px;
+  background-color: var(--gray-200);
+  color: black;
+  font-weight: 700;
+
+  svg {
+    margin: 8px;
+  }
+}
+
+.valid {
+  background-color: var(--primary-rgb);
+  color: white;
+  opacity: 100%;
+}
+
+.outlined {
+  flex-shrink: 0;
+  border: var(--semi-border);
+
+  color: var(--gray-100);
+  background-color: var(--card-rgb);
+  font-weight: 600;
+
+  &:hover {
+    background-color: var(--hover-rgb);
+  }
+}
+
+.selected {
+  border: 1px solid var(--primary-rgb);
+  color: var(--primary-rgb);
+}
+
+.sm {
+  @include text_sm;
+  padding: 8px 24px;
+}
+
+.md {
+  @include text_md;
+  padding: 8px 28px;
+}
+
+.lg {
+  @include text_md;
+  padding: 14px 32px;
+}
+
+.wide {
+  width: 100%;
+}

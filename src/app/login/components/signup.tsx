@@ -1,3 +1,4 @@
+import Button from '@/app/_components/atoms/Button';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -155,13 +156,13 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             {message && <p className={styles.errorMessage}>{message}</p>}
           </div>
 
-          <button
+          <Button
             type="submit"
-            className={isValid ? styles.validButton : ''}
-            disabled={!isValid}
-          >
-            가입하기
-          </button>
+            text="가입하기"
+            isValid={isValid}
+            wide
+            size="lg"
+          />
         </form>
       </div>
     </div>

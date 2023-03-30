@@ -46,10 +46,6 @@
         .button_wrapper {
           text-align: right;
           padding: 20px 14px;
-
-          button {
-            @include button_sm;
-          }
         }
       }
     }

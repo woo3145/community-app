@@ -1,7 +1,7 @@
 'use client';
 
-import { Badge } from '@/app/_common/badge';
 import { UserProfile } from '@/app/_common/profile/user_profile';
+import Badge from '@/app/_components/atoms/Badge';
 import { MyProfileModifyModal } from '@/app/_modals/myProfileModifyModal';
 import { useMe } from '@/hooks/useMe';
 import { useSession } from 'next-auth/react';

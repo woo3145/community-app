@@ -24,19 +24,6 @@
     width: 100%;
     max-width: $breakpoint-desktop;
     margin: auto;
-
-    button {
-      @include button_md;
-      @include text_md;
-      background-color: var(--gray-200);
-      color: black;
-      opacity: 30%;
-    }
-    .validButton {
-      background-color: var(--primary-rgb);
-      color: white;
-      opacity: 100%;
-    }
   }
 }
 
