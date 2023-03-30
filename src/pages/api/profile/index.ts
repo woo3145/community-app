@@ -9,6 +9,7 @@ interface EditProfileBody {
   nameType: boolean;
   nickname: string;
   description: string;
+  avatar: string;
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -19,7 +20,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw new HttpError(401, 'Unauthorized');
     }
 
-    const { nameType, nickname, description } = req.body as EditProfileBody;
+    const { nameType, nickname, description, avatar } =
+      req.body as EditProfileBody;
 
     const profile = await client.profile.findUnique({
       where: { userId: session.user.id },
@@ -32,6 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       nickname: profile.nickname,
       description: profile.description,
       nameType: profile.nameType, // true: 닉네임, false: 이름
+      avatar: profile.avatar,
     };
     if (nameType !== profile.nameType) {
       isChanged = true;
@@ -44,6 +47,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (description !== profile.description) {
       isChanged = true;
       updatedProfile.description = description;
+    }
+    if (avatar !== profile.avatar) {
+      isChanged = true;
+      updatedProfile.avatar = avatar;
     }
 
     if (isChanged) {

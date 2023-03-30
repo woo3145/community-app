@@ -44,7 +44,14 @@ export const ArticleCard = ({ article }: Props) => {
       </div>
       {article.imageUrl && (
         <Link href={`/post/${article.id}`} className={styles.imageContainer}>
-          <Image src={article.imageUrl} width={200} height={200} alt="image" />
+          <Image
+            src={article.imageUrl}
+            width={200}
+            height={150}
+            alt="image"
+            style={{ objectFit: 'cover' }}
+            priority={true}
+          />
         </Link>
       )}
     </article>

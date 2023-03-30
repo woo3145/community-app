@@ -1,3 +1,5 @@
+@import '../mixins';
+
 .defaultAvatar {
   width: 100%;
   height: 100%;
@@ -9,6 +11,7 @@
   width: 100%;
   height: 100%;
   border-radius: 100%;
+  border: var(--border);
   object-fit: cover;
 }
 

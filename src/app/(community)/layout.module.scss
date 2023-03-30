@@ -39,6 +39,7 @@
     .categories {
       position: fixed;
       width: 782px;
+      z-index: 10;
       background-color: var(--background-end-rgb);
     }
 

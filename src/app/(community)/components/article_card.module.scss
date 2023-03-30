@@ -64,13 +64,14 @@
 }
 
 .imageContainer {
+  position: relative;
   box-sizing: border-box;
   flex-shrink: 0;
   padding-left: 20px;
+  z-index: 0;
   img {
     width: 200px;
     height: 150px;
-    object-fit: cover;
     border-radius: 8px;
   }
 }

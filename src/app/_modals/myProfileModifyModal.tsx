@@ -44,7 +44,7 @@ export const MyProfileModifyModal = ({
 }: Props) => {
   const [preview, setPreview] = useState(profile.avatar || '');
   const [previewForEdit, setPreviewForEdit] = useState('');
-  const [imageFile, setImageFile] = useState<File>();
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [cropModalIsOpen, setCropModalIsOpen] = useState<boolean>(false);
   const openCropModal = () => {
     setCropModalIsOpen(true);
@@ -99,13 +99,32 @@ export const MyProfileModifyModal = ({
 
       if (
         nameType === profile.nameType &&
-        description === profile.description
+        description === profile.description &&
+        !imageFile
       ) {
         if (!nameType || (nameType && nickname === profile.nickname)) {
           // 변경할 내용 없음
+          console.log('변경 안함');
           closeModal();
           return;
         }
+      }
+
+      // (이미지 업로드 후 url받아오기)
+      let imagePath = '';
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        const imageResponse = await (
+          await fetch(`/api/upload/image`, {
+            method: 'POST',
+            body: formData,
+          })
+        ).json();
+
+        if (imageResponse.filePath) imagePath = imageResponse.filePath;
       }
 
       const response = await (
@@ -118,6 +137,7 @@ export const MyProfileModifyModal = ({
             nameType,
             nickname,
             description,
+            avatar: imagePath,
           }),
         })
       ).json();
@@ -172,7 +192,8 @@ export const MyProfileModifyModal = ({
                   modalIsOpen={cropModalIsOpen}
                   setIsOpen={setCropModalIsOpen}
                   previewForEdit={previewForEdit}
-                  setPreviewForEdit={setPreviewForEdit}
+                  setPreview={setPreview}
+                  setImageFile={setImageFile}
                 />
               )}
             </div>
