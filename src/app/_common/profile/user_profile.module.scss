@@ -7,10 +7,6 @@
 .profileBox {
   @include flex_center;
 
-  .avatarWrapper {
-    flex-shrink: 0;
-  }
-
   .verticleBox {
     margin-left: 12px;
 
@@ -24,32 +20,18 @@
 // 사이즈
 
 .sm {
-  .avatarWrapper {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
   .verticleBox {
     @include text_sm;
   }
 }
 
 .md {
-  .avatarWrapper {
-    width: 2.125rem;
-    height: 2.125rem;
-  }
-
   .verticleBox {
     @include text_md;
   }
 }
 
 .lg {
-  .avatarWrapper {
-    width: 6rem;
-    height: 6rem;
-  }
-
   .verticleBox {
     @include text_xl;
     margin-left: 20px;

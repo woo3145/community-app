@@ -14,7 +14,7 @@ export const PostContents = ({ article }: Props) => {
           <AuthorProfile
             profile={article.user?.profile}
             createAt={article.createAt}
-            size={'sm'}
+            size={'md'}
           />
         </div>
 

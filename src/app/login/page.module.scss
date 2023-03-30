@@ -28,25 +28,5 @@
   form {
     @include flex_center;
     flex-direction: column;
-
-    .inputBox {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      label {
-        margin-bottom: 10px;
-        @include text_sm;
-        font-weight: 700;
-        color: var(--gray-100);
-      }
-      input {
-        margin-bottom: 20px;
-        padding: 14px 20px;
-        border: var(--border);
-        border-radius: var(--border-radius);
-
-        @include text_sm;
-      }
-    }
   }
 }

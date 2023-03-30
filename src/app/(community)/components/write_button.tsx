@@ -1,4 +1,4 @@
-import { Avatar } from '@/app/_common/avatar';
+import { Avatar } from '@/app/_components/atoms/Avatar';
 import Link from 'next/link';
 import { HiOutlinePencil } from 'react-icons/hi';
 import styles from './write_button.module.scss';

@@ -39,36 +39,11 @@
     @include flex_center;
     flex-direction: column;
     color: var(--gray-100);
-    .inputBox {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
 
-      label {
-        margin-bottom: 10px;
-        @include text_sm;
-        font-weight: 700;
-      }
-      input {
-        padding: 14px 20px;
-        margin-bottom: 12px;
-        border: var(--border);
-        border-radius: var(--border-radius);
-
-        @include text_sm;
-      }
-      .focusInput:focus {
-        border-color: var(--focus-rgb);
-      }
-      .inValid {
-        border-color: var(--error-rgb);
-      }
-
-      .helpText {
-        margin-bottom: 12px;
-        @include text_sm;
-        color: var(--gray-100);
-      }
+    .helpText {
+      margin-bottom: 12px;
+      @include text_sm;
+      color: var(--gray-100);
     }
   }
 }

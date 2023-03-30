@@ -1,5 +1,4 @@
-import { Avatar } from '@/app/_common/avatar';
-
+import { Avatar } from '@/app/_components/atoms/Avatar';
 import styles from './user_profile.module.scss';
 
 interface Props {
@@ -11,7 +10,7 @@ export const DeletedProfile = ({ size = 'md' }: Props) => {
     <div className={styles.wrapper}>
       <div className={`${styles.profileBox}  ${styles[size]}`}>
         <div className={styles.avatarWrapper}>
-          <Avatar src={''} />
+          <Avatar src={''} size={size} />
         </div>
 
         <div className={styles.verticleBox}>

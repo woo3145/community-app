@@ -3,9 +3,6 @@
 .loginButton {
   @include flex_center;
 
-  .avatarWrapper {
-    flex-shrink: 0;
-  }
   span {
     width: 100%;
     margin-left: 12px;
@@ -22,9 +19,7 @@
 
   .authorBox {
     @include flex_center;
-    .avatarWrapper {
-      flex-shrink: 0;
-    }
+
     .verticleBox {
       margin-left: 12px;
 
@@ -42,10 +37,6 @@
 }
 
 .sm {
-  .avatarWrapper {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
   .user_name {
     @include text_sm;
   }
@@ -56,10 +47,6 @@
 }
 
 .md {
-  .avatarWrapper {
-    width: 2.125rem;
-    height: 2.125rem;
-  }
   .user_name {
     @include text_md;
   }

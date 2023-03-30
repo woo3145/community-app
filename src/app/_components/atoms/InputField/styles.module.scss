@@ -1,0 +1,48 @@
+@import '../../../mixins';
+
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  label {
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  input {
+    margin-bottom: 12px;
+    border: var(--border);
+    border-radius: var(--border-radius);
+  }
+  :focus {
+    border-color: var(--focus-rgb);
+  }
+}
+
+.sm {
+  label {
+    @include text_xs;
+  }
+  input {
+    @include text_sm;
+    padding: 8px 16px;
+  }
+}
+.md {
+  label {
+    @include text_sm;
+  }
+  input {
+    @include text_sm;
+    padding: 14px 20px;
+  }
+}
+.lg {
+  label {
+    @include text_md;
+  }
+  input {
+    @include text_md;
+    padding: 14px 20px;
+  }
+}

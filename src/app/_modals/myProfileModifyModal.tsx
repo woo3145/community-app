@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 import { useSWRConfig } from 'swr';
-import { Avatar } from '../_common/avatar';
+import { Avatar } from '../_components/atoms/Avatar';
 import Button from '../_components/atoms/Button';
 import { AvatarCrop } from './avatarCrop/avatarCrop';
 

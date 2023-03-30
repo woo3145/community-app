@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import Button from '../_components/atoms/Button';
+import InputField from '../_components/atoms/InputField';
 import { EmailLogin } from './components/emailLogin';
 import { Signup } from './components/signup';
 import styles from './page.module.scss';
@@ -14,7 +15,7 @@ interface CheckEmailResponse {
 
 export default function LogIn({ providers }: any) {
   const { data: session } = useSession();
-  const [email, setEmail] = useState<string | null>();
+  const [email, setEmail] = useState<string>('');
   const [type, setType] = useState<string | null>(null);
 
   if (session) {
@@ -22,7 +23,7 @@ export default function LogIn({ providers }: any) {
   }
 
   const onPrevPage = () => {
-    setEmail(null);
+    setEmail('');
     setType(null);
   };
 
@@ -58,20 +59,18 @@ export default function LogIn({ providers }: any) {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className={styles.inputBox}>
-            <label htmlFor="email">이메일</label>
-            <input
-              id="email"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="이메일을 입력해주세요."
-            />
-          </div>
+          <InputField
+            label="이메일"
+            id="email"
+            type="email"
+            placeholder="이메일을 입력해주세요."
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <Button
             type="submit"
             text="이메일로 계속하기"
-            isValid={true}
+            isValid={4 < email.length}
             wide
             size="lg"
           />

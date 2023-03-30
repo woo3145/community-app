@@ -1,22 +1,23 @@
 import Image from 'next/image';
 
-import styles from './avatar.module.scss';
+import styles from './styles.module.scss';
 
 interface Props {
   src?: string;
+  size?: UISize;
 }
 
-export const Avatar = ({ src }: Props) => {
+export const Avatar = ({ src, size = 'md' }: Props) => {
   if (!src) {
     return <div className={styles.defaultAvatar}></div>;
   }
   return (
     <Image
-      className={styles.avatar}
+      className={`${styles.avatar} ${styles[size]}`}
       src={src}
       alt="Profile Image"
-      width={200}
-      height={200}
+      width={100}
+      height={100}
     ></Image>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 
-import { Avatar } from '@/app/_common/avatar';
-import { CareerBadge } from '@/app/_common/profile/career_badge';
+import { Avatar } from '@/app/_components/atoms/Avatar';
+import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
 import { useMe } from '@/hooks/useMe';
 import Link from 'next/link';
 import { IoChevronForwardOutline } from 'react-icons/io5';
@@ -34,15 +34,13 @@ export const MyProfile = ({ arrow = false, size = 'md' }: Props) => {
   return (
     <Link href={'/my/recents'} className={styles.myCommunityButton}>
       <div className={`${styles.authorBox} ${styles[size]}`}>
-        <div className={styles.avatarWrapper}>
-          <Avatar src={me.profile.avatar} />
-        </div>
+        <Avatar src={me.profile.avatar} size={size} />
 
         <div className={styles.verticleBox}>
           <p className={styles.user_name}>
             {me.profile.nameType ? me.profile.nickname : me.profile.name}
           </p>
-          <CareerBadge job={'개발'} annual={me.profile.annual} />
+          <AvatarCareer job={'개발'} annual={me.profile.annual} />
         </div>
       </div>
       {arrow && <IoChevronForwardOutline />}

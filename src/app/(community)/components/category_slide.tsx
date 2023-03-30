@@ -83,7 +83,11 @@ export const CategorySlide = () => {
   const onClickCategory = (categoryId: number) => {
     setCategoryId(categoryId);
     setMoreVisible(false);
-    router.push(`/${categoryId}`);
+    if (categoryId === -1 || categoryId === 0) {
+      router.push(`/`);
+    } else {
+      router.push(`/${categoryId}`);
+    }
   };
 
   // 슬라이드 왼쪽이동

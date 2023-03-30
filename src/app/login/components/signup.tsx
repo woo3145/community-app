@@ -1,4 +1,5 @@
 import Button from '@/app/_components/atoms/Button';
+import InputField from '@/app/_components/atoms/InputField';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -24,7 +25,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
     register,
     handleSubmit,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
     setValue,
   } = useForm<FormData>();
 
@@ -71,13 +72,9 @@ export const Signup = ({ onPrevPage, email }: Props) => {
   };
   const password = watch('password');
   const passwordValid = passwordRegex.test(password);
-  const passwordClassName = passwordValid ? styles.valid : styles.inValid;
 
   const checkPassword = watch('checkPassword');
   const checkPasswordValid = password === checkPassword;
-  const checkPasswordClassName = checkPasswordValid
-    ? styles.valid
-    : styles.inValid;
 
   return (
     <div className={styles.wrapper}>
@@ -90,71 +87,61 @@ export const Signup = ({ onPrevPage, email }: Props) => {
           <div className={styles.right}></div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.inputBox}>
-            <label htmlFor="email">이메일</label>
-            <input id="email" type="email" value={email} disabled={true} />
-          </div>
+          <InputField
+            label="이메일"
+            id="email"
+            type="email"
+            value={email}
+            disabled={true}
+          />
 
-          <div className={styles.inputBox}>
-            <label htmlFor="name">이름</label>
-            <input
-              className={styles.focusInput}
-              type="text"
-              placeholder="이름을 입력해주세요."
-              {...register('name', {
-                required: true,
-                minLength: 2,
-                maxLength: 20,
-              })}
-            />
-          </div>
+          <InputField
+            label="이름"
+            type="text"
+            placeholder="이름을 입력해주세요."
+            {...register('name', {
+              required: true,
+              minLength: 2,
+              maxLength: 20,
+            })}
+          />
 
-          <div className={styles.inputBox}>
-            <label htmlFor="password">비밀번호</label>
-            <input
-              className={password ? passwordClassName : styles.focusInput}
-              type="password"
-              placeholder="비밀번호를 입력해주세요."
-              {...register('password', {
-                required: true,
-              })}
-            />
-            {password && !passwordValid && (
-              <p className={styles.errorMessage}>
-                올바르지 않은 비밀번호입니다.
-              </p>
-            )}
-            <input
-              className={
-                checkPassword ? checkPasswordClassName : styles.focusInput
-              }
-              type="password"
-              placeholder="비밀번호를 다시 한번 입력해주세요."
-              {...register('checkPassword', {
-                required: true,
-                pattern: passwordRegex,
-              })}
-            />
-            {checkPassword && !checkPasswordValid && (
-              <p className={styles.errorMessage}>
-                비밀번호가 서로 일치하지 않습니다.
-              </p>
-            )}
-            {password &&
-              passwordValid &&
-              checkPassword &&
-              checkPasswordValid && (
-                <p className={styles.successMessage}>
-                  사용 가능한 비밀번호입니다.
-                </p>
-              )}
-            <p className={styles.helpText}>
-              영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상으로
-              입력해주세요.
+          <InputField
+            label="비밀번호"
+            type="password"
+            placeholder="비밀번호를 입력해주세요."
+            {...register('password', {
+              required: true,
+              pattern: passwordRegex,
+            })}
+          />
+          {password && !passwordValid && (
+            <p className={styles.errorMessage}>올바르지 않은 비밀번호입니다.</p>
+          )}
+          <InputField
+            label="비밀번호"
+            type="password"
+            placeholder="비밀번호를 다시 한번 입력해주세요."
+            {...register('checkPassword', {
+              required: true,
+              pattern: passwordRegex,
+              validate: (value, formValues) => value === formValues.password,
+            })}
+          />
+          {checkPassword && !checkPasswordValid && (
+            <p className={styles.errorMessage}>
+              비밀번호가 서로 일치하지 않습니다.
             </p>
+          )}
+          {passwordValid && checkPasswordValid && (
+            <p className={styles.successMessage}>사용 가능한 비밀번호입니다.</p>
+          )}
+          <p className={styles.helpText}>
+            영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상으로
+            입력해주세요.
+          </p>
 
-            {message && <p className={styles.errorMessage}>{message}</p>}
-          </div>
+          {message && <p className={styles.errorMessage}>{message}</p>}
 
           <Button
             type="submit"

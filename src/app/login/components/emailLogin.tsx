@@ -1,4 +1,5 @@
 import Button from '@/app/_components/atoms/Button';
+import InputField from '@/app/_components/atoms/InputField';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -49,22 +50,21 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
           <div className={styles.right}></div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.inputBox}>
-            <label htmlFor="password">비밀번호</label>
-            <input
-              className={message ? styles.inValid : styles.focusInput}
-              type="password"
-              placeholder="비밀번호를 입력해주세요."
-              {...register('password', {
-                required: true,
-                minLength: 2,
-                onChange: () => {
-                  setMessage('');
-                },
-              })}
-            />
-            {message && <p className={styles.errorMessage}>{message}</p>}
-          </div>
+          <InputField
+            label="비밀번호"
+            id="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요."
+            {...register('password', {
+              required: true,
+              minLength: 2,
+              onChange: () => {
+                setMessage('');
+              },
+            })}
+          />
+          {message && <p className={styles.errorMessage}>{message}</p>}
+
           <Button type="submit" text="다음" isValid={isValid} wide size="lg" />
         </form>
       </div>
