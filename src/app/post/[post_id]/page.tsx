@@ -1,18 +1,16 @@
 'use client';
 
-import { DeletedProfile } from '@/app/_common/profile/deleted_profile';
-import { UserProfile } from '@/app/_common/profile/user_profile';
 import Badge from '@/app/_components/atoms/Badge';
 import { useMe } from '@/hooks/useMe';
 import { usePost } from '@/hooks/usePost';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
 import { CommentsContainer } from './components/commentsContainer';
 import { PostContents } from './components/postContents';
+import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
+import { useState } from 'react';
 import styles from './page.module.scss';
 
 export default function PostDetail({
@@ -66,11 +64,7 @@ export default function PostDetail({
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>
-            {post.userId ? (
-              <UserProfile profile={post.user?.profile} />
-            ) : (
-              <DeletedProfile />
-            )}
+            <UserProfile profile={post.user?.profile} />
           </div>
           <div className={styles.postCount}>
             {/* Like Button */}
@@ -95,7 +89,7 @@ export default function PostDetail({
 
       <section className={styles.postDetail}>
         <article className={styles.contentsBox}>
-          <PostContents article={post} />
+          <PostContents post={post} />
           <div className={styles.tagList}>
             {post.tags?.map((tag, idx) => {
               return (

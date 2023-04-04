@@ -1,14 +1,13 @@
-import { AuthorProfile } from '@/app/_common/profile/author_profile';
-import { MyProfile } from '@/app/_common/profile/my_profile';
 import Button from '@/app/_components/atoms/Button';
 import { useComments } from '@/hooks/useComments';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
-import { Comment } from './comment';
 
 import styles from './commentsContainer.module.scss';
+import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
+import { Comment } from '@/app/_components/organisms/CommentItem';
 
 interface Props {
   postId: number;

@@ -1,30 +1,30 @@
-import { AuthorProfile } from '@/app/_common/profile/author_profile';
 import Image from 'next/image';
 import styles from './postContents.module.scss';
+import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
 
 interface Props {
-  article: Article;
+  post: PostItem;
 }
 
-export const PostContents = ({ article }: Props) => {
+export const PostContents = ({ post }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.autor}>
           <AuthorProfile
-            profile={article.user?.profile}
-            createAt={article.createAt}
+            profile={post.user?.profile}
+            createAt={post.createAt}
             size={'md'}
           />
         </div>
 
-        <h1 className={styles.title}>{article.title}</h1>
+        <h1 className={styles.title}>{post.title}</h1>
       </div>
 
-      <div className={styles.body}>{article.content}</div>
+      <div className={styles.body}>{post.content}</div>
 
-      {article.imageUrl && (
-        <Image src={article.imageUrl} width={800} height={800} alt="image" />
+      {post.imageUrl && (
+        <Image src={post.imageUrl} width={800} height={800} alt="image" />
       )}
     </div>
   );

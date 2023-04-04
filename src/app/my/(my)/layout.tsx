@@ -1,6 +1,5 @@
 'use client';
 
-import { UserProfile } from '@/app/_common/profile/user_profile';
 import Badge from '@/app/_components/atoms/Badge';
 import { MyProfileModifyModal } from '@/app/_modals/myProfileModifyModal';
 import { useMe } from '@/hooks/useMe';
@@ -10,6 +9,7 @@ import { useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';
 
 import styles from './layout.module.scss';
+import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
 
 export default function ProfilePageLayout({
   children,

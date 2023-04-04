@@ -1,11 +1,10 @@
-import { AuthorProfile } from '@/app/_common/profile/author_profile';
-import { MyProfile } from '@/app/_common/profile/my_profile';
-import { IoChatbubbleOutline, IoEllipsisHorizontal } from 'react-icons/io5';
+import { IoEllipsisHorizontal } from 'react-icons/io5';
 
-import styles from './comment.module.scss';
+import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
+import styles from './styles.module.scss';
 
 interface Props {
-  comment: IComment;
+  comment: Comment;
 }
 
 const PopupMenu = () => {

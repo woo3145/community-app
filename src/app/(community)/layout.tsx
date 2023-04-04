@@ -1,4 +1,4 @@
-import { MyProfile } from '../_common/profile/my_profile';
+import { MyProfile } from '../_components/molecules/profile/MyProfile';
 import { CategorySlide } from './components/category_slide';
 
 import styles from './layout.module.scss';

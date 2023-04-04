@@ -1,51 +1,52 @@
-import { AuthorProfile } from '@/app/_common/profile/author_profile';
 import Badge from '@/app/_components/atoms/Badge';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
-import styles from './article_card.module.scss';
+import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
+
+import styles from './styles.module.scss';
 
 interface Props {
-  article: Article;
+  post: PostItem;
 }
 
-export const ArticleCard = ({ article }: Props) => {
+export const PostItem = ({ post }: Props) => {
   return (
     <article className={styles.container}>
       <div className={styles.verticleBox}>
         <div className={styles.header}>
           <AuthorProfile
             size={'sm'}
-            profile={article.user?.profile}
-            createAt={article.createAt}
+            profile={post.user?.profile}
+            createAt={post.createAt}
           />
         </div>
 
-        <Link href={`/post/${article.id}`} className={styles.body}>
-          <h3>{article.title}</h3>
-          <p>{article.content} </p>
+        <Link href={`/post/${post.id}`} className={styles.body}>
+          <h3>{post.title}</h3>
+          <p>{post.content} </p>
           <ul className={styles.tagList}>
-            {article.tags.map((tag, idx) => {
+            {post.tags.map((tag, idx) => {
               return <Badge key={idx} text={tag.title} size={'sm'} />;
             })}
           </ul>
           <div className={styles.bottom}>
             <div className={styles.icon}>
               <AiOutlineLike />
-              <span>{article._count.likes}</span>
+              <span>{post._count.likes}</span>
             </div>
             <div className={styles.icon}>
               <IoChatbubbleOutline />
-              <span>{article._count.comments}</span>
+              <span>{post._count.comments}</span>
             </div>
           </div>
         </Link>
       </div>
-      {article.imageUrl && (
-        <Link href={`/post/${article.id}`} className={styles.imageContainer}>
+      {post.imageUrl && (
+        <Link href={`/post/${post.id}`} className={styles.imageContainer}>
           <Image
-            src={article.imageUrl}
+            src={post.imageUrl}
             width={200}
             height={150}
             alt="image"

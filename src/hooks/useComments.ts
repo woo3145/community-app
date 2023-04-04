@@ -1,13 +1,13 @@
 import useSWR from 'swr';
 
 interface UseCommentsResponse {
-  comments: IComment[] | [];
+  comments: Comment[] | [];
   isLoading: boolean;
   isError: boolean;
 }
 
 export const useComments = (postId: number): UseCommentsResponse => {
-  const { data, error } = useSWR<{ comments: IComment[] }>(
+  const { data, error } = useSWR<{ comments: Comment[] }>(
     postId ? `/api/posts/${postId}/comments` : null,
     async (url: string) => {
       const response = await fetch(url);

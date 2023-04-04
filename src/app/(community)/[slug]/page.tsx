@@ -1,6 +1,6 @@
 'use client';
 
-import { ArticleCard } from '../components/article_card';
+import { PostItem } from '@/app/_components/organisms/PostItem';
 import { WriteButton } from '../components/write_button';
 
 import styles from './page.module.scss';
@@ -21,8 +21,8 @@ export default function CommunitySlug({ params }: Props) {
       </section>
       <section className={styles.article_list_section}>
         {data.map((page) =>
-          page.posts.map((article) => {
-            return <ArticleCard key={article.id} article={article} />;
+          page.posts.map((post) => {
+            return <PostItem key={post.id} post={post} />;
           })
         )}
       </section>

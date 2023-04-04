@@ -1,4 +1,4 @@
-interface Article {
+interface PostItem {
   id: number;
   title: string;
   content: string;
@@ -20,7 +20,7 @@ interface Article {
   };
 }
 
-interface IComment {
+interface Comment {
   id: number;
   content: string;
 

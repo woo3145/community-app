@@ -1,10 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
-import Link from 'next/link';
-
-import styles from './user_profile.module.scss';
+import styles from './styles.module.scss';
 
 interface Props {
   profile?: Profile;
@@ -23,7 +22,13 @@ export const UserProfile = ({ profile, size = 'md' }: Props) => {
 
         <div className={styles.verticleBox}>
           <p className={styles.user_name}>
-            {profile.nameType ? profile.nickname : profile.name}
+            {profile ? (
+              <p className={styles.user_name}>
+                {profile.nameType ? profile.nickname : profile.name}
+              </p>
+            ) : (
+              <p className={styles.user_name}>탈퇴한 사용자</p>
+            )}
           </p>
           <AvatarCareer job={'개발'} annual={profile.annual} />
         </div>

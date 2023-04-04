@@ -1,14 +1,14 @@
 import useSWR from 'swr';
 
 interface UsePostsReturn {
-  post: Article | null;
+  post: PostItem | null;
   isLiked: boolean;
   isLoading: boolean;
   isError: boolean;
 }
 
 export const usePost = (postId: number): UsePostsReturn => {
-  const { data, error } = useSWR<{ post: Article; isLiked: boolean }>(
+  const { data, error } = useSWR<{ post: PostItem; isLiked: boolean }>(
     postId ? `/api/posts/${postId}` : null,
     async (url: string) => {
       const response = await fetch(url);

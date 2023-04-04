@@ -82,12 +82,9 @@ model Profile {
 }
 
 model Job {
-  id Int @id @default(autoincrement())
-
-  user     Profile[]
-  parentId Int?
-  parent   Job?      @relation("JobSubJobs", fields: [parentId], references: [id]) // 직군
-  subJobs  Job[]     @relation("JobSubJobs") // 직무
+  id    Int       @id @default(autoincrement())
+  title String
+  user  Profile[]
 }
 
 model Tag {

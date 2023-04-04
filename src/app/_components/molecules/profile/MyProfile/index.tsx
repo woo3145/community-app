@@ -1,12 +1,13 @@
 'use client';
 
+import Link from 'next/link';
+
+import { formatDate } from '@/libs/client/dateUtils';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
+import styles from './styles.module.scss';
 import { useMe } from '@/hooks/useMe';
-import Link from 'next/link';
 import { IoChevronForwardOutline } from 'react-icons/io5';
-
-import styles from './my_profile.module.scss';
 
 interface Props {
   arrow?: boolean;

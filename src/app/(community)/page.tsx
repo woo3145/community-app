@@ -1,10 +1,10 @@
 'use client';
 
 import { usePosts } from '@/hooks/usePosts';
-import { ArticleCard } from './components/article_card';
 import { WriteButton } from './components/write_button';
 
 import styles from './page.module.scss';
+import { PostItem } from '../_components/organisms/PostItem';
 
 export default function Community() {
   const { data, isLoading, bottomRef, isReachedEnd } = usePosts();
@@ -16,8 +16,8 @@ export default function Community() {
       </section>
       <section className={styles.article_list_section}>
         {data.map((page) =>
-          page.posts.map((article) => {
-            return <ArticleCard key={article.id} article={article} />;
+          page.posts.map((post) => {
+            return <PostItem key={post.id} post={post} />;
           })
         )}
       </section>

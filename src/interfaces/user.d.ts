@@ -11,6 +11,11 @@ interface Profile {
   interestTags: SubTag[];
 }
 
+interface Job {
+  id: number;
+  title: string;
+}
+
 interface Me {
   id: string;
   email: string;

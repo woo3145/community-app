@@ -1,7 +1,5 @@
 'use client';
 
-import { ArticleCard } from '@/app/(community)/components/article_card';
-import { UserProfile } from '@/app/_common/profile/user_profile';
 import Badge from '@/app/_components/atoms/Badge';
 import { usePost } from '@/hooks/usePost';
 import { useProfile } from '@/hooks/useProfile';
@@ -9,6 +7,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './page.module.scss';
+import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
+import { PostItem } from '@/app/_components/organisms/PostItem';
 
 interface Props {
   params: {
@@ -64,7 +64,7 @@ export default function ProfilePage({ params: { user_id } }: Props) {
           </ul>
         </div>
 
-        <div>{post && <ArticleCard article={post} />}</div>
+        <div>{post && <PostItem post={post} />}</div>
       </div>
     </main>
   );
