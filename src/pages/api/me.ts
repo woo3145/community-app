@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         email: true,
         profile: {
           include: {
-            jobs: true,
+            job: true,
             interestTags: true,
           },
         },

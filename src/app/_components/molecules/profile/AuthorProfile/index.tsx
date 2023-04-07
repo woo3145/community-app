@@ -28,7 +28,10 @@ export const AuthorProfile = ({ profile, createAt, size = 'md' }: Props) => {
             ) : (
               <p className={styles.user_name}>탈퇴한 사용자</p>
             )}
-            <AvatarCareer job={'개발'} annual={profile?.annual || 0} />
+            <AvatarCareer
+              job={profile?.job?.title || ''}
+              annual={profile?.annual || 0}
+            />
           </div>
 
           {createAt && (

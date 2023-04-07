@@ -5,9 +5,10 @@ import { useForm } from 'react-hook-form';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
 
-import styles from './commentsContainer.module.scss';
 import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
-import { Comment } from '@/app/_components/organisms/CommentItem';
+import { Comment } from '@/app/_components/molecules/CommentItem';
+
+import styles from './styles.module.scss';
 
 interface Props {
   postId: number;
@@ -26,7 +27,7 @@ const EmptyCommentMessage = () => {
   );
 };
 
-export const CommentsContainer = ({ postId }: Props) => {
+export const CommentList = ({ postId }: Props) => {
   const { register, handleSubmit, setValue } = useForm<CreateCommentForm>();
   const { comments, isLoading, isError } = useComments(postId);
   const [isApiLoading, setIsApiLoading] = useState(false);

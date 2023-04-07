@@ -76,9 +76,10 @@ model Profile {
   description  String?
   annual       Int     @default(0) // 경력
   interestTags Tag[] // 관심있는 주제
-  jobs         Job[] // 직군,직무
   user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String  @unique
+  job          Job?    @relation(fields: [jobId], references: [id]) // 직군
+  jobId        Int?
 }
 
 model Job {

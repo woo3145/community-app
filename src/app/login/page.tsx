@@ -17,7 +17,6 @@ export default function LogIn({ providers }: any) {
   const { data: session } = useSession();
   const [email, setEmail] = useState<string>('');
   const [type, setType] = useState<string | null>(null);
-
   if (session) {
     redirect('/');
   }

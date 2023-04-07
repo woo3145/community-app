@@ -1,10 +1,11 @@
 'use client';
 
-import { PostItem } from '@/app/_components/organisms/PostItem';
-import { WriteButton } from '../components/write_button';
+import { PostItem } from '@/app/_components/molecules/PostItem';
 
 import styles from './page.module.scss';
 import { usePosts } from '@/hooks/usePosts';
+import { WriteButton } from '@/app/_components/molecules/WriteButton';
+import PostList from '@/app/_components/organisms/PostList';
 
 interface Props {
   params: {
@@ -13,24 +14,14 @@ interface Props {
 }
 
 export default function CommunitySlug({ params }: Props) {
-  const { data, isLoading, bottomRef, isReachedEnd } = usePosts(params.slug);
   return (
     <div className={styles.wrapper}>
-      <section className={styles.write_button_section}>
+      <section className={styles.writeButtonSection}>
         <WriteButton />
       </section>
-      <section className={styles.article_list_section}>
-        {data.map((page) =>
-          page.posts.map((post) => {
-            return <PostItem key={post.id} post={post} />;
-          })
-        )}
+      <section className={styles.postListSection}>
+        <PostList category={params.slug} />
       </section>
-      {isLoading ? (
-        <div>loading..</div>
-      ) : (
-        !isReachedEnd && <div ref={bottomRef}></div>
-      )}
     </div>
   );
 }

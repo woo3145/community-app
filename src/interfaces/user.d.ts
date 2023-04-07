@@ -5,7 +5,7 @@ interface Profile {
   nameType: boolean;
   description?: string;
   avatar?: string;
-  jobs?: any; // 임시
+  job?: Job;
   annual: number;
   userId: string;
   interestTags: SubTag[];

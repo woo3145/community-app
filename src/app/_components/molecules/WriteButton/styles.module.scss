@@ -1,9 +1,11 @@
-@import '../../mixins';
+@import '../../../mixins';
 
 .container {
   @include flex_center;
-
-  width: 100%;
+  padding: 30px;
+  border: var(--border);
+  border-top: none;
+  background-color: var(--card-color);
 }
 
 .avatarWrapper {
@@ -20,4 +22,5 @@
   padding: 18px 20px;
   border: var(--border);
   border-radius: var(--border-radius);
+  cursor: pointer;
 }

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './page.module.scss';
 import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
-import { PostItem } from '@/app/_components/organisms/PostItem';
+import { PostItem } from '@/app/_components/molecules/PostItem';
 
 interface Props {
   params: {

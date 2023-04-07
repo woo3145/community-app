@@ -4,7 +4,7 @@ import { usePosts } from '@/hooks/usePosts';
 import { MyNavigation } from '../../components/myNavigation';
 
 import styles from '../page.module.scss';
-import { PostItem } from '@/app/_components/organisms/PostItem';
+import { PostItem } from '@/app/_components/molecules/PostItem';
 
 export default function MyPagePosts() {
   const { data, isLoading } = usePosts(); // 임시

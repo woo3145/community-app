@@ -7,11 +7,11 @@ import { useRouter } from 'next/navigation';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
-import { CommentsContainer } from './components/commentsContainer';
 import { PostContents } from './components/postContents';
 import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
 import { useState } from 'react';
 import styles from './page.module.scss';
+import { CommentList } from '@/app/_components/organisms/CommentList';
 
 export default function PostDetail({
   params: { post_id },
@@ -121,7 +121,7 @@ export default function PostDetail({
           </div>
         </article>
 
-        <CommentsContainer postId={post_id} />
+        <CommentList postId={post_id} />
       </section>
     </main>
   );

@@ -190,7 +190,11 @@ export const MyProfileModifyModal = ({
                   onChange={handleImage}
                 />
                 <label htmlFor="input-image">
-                  <Avatar src={preview} />
+                  <Avatar
+                    src={preview}
+                    size="lg"
+                    style={{ cursor: 'pointer' }}
+                  />
                 </label>
               </div>
               {previewForEdit && (

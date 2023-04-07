@@ -1,5 +1,5 @@
+import { CategorySlider } from '../_components/molecules/CategorySlider';
 import { MyProfile } from '../_components/molecules/profile/MyProfile';
-import { CategorySlide } from './components/category_slide';
 
 import styles from './layout.module.scss';
 
@@ -21,7 +21,7 @@ export default function CommunityLayout({
 
       <main className={styles.main}>
         <div className={styles.categories}>
-          <CategorySlide />
+          <CategorySlider />
         </div>
         <div className={styles.contents_wrapper}>{children}</div>
       </main>

@@ -1,21 +1,9 @@
-'use client';
-
-import Button from '@/app/_components/atoms/Button';
-import { useMountedRef } from '@/hooks/useMountedRef';
-import { useTags } from '@/hooks/useTags';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import {
-  IoChevronBack,
-  IoChevronForwardSharp,
-  IoEllipsisHorizontal,
-} from 'react-icons/io5';
+import { useMountedRef } from './useMountedRef';
 
-import styles from './category_slide.module.scss';
-
-export const CategorySlide = () => {
+export const useCategorySlider = () => {
   const [categoryId, setCategoryId] = useState<number>();
-  const { tags, subTags, isLoading, isError } = useTags();
   const router = useRouter();
 
   const [leftVisible, setLeftVisible] = useState(false); // 슬라이드 왼쪽 버튼
@@ -46,7 +34,7 @@ export const CategorySlide = () => {
     }
   }, [categoryId]);
 
-  // categoryId가 바뀌면 해당 카테고리의 아이템의 위치로 스크롤링
+  // categoryId가 바뀌거나 컴포넌트가 로드완료 되면 해당 카테고리의 아이템의 위치로 스크롤링
   useEffect(() => {
     if (categoryId === undefined) return;
     if (!scrollRef.current) return;
@@ -54,6 +42,8 @@ export const CategorySlide = () => {
     const target = scrollRef.current.querySelector(
       `#categoryButton_${categoryId}`
     ) as HTMLElement;
+
+    if (!target) return;
 
     // target의 위치에서 박스의 절반크기만큼 이동하여 중간으로 위치하도록함
     const position = target.offsetLeft - scrollRef.current.offsetWidth / 2;
@@ -121,96 +111,20 @@ export const CategorySlide = () => {
     }
   };
 
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
+  const onClickMoreButton = () => {
+    setMoreVisible(!moreVisible);
+  };
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div className={styles.flexBox}>
-          <div className={styles.category_list} ref={handleScrollRef}>
-            <Button
-              id={`categoryButton_-1`}
-              outlined
-              key={-1}
-              text="추천"
-              size="sm"
-              onClick={() => onClickCategory(-1)}
-              selected={categoryId === -1}
-            />
-            <Button
-              id={`categoryButton_0`}
-              outlined
-              key={0}
-              text="전체"
-              size="sm"
-              onClick={() => onClickCategory(0)}
-              selected={categoryId === 0}
-            />
-            {subTags?.map((category) => {
-              return (
-                <Button
-                  id={`categoryButton_${category.id}`}
-                  outlined
-                  key={category.id}
-                  text={category.title}
-                  size="sm"
-                  onClick={() => onClickCategory(category.id)}
-                  selected={categoryId === category.id}
-                />
-              );
-            })}
-          </div>
-
-          {leftVisible && (
-            <div className={styles.leftButton} onClick={onClickLeft}>
-              <IoChevronBack />
-            </div>
-          )}
-          {rightVisible && (
-            <div className={styles.rightButton} onClick={onClickRight}>
-              <IoChevronForwardSharp />
-            </div>
-          )}
-        </div>
-        <div
-          className={styles.moreButton}
-          onClick={() => setMoreVisible(!moreVisible)}
-        >
-          <IoEllipsisHorizontal />
-        </div>
-      </div>
-      {moreVisible && (
-        <div className={styles.moreContainer}>
-          <Button
-            text="추천"
-            outlined
-            size="sm"
-            onClick={() => onClickCategory(-1)}
-            selected={categoryId === -1}
-          />
-          <Button
-            text="전체"
-            outlined
-            size="sm"
-            onClick={() => onClickCategory(0)}
-            selected={categoryId === 0}
-          />
-          {subTags?.map((category) => {
-            return (
-              <Button
-                key={category.id}
-                text={category.title}
-                outlined
-                size="sm"
-                onClick={() => onClickCategory(category.id)}
-                selected={categoryId === category.id}
-              />
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
+  return {
+    categoryId,
+    handleScrollRef,
+    scrollRef,
+    leftVisible,
+    rightVisible,
+    moreVisible,
+    onClickCategory,
+    onClickLeft,
+    onClickRight,
+    onClickMoreButton,
+  };
 };
