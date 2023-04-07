@@ -1,13 +1,6 @@
-@import '../../mixins';
-@import '../../variables';
+@import '../../../mixins';
 
-.wrapper {
-  width: $breakpoint-tablet;
-  margin: 0 auto;
-  padding-top: 60px;
-}
-
-.profileContainer {
+.container {
   position: relative;
   padding: 30px;
   background-color: var(--card-color);
@@ -51,11 +44,4 @@
   svg {
     margin-right: 8px;
   }
-}
-
-.body {
-  margin-top: 12px;
-  background-color: var(--card-color);
-  border: var(--border);
-  border-radius: var(border-radius);
 }

@@ -33,7 +33,7 @@ export const MyProfile = ({ arrow = false, size = 'md' }: Props) => {
   }
 
   return (
-    <Link href={'/my/recents'} className={styles.myCommunityButton}>
+    <Link href={'/my'} className={styles.myCommunityButton}>
       <div className={`${styles.authorBox} ${styles[size]}`}>
         <Avatar src={me.profile.avatar} size={size} />
 
@@ -41,7 +41,10 @@ export const MyProfile = ({ arrow = false, size = 'md' }: Props) => {
           <p className={styles.user_name}>
             {me.profile.nameType ? me.profile.nickname : me.profile.name}
           </p>
-          <AvatarCareer job={'개발'} annual={me.profile.annual} />
+          <AvatarCareer
+            job={me.profile.job?.title}
+            annual={me.profile.annual}
+          />
         </div>
       </div>
       {arrow && <IoChevronForwardOutline />}

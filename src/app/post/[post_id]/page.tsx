@@ -7,11 +7,12 @@ import { useRouter } from 'next/navigation';
 import { AiOutlineLike } from 'react-icons/ai';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
-import { PostContents } from './components/postContents';
 import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
 import { useState } from 'react';
 import styles from './page.module.scss';
 import { CommentList } from '@/app/_components/organisms/CommentList';
+import Link from 'next/link';
+import { PostContent } from '@/app/_components/molecules/PostContent';
 
 export default function PostDetail({
   params: { post_id },
@@ -64,7 +65,9 @@ export default function PostDetail({
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>
-            <UserProfile profile={post.user?.profile} />
+            <Link href={`/profile/${post.user?.profile.userId}`}>
+              <UserProfile profile={post.user?.profile} />
+            </Link>
           </div>
           <div className={styles.postCount}>
             {/* Like Button */}
@@ -89,7 +92,7 @@ export default function PostDetail({
 
       <section className={styles.postDetail}>
         <article className={styles.contentsBox}>
-          <PostContents post={post} />
+          <PostContent post={post} />
           <div className={styles.tagList}>
             {post.tags?.map((tag, idx) => {
               return (

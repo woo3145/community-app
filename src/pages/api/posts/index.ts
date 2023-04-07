@@ -40,7 +40,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
               tags: true,
               user: {
                 select: {
-                  profile: true,
+                  profile: {
+                    include: { job: true },
+                  },
                 },
               },
               _count: {
@@ -68,7 +70,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           tags: true,
           user: {
             select: {
-              profile: true,
+              profile: {
+                include: { job: true },
+              },
             },
           },
           _count: {

@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const profile = await client.profile.findUnique({
       where: { userId: userId },
       include: {
-        jobs: true,
+        job: true,
         interestTags: true,
       },
     });

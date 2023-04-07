@@ -13,7 +13,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
       include: {
         user: {
-          select: { profile: true },
+          select: {
+            profile: {
+              include: { job: true },
+            },
+          },
         },
       },
     });

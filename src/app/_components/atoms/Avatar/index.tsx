@@ -11,7 +11,12 @@ interface Props {
 
 export const Avatar = ({ src, size = 'md', style }: Props) => {
   if (!src) {
-    return <div className={`${styles.defaultAvatar} ${styles[size]}`}></div>;
+    return (
+      <div
+        className={`${styles.defaultAvatar} ${styles[size]}`}
+        style={style}
+      ></div>
+    );
   }
   return (
     <Image

@@ -1,42 +1,45 @@
-import Link from 'next/link';
-import styles from './myNavigation.module.scss';
+import { Dispatch, SetStateAction } from 'react';
+
+import styles from './styles.module.scss';
+import { MyCommunityTabType } from '..';
 
 interface Props {
-  tab: 'recents' | 'posts' | 'comments' | 'likes';
+  tab: MyCommunityTabType;
+  setTab: Dispatch<SetStateAction<MyCommunityTabType>>;
 }
 
-export const MyNavigation = ({ tab }: Props) => {
+export const MyCommunityTab = ({ tab, setTab }: Props) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.tabs}>
-        <Link
-          href="/my/recents"
+        <div
           className={`${styles.tab} ${
             tab === 'recents' ? styles.selected : ''
           }`}
+          onClick={() => setTab('recents')}
         >
           최근본
-        </Link>
-        <Link
-          href="/my/posts"
+        </div>
+        <div
           className={`${styles.tab} ${tab === 'posts' ? styles.selected : ''}`}
+          onClick={() => setTab('posts')}
         >
           작성글
-        </Link>
-        <Link
-          href="/my/comments"
+        </div>
+        <div
           className={`${styles.tab} ${
             tab === 'comments' ? styles.selected : ''
           }`}
+          onClick={() => setTab('comments')}
         >
           작성댓글
-        </Link>
-        <Link
-          href="/my/likes"
+        </div>
+        <div
           className={`${styles.tab} ${tab === 'likes' ? styles.selected : ''}`}
+          onClick={() => setTab('likes')}
         >
           좋아요
-        </Link>
+        </div>
       </div>
     </div>
   );

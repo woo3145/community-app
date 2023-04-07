@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import styles from './postContents.module.scss';
+import styles from './styles.module.scss';
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
 
 interface Props {
   post: PostItem;
 }
 
-export const PostContents = ({ post }: Props) => {
+export const PostContent = ({ post }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>

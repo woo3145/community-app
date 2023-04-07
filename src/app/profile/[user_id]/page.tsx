@@ -34,10 +34,11 @@ export default function ProfilePage({ params: { user_id } }: Props) {
     <main className={styles.wrapper}>
       <div className={styles.profileContainer}>
         <UserProfile profile={profile} size={'lg'} />
-        <div className={styles.description}>한줄 소개 ..... </div>
+        <div className={styles.description}>{profile.description}</div>
         <div className={styles.tagSection}>
           <p>관심 주제</p>
           <div className={styles.tagList}>
+            {/* 임시 */}
             <Badge text={'개발'} />
             <Badge text={'데이터'} />
             {profile.interestTags.map((tag, idx) => {

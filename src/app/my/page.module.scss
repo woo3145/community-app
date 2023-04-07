@@ -1,0 +1,17 @@
+@import '../mixins';
+@import '../variables';
+
+.wrapper {
+  width: $breakpoint-tablet;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+
+.profileSection {
+  width: 100%;
+}
+
+.communitySection {
+  margin-top: 12px;
+  width: 100%;
+}

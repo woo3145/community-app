@@ -16,12 +16,12 @@ export const UserProfile = ({ profile, size = 'md' }: Props) => {
   }
 
   return (
-    <Link href={`/profile/${profile.userId}`} className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <div className={`${styles.profileBox} ${styles[size]}`}>
         <Avatar src={profile.avatar} size={size} />
 
         <div className={styles.verticleBox}>
-          <p className={styles.user_name}>
+          <div className={styles.user_name}>
             {profile ? (
               <p className={styles.user_name}>
                 {profile.nameType ? profile.nickname : profile.name}
@@ -29,10 +29,10 @@ export const UserProfile = ({ profile, size = 'md' }: Props) => {
             ) : (
               <p className={styles.user_name}>탈퇴한 사용자</p>
             )}
-          </p>
-          <AvatarCareer job={'개발'} annual={profile.annual} />
+          </div>
+          <AvatarCareer job={profile.job?.title} annual={profile.annual} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
