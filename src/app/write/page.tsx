@@ -7,8 +7,8 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoClose, IoImageOutline } from 'react-icons/io5';
 import Button from '../_components/atoms/Button';
-import { TagPicker } from './components/tagPicker';
 import styles from './page.module.scss';
+import { TagPicker } from '../_components/molecules/TagPicker';
 
 interface PostFormData {
   title: string;
@@ -31,7 +31,7 @@ export default function Write() {
   } = useForm<PostFormData>();
   const [selectedTags, setSelectedTags] = useState<SubTag[]>([]);
   const [preview, setPreview] = useState('');
-  const [imageFile, setImageFile] = useState<File>();
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const {
     ref: contentRef,
@@ -125,6 +125,11 @@ export default function Write() {
     setImageFile(file);
   };
 
+  const onClickResetImage = () => {
+    setImageFile(null);
+    setPreview('');
+  };
+
   if (status !== 'loading' && !session) {
     redirect('/login');
   }
@@ -172,15 +177,15 @@ export default function Write() {
             ></textarea>
 
             {/* 이미지 */}
-            <div className={styles.imageContainer}>
-              <button>
-                <IoClose />
-              </button>
+            {preview && (
+              <div className={styles.imageContainer}>
+                <button onClick={onClickResetImage}>
+                  <IoClose />
+                </button>
 
-              {preview && (
                 <Image src={preview} width={800} height={800} alt="image" />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
 

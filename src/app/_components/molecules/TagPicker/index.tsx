@@ -2,7 +2,7 @@ import { TagSelectorModal } from '@/app/_modals/tag_selector_modal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IoAdd, IoCloseOutline } from 'react-icons/io5';
 
-import styles from './tagPicker.module.scss';
+import styles from './styles.module.scss';
 
 interface Props {
   selectedTags: SubTag[];

@@ -5,6 +5,7 @@ import { usePosts } from '@/hooks/usePosts';
 import { PostItem } from '../../molecules/PostItem';
 
 import styles from './styles.module.scss';
+import { PostItemLoading } from '../../molecules/PostItem/Loading';
 
 interface Props {
   category: string;
@@ -15,13 +16,17 @@ export default function PostList({ category }: Props) {
 
   return (
     <div className={styles.container}>
-      {data.map((page) =>
-        page.posts.map((post) => {
-          return <PostItem key={post.id} post={post} />;
-        })
-      )}
+      {data.length === 0 && isLoading
+        ? [1, 2, 3, 4].map((i) => {
+            return <PostItemLoading key={i} />;
+          })
+        : data.map((page) =>
+            page.posts.map((post) => {
+              return <PostItem key={post.id} post={post} />;
+            })
+          )}
       {isLoading ? (
-        <div>loading..</div>
+        <PostItemLoading />
       ) : (
         !isReachedEnd && <div ref={bottomRef}></div>
       )}
