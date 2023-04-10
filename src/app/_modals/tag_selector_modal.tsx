@@ -5,6 +5,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 
 import styles from './tag_selector_modal.module.scss';
+import { toast } from 'react-toastify';
 
 const customStyles = {
   content: {
@@ -43,7 +44,7 @@ export const TagSelectorModal = ({
     }
 
     if (3 <= pickedTags.length) {
-      console.log('최대 3개만 선택가능');
+      toast.error('최대 3개만 선택 가능합니다.');
       return;
     }
     setPickedTags([...pickedTags, tag]);

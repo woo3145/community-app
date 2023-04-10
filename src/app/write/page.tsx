@@ -9,6 +9,7 @@ import { IoClose, IoImageOutline } from 'react-icons/io5';
 import Button from '../_components/atoms/Button';
 import styles from './page.module.scss';
 import { TagPicker } from '../_components/molecules/TagPicker';
+import { toast } from 'react-toastify';
 
 interface PostFormData {
   title: string;
@@ -57,9 +58,9 @@ export default function Write() {
   const onSubmit = async (data: PostFormData) => {
     try {
       const { title, content } = data;
-      if (!title) return console.log('제목을 입력해주세요.');
-      if (!content) return console.log('내용을 입력해주세요.');
-      if (!selectedTags.length) return console.log('태그를 선택해주세요.');
+      if (!title) return toast.error('제목을 입력해주세요.');
+      if (!content) return toast.error('내용을 입력해주세요.');
+      if (!selectedTags.length) return toast.error('태그를 선택해주세요.');
 
       // (이미지 업로드 후 url받아오기)
       let imagePath = '';
@@ -95,7 +96,7 @@ export default function Write() {
       ).json();
 
       if (response.error) {
-        // 에러처리
+        toast.error('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
         return;
       }
       const { postId } = response as CreatePostResponse;

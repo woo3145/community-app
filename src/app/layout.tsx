@@ -2,6 +2,7 @@ import { Header } from './_common/header';
 import { SessionProviders } from './sessionProviders';
 
 import './globals.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default async function RootLayout({
   children,

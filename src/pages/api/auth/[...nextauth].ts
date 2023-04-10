@@ -4,6 +4,7 @@ import { AuthOptions, DefaultUser } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import client from '@/libs/server/prismaClient';
 import { IssueTokens, issueTokens } from '@/libs/server/tokenUtils';
+import { signIn } from 'next-auth/react';
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(client),

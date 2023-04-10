@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import styles from './header.module.scss';
+import { ToastContainer } from 'react-toastify';
 
 const Logo = () => {
   return (
@@ -56,6 +57,8 @@ export const Header = () => {
         </div>
       </div>
       <div className={styles.paddingBox}></div>
+
+      <ToastContainer />
     </>
   );
 };

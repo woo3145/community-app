@@ -20,7 +20,6 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { isValid },
   } = useForm<FormData>();
   const [message, setMessage] = useState('');
@@ -32,11 +31,13 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
       const result = await signIn('credentials', {
         email: email,
         password: password,
-        redirect: true,
-        callbackUrl: '/',
+        redirect: false,
       });
+      if (!result?.ok) {
+        setMessage('비밀번호가 일치하지 않습니다.');
+        return;
+      }
     } catch (e) {
-      console.log('error : ', e);
       setMessage('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
     }
   };

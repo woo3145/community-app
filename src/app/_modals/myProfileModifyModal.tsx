@@ -15,6 +15,7 @@ import Button from '../_components/atoms/Button';
 import { AvatarCrop } from './avatarCrop/avatarCrop';
 
 import styles from './myProfileModifyModal.module.scss';
+import { toast } from 'react-toastify';
 
 const customStyles = {
   content: {
@@ -100,7 +101,7 @@ export const MyProfileModifyModal = ({
       const { nickname, description } = data;
 
       if (!nickname && nameType) {
-        console.log('닉네임 선택하고 닉네임을 입력안함');
+        toast.error('닉네임을 입력해주세요.');
         return;
       }
       if (
@@ -110,7 +111,6 @@ export const MyProfileModifyModal = ({
       ) {
         if (!nameType || (nameType && nickname === profile.nickname)) {
           // 변경할 내용 없음
-          console.log('변경 안함');
           closeModal();
           return;
         }
@@ -149,10 +149,12 @@ export const MyProfileModifyModal = ({
       ).json();
 
       if (response.error) {
+        toast.error('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
         return;
       }
       // 성공
       mutate('/api/me');
+      toast.success('성공적으로 업데이트 되었습니다.');
       closeModal();
     } catch (e) {
       console.log('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');

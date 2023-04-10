@@ -27,12 +27,16 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
         <span>*</span>
       </div>
       <div className={styles.body}>
-        <button className={styles.addButton} onClick={openModal}>
+        <button type="button" className={styles.addButton} onClick={openModal}>
           <IoAdd />
         </button>
 
         {selectedTags.length === 0 && (
-          <button className={styles.placeholder} onClick={openModal}></button>
+          <button
+            type="button"
+            className={styles.placeholder}
+            onClick={openModal}
+          ></button>
         )}
 
         {modalIsOpen && (
@@ -49,7 +53,7 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
             return (
               <div key={idx} className={styles.selectedTag}>
                 <span>{tag.title}</span>
-                <button onClick={() => onClickExcludeTag(tag.id)}>
+                <button type="button" onClick={() => onClickExcludeTag(tag.id)}>
                   <IoCloseOutline />
                 </button>
               </div>

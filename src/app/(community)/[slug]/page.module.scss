@@ -4,10 +4,20 @@
   padding-bottom: 100px;
 }
 
-.writeButtonSection {
-  width: 100%;
+.write_button_section {
+  padding: 30px;
+  border: var(--border);
+  border-top: none;
+
+  background-color: var(--card-color);
 }
 
-.postListSection {
-  width: full;
+.article_list_section {
+  display: flex;
+  flex-direction: column;
+  border: var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+
+  background-color: var(--card-color);
 }
