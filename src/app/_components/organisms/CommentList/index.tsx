@@ -6,9 +6,9 @@ import { IoChatbubbleOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
 
 import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
-import { Comment } from '@/app/_components/molecules/CommentItem';
 
 import styles from './styles.module.scss';
+import { CommentItem } from '../../molecules/CommentItem';
 
 interface Props {
   postId: number;
@@ -68,7 +68,7 @@ export const CommentList = ({ postId }: Props) => {
     <div className={styles.commentsContainer}>
       {comments.length > 0 ? (
         comments.map((comment) => {
-          return <Comment key={comment.id} comment={comment} />;
+          return <CommentItem key={comment.id} comment={comment} />;
         })
       ) : (
         <EmptyCommentMessage />

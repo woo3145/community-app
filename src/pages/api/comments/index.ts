@@ -19,7 +19,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const { content, postId } = req.body as CreateCommentBody;
-    console.log(content, postId);
     const newComment = await client.comment.create({
       data: {
         content,

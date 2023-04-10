@@ -25,6 +25,7 @@ interface Comment {
   content: string;
 
   userId?: string;
+  postId?: number;
 
   user?: {
     profile: Profile;

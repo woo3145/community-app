@@ -15,9 +15,9 @@ const PopupMenu = () => {
   );
 };
 
-export const Comment = ({ comment }: Props) => {
+export const CommentItem = ({ comment }: Props) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.container}>
       <div className={styles.header}>
         <AuthorProfile
           profile={comment.user?.profile}

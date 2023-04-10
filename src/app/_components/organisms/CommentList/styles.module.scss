@@ -2,7 +2,6 @@
 
 .commentsContainer {
   width: 100%;
-  padding: 54px 40px;
   .emptyMessage {
     @include flex_center;
     flex-direction: column;
@@ -20,6 +19,7 @@
   }
 
   .commentWrite {
+    padding: 8px 40px;
     &_top {
       margin-bottom: 12px;
       .profileWrapper {

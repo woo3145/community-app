@@ -4,17 +4,16 @@ import { useMe } from '@/hooks/useMe';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
-import { usePosts } from '@/hooks/usePosts';
-import { PostItem } from '@/app/_components/molecules/PostItem';
 
 import styles from './styles.module.scss';
 import { MyCommunityTab } from './MyCommunityTab';
+import { MyPosts } from './MyPosts';
+import { MyComments } from './MyComments';
 
 export type MyCommunityTabType = 'recents' | 'posts' | 'comments' | 'likes';
 
 export const MyCommunity = () => {
   const [tab, setTab] = useState<MyCommunityTabType>('recents');
-  const { data, isLoading: postIsLoading } = usePosts(''); // 임시
   const { me, isLoading } = useMe();
   const { data: session, status } = useSession();
 
@@ -29,19 +28,10 @@ export const MyCommunity = () => {
   return (
     <div className={styles.wrapper}>
       <MyCommunityTab tab={tab} setTab={setTab} />
-      <div>
-        {isLoading ? (
-          <div>loading..</div>
-        ) : (
-          <div>
-            {data.map((page) =>
-              page.posts.map((post) => {
-                return <PostItem key={post.id} post={post} />;
-              })
-            )}
-          </div>
-        )}
-      </div>
+      {tab === 'recents' && <MyPosts />} {/* 임시 */}
+      {tab === 'posts' && <MyPosts />}
+      {tab === 'comments' && <MyComments />}
+      {tab === 'likes' && <MyPosts />} {/* 임시 */}
     </div>
   );
 };
