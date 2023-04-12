@@ -6,9 +6,10 @@ import { IoChatbubbleOutline } from 'react-icons/io5';
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
 
 import styles from './styles.module.scss';
+import { Post } from '@/libs/server/postUtils/postFetchTypes';
 
 interface Props {
-  post: PostItem;
+  post: Post;
 }
 
 export const PostItem = ({ post }: Props) => {

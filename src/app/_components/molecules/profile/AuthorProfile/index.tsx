@@ -6,6 +6,7 @@ import { formatDate } from '@/libs/client/dateUtils';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
 import styles from './styles.module.scss';
+import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 interface Props {
   profile?: Profile;

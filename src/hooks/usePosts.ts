@@ -1,9 +1,10 @@
 import { MutableRefObject, useRef } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from './useInfiniteScroll';
+import { Post } from '@/libs/server/postUtils/postFetchTypes';
 
 interface UsePostsReturn {
-  data: { posts: PostItem[] }[];
+  data: { posts: Post[] }[];
   bottomRef: MutableRefObject<null>;
   isReachedEnd: boolean;
   isLoading: boolean;
@@ -21,7 +22,7 @@ const fetcher = async (url: string) => {
 const POST_LIMIT = 6;
 
 export const usePosts = (slug?: string): UsePostsReturn => {
-  const { data, error, size, setSize } = useSWRInfinite<{ posts: PostItem[] }>(
+  const { data, error, size, setSize } = useSWRInfinite<{ posts: Post[] }>(
     (pageIndex: number, previousPageData: any) => {
       if (previousPageData && !previousPageData.posts?.length) return null; // 끝에 도달
 

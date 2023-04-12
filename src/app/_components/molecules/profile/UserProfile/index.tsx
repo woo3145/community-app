@@ -1,9 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
 import styles from './styles.module.scss';
+import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 interface Props {
   profile?: Profile;
@@ -18,7 +18,7 @@ export const UserProfile = ({ profile, size = 'md' }: Props) => {
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.profileBox} ${styles[size]}`}>
-        <Avatar src={profile.avatar} size={size} />
+        <Avatar src={profile.avatar || ''} size={size} />
 
         <div className={styles.verticleBox}>
           <div className={styles.user_name}>

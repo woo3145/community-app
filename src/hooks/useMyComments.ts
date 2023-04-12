@@ -1,9 +1,10 @@
 import { MutableRefObject, useRef } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from './useInfiniteScroll';
+import { Comments } from '@/libs/server/commentUtils/commentFetchTypes';
 
 interface UseMyCommentsReturn {
-  data: { comments: Comment[] }[];
+  data: { comments: Comments }[];
   bottomRef: MutableRefObject<null>;
   isReachedEnd: boolean;
   isLoading: boolean;
@@ -22,7 +23,7 @@ const POST_LIMIT = 6;
 
 export const useMyComments = (): UseMyCommentsReturn => {
   const { data, error, size, setSize } = useSWRInfinite<{
-    comments: Comment[];
+    comments: Comments;
   }>(
     (pageIndex: number, previousPageData: any) => {
       if (previousPageData && !previousPageData.posts?.length) return null; // 끝에 도달

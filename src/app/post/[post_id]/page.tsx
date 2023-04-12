@@ -65,7 +65,7 @@ export default function PostDetail({
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>
-            <Link href={`/profile/${post.user?.profile.userId}`}>
+            <Link href={`/profile/${post.user?.profile?.userId}`}>
               <UserProfile profile={post.user?.profile} />
             </Link>
           </div>

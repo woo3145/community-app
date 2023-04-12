@@ -1,13 +1,14 @@
+import { Comments } from '@/libs/server/commentUtils/commentFetchTypes';
 import useSWR from 'swr';
 
 interface UseCommentsResponse {
-  comments: Comment[] | [];
+  comments: Comments;
   isLoading: boolean;
   isError: boolean;
 }
 
 export const useComments = (postId: number): UseCommentsResponse => {
-  const { data, error } = useSWR<{ comments: Comment[] }>(
+  const { data, error } = useSWR<{ comments: Comments }>(
     postId ? `/api/posts/${postId}/comments` : null,
     async (url: string) => {
       const response = await fetch(url);

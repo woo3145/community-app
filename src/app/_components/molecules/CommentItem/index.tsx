@@ -3,6 +3,7 @@ import { IoEllipsisHorizontal } from 'react-icons/io5';
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
 import styles from './styles.module.scss';
 import Link from 'next/link';
+import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 
 interface Props {
   comment: Comment;

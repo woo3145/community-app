@@ -1,5 +1,6 @@
 import client from '@/libs/server/prismaClient';
-import { FetchedPost } from './fetchTypes';
+import { getProfileInclude } from '../profileUtils/profileFetch';
+import { FetchedPost } from './postFetchTypes';
 
 export const parseFetchPostQueryParams = (
   query: Partial<{
@@ -27,7 +28,7 @@ export const getPostInclude = () => {
     user: {
       select: {
         profile: {
-          include: { job: true },
+          include: getProfileInclude(),
         },
       },
     },

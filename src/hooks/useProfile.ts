@@ -1,3 +1,4 @@
+import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 import useSWR from 'swr';
 
 interface UseProfileResponse {

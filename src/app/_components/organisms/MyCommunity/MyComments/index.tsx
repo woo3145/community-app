@@ -5,7 +5,6 @@ import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
 import styles from './styles.module.scss';
 import { useMyComments } from '@/hooks/useMyComments';
 import { CommentItem } from '@/app/_components/molecules/CommentItem';
-import Link from 'next/link';
 
 export const MyComments = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyComments();
@@ -17,8 +16,8 @@ export const MyComments = () => {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.comments.map((comment) => {
-              return <CommentItem key={comment.id} comment={comment} isLink />;
+            page.comments.map((comment, idx) => {
+              return <CommentItem key={idx} comment={comment} isLink />;
             })
           )}
       {isLoading ? (

@@ -1,5 +1,6 @@
+import { Me } from '@/interfaces/user';
 import { useSession } from 'next-auth/react';
-import useSWR, { KeyedMutator } from 'swr';
+import useSWR from 'swr';
 
 interface UseMeResponse {
   me: Me | null;

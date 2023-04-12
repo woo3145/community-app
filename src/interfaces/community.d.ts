@@ -1,29 +1,12 @@
-import { Post } from '@/libs/server/postUtils/fetchTypes';
-import { addIsLikedAndIsCommented } from '@/libs/server/postUtils/postFetch';
+import { addIsLikedAndIsCommented } from '@/libs/server/fetcher/postFetch';
+import { Post } from '@/libs/server/postUtils/postFetchTypes';
 
-type PostItem = Post;
-
-interface RecentlyViewdPost {
+export interface RecentlyViewdPost {
   viewdAt: Date;
-  post: PostItem;
+  post: Post;
 }
 
-interface LikesPost {
+export interface LikesPost {
   createAt: Date;
-  post: PostItem;
-}
-
-interface Comment {
-  id: number;
-  content: string;
-
-  userId?: string;
-  postId?: number;
-
-  user?: {
-    profile: Profile;
-  };
-
-  createAt: Date;
-  updateAt: Date;
+  post: Post;
 }

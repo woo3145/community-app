@@ -1,5 +1,5 @@
 import client from '@/libs/server/prismaClient';
-import { FetchedPost } from './fetchTypes';
+import { FetchedPost } from './postFetchTypes';
 
 export const updatePostViewed = async (userId: string, postId: number) => {
   const viewd = await client.view.findFirst({

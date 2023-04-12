@@ -9,6 +9,7 @@ import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
 
 import styles from './styles.module.scss';
 import { CommentItem } from '../../molecules/CommentItem';
+import { toast } from 'react-toastify';
 
 interface Props {
   postId: number;
@@ -53,7 +54,8 @@ export const CommentList = ({ postId }: Props) => {
     ).json();
 
     if (response.error) {
-      // 에러처리
+      toast.error(response.error);
+      setIsApiLoading(false);
       return;
     }
 
@@ -67,8 +69,8 @@ export const CommentList = ({ postId }: Props) => {
   return (
     <div className={styles.commentsContainer}>
       {comments.length > 0 ? (
-        comments.map((comment) => {
-          return <CommentItem key={comment.id} comment={comment} />;
+        comments.map((comment, idx) => {
+          return <CommentItem key={idx} comment={comment} />;
         })
       ) : (
         <EmptyCommentMessage />
