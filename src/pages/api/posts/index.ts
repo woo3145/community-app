@@ -16,14 +16,16 @@ interface CreatePostBody {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getServerSession(req, res, authOptions);
+
   if (req.method === 'GET') {
     const { tag_id, page, limit } = req.query as {
       tag_id: string | undefined;
       page: string | undefined;
       limit: string | undefined;
     };
-    console.log(tag_id, page, limit);
-    let posts: Post[] = [];
+
+    let posts = [];
     const intPage = page !== undefined ? parseInt(page) : 0;
     const intLimit = limit !== undefined ? parseInt(limit) : 15;
     if (tag_id && tag_id !== 'all') {
@@ -36,6 +38,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             orderBy: {
               createAt: 'desc',
             },
+
             include: {
               tags: true,
               user: {
@@ -43,6 +46,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                   profile: {
                     include: { job: true },
                   },
+                },
+              },
+              likes: {
+                select: {
+                  userId: true,
                 },
               },
               _count: {
@@ -75,6 +83,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
               },
             },
           },
+          likes: {
+            select: {
+              userId: true,
+            },
+          },
           _count: {
             select: {
               comments: true,
@@ -85,11 +98,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     }
 
-    return res.status(200).json({ posts });
+    const postsWithIsLiked = posts.map((post) => {
+      return {
+        ...post,
+        isLiked: post.likes.some((liked) => liked.userId === session?.user.id),
+      };
+    });
+
+    return res.status(200).json({ posts: postsWithIsLiked });
   }
 
   if (req.method === 'POST') {
-    const session = await getServerSession(req, res, authOptions);
     if (!session) {
       throw new HttpError(401, 'Unauthorized');
     }

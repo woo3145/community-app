@@ -32,7 +32,9 @@ export const PostItem = ({ post }: Props) => {
             })}
           </ul>
           <div className={styles.bottom}>
-            <div className={styles.icon}>
+            <div
+              className={`${styles.icon} ${post.isLiked ? styles.isLiked : ''}`}
+            >
               <AiOutlineLike />
               <span>{post._count.likes}</span>
             </div>

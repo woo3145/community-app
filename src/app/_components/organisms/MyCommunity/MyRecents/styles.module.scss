@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+
+  background-color: var(--card-color);
+}

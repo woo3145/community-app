@@ -20,46 +20,49 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const intPage = page !== undefined ? parseInt(page) : 0;
     const intLimit = limit !== undefined ? parseInt(limit) : 15;
 
-    const posts = await client.post.findMany({
+    const likes = await client.likedPost.findMany({
       skip: intPage * intLimit,
       take: intLimit,
       where: {
         userId: session.user.id,
       },
       orderBy: {
-        createAt: 'desc',
+        createdAt: 'desc',
       },
-      include: {
-        tags: true,
-        user: {
-          select: {
-            profile: {
-              include: { job: true },
+      select: {
+        createdAt: true,
+        post: {
+          include: {
+            tags: true,
+            user: {
+              select: {
+                profile: {
+                  include: { job: true },
+                },
+              },
+            },
+            _count: {
+              select: {
+                comments: true,
+                likes: true,
+              },
             },
           },
         },
-        _count: {
-          select: {
-            comments: true,
-            likes: true,
-          },
-        },
-        likes: {
-          select: {
-            userId: true,
-          },
-        },
       },
     });
 
-    const postsWithIsLiked = posts.map((post) => {
+    const likesPostWithIsLiked = likes.map((like) => {
       return {
-        ...post,
-        isLiked: post.likes.some((liked) => liked.userId === session?.user.id),
+        ...like,
+        post: {
+          ...like.post,
+          isLiked: true,
+        },
       };
     });
 
-    return res.status(200).json({ posts: postsWithIsLiked });
+    return res.status(200).json({ likes: likesPostWithIsLiked });
   }
 
   throw new HttpError(404, 'Not found');

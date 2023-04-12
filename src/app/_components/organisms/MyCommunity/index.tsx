@@ -9,6 +9,8 @@ import styles from './styles.module.scss';
 import { MyCommunityTab } from './MyCommunityTab';
 import { MyPosts } from './MyPosts';
 import { MyComments } from './MyComments';
+import { MyRecents } from './MyRecents';
+import { MyLikes } from './MyLikes';
 
 export type MyCommunityTabType = 'recents' | 'posts' | 'comments' | 'likes';
 
@@ -28,10 +30,10 @@ export const MyCommunity = () => {
   return (
     <div className={styles.wrapper}>
       <MyCommunityTab tab={tab} setTab={setTab} />
-      {tab === 'recents' && <MyPosts />} {/* 임시 */}
+      {tab === 'recents' && <MyRecents />} {/* 임시 */}
       {tab === 'posts' && <MyPosts />}
       {tab === 'comments' && <MyComments />}
-      {tab === 'likes' && <MyPosts />} {/* 임시 */}
+      {tab === 'likes' && <MyLikes />} {/* 임시 */}
     </div>
   );
 };

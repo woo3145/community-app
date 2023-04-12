@@ -1,13 +1,14 @@
 'use client';
 
 import { PostItem } from '@/app/_components/molecules/PostItem';
-import { useMyPosts } from '@/hooks/useMyPosts';
 import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
 
 import styles from './styles.module.scss';
+import { useMyLikes } from '@/hooks/useMyLikes';
 
-export const MyPosts = () => {
-  const { data, isLoading, bottomRef, isReachedEnd } = useMyPosts();
+export const MyLikes = () => {
+  const { data, isLoading, bottomRef, isReachedEnd } = useMyLikes();
+
   return (
     <div className={styles.container}>
       {data.length === 0 && isLoading
@@ -15,8 +16,8 @@ export const MyPosts = () => {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.posts.map((post) => {
-              return <PostItem key={post.id} post={post} />;
+            page.likes.map((likesPost) => {
+              return <PostItem key={likesPost.post.id} post={likesPost.post} />;
             })
           )}
       {isLoading ? (

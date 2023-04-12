@@ -18,6 +18,17 @@ interface PostItem {
     comments: number;
     likes: number;
   };
+  isLiked: boolean;
+}
+
+interface RecentlyViewdPost {
+  viewdAt: Date;
+  post: PostItem;
+}
+
+interface LikesPost {
+  createAt: Date;
+  post: PostItem;
 }
 
 interface Comment {

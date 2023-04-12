@@ -2,8 +2,8 @@ import { MutableRefObject, useRef } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from './useInfiniteScroll';
 
-interface UseMyCommentsReturn {
-  data: { comments: Comment[] }[];
+interface UseMyLikesPostReturn {
+  data: { likes: LikesPost[] }[];
   bottomRef: MutableRefObject<null>;
   isReachedEnd: boolean;
   isLoading: boolean;
@@ -20,21 +20,21 @@ const fetcher = async (url: string) => {
 
 const POST_LIMIT = 6;
 
-export const useMyComments = (): UseMyCommentsReturn => {
+export const useMyLikes = (): UseMyLikesPostReturn => {
   const { data, error, size, setSize } = useSWRInfinite<{
-    comments: Comment[];
+    likes: LikesPost[];
   }>(
     (pageIndex: number, previousPageData: any) => {
       if (previousPageData && !previousPageData.posts?.length) return null; // 끝에 도달
 
-      return `/api/my/comments?&page=${pageIndex}&limit=${POST_LIMIT}`;
+      return `/api/my/likes?&page=${pageIndex}&limit=${POST_LIMIT}`;
     },
     fetcher,
     { revalidateFirstPage: true } // 항상 첫페이지 유효성 재확인
   );
 
   const isReachedEnd =
-    data !== undefined && data[data.length - 1]?.comments.length < POST_LIMIT;
+    data !== undefined && data[data.length - 1]?.likes.length < POST_LIMIT;
   // 마지막으로 가져온 데이터의 크기가 limit보다 적으면 더이상 가져올 데이터 없음
   const isLoading =
     (!data && !error) ||

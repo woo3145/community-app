@@ -20,7 +20,7 @@ export default function PostDetail({
   params: { post_id: number };
 }) {
   const router = useRouter();
-  const { post, isLoading, isLiked } = usePost(post_id);
+  const { post, isLoading } = usePost(post_id);
   const { mutate } = useSWRConfig();
   const [isApiLoading, setIsApiLoading] = useState(false);
   const { me } = useMe();
@@ -42,7 +42,7 @@ export default function PostDetail({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          isLiked: isLiked,
+          isLiked: post?.isLiked ? true : false,
         }),
       })
     ).json();
@@ -74,7 +74,7 @@ export default function PostDetail({
             <div
               onClick={onClickLike}
               className={`${styles.likeButton} ${
-                isLiked ? styles.isLiked : ''
+                post.isLiked ? styles.isLiked : ''
               }`}
             >
               <AiOutlineLike />
@@ -109,7 +109,7 @@ export default function PostDetail({
             <div
               onClick={onClickLike}
               className={`${styles.likeButton} ${
-                isLiked ? styles.isLiked : ''
+                post.isLiked ? styles.isLiked : ''
               }`}
             >
               <AiOutlineLike />

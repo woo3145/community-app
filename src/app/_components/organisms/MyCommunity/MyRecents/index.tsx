@@ -1,13 +1,14 @@
 'use client';
 
 import { PostItem } from '@/app/_components/molecules/PostItem';
-import { useMyPosts } from '@/hooks/useMyPosts';
 import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
 
 import styles from './styles.module.scss';
+import { useMyRecents } from '@/hooks/useMyRecents';
 
-export const MyPosts = () => {
-  const { data, isLoading, bottomRef, isReachedEnd } = useMyPosts();
+export const MyRecents = () => {
+  const { data, isLoading, bottomRef, isReachedEnd } = useMyRecents();
+
   return (
     <div className={styles.container}>
       {data.length === 0 && isLoading
@@ -15,8 +16,13 @@ export const MyPosts = () => {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.posts.map((post) => {
-              return <PostItem key={post.id} post={post} />;
+            page.recents.map((recentlyViewdPost) => {
+              return (
+                <PostItem
+                  key={recentlyViewdPost.post.id}
+                  post={recentlyViewdPost.post}
+                />
+              );
             })
           )}
       {isLoading ? (

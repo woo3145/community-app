@@ -36,25 +36,49 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             likes: true,
           },
         },
+        likes: {
+          select: {
+            userId: true,
+          },
+        },
       },
     });
 
     if (!post) {
       throw new HttpError(404, '게시글을 찾을 수 없습니다.');
     }
-    let isLiked: boolean = false;
 
+    // 로그인 상태라면 최근 본 글 저장
     if (session?.user) {
-      const like = await client.likedPost.findFirst({
+      const viewd = await client.view.findFirst({
         where: {
-          userId: session.user.id,
           postId: post.id,
+          userId: session.user.id,
         },
       });
+      if (viewd) {
+        await client.view.delete({
+          where: {
+            id: viewd.id,
+          },
+        });
+      }
 
-      isLiked = !!like;
+      await client.view.create({
+        data: {
+          postId: post.id,
+          userId: session.user.id,
+        },
+      });
     }
-    return res.status(200).json({ message: 'successful', post, isLiked });
+
+    const postWithIsLiked = {
+      ...post,
+      isLiked: post.likes.some((likes) => likes.userId === session?.user.id),
+    };
+    return res
+      .status(200)
+      .json({ message: 'successful', post: postWithIsLiked });
   }
 
   if (req.method === 'PUT') {

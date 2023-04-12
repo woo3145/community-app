@@ -28,7 +28,7 @@ export const useMyPosts = (): UseMyPostsReturn => {
       return `/api/my/posts?&page=${pageIndex}&limit=${POST_LIMIT}`;
     },
     fetcher,
-    { revalidateFirstPage: false } // 항상 첫페이지 유효성 재확인
+    { revalidateFirstPage: true } // 항상 첫페이지 유효성 재확인
   );
 
   const isReachedEnd =

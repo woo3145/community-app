@@ -20,46 +20,54 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const intPage = page !== undefined ? parseInt(page) : 0;
     const intLimit = limit !== undefined ? parseInt(limit) : 15;
 
-    const posts = await client.post.findMany({
+    const recents = await client.view.findMany({
       skip: intPage * intLimit,
       take: intLimit,
       where: {
         userId: session.user.id,
       },
       orderBy: {
-        createAt: 'desc',
+        viewedAt: 'desc',
       },
-      include: {
-        tags: true,
-        user: {
-          select: {
-            profile: {
-              include: { job: true },
+      select: {
+        viewedAt: true,
+        post: {
+          include: {
+            tags: true,
+            user: {
+              select: {
+                profile: {
+                  include: { job: true },
+                },
+              },
+            },
+            _count: {
+              select: {
+                comments: true,
+                likes: true,
+              },
+            },
+            likes: {
+              select: {
+                userId: true,
+              },
             },
           },
         },
-        _count: {
-          select: {
-            comments: true,
-            likes: true,
-          },
-        },
-        likes: {
-          select: {
-            userId: true,
-          },
-        },
       },
     });
-
-    const postsWithIsLiked = posts.map((post) => {
+    const recentsWithIsLiked = recents.map((recent) => {
       return {
-        ...post,
-        isLiked: post.likes.some((liked) => liked.userId === session?.user.id),
+        ...recent,
+        post: {
+          ...recent.post,
+          isLiked: recent.post.likes.some(
+            (liked) => liked.userId === session?.user.id
+          ),
+        },
       };
     });
-
-    return res.status(200).json({ posts: postsWithIsLiked });
+    return res.status(200).json({ recents: recentsWithIsLiked });
   }
 
   throw new HttpError(404, 'Not found');
