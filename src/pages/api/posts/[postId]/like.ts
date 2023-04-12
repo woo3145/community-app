@@ -12,21 +12,7 @@ interface LikePostBody {
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
-  if (req.method === 'GET') {
-    if (!session) {
-      throw new HttpError(401, 'Unauthorized');
-    }
 
-    const { postId } = req.query as { postId: string };
-    const like = await client.likedPost.findFirst({
-      where: {
-        userId: session.user.id,
-        postId: parseInt(postId),
-      },
-    });
-
-    return res.status(200).json({ message: 'successful', isLiked: !!like });
-  }
   if (req.method === 'PUT') {
     if (!session) {
       throw new HttpError(401, 'Unauthorized');

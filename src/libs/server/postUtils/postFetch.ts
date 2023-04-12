@@ -6,17 +6,17 @@ export const parseFetchPostQueryParams = (
     [key: string]: string | string[];
   }>
 ) => {
-  const { tag_id, page, limit, post_id } = query as {
+  const { tag_id, page, limit, postId } = query as {
     tag_id: string | undefined;
     page: string | undefined;
     limit: string | undefined;
-    post_id: string | undefined;
+    postId: string | undefined;
   };
 
   const intTagId = tag_id !== undefined ? parseInt(tag_id) : -1;
   const intPage = page !== undefined ? parseInt(page) : 0;
   const intLimit = limit !== undefined ? parseInt(limit) : 15;
-  const intPostId = post_id !== undefined ? parseInt(post_id) : -1;
+  const intPostId = postId !== undefined ? parseInt(postId) : -1;
 
   return { intTagId, intPage, intLimit, intPostId };
 };

@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
 
-import client from '@/libs/server/prismaClient';
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 import {
@@ -10,14 +9,7 @@ import {
   fetchPostsByTagId,
   parseFetchPostQueryParams,
 } from '@/libs/server/postUtils/postFetch';
-
-interface CreatePostBody {
-  title: string;
-  content: string;
-  published: boolean;
-  imageUrl: string;
-  tags: number[];
-}
+import { CreatePostBody, createPost } from '@/libs/server/postUtils/postHelper';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -43,27 +35,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { title, content, published, tags, imageUrl } =
       req.body as CreatePostBody;
 
-    const newPost = await client.post.create({
-      data: {
-        title,
-        content,
-        published: published === true ? true : false,
-        imageUrl,
-        user: {
-          connect: {
-            id: session.user.id,
-          },
-        },
-        tags: {
-          connect: tags.splice(0, 3).map((tagId: number) => {
-            return {
-              id: tagId,
-            };
-          }),
-        },
-      },
+    const newPost = await createPost(session.user.id, {
+      title,
+      content,
+      published,
+      tags,
+      imageUrl,
     });
-
     return res.status(200).json({ message: 'successful', postId: newPost.id });
   }
 

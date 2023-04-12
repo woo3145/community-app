@@ -5,7 +5,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 
 import client from '@/libs/server/prismaClient';
-import { getPostInclude } from '@/libs/server/postUtils/postFetch';
+import {
+  addIsLikedAndIsCommented,
+  getPostInclude,
+} from '@/libs/server/postUtils/postFetch';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -41,10 +44,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const likesPostWithIsLiked = likes.map((like) => {
       return {
         ...like,
-        post: {
-          ...like.post,
-          isLiked: true,
-        },
+        post: addIsLikedAndIsCommented(like.post, session.user.id),
       };
     });
 
