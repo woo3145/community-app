@@ -41,6 +41,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             userId: true,
           },
         },
+        comments: {
+          select: {
+            userId: true,
+          },
+        },
       },
     });
 
@@ -75,6 +80,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const postWithIsLiked = {
       ...post,
       isLiked: post.likes.some((likes) => likes.userId === session?.user.id),
+      isCommented: post.comments.some(
+        (comment) => comment.userId === session?.user.id
+      ),
     };
     return res
       .status(200)

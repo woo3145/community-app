@@ -2,9 +2,12 @@ import { IoEllipsisHorizontal } from 'react-icons/io5';
 
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
 import styles from './styles.module.scss';
+import Link from 'next/link';
 
 interface Props {
   comment: Comment;
+  isLink?: boolean;
+  isEditButton?: boolean;
 }
 
 const PopupMenu = () => {
@@ -15,7 +18,11 @@ const PopupMenu = () => {
   );
 };
 
-export const CommentItem = ({ comment }: Props) => {
+export const CommentItem = ({
+  comment,
+  isLink = false,
+  isEditButton = false,
+}: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -24,9 +31,15 @@ export const CommentItem = ({ comment }: Props) => {
           createAt={comment.createAt}
           size="sm"
         />
-        <PopupMenu />
+        {isEditButton && <PopupMenu />}
       </div>
-      <div className={styles.content}>{comment.content}</div>
+      {isLink ? (
+        <Link href={`/post/${comment.postId}`}>
+          <div className={styles.content}>{comment.content}</div>
+        </Link>
+      ) : (
+        <div className={styles.content}>{comment.content}</div>
+      )}
     </div>
   );
 };

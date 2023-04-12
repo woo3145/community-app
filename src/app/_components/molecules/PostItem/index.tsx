@@ -38,7 +38,11 @@ export const PostItem = ({ post }: Props) => {
               <AiOutlineLike />
               <span>{post._count.likes}</span>
             </div>
-            <div className={styles.icon}>
+            <div
+              className={`${styles.icon} ${
+                post.isCommented ? styles.isCommented : ''
+              }`}
+            >
               <IoChatbubbleOutline />
               <span>{post._count.comments}</span>
             </div>

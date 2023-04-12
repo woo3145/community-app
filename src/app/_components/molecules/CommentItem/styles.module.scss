@@ -3,6 +3,8 @@
 .container {
   width: 100%;
   padding: 20px 30px 0 30px;
+  border-bottom: var(--border);
+  margin-bottom: 12px;
 }
 
 .header {
@@ -16,8 +18,6 @@
 }
 
 .content {
-  margin-bottom: 24px;
   padding: 8px 24px 12px 40px;
-  border-bottom: var(--border);
   @include text_md;
 }

@@ -19,6 +19,7 @@ interface PostItem {
     likes: number;
   };
   isLiked: boolean;
+  isCommented: boolean;
 }
 
 interface RecentlyViewdPost {

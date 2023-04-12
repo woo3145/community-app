@@ -18,11 +18,7 @@ export const MyComments = () => {
           })
         : data.map((page) =>
             page.comments.map((comment) => {
-              return (
-                <Link href={`/post/${comment.postId}`} key={comment.id}>
-                  <CommentItem comment={comment} />
-                </Link>
-              );
+              return <CommentItem key={comment.id} comment={comment} isLink />;
             })
           )}
       {isLoading ? (

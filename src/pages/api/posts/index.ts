@@ -53,6 +53,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                   userId: true,
                 },
               },
+              comments: {
+                select: {
+                  userId: true,
+                },
+              },
               _count: {
                 select: {
                   comments: true,
@@ -88,6 +93,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
               userId: true,
             },
           },
+          comments: {
+            select: {
+              userId: true,
+            },
+          },
           _count: {
             select: {
               comments: true,
@@ -102,6 +112,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return {
         ...post,
         isLiked: post.likes.some((liked) => liked.userId === session?.user.id),
+        isCommented: post.comments.some(
+          (comment) => comment.userId === session?.user.id
+        ),
       };
     });
 

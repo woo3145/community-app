@@ -82,7 +82,11 @@ export default function PostDetail({
             </div>
 
             {/* Comment Button */}
-            <div className={styles.commentButton}>
+            <div
+              className={`${styles.commentButton} ${
+                post.isCommented ? styles.isCommented : ''
+              }`}
+            >
               <IoChatbubbleOutline />
               <span>{post._count.comments}</span>
             </div>
@@ -117,7 +121,11 @@ export default function PostDetail({
             </div>
 
             {/* Comment Button */}
-            <div className={styles.commentButton}>
+            <div
+              className={`${styles.commentButton} ${
+                post.isCommented ? styles.isCommented : ''
+              }`}
+            >
               <IoChatbubbleOutline />
               <span>{post._count.comments}</span>
             </div>
