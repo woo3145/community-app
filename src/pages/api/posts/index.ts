@@ -5,7 +5,11 @@ import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
 import client from '@/libs/server/prismaClient';
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
-import { Post } from '@prisma/client';
+import {
+  addIsLikedAndIsCommented,
+  fetchPostsByTagId,
+  parseFetchPostQueryParams,
+} from '@/libs/server/postUtils/postFetch';
 
 interface CreatePostBody {
   title: string;
@@ -19,103 +23,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
 
   if (req.method === 'GET') {
-    const { tag_id, page, limit } = req.query as {
-      tag_id: string | undefined;
-      page: string | undefined;
-      limit: string | undefined;
-    };
+    const { intTagId, intPage, intLimit } = parseFetchPostQueryParams(
+      req.query
+    );
 
-    let posts = [];
-    const intPage = page !== undefined ? parseInt(page) : 0;
-    const intLimit = limit !== undefined ? parseInt(limit) : 15;
-    if (tag_id && tag_id !== 'all') {
-      const tag = await client.tag.findFirst({
-        where: { id: parseInt(tag_id) },
-        include: {
-          posts: {
-            skip: intPage * intLimit,
-            take: intLimit,
-            orderBy: {
-              createAt: 'desc',
-            },
-
-            include: {
-              tags: true,
-              user: {
-                select: {
-                  profile: {
-                    include: { job: true },
-                  },
-                },
-              },
-              likes: {
-                select: {
-                  userId: true,
-                },
-              },
-              comments: {
-                select: {
-                  userId: true,
-                },
-              },
-              _count: {
-                select: {
-                  comments: true,
-                  likes: true,
-                },
-              },
-            },
-          },
-        },
-      });
-      posts = tag ? tag.posts : [];
-    } else {
-      posts = await client.post.findMany({
-        skip: intPage * intLimit,
-        take: intLimit,
-        where: {
-          published: true,
-        },
-        orderBy: {
-          createAt: 'desc',
-        },
-        include: {
-          tags: true,
-          user: {
-            select: {
-              profile: {
-                include: { job: true },
-              },
-            },
-          },
-          likes: {
-            select: {
-              userId: true,
-            },
-          },
-          comments: {
-            select: {
-              userId: true,
-            },
-          },
-          _count: {
-            select: {
-              comments: true,
-              likes: true,
-            },
-          },
-        },
-      });
-    }
-
+    const posts = await fetchPostsByTagId(intTagId, intPage, intLimit);
     const postsWithIsLiked = posts.map((post) => {
-      return {
-        ...post,
-        isLiked: post.likes.some((liked) => liked.userId === session?.user.id),
-        isCommented: post.comments.some(
-          (comment) => comment.userId === session?.user.id
-        ),
-      };
+      return addIsLikedAndIsCommented(post, session?.user.id);
     });
 
     return res.status(200).json({ posts: postsWithIsLiked });

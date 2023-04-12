@@ -4,7 +4,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 
-import client from '@/libs/server/prismaClient';
+import {
+  addIsLikedAndIsCommented,
+  fetchPostsByUserId,
+  parseFetchPostQueryParams,
+} from '@/libs/server/postUtils/postFetch';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -13,58 +17,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!session) {
       throw new HttpError(401, 'Unauthorized');
     }
-    const { page, limit } = req.query as {
-      page: string | undefined;
-      limit: string | undefined;
-    };
-    const intPage = page !== undefined ? parseInt(page) : 0;
-    const intLimit = limit !== undefined ? parseInt(limit) : 15;
+    const { intPage, intLimit } = parseFetchPostQueryParams(req.query);
 
-    const posts = await client.post.findMany({
-      skip: intPage * intLimit,
-      take: intLimit,
-      where: {
-        userId: session.user.id,
-      },
-      orderBy: {
-        createAt: 'desc',
-      },
-      include: {
-        tags: true,
-        user: {
-          select: {
-            profile: {
-              include: { job: true },
-            },
-          },
-        },
-        _count: {
-          select: {
-            comments: true,
-            likes: true,
-          },
-        },
-        likes: {
-          select: {
-            userId: true,
-          },
-        },
-        comments: {
-          select: {
-            userId: true,
-          },
-        },
-      },
-    });
+    const posts = await fetchPostsByUserId(session.user.id, intPage, intLimit);
 
     const postsWithIsLiked = posts.map((post) => {
-      return {
-        ...post,
-        isLiked: post.likes.some((liked) => liked.userId === session?.user.id),
-        isCommented: post.comments.some(
-          (comment) => comment.userId === session?.user.id
-        ),
-      };
+      return addIsLikedAndIsCommented(post, session.user.id);
     });
 
     return res.status(200).json({ posts: postsWithIsLiked });

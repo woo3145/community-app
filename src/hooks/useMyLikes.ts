@@ -1,6 +1,7 @@
 import { MutableRefObject, useRef } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from './useInfiniteScroll';
+import { LikesPost } from '@/interfaces/community';
 
 interface UseMyLikesPostReturn {
   data: { likes: LikesPost[] }[];

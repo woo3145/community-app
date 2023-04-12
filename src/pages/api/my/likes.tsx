@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 
 import client from '@/libs/server/prismaClient';
+import { getPostInclude } from '@/libs/server/postUtils/postFetch';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -32,22 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       select: {
         createdAt: true,
         post: {
-          include: {
-            tags: true,
-            user: {
-              select: {
-                profile: {
-                  include: { job: true },
-                },
-              },
-            },
-            _count: {
-              select: {
-                comments: true,
-                likes: true,
-              },
-            },
-          },
+          include: getPostInclude(),
         },
       },
     });

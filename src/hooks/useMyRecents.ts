@@ -1,6 +1,7 @@
 import { MutableRefObject, useRef } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from './useInfiniteScroll';
+import { RecentlyViewdPost } from '@/interfaces/community';
 
 interface UseMyRecentlyViewdPostReturn {
   data: { recents: RecentlyViewdPost[] }[];

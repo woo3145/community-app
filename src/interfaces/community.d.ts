@@ -1,26 +1,7 @@
-interface PostItem {
-  id: number;
-  title: string;
-  content: string;
-  tags: SubTag[];
-  imageUrl?: string;
+import { Post } from '@/libs/server/postUtils/fetchTypes';
+import { addIsLikedAndIsCommented } from '@/libs/server/postUtils/postFetch';
 
-  userId?: string;
-
-  user?: {
-    profile: Profile;
-  };
-
-  createAt: Date;
-  updateAt: Date;
-
-  _count: {
-    comments: number;
-    likes: number;
-  };
-  isLiked: boolean;
-  isCommented: boolean;
-}
+type PostItem = Post;
 
 interface RecentlyViewdPost {
   viewdAt: Date;

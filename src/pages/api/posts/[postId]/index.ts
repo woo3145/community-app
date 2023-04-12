@@ -4,6 +4,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import client from '@/libs/server/prismaClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]';
+import {
+  addIsLikedAndIsCommented,
+  fetchPost,
+  parseFetchPostQueryParams,
+} from '@/libs/server/postUtils/postFetch';
+import { updatePostViewed } from '@/libs/server/postUtils/postHelper';
 
 interface UpdatePostBody {
   title?: string;
@@ -14,40 +20,10 @@ interface UpdatePostBody {
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
-  const { postId } = req.query as { postId: string };
+  const { intPostId } = parseFetchPostQueryParams(req.query);
 
   if (req.method === 'GET') {
-    const post = await client.post.findUnique({
-      where: { id: parseInt(postId) },
-      include: {
-        tags: true,
-        user: {
-          select: {
-            profile: {
-              include: {
-                job: true,
-              },
-            },
-          },
-        },
-        _count: {
-          select: {
-            comments: true,
-            likes: true,
-          },
-        },
-        likes: {
-          select: {
-            userId: true,
-          },
-        },
-        comments: {
-          select: {
-            userId: true,
-          },
-        },
-      },
-    });
+    const post = await fetchPost(intPostId);
 
     if (!post) {
       throw new HttpError(404, '게시글을 찾을 수 없습니다.');
@@ -55,35 +31,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     // 로그인 상태라면 최근 본 글 저장
     if (session?.user) {
-      const viewd = await client.view.findFirst({
-        where: {
-          postId: post.id,
-          userId: session.user.id,
-        },
-      });
-      if (viewd) {
-        await client.view.delete({
-          where: {
-            id: viewd.id,
-          },
-        });
-      }
-
-      await client.view.create({
-        data: {
-          postId: post.id,
-          userId: session.user.id,
-        },
-      });
+      updatePostViewed(session.user.id, post.id);
     }
 
-    const postWithIsLiked = {
-      ...post,
-      isLiked: post.likes.some((likes) => likes.userId === session?.user.id),
-      isCommented: post.comments.some(
-        (comment) => comment.userId === session?.user.id
-      ),
-    };
+    const postWithIsLiked = addIsLikedAndIsCommented(post, session?.user.id);
+
     return res
       .status(200)
       .json({ message: 'successful', post: postWithIsLiked });
@@ -95,7 +47,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const post = await client.post.findUnique({
-      where: { id: parseInt(postId) },
+      where: { id: intPostId },
       include: {
         user: {
           select: {
@@ -152,7 +104,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const post = await client.post.findUnique({
-      where: { id: parseInt(postId) },
+      where: { id: intPostId },
       include: {
         user: {
           select: {
