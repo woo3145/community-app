@@ -1,0 +1,21 @@
+@import '../../../../mixins';
+
+.container {
+  border: var(--border);
+  border-radius: var(--border-radius);
+  textarea {
+    width: 100%;
+    height: 90px;
+
+    padding: 16px 20px;
+    border: none;
+
+    @include text_sm;
+    resize: none;
+  }
+
+  .button_wrapper {
+    text-align: right;
+    padding: 20px 14px;
+  }
+}

@@ -1,15 +1,13 @@
-import Button from '@/app/_components/atoms/Button';
+'use client';
+
 import { useComments } from '@/hooks/useComments';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { IoChatbubbleOutline } from 'react-icons/io5';
-import { useSWRConfig } from 'swr';
 
 import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
 
 import styles from './styles.module.scss';
 import { CommentItem } from '../../molecules/CommentItem';
-import { toast } from 'react-toastify';
+import { CreateCommentForm } from '../../molecules/forms/CreateCommentForm';
 
 interface Props {
   postId: number;
@@ -29,42 +27,7 @@ const EmptyCommentMessage = () => {
 };
 
 export const CommentList = ({ postId }: Props) => {
-  const { register, handleSubmit, setValue } = useForm<CreateCommentForm>();
   const { comments, isLoading, isError } = useComments(postId);
-  const [isApiLoading, setIsApiLoading] = useState(false);
-  const { mutate } = useSWRConfig();
-
-  const onSubmit = handleSubmit(async (data) => {
-    if (isApiLoading) {
-      console.log('처리중입니다.');
-      return;
-    }
-    setIsApiLoading(true);
-    const response = await (
-      await fetch(`/api/comments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: data.content,
-          postId: postId,
-        }),
-      })
-    ).json();
-
-    if (response.error) {
-      toast.error(response.error);
-      setIsApiLoading(false);
-      return;
-    }
-
-    mutate(`/api/posts/${postId}/comments`);
-    mutate(`/api/posts/${postId}`);
-
-    setValue('content', '');
-    setIsApiLoading(false);
-  });
 
   return (
     <div className={styles.commentsContainer}>
@@ -83,15 +46,7 @@ export const CommentList = ({ postId }: Props) => {
           </div>
         </div>
         <div className={styles.commentWrite_bottom}>
-          <form onSubmit={onSubmit}>
-            <textarea
-              {...register('content', { required: true })}
-              placeholder="댓글 남기기"
-            />
-            <div className={styles.button_wrapper}>
-              <Button text="등록" type="submit" size="sm" />
-            </div>
-          </form>
+          <CreateCommentForm postId={postId} />
         </div>
       </div>
     </div>

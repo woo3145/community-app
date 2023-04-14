@@ -1,5 +1,3 @@
-'use client';
-
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
 import styles from './styles.module.scss';

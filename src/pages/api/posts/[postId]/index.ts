@@ -18,7 +18,7 @@ import {
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
   const { intPostId } = parseFetchPostQueryParams(req.query);
-
+  console.log(session);
   // 게시물 목록 로드
   if (req.method === 'GET') {
     const post = await fetchPost(intPostId);

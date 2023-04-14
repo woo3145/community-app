@@ -1,0 +1,19 @@
+@import '../../../mixins';
+
+.commentButton {
+  @include flex_center;
+  margin-right: 40px;
+  cursor: pointer;
+  svg {
+    @include text_xl;
+  }
+  span {
+    @include text_xl;
+    margin-left: 4px;
+    padding-top: 1px;
+  }
+}
+
+.isCommented {
+  color: var(--primary-rgb);
+}

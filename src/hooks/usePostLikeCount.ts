@@ -2,35 +2,33 @@ import { Comments } from '@/libs/server/commentUtils/commentFetchTypes';
 import useSWR from 'swr';
 
 interface UseCommentsResponse {
-  comments: Comments;
-  count: number;
+  likeCount: number;
   isLoading: boolean;
   isError: boolean;
 }
 
-export const useComments = (postId: number): UseCommentsResponse => {
-  const { data, error } = useSWR<{ comments: Comments }>(
-    postId ? `/api/posts/${postId}/comments` : null,
+// 게시물의 좋아요 수
+export const usePostLikeCount = (postId: number): UseCommentsResponse => {
+  const { data, error } = useSWR<{ likeCount: number }>(
+    postId ? `/api/posts/${postId}/like` : null,
     async (url: string) => {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error('댓글 목록을 불러오지 못했습니다.');
+        throw new Error('좋아요 수를 불러오지 못했습니다.');
       }
       return response.json();
     }
   );
   if (!postId) {
     return {
-      comments: [],
-      count: 0,
+      likeCount: 0,
       isLoading: false,
       isError: false,
     };
   }
 
   return {
-    comments: data?.comments || [],
-    count: data?.comments ? data.comments.length : 0,
+    likeCount: data?.likeCount ? data.likeCount : 0,
     isLoading: !data && !error,
     isError: error !== undefined,
   };
