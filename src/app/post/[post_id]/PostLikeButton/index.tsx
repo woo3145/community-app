@@ -3,8 +3,8 @@
 import { useToggleLike } from '@/hooks/useToggleLike';
 import { useSession } from 'next-auth/react';
 import { AiOutlineLike } from 'react-icons/ai';
-import { usePostLikeCount } from '@/hooks/usePostLikeCount';
-import { usePostIsLiked } from '@/hooks/usePostIsLiked';
+import { usePostLikeCount } from '@/hooks/swr/usePostLikeCount';
+import { usePostIsLiked } from '@/hooks/swr/usePostIsLiked';
 
 import styles from './styles.module.scss';
 

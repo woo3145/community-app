@@ -40,7 +40,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    return res.status(200).json({ comments });
+    return res.status(200).json({ message: 'success', data: comments });
   }
 
   throw new HttpError(404, 'Not found');

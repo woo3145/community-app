@@ -19,6 +19,7 @@ export const usePost = (postId: number): UsePostsReturn => {
       return response.json();
     }
   );
+
   return {
     post: data?.post || null,
     isLiked: data?.isLiked || false,

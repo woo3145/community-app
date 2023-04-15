@@ -42,7 +42,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         post: addIsLikedAndIsCommented(recent.post, session.user.id),
       };
     });
-    return res.status(200).json({ recents: recentsWithIsLiked });
+    return res
+      .status(200)
+      .json({ message: 'success', data: recentsWithIsLiked });
   }
 
   throw new HttpError(404, 'Not found');

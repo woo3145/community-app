@@ -3,8 +3,8 @@
 import { IoChatbubbleOutline } from 'react-icons/io5';
 
 import styles from './styles.module.scss';
-import { useComments } from '@/hooks/useComments';
-import { usePostIsCommented } from '@/hooks/usePostIsCommented';
+import { useComments } from '@/hooks/swr/useComments';
+import { usePostIsCommented } from '@/hooks/swr/usePostIsCommented';
 import { useSession } from 'next-auth/react';
 
 interface Props {

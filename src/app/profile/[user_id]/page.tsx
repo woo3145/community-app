@@ -2,7 +2,7 @@
 
 import Badge from '@/app/_components/atoms/Badge';
 import { usePost } from '@/hooks/usePost';
-import { useProfile } from '@/hooks/useProfile';
+import { useProfile } from '@/hooks/swr/useProfile';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

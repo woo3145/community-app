@@ -1,9 +1,4 @@
-'use client';
-
-import { PostItem } from '@/app/_components/molecules/PostItem';
-
 import styles from './page.module.scss';
-import { usePosts } from '@/hooks/usePosts';
 import { WriteButton } from '@/app/_components/molecules/WriteButton';
 import PostList from '@/app/_components/organisms/PostList';
 

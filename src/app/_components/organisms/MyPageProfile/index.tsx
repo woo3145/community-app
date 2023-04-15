@@ -4,9 +4,10 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { MyProfileModifyModal } from '@/app/_modals/myProfileModifyModal';
 import { useState } from 'react';
 import styles from './styles.module.scss';
+import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 interface Props {
-  profile: Profile;
+  profile: Exclude<Profile, null>;
 }
 
 export const MyPageProfile = ({ profile }: Props) => {

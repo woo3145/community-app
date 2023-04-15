@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import styles from './styles.module.scss';
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
+import { Post } from '@/libs/server/postUtils/postFetchTypes';
 
 interface Props {
-  post: PostItem;
+  post: Post;
 }
 
 export const PostContent = ({ post }: Props) => {
@@ -12,7 +13,7 @@ export const PostContent = ({ post }: Props) => {
       <div className={styles.header}>
         <div className={styles.autor}>
           <AuthorProfile
-            profile={post.user?.profile}
+            profile={post.user ? post.user.profile : null}
             createAt={post.createAt}
             size={'md'}
           />

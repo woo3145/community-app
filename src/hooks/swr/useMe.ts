@@ -8,9 +8,10 @@ interface UseMeResponse {
   isError: boolean;
 }
 
+// 로그인한 사용자 정보 불러오기
 export const useMe = (): UseMeResponse => {
   const { data: session } = useSession();
-  const { data, error, mutate } = useSWR<{ user: Me }>(
+  const { data, error } = useSWR<{ user: Me }>(
     session ? `/api/me` : null,
     async (url: string) => {
       const response = await fetch(url);
@@ -21,7 +22,7 @@ export const useMe = (): UseMeResponse => {
     }
   );
 
-  if (!session) {
+  if (!session || !data) {
     return {
       me: null,
       isLoading: false,

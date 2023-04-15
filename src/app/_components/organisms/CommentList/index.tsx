@@ -1,6 +1,6 @@
 'use client';
 
-import { useComments } from '@/hooks/useComments';
+import { useComments } from '@/hooks/swr/useComments';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 
 import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';

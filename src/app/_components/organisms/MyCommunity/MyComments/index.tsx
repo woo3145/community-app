@@ -3,7 +3,7 @@
 import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
 
 import styles from './styles.module.scss';
-import { useMyComments } from '@/hooks/useMyComments';
+import { useMyComments } from '@/hooks/scrollSwr/useMyComments';
 import { CommentItem } from '@/app/_components/molecules/CommentItem';
 
 export const MyComments = () => {
@@ -16,7 +16,7 @@ export const MyComments = () => {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.comments.map((comment, idx) => {
+            page.data.map((comment, idx) => {
               return <CommentItem key={idx} comment={comment} isLink />;
             })
           )}

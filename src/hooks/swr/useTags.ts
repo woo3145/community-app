@@ -7,6 +7,7 @@ interface UseTagsReturn {
   isError: boolean;
 }
 
+// 태그목록 불러오기
 export const useTags = (): UseTagsReturn => {
   const { data, error } = useSWR<{ tags: ParentTag[] }>(
     '/api/tags',

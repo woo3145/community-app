@@ -1,6 +1,6 @@
 'use client';
 
-import { usePosts } from '@/hooks/usePosts';
+import { usePosts } from '@/hooks/scrollSwr/usePosts';
 
 import { PostItem } from '../../molecules/PostItem';
 
@@ -13,7 +13,6 @@ interface Props {
 
 export default function PostList({ category }: Props) {
   const { data, isLoading, bottomRef, isReachedEnd } = usePosts(category);
-
   return (
     <div className={styles.container}>
       {data.length === 0 && isLoading
@@ -21,7 +20,7 @@ export default function PostList({ category }: Props) {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.posts.map((post) => {
+            page.data.map((post) => {
               return <PostItem key={post.id} post={post} />;
             })
           )}

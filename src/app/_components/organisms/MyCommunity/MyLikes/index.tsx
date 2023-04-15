@@ -4,7 +4,7 @@ import { PostItem } from '@/app/_components/molecules/PostItem';
 import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
 
 import styles from './styles.module.scss';
-import { useMyLikes } from '@/hooks/useMyLikes';
+import { useMyLikes } from '@/hooks/scrollSwr/useMyLikes';
 
 export const MyLikes = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyLikes();
@@ -16,7 +16,7 @@ export const MyLikes = () => {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.likes.map((likesPost) => {
+            page.data.map((likesPost) => {
               return <PostItem key={likesPost.post.id} post={likesPost.post} />;
             })
           )}

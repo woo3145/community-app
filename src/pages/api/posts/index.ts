@@ -24,7 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return addIsLikedAndIsCommented(post, session?.user.id);
     });
 
-    return res.status(200).json({ posts: postsWithIsLiked });
+    return res.status(200).json({ data: postsWithIsLiked });
   }
 
   if (req.method === 'POST') {

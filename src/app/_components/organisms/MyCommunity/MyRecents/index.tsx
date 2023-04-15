@@ -4,7 +4,7 @@ import { PostItem } from '@/app/_components/molecules/PostItem';
 import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
 
 import styles from './styles.module.scss';
-import { useMyRecents } from '@/hooks/useMyRecents';
+import { useMyRecents } from '@/hooks/scrollSwr/useMyRecents';
 
 export const MyRecents = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyRecents();
@@ -16,7 +16,7 @@ export const MyRecents = () => {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.recents.map((recentlyViewdPost) => {
+            page.data.map((recentlyViewdPost) => {
               return (
                 <PostItem
                   key={recentlyViewdPost.post.id}

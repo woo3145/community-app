@@ -1,5 +1,5 @@
 'use client';
-import { useTags } from '@/hooks/useTags';
+import { useTags } from '@/hooks/swr/useTags';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';

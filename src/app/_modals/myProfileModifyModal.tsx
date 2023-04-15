@@ -16,6 +16,7 @@ import { AvatarCrop } from './avatarCrop/avatarCrop';
 
 import styles from './myProfileModifyModal.module.scss';
 import { toast } from 'react-toastify';
+import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 const customStyles = {
   content: {
@@ -31,7 +32,7 @@ const customStyles = {
 interface Props {
   modalIsOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  profile: Profile;
+  profile: Exclude<Profile, null>;
 }
 
 interface FormData {
@@ -62,8 +63,8 @@ export const MyProfileModifyModal = ({
     formState: { isValid },
   } = useForm<FormData>({
     defaultValues: {
-      nickname: nameType ? profile.nickname : profile.name,
-      description: profile.description,
+      nickname: nameType && profile.nickname ? profile.nickname : profile.name,
+      description: profile.description || '',
     },
     mode: 'all',
   });

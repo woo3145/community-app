@@ -48,7 +48,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       };
     });
 
-    return res.status(200).json({ likes: likesPostWithIsLiked });
+    return res
+      .status(200)
+      .json({ message: 'success', data: likesPostWithIsLiked });
   }
 
   throw new HttpError(404, 'Not found');

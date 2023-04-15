@@ -1,3 +1,5 @@
+'use client';
+
 import { TagSelectorModal } from '@/app/_modals/tag_selector_modal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IoAdd, IoCloseOutline } from 'react-icons/io5';

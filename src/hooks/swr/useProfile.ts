@@ -7,6 +7,7 @@ interface UseProfileResponse {
   isError: boolean;
 }
 
+// 유저 프로필 불러오기
 export const useProfile = (userId?: string): UseProfileResponse => {
   const { data, error } = useSWR<{ profile: Profile }>(
     userId ? `/api/profile/${userId}` : null,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMe } from '@/hooks/useMe';
+import { useMe } from '@/hooks/swr/useMe';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import styles from './page.module.scss';

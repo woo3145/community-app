@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/app/_components/atoms/Button';
-import { useTags } from '@/hooks/useTags';
+import { useTags } from '@/hooks/swr/useTags';
 import {
   IoChevronBack,
   IoChevronForwardSharp,

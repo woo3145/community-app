@@ -1,7 +1,7 @@
 'use client';
 
 import { PostItem } from '@/app/_components/molecules/PostItem';
-import { useMyPosts } from '@/hooks/useMyPosts';
+import { useMyPosts } from '@/hooks/scrollSwr/useMyPosts';
 import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
 
 import styles from './styles.module.scss';
@@ -15,7 +15,7 @@ export const MyPosts = () => {
             return <PostItemLoading key={i} />;
           })
         : data.map((page) =>
-            page.posts.map((post) => {
+            page.data.map((post) => {
               return <PostItem key={post.id} post={post} />;
             })
           )}

@@ -10,7 +10,19 @@ interface Props {
 
 export const UserProfile = ({ profile, size = 'md' }: Props) => {
   if (!profile) {
-    return <div>Error loading profile</div>;
+    return (
+      <div className={styles.wrapper}>
+        <div className={`${styles.profileBox} ${styles[size]}`}>
+          <Avatar src={''} size={size} />
+
+          <div className={styles.verticleBox}>
+            <div className={styles.user_name}>
+              <p className={styles.user_name}>탈퇴한 사용자</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
