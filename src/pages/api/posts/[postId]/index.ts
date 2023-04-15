@@ -5,20 +5,14 @@ import client from '@/libs/server/prismaClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]';
 import {
-  addIsLikedAndIsCommented,
   fetchPost,
   parseFetchPostQueryParams,
 } from '@/libs/server/postUtils/postFetch';
-import {
-  UpdatePostBody,
-  updatePost,
-  updatePostViewed,
-} from '@/libs/server/postUtils/postHelper';
+import { UpdatePostBody, updatePost } from '@/libs/server/postUtils/postHelper';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
   const { intPostId } = parseFetchPostQueryParams(req.query);
-  console.log(session);
   // 게시물 목록 로드
   if (req.method === 'GET') {
     const post = await fetchPost(intPostId);
@@ -27,16 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw new HttpError(404, '게시글을 찾을 수 없습니다.');
     }
 
-    // 로그인 상태라면 최근 본 글 저장
-    if (session && session.user) {
-      await updatePostViewed(session.user.id, post.id);
-    }
-
-    const postWithIsLiked = addIsLikedAndIsCommented(post, session?.user.id);
-
-    return res
-      .status(200)
-      .json({ message: 'successful', post: postWithIsLiked });
+    return res.status(200).json({ message: 'successful', post });
   }
 
   // 게시물 업데이트
