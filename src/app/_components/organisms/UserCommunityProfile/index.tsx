@@ -1,20 +1,24 @@
+'use client';
+
 import Badge from '@/app/_components/atoms/Badge';
 import { UserProfile } from '../../molecules/profile/UserProfile';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { MyProfileModifyModal } from '@/app/_modals/myProfileModifyModal';
 import { useState } from 'react';
+import { useProfile } from '@/hooks/swr/useProfile';
+
 import styles from './styles.module.scss';
-import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
-interface Props {
-  profile: Exclude<Profile, null>;
-}
-
-export const MyPageProfile = ({ profile }: Props) => {
+export const UserCommunityProfile = ({ userId }: { userId: string }) => {
+  const { profile, isLoading } = useProfile(userId);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const openModal = () => {
     setIsOpen(true);
   };
+
+  if (isLoading || !profile) {
+    return <div>로딩 ... </div>;
+  }
 
   return (
     <div className={styles.container}>

@@ -26,7 +26,8 @@ export const getPost = async (postId: number): Promise<Post> => {
     const commentsRes = await fetch(
       `http://localhost:3000/api/user/${session.user.id}/comments`
     );
-    const { comments }: GetUserCommentsResponse = await commentsRes.json();
+    const { data: comments }: GetUserCommentsResponse =
+      await commentsRes.json();
     post.isCommented = comments.some((comment) => comment.postId === post.id);
 
     // 최근 본 글에 저장

@@ -15,11 +15,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
 
   if (req.method === 'GET') {
-    const { intTagId, intPage, intLimit } = parseFetchPostQueryParams(
-      req.query
-    );
+    const { tagId, page, limit } = parseFetchPostQueryParams(req.query);
 
-    const posts = await fetchPostsByTagId(intTagId, intPage, intLimit);
+    const posts = await fetchPostsByTagId(tagId, page, limit);
     const postsWithIsLiked = posts.map((post) => {
       return addIsLikedAndIsCommented(post, session?.user.id);
     });

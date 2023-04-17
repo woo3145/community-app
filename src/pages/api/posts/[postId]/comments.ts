@@ -1,28 +1,17 @@
 import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import client from '@/libs/server/prismaClient';
+import {
+  fetchCommentsByPostId,
+  parseFetchCommentsQueryParams,
+} from '@/libs/server/commentUtils/commentFetch';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { postId } = req.query as { postId: string };
+  const { postId } = parseFetchCommentsQueryParams(req.query);
   if (req.method === 'GET') {
-    const comments = await client.comment.findMany({
-      where: { postId: parseInt(postId) },
-      orderBy: {
-        createAt: 'asc',
-      },
-      include: {
-        user: {
-          select: {
-            profile: {
-              include: { job: true },
-            },
-          },
-        },
-      },
-    });
+    const comments = await fetchCommentsByPostId(postId);
 
-    return res.status(200).json({ message: 'successful', comments });
+    return res.status(200).json({ message: 'successful', data: comments });
   }
 
   throw new HttpError(404, 'Not found');

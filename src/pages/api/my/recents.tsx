@@ -18,11 +18,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!session) {
       throw new HttpError(401, 'Unauthorized');
     }
-    const { intPage, intLimit } = parseFetchPostQueryParams(req.query);
+    const { page, limit } = parseFetchPostQueryParams(req.query);
 
     const recents = await client.view.findMany({
-      skip: intPage * intLimit,
-      take: intLimit,
+      skip: page * limit,
+      take: limit,
       where: {
         userId: session.user.id,
       },

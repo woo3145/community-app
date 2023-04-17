@@ -1,27 +1,20 @@
 'use client';
 
 import { useMe } from '@/hooks/swr/useMe';
-import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import { useState } from 'react';
-
-import styles from './styles.module.scss';
 import { MyCommunityTab } from './MyCommunityTab';
 import { MyPosts } from './MyPosts';
 import { MyComments } from './MyComments';
 import { MyRecents } from './MyRecents';
 import { MyLikes } from './MyLikes';
 
+import styles from './styles.module.scss';
+
 export type MyCommunityTabType = 'recents' | 'posts' | 'comments' | 'likes';
 
-export const MyCommunity = () => {
+export const MyCommunityBody = () => {
   const [tab, setTab] = useState<MyCommunityTabType>('recents');
   const { me, isLoading } = useMe();
-  const { data: session, status } = useSession();
-
-  if (status !== 'loading' && !session) {
-    redirect('/login');
-  }
 
   if (isLoading || !me) {
     return <div>로딩 ... </div>;

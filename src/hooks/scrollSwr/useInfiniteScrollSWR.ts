@@ -10,7 +10,7 @@ interface UseInfiniteScrollSWRReturn<T> {
   isError: boolean;
 }
 interface UseInfiniteScrollSWROption {
-  limit?: number; // 한번페이지당 불러올 데이터 수
+  limit?: number; // 한페이지당 불러올 데이터 수
   query?: string; // 추가적인 쿼리 ex) tag_id=7&title=test
   revalidateFirstPage?: boolean; // 항상 첫페이지 유효성 재확인
 }

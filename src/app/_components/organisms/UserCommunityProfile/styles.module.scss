@@ -1,0 +1,47 @@
+@import '../../../mixins';
+
+.container {
+  position: relative;
+  padding: 30px;
+  background-color: var(--card-color);
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+
+.description {
+  @include text-sm;
+  margin-top: 20px;
+}
+
+.tagSection {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: var(--border);
+
+  p {
+    @include text-sm;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .tagList {
+    display: flex;
+    gap: 4px;
+  }
+}
+
+.editButton {
+  @include text_md;
+  position: absolute;
+  top: 64px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  border: var(--border);
+  border-radius: 28px;
+  padding: 8px 28px;
+  font-weight: 700;
+  cursor: pointer;
+  svg {
+    margin-right: 8px;
+  }
+}

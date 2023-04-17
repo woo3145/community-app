@@ -12,10 +12,10 @@ import { UpdatePostBody, updatePost } from '@/libs/server/postUtils/postHelper';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
-  const { intPostId } = parseFetchPostQueryParams(req.query);
+  const { postId } = parseFetchPostQueryParams(req.query);
   // 게시물 목록 로드
   if (req.method === 'GET') {
-    const post = await fetchPost(intPostId);
+    const post = await fetchPost(postId);
 
     if (!post) {
       throw new HttpError(404, '게시글을 찾을 수 없습니다.');
@@ -30,7 +30,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw new HttpError(401, 'Unauthorized');
     }
 
-    const post = await fetchPost(intPostId);
+    const post = await fetchPost(postId);
     if (!post) {
       throw new HttpError(404, '게시글을 찾을 수 없습니다.');
     }
@@ -55,7 +55,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const post = await client.post.findUnique({
-      where: { id: intPostId },
+      where: { id: postId },
       select: {
         id: true,
         userId: true,

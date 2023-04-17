@@ -10,7 +10,7 @@ interface UseCommentsResponse {
 
 // 게시물의 댓글 목록 불러오기
 export const useComments = (postId: number): UseCommentsResponse => {
-  const { data, error } = useSWR<{ comments: Comments }>(
+  const { data, error } = useSWR<{ data: Comments }>(
     postId ? `/api/posts/${postId}/comments` : null,
     async (url: string) => {
       const response = await fetch(url);
@@ -30,8 +30,8 @@ export const useComments = (postId: number): UseCommentsResponse => {
   }
 
   return {
-    comments: data?.comments || [],
-    count: data?.comments ? data.comments.length : 0,
+    comments: data?.data || [],
+    count: data?.data ? data.data.length : 0,
     isLoading: !data && !error,
     isError: error !== undefined,
   };

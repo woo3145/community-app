@@ -7,19 +7,27 @@ export const parseFetchPostQueryParams = (
     [key: string]: string | string[];
   }>
 ) => {
-  const { tag_id, page, limit, postId } = query as {
+  const {
+    tag_id,
+    page: _page,
+    limit: _limit,
+    postId: _postId,
+    userId: _userId,
+  } = query as {
     tag_id: string | undefined;
     page: string | undefined;
     limit: string | undefined;
     postId: string | undefined;
+    userId: string | undefined;
   };
 
-  const intTagId = tag_id !== undefined ? parseInt(tag_id) : -1;
-  const intPage = page !== undefined ? parseInt(page) : 0;
-  const intLimit = limit !== undefined ? parseInt(limit) : 15;
-  const intPostId = postId !== undefined ? parseInt(postId) : -1;
+  const tagId = tag_id !== undefined ? parseInt(tag_id) : -1;
+  const page = _page !== undefined ? parseInt(_page) : 0;
+  const limit = _limit !== undefined ? parseInt(_limit) : 15;
+  const postId = _postId !== undefined ? parseInt(_postId) : -1;
+  const userId = _userId !== undefined ? _userId : '';
 
-  return { intTagId, intPage, intLimit, intPostId };
+  return { tagId, page, limit, postId, userId };
 };
 
 export const getPostInclude = () => {
@@ -52,17 +60,17 @@ export const getPostInclude = () => {
 };
 
 export const fetchPostsByTagId = async (
-  intTagId: number,
-  intPage: number,
-  intLimit: number
+  tagId: number,
+  page: number,
+  limit: number
 ) => {
-  if (intTagId && intTagId !== -1) {
+  if (tagId && tagId !== -1) {
     const tag = await client.tag.findFirst({
-      where: { id: intTagId },
+      where: { id: tagId },
       include: {
         posts: {
-          skip: intPage * intLimit,
-          take: intLimit,
+          skip: page * limit,
+          take: limit,
           orderBy: {
             createAt: 'desc',
           },
@@ -74,8 +82,8 @@ export const fetchPostsByTagId = async (
   }
 
   const posts = await client.post.findMany({
-    skip: intPage * intLimit,
-    take: intLimit,
+    skip: page * limit,
+    take: limit,
     where: {
       published: true,
     },
@@ -89,12 +97,12 @@ export const fetchPostsByTagId = async (
 
 export const fetchPostsByUserId = async (
   userId: string,
-  intPage: number,
-  intLimit: number
+  page: number,
+  limit: number
 ) => {
   const posts = await client.post.findMany({
-    skip: intPage * intLimit,
-    take: intLimit,
+    skip: page * limit,
+    take: limit,
     where: {
       userId: userId,
     },

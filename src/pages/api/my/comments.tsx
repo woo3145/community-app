@@ -3,8 +3,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
-
-import client from '@/libs/server/prismaClient';
+import {
+  fetchCommentsByUserId,
+  parseFetchCommentsQueryParams,
+} from '@/libs/server/commentUtils/commentFetch';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -13,32 +15,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!session) {
       throw new HttpError(401, 'Unauthorized');
     }
-    const { page, limit } = req.query as {
-      page: string | undefined;
-      limit: string | undefined;
-    };
-    const intPage = page !== undefined ? parseInt(page) : 0;
-    const intLimit = limit !== undefined ? parseInt(limit) : 15;
+    const { page, limit } = parseFetchCommentsQueryParams(req.query);
 
-    const comments = await client.comment.findMany({
-      skip: intPage * intLimit,
-      take: intLimit,
-      where: {
-        userId: session.user.id,
-      },
-      orderBy: {
-        createAt: 'asc',
-      },
-      include: {
-        user: {
-          select: {
-            profile: {
-              include: { job: true },
-            },
-          },
-        },
-      },
-    });
+    const comments = await fetchCommentsByUserId(session.user.id, page, limit);
 
     return res.status(200).json({ message: 'success', data: comments });
   }

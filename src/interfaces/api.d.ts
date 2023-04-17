@@ -15,7 +15,7 @@ interface GetPostIsLikedResponse extends ApiResponse {
 }
 
 interface GetUserCommentsResponse extends ApiResponse {
-  comments: Comment[];
+  data: Comment[];
 }
 
 interface LikePostResponse extends ApiResponse {
