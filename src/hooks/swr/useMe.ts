@@ -5,6 +5,7 @@ import useSWR from 'swr';
 interface UseMeResponse {
   me: Me | null;
   isLoading: boolean;
+  isLoggedIn: boolean;
   isError: boolean;
 }
 
@@ -22,9 +23,10 @@ export const useMe = (): UseMeResponse => {
     }
   );
 
-  if (!session || !data) {
+  if (!session) {
     return {
       me: null,
+      isLoggedIn: false,
       isLoading: false,
       isError: false,
     };
@@ -33,6 +35,7 @@ export const useMe = (): UseMeResponse => {
   return {
     me: data?.user || null,
     isLoading: !data && !error,
+    isLoggedIn: !!data?.user,
     isError: error !== undefined,
   };
 };

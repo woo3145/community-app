@@ -6,6 +6,7 @@ import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
 import styles from './styles.module.scss';
 import { useMe } from '@/hooks/swr/useMe';
 import { IoChevronForwardOutline } from 'react-icons/io5';
+import { MyProfileLoading } from './Loading';
 
 interface Props {
   arrow?: boolean;
@@ -13,12 +14,13 @@ interface Props {
 }
 
 export const MyProfile = ({ arrow = false, size = 'md' }: Props) => {
-  const { me, isLoading, isError } = useMe();
+  const { me, isLoading, isLoggedIn, isError } = useMe();
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <MyProfileLoading />;
   }
 
-  if (isError || !me?.profile) {
+  if (!isLoggedIn || !me?.profile) {
     return (
       <Link href="/login" className={styles.loginButton}>
         <div className={styles.avatarWrapper}>

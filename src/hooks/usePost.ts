@@ -7,7 +7,7 @@ interface UsePostsReturn {
   isLoading: boolean;
   isError: boolean;
 }
-
+// 삭제 예정
 export const usePost = (postId: number): UsePostsReturn => {
   const { data, error } = useSWR<{ post: Post; isLiked: boolean }>(
     postId ? `/api/posts/${postId}` : null,
