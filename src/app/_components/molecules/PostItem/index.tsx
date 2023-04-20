@@ -14,54 +14,58 @@ interface Props {
 
 export const PostItem = ({ post }: Props) => {
   return (
-    <article className={styles.container}>
-      <div className={styles.verticleBox}>
-        <div className={styles.header}>
-          <AuthorProfile
-            size={'sm'}
-            profile={post.user?.profile}
-            createAt={post.createAt}
-          />
-        </div>
-
-        <Link href={`/post/${post.id}`} className={styles.body}>
-          <h3>{post.title}</h3>
-          <p>{post.content} </p>
-          <ul className={styles.tagList}>
-            {post.tags.map((tag, idx) => {
-              return <Badge key={idx} text={tag.title} size={'sm'} />;
-            })}
-          </ul>
-          <div className={styles.bottom}>
-            <div
-              className={`${styles.icon} ${post.isLiked ? styles.isLiked : ''}`}
-            >
-              <AiOutlineLike />
-              <span>{post._count.likes}</span>
-            </div>
-            <div
-              className={`${styles.icon} ${
-                post.isCommented ? styles.isCommented : ''
-              }`}
-            >
-              <IoChatbubbleOutline />
-              <span>{post._count.comments}</span>
-            </div>
+    <article className={styles.wrapper}>
+      <div className={styles.container}>
+        <div className={styles.verticleBox}>
+          <div className={styles.header}>
+            <AuthorProfile
+              size={'sm'}
+              profile={post.user?.profile}
+              createAt={post.createAt}
+            />
           </div>
-        </Link>
+
+          <Link href={`/post/${post.id}`} className={styles.body}>
+            <h3>{post.title}</h3>
+            <p>{post.content} </p>
+            <ul className={styles.tagList}>
+              {post.tags.map((tag, idx) => {
+                return <Badge key={idx} text={tag.title} size={'sm'} />;
+              })}
+            </ul>
+            <div className={styles.bottom}>
+              <div
+                className={`${styles.icon} ${
+                  post.isLiked ? styles.isLiked : ''
+                }`}
+              >
+                <AiOutlineLike />
+                <span>{post._count.likes}</span>
+              </div>
+              <div
+                className={`${styles.icon} ${
+                  post.isCommented ? styles.isCommented : ''
+                }`}
+              >
+                <IoChatbubbleOutline />
+                <span>{post._count.comments}</span>
+              </div>
+            </div>
+          </Link>
+        </div>
+        {post.imageUrl && (
+          <Link href={`/post/${post.id}`} className={styles.imageContainer}>
+            <Image
+              src={post.imageUrl}
+              width={200}
+              height={150}
+              alt="image"
+              style={{ objectFit: 'cover' }}
+              priority={true}
+            />
+          </Link>
+        )}
       </div>
-      {post.imageUrl && (
-        <Link href={`/post/${post.id}`} className={styles.imageContainer}>
-          <Image
-            src={post.imageUrl}
-            width={200}
-            height={150}
-            alt="image"
-            style={{ objectFit: 'cover' }}
-            priority={true}
-          />
-        </Link>
-      )}
     </article>
   );
 };
