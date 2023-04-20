@@ -11,10 +11,6 @@ import styles from './styles.module.scss';
 
 export const UserCommunityProfile = ({ userId }: { userId: string }) => {
   const { profile, isLoading } = useProfile(userId);
-  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const openModal = () => {
-    setIsOpen(true);
-  };
 
   if (isLoading || !profile) {
     return <div>로딩 ... </div>;
@@ -34,17 +30,6 @@ export const UserCommunityProfile = ({ userId }: { userId: string }) => {
           })}
         </div>
       </div>
-      <div className={styles.editButton} onClick={openModal}>
-        <HiOutlinePencil />
-        <span>수정하기</span>
-      </div>
-      {modalIsOpen && (
-        <MyProfileModifyModal
-          modalIsOpen={modalIsOpen}
-          setIsOpen={setIsOpen}
-          profile={profile}
-        />
-      )}
     </div>
   );
 };

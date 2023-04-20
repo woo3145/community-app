@@ -1,10 +1,9 @@
 'use client';
 
-import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
-
 import styles from './styles.module.scss';
 import { useMyComments } from '@/hooks/scrollSwr/useMyComments';
 import { CommentItem } from '@/app/_components/molecules/CommentItem';
+import { CommentItemLoading } from '@/app/_components/molecules/CommentItem/Loading';
 
 export const MyComments = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyComments();
@@ -13,7 +12,7 @@ export const MyComments = () => {
     <div className={styles.container}>
       {data.length === 0 && isLoading
         ? [1, 2, 3, 4].map((i) => {
-            return <PostItemLoading key={i} />;
+            return <CommentItemLoading key={i} />;
           })
         : data.map((page) =>
             page.data.map((comment, idx) => {
@@ -21,7 +20,7 @@ export const MyComments = () => {
             })
           )}
       {isLoading ? (
-        <PostItemLoading />
+        <CommentItemLoading />
       ) : (
         !isReachedEnd && <div ref={bottomRef}></div>
       )}

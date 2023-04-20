@@ -3,5 +3,6 @@
 .wrapper {
   background-color: var(--card-color);
   border: var(--border);
-  border-radius: var(border-radius);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
 }

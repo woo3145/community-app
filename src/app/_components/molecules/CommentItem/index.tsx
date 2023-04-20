@@ -25,22 +25,24 @@ export const CommentItem = ({
   isEditButton = false,
 }: Props) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <AuthorProfile
-          profile={comment.user?.profile}
-          createAt={comment.createAt}
-          size="sm"
-        />
-        {isEditButton && <PopupMenu />}
-      </div>
-      {isLink ? (
-        <Link href={`/post/${comment.postId}`}>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <AuthorProfile
+            profile={comment.user?.profile}
+            createAt={comment.createAt}
+            size="sm"
+          />
+          {isEditButton && <PopupMenu />}
+        </div>
+        {isLink ? (
+          <Link href={`/post/${comment.postId}`}>
+            <div className={styles.content}>{comment.content}</div>
+          </Link>
+        ) : (
           <div className={styles.content}>{comment.content}</div>
-        </Link>
-      ) : (
-        <div className={styles.content}>{comment.content}</div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

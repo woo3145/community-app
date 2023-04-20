@@ -8,6 +8,7 @@ import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
 import styles from './styles.module.scss';
 import { CommentItem } from '../../molecules/CommentItem';
 import { CreateCommentForm } from '../../molecules/forms/CreateCommentForm';
+import { CommentItemLoading } from '../../molecules/CommentItem/Loading';
 
 interface Props {
   postId: number;
@@ -31,13 +32,19 @@ export const CommentList = ({ postId }: Props) => {
 
   return (
     <div className={styles.commentsContainer}>
-      {comments.length > 0 ? (
+      {comments.length === 0 &&
+        isLoading &&
+        [1, 2, 3, 4].map((i) => {
+          return <CommentItemLoading key={i} />;
+        })}
+
+      {!isLoading && comments.length === 0 && <EmptyCommentMessage />}
+
+      {!isLoading &&
+        comments.length > 0 &&
         comments.map((comment, idx) => {
           return <CommentItem key={idx} comment={comment} />;
-        })
-      ) : (
-        <EmptyCommentMessage />
-      )}
+        })}
 
       <div className={styles.commentWrite}>
         <div className={styles.commentWrite_top}>

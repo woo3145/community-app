@@ -13,7 +13,7 @@ export const usePostIsCommented = (
   userId: string | undefined
 ): UsePostIsCommentedResponse => {
   // 임시: 유저의 댓글들을 모두 가져와 postId와 비교
-  const { data, error } = useSWR<{ comments: Comment[] }>(
+  const { data, error } = useSWR<{ data: Comment[] }>(
     userId ? `/api/user/${userId}/comments` : null,
     async (url: string) => {
       const response = await fetch(url);
@@ -23,16 +23,14 @@ export const usePostIsCommented = (
       return response.json();
     }
   );
-  if (!userId || !data?.comments) {
+  if (!userId || !data?.data) {
     return {
       isCommented: false,
       isLoading: false,
       isError: false,
     };
   }
-  const isCommented = data.comments.some(
-    (comment) => comment.postId === postId
-  );
+  const isCommented = data.data.some((comment) => comment.postId === postId);
 
   return {
     isCommented,
