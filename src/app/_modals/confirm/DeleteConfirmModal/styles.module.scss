@@ -1,0 +1,43 @@
+@import '../../../mixins';
+@import '../../../variables';
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: $myProfileModifyModalWidth;
+  max-height: $myProfileModifyModalHeight;
+}
+
+.message {
+  @include flex-center;
+  @include text_2xl;
+  font-weight: 700;
+  padding: 20px 0;
+}
+
+.horizontalBox {
+  @include flex-center;
+  gap: 12px;
+  div {
+    @include flex-center;
+    @include text-lg;
+    width: 100%;
+    padding: 12px 0;
+    border: var(--border);
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  .deleteButton {
+    color: white;
+    font-weight: 700;
+    background-color: var(--error-rgb);
+  }
+  .loading {
+    background-color: var(--gray-200);
+    opacity: 40%;
+    cursor: default;
+  }
+}

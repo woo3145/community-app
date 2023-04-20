@@ -6,6 +6,7 @@
 .container {
   width: 100%;
   border-bottom: var(--border);
+  position: relative;
 }
 
 .header {
@@ -21,6 +22,39 @@
 .content {
   padding: 8px 24px 12px 40px;
   @include text_md;
+}
+
+.popup {
+  position: relative;
+  .bubblePoint {
+    &::after {
+      position: absolute;
+      right: 12px;
+      top: -6px;
+      box-sizing: border-box;
+      display: block;
+      content: '';
+      width: 10px;
+      height: 10px;
+      transform: rotate(45deg);
+      border-top: var(--border);
+      border-left: var(--border);
+      background-color: var(--card-color);
+    }
+  }
+  position: absolute;
+  right: -8px;
+  padding: 8px 20px;
+  border: var(--border);
+  border-radius: 5px;
+  background-color: var(--card-color);
+
+  div {
+    @include text_sm;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: var(--error-rgb);
+  }
 }
 
 .loadingWrapper {
