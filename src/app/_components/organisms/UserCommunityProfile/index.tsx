@@ -3,7 +3,7 @@
 import Badge from '@/app/_components/atoms/Badge';
 import { UserProfile } from '../../molecules/profile/UserProfile';
 import { HiOutlinePencil } from 'react-icons/hi';
-import { MyProfileModifyModal } from '@/app/_modals/myProfileModifyModal';
+import { MyProfileModifyModal } from '@/app/_modals/MyProfileModifyModal';
 import { useState } from 'react';
 import { useProfile } from '@/hooks/swr/useProfile';
 

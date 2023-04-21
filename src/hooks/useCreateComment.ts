@@ -1,19 +1,17 @@
 import { CreateCommentFormValue } from '@/app/_components/molecules/forms/CreateCommentForm';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSWRConfig } from 'swr';
 
 // 댓글 생성
-export const useCreateComment = (
-  postId: number,
-  userId: string | undefined,
-  reset: () => void
-) => {
+export const useCreateComment = (postId: number, reset: () => void) => {
+  const { data: session } = useSession();
   const [isApiLoading, setIsApiLoading] = useState(false);
   const { mutate } = useSWRConfig();
 
   const onSubmit = async (data: CreateCommentFormValue) => {
-    if (!userId) {
+    if (!session?.user) {
       toast.error('로그인이 필요합니다.');
       return;
     }
@@ -44,7 +42,7 @@ export const useCreateComment = (
     }
 
     mutate(`/api/posts/${postId}/comments`); // 게시물 댓글 새로고침
-    mutate(`/api/user/${userId}/comments`); // 내 댓글여부 새로고침(임시)
+    mutate(`/api/user/${session.user.id}/comments`); // 내 댓글여부 새로고침(임시)
     reset();
 
     setIsApiLoading(false);

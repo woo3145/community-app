@@ -22,12 +22,7 @@ export const CreateCommentForm = ({ postId }: Props) => {
     reset,
     formState: { isValid },
   } = useForm<CreateCommentFormValue>();
-  const { data: session } = useSession();
-  const { onSubmit, isApiLoading } = useCreateComment(
-    postId,
-    session?.user.id,
-    reset
-  );
+  const { onSubmit, isApiLoading } = useCreateComment(postId, reset);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>

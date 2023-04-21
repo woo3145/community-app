@@ -28,7 +28,7 @@ const customStyles = {
 interface Props {
   modalIsOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  previewForEdit: string;
+  preview: string;
   setPreview: Dispatch<SetStateAction<string>>;
   setImageFile: Dispatch<SetStateAction<File | null>>;
 }
@@ -36,7 +36,7 @@ interface Props {
 export const AvatarCrop = ({
   modalIsOpen,
   setIsOpen,
-  previewForEdit,
+  preview,
   setPreview,
   setImageFile,
 }: Props) => {
@@ -55,7 +55,7 @@ export const AvatarCrop = ({
 
   // 이미지 정보 저장
   const initImage = useCallback(async () => {
-    const image = await loadImage(previewForEdit);
+    const image = await loadImage(preview);
     const imageSize = resizeImage(image);
     setImage(image);
     setImageSize(imageSize);
@@ -65,7 +65,7 @@ export const AvatarCrop = ({
       width: 100,
       height: 100,
     });
-  }, [previewForEdit]);
+  }, [preview]);
 
   useEffect(() => {
     initImage();

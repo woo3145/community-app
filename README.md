@@ -67,4 +67,4 @@ AWS_S3_BUCKET=
 - 그외
   - [x] 로딩 컴포넌트 적용
   - [x] react-toastify
-  - [ ] 댓글 삭제 기능
+  - [x] 댓글 삭제 기능

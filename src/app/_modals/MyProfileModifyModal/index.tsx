@@ -1,22 +1,18 @@
 'use client';
-import {
-  ChangeEvent,
-  Dispatch,
-  KeyboardEvent,
-  SetStateAction,
-  useState,
-} from 'react';
+import { Dispatch, KeyboardEvent, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 import { useSWRConfig } from 'swr';
-import { Avatar } from '../_components/atoms/Avatar';
-import Button from '../_components/atoms/Button';
-import { AvatarCrop } from './avatarCrop/avatarCrop';
-
-import styles from './myProfileModifyModal.module.scss';
+import { Avatar } from '../../_components/atoms/Avatar';
+import Button from '../../_components/atoms/Button';
+import { AvatarCrop } from '../avatarCrop/avatarCrop';
 import { toast } from 'react-toastify';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
+
+import styles from './styles.module.scss';
+import { useUploadImage } from '@/hooks/useUploadImage';
+import { useEditProfile } from '@/hooks/useEditProfile';
 
 const customStyles = {
   content: {
@@ -35,7 +31,7 @@ interface Props {
   profile: Exclude<Profile, null>;
 }
 
-interface FormData {
+export interface EditProfileFormValue {
   nickname: string;
   description: string;
 }
@@ -45,23 +41,31 @@ export const MyProfileModifyModal = ({
   setIsOpen,
   profile,
 }: Props) => {
-  const [preview, setPreview] = useState(profile.avatar || '');
-  const [previewForEdit, setPreviewForEdit] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [cropModalIsOpen, setCropModalIsOpen] = useState<boolean>(false);
   const openCropModal = () => {
     setCropModalIsOpen(true);
   };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const {
+    preview,
+    setPreview,
+    imageFile,
+    setImageFile,
+    uploadImage,
+    handleImage,
+  } = useUploadImage(openCropModal);
 
   const [nameType, setNameType] = useState<boolean>(profile.nameType);
-  const { mutate } = useSWRConfig();
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { isValid },
-  } = useForm<FormData>({
+  } = useForm<EditProfileFormValue>({
     defaultValues: {
       nickname: nameType && profile.nickname ? profile.nickname : profile.name,
       description: profile.description || '',
@@ -69,26 +73,13 @@ export const MyProfileModifyModal = ({
     mode: 'all',
   });
 
-  const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files?.length || !event.target.files[0]) {
-      console.log('선택된 이미지가 없습니다.');
-      return;
-    }
-    const file = event.target.files[0];
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e: any) => {
-      if (reader.readyState === 2) {
-        setPreviewForEdit(e.target.result);
-      }
-    };
-    openCropModal();
-  };
-
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const { onSubmit } = useEditProfile(
+    profile,
+    nameType,
+    imageFile,
+    uploadImage,
+    closeModal
+  );
 
   const PreventEnter = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter') {
@@ -96,71 +87,6 @@ export const MyProfileModifyModal = ({
       if (text[text.length - 1] == '\n') event.preventDefault(); // 엔터 2번이상 입력 막기
     }
   };
-
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      const { nickname, description } = data;
-
-      if (!nickname && nameType) {
-        toast.error('닉네임을 입력해주세요.');
-        return;
-      }
-      if (
-        nameType === profile.nameType &&
-        description === profile.description &&
-        !imageFile
-      ) {
-        if (!nameType || (nameType && nickname === profile.nickname)) {
-          // 변경할 내용 없음
-          closeModal();
-          return;
-        }
-      }
-
-      // (이미지 업로드 후 url받아오기)
-      let imagePath = '';
-
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('image', imageFile);
-
-        const imageResponse = await (
-          await fetch(`/api/upload/image`, {
-            method: 'POST',
-            body: formData,
-          })
-        ).json();
-
-        if (imageResponse.filePath) imagePath = imageResponse.filePath;
-      }
-
-      const response = await (
-        await fetch('/api/profile', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            nameType,
-            nickname,
-            description,
-            avatar: imagePath,
-          }),
-        })
-      ).json();
-
-      if (response.error) {
-        toast.error('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
-        return;
-      }
-      // 성공
-      mutate('/api/me');
-      toast.success('성공적으로 업데이트 되었습니다.');
-      closeModal();
-    } catch (e) {
-      console.log('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
-    }
-  });
 
   return (
     <ReactModal
@@ -178,7 +104,7 @@ export const MyProfileModifyModal = ({
           </button>
         </div>
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.body}>
             <h3>커뮤니티 기본정보</h3>
             <p>woo3145 커뮤니티에서 사용되는 정보입니다.</p>
@@ -194,17 +120,17 @@ export const MyProfileModifyModal = ({
                 />
                 <label htmlFor="input-image">
                   <Avatar
-                    src={preview}
+                    src={preview ? preview : profile.avatar || ''}
                     size="lg"
                     style={{ cursor: 'pointer' }}
                   />
                 </label>
               </div>
-              {previewForEdit && (
+              {modalIsOpen && (
                 <AvatarCrop
                   modalIsOpen={cropModalIsOpen}
                   setIsOpen={setCropModalIsOpen}
-                  previewForEdit={previewForEdit}
+                  preview={preview}
                   setPreview={setPreview}
                   setImageFile={setImageFile}
                 />

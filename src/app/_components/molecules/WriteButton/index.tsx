@@ -6,7 +6,7 @@ import { useMe } from '@/hooks/swr/useMe';
 import styles from './styles.module.scss';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { MyProfileModifyModal } from '@/app/_modals/myProfileModifyModal';
+import { MyProfileModifyModal } from '@/app/_modals/MyProfileModifyModal';
 
 export const WriteButton = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
