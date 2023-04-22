@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 interface Props {
   image?: HTMLImageElement;
@@ -7,24 +7,29 @@ interface Props {
 }
 
 export const PreviewLayer = ({ image, imageSize }: Props) => {
-  const previewRef = useRef<HTMLCanvasElement>(null);
-
-  const drawImage = useCallback(async () => {
-    if (!image) return;
-    const canvas = previewRef.current;
-    if (!canvas) return;
+  const drawImage = (canvas: HTMLCanvasElement | null) => {
+    if (!image || !canvas) return;
 
     const context = canvas.getContext('2d');
     if (!context) return;
-    console.log('Preview Draw');
+
     canvas.width = imageSize.width;
     canvas.height = imageSize.height;
     context.drawImage(image, 0, 0, imageSize.width, imageSize.height);
-  }, [image, imageSize, previewRef]);
+  };
+
+  const refCallback = (canvas: HTMLCanvasElement) => {
+    if (canvas) {
+      drawImage(canvas);
+    }
+  };
 
   useEffect(() => {
-    drawImage();
-  }, [drawImage]);
+    return () => {
+      if (!image) return;
+      URL.revokeObjectURL(image.src);
+    };
+  }, [image]);
 
-  return <canvas ref={previewRef} style={{ display: 'block' }} />;
+  return <canvas ref={refCallback} style={{ display: 'block' }} />;
 };
