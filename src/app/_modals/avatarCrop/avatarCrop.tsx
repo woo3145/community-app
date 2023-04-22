@@ -1,18 +1,13 @@
 'use client';
-import { loadImage, resizeImage } from '@/libs/client/imageUtils';
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { cropImage } from '@/libs/client/imageUtils';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 
 import styles from './avatarCrop.module.scss';
 import { CropLayer } from './cropLayer';
 import { PreviewLayer } from './previewLayer';
+import { useImageCrop } from '@/hooks/useImageCrop';
 
 const customStyles = {
   content: {
@@ -40,60 +35,25 @@ export const AvatarCrop = ({
   setPreview,
   setImageFile,
 }: Props) => {
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
-  const [image, setImage] = useState<HTMLImageElement>();
-  const [dragArea, setDragArea] = useState<DragArea>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  });
+  const { image, imageSize, dragArea, setDragArea, initImage } =
+    useImageCrop(preview);
 
   function closeModal() {
     setIsOpen(false);
   }
-
-  // 이미지 정보 저장
-  const initImage = useCallback(async () => {
-    const image = await loadImage(preview);
-    const imageSize = resizeImage(image);
-    setImage(image);
-    setImageSize(imageSize);
-    setDragArea({
-      x: imageSize.width / 4,
-      y: imageSize.width / 4,
-      width: 100,
-      height: 100,
-    });
-  }, [preview]);
 
   useEffect(() => {
     initImage();
   }, [initImage]);
 
   const onClickCropImage = async () => {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    if (!context || !image) return;
-    canvas.width = imageSize.width;
-    canvas.height = imageSize.height;
-    context.drawImage(image, 0, 0, imageSize.width, imageSize.height);
-    const cropedImage = context.getImageData(
-      dragArea.x,
-      dragArea.y,
-      dragArea.width,
-      dragArea.height
-    );
-    canvas.width = cropedImage.width;
-    canvas.height = cropedImage.height;
-    context.putImageData(cropedImage, 0, 0);
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-      const imageFile = new File([blob], 'avatar.jpeg');
-      setImageFile(imageFile);
-      setPreview(canvas.toDataURL());
-      closeModal();
-    }, 'image/jpeg');
+    if (!image) return;
+    const croppedImage = await cropImage(image, imageSize, dragArea);
+    if (!croppedImage) return;
+    const imageFile = new File([croppedImage], 'avatar.jpeg');
+    setImageFile(imageFile);
+    setPreview(URL.createObjectURL(croppedImage));
+    closeModal();
   };
 
   return (

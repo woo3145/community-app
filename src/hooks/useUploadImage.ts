@@ -1,6 +1,5 @@
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
 
 // 이미지 업로드
 export const useUploadImage = (callback: () => void) => {

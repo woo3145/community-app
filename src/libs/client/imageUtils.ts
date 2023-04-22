@@ -34,3 +34,41 @@ export const resizeImage = (
     };
   }
 };
+
+export const cropImage = async (
+  image: HTMLImageElement,
+  imageSize: ImageSize,
+  dragArea: DragArea
+): Promise<Blob | null> => {
+  if (!image) return null;
+
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+
+  if (!context) return null;
+
+  canvas.width = imageSize.width;
+  canvas.height = imageSize.height;
+  context.drawImage(image, 0, 0, imageSize.width, imageSize.height);
+
+  const cropedImage = context.getImageData(
+    dragArea.x,
+    dragArea.y,
+    dragArea.width,
+    dragArea.height
+  );
+
+  canvas.width = cropedImage.width;
+  canvas.height = cropedImage.height;
+  context.putImageData(cropedImage, 0, 0);
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        resolve(null);
+      } else {
+        resolve(blob);
+      }
+    }, 'image/jpeg');
+  });
+};
