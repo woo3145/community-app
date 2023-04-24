@@ -1,20 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { CustomError } from './customErrors';
 
-export class HttpError extends Error {
-  status: number;
-
-  constructor(status: number, message: string) {
-    super(message);
-    this.name = 'HttpError';
-    this.status = status;
-  }
-}
-
+// API 에러 핸들러
 export function handleError(error: unknown, res: NextApiResponse) {
-  if (error instanceof HttpError) {
-    res.status(error.status).json({ ok: false, message: error.message });
+  if (error instanceof CustomError) {
+    res.status(error.statusCode).json({ errors: error.serializeErrors() });
   } else {
-    res.status(500).json({ ok: false, message: 'Internal server error' });
+    res.status(500).json({ errors: [{ message: 'Internal server error' }] });
   }
 }
 

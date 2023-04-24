@@ -1,4 +1,4 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
+import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 

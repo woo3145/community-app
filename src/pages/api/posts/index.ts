@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
+import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
 
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';

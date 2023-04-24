@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandling';
+import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
 
 import client from '@/libs/server/prismaClient';
 

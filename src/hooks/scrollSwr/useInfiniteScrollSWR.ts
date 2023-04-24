@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from '../useInfiniteScroll';
-import { HttpError } from '@/libs/server/errorHandling';
+import { HttpError } from '@/libs/server/errorHandler';
 
 interface UseInfiniteScrollSWRReturn<T> {
   data: { data: T }[];
@@ -51,7 +51,6 @@ export const useInfiniteScrollSWR = <T extends any[]>(
     {
       revalidateFirstPage: revalidateFirstPage,
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        console.log(retryCount);
         // Never retry on 404.
         if (error.status === 404) return;
 
@@ -65,7 +64,7 @@ export const useInfiniteScrollSWR = <T extends any[]>(
   );
 
   const isReachedEnd =
-    data !== undefined && data[data.length - 1]?.data.length < limit;
+    error || (data !== undefined && data[data.length - 1]?.data.length < limit);
   // 마지막으로 가져온 데이터의 크기가 limit보다 적으면 더이상 가져올 데이터 없음
   const isLoading =
     (!data && !error) ||
@@ -73,7 +72,7 @@ export const useInfiniteScrollSWR = <T extends any[]>(
   // 첫페이지 요청이 아님 && 데이터는 그대로고 사이즈만 증가한 상태
 
   const bottomRef = useInfiniteScroll(data, () => {
-    if (!error && !isReachedEnd) setSize(size + 1);
+    if (!isReachedEnd) setSize(size + 1);
   });
 
   return {
