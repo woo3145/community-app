@@ -1,9 +1,14 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import client from '@/libs/server/prismaClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
+import {
+  ForbiddenError,
+  NotFoundError,
+  ValidationError,
+} from '@/libs/server/customErrors';
 
 interface CreateTagBody {
   title: string;
@@ -23,12 +28,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    return res.status(200).json({ message: 'successful', tags });
+    return res.status(200).json({ message: 'successful', data: tags });
   }
 
   if (req.method === 'POST') {
     if (!session || session.user.id !== process.env.ADMIN_ID) {
-      throw new HttpError(403, 'Forbidden');
+      throw new ForbiddenError();
     }
 
     const { title, parentId } = req.body as CreateTagBody;
@@ -39,7 +44,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
 
       if (!parentTag) {
-        throw new HttpError(400, '부모 태그를 찾을 수 없습니다.');
+        throw new ValidationError([
+          { field: 'parentId', message: '잘못된 parentId 입니다.' },
+        ]);
       }
 
       await client.tag.update({
@@ -61,7 +68,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ message: 'successful' });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

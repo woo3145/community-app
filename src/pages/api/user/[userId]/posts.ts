@@ -1,4 +1,4 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 
@@ -8,6 +8,7 @@ import {
   parseFetchPostQueryParams,
 } from '@/libs/server/postUtils/postFetch';
 import { authOptions } from '../../auth/[...nextauth]';
+import { NotFoundError } from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -26,7 +27,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ message: 'success', data: posts });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

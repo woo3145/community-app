@@ -1,9 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 
 import client from '@/libs/server/prismaClient';
 import jwt from 'jsonwebtoken';
 import { issueTokens, jwtTokenSecret } from '@/libs/server/tokenUtils';
+import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
+import { UnauthorizedError } from '@/libs/server/customErrors';
 
 interface TokenPayload {
   sub: string;
@@ -16,7 +18,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { refreshToken } = req.body;
 
     if (!refreshToken) {
-      throw new HttpError(400, 'Refresh Token not provided');
+      throw new ValidationError([
+        {
+          field: 'refresh token',
+          message: 'refresh token이 존재하지 않습니다.',
+        },
+      ]);
     }
 
     try {
@@ -25,7 +32,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const user = await client.user.findUnique({ where: { id: sub } });
 
       if (!user) {
-        return res.status(401).json({ message: 'User not found' });
+        throw new NotFoundError('user');
       }
       // 유효하다면 재발급
       const {
@@ -38,11 +45,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         .status(200)
         .json({ accessToken, refreshToken: newRefreshToken, expires_in });
     } catch (e) {
-      console.error(e);
-      throw new HttpError(401, 'Invalid refresh token');
+      throw new UnauthorizedError();
     }
   }
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

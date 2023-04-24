@@ -1,4 +1,4 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import client from '@/libs/server/prismaClient';
@@ -9,6 +9,12 @@ import {
   parseFetchPostQueryParams,
 } from '@/libs/server/postUtils/postFetch';
 import { UpdatePostBody, updatePost } from '@/libs/server/postUtils/postHelper';
+import {
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+  ValidationError,
+} from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -18,30 +24,32 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const post = await fetchPost(postId);
 
     if (!post) {
-      throw new HttpError(404, '게시글을 찾을 수 없습니다.');
+      throw new NotFoundError('post');
     }
 
-    return res.status(200).json({ message: 'successful', post });
+    return res.status(200).json({ message: 'successful', data: post });
   }
 
   // 게시물 업데이트
   if (req.method === 'PUT') {
     if (!session) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new UnauthorizedError();
     }
 
     const post = await fetchPost(postId);
     if (!post) {
-      throw new HttpError(404, '게시글을 찾을 수 없습니다.');
+      throw new NotFoundError('post');
     }
 
     if (!post.userId || post.userId !== session.user.id) {
-      throw new HttpError(403, 'Forbidden');
+      throw new ForbiddenError();
     }
     const { title, content, published, tags } = req.body as UpdatePostBody;
 
     if (tags && 3 < tags.length) {
-      throw new HttpError(400, '태그의 갯수가 잘못되었습니다.');
+      throw new ValidationError([
+        { field: 'tags', message: '태그는 3개 미만이어야 합니다.' },
+      ]);
     }
     await updatePost(post, { title, content, published, tags });
 
@@ -51,7 +59,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   // 게시물 삭제
   if (req.method === 'DELETE') {
     if (!session) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new UnauthorizedError();
     }
 
     const post = await client.post.findUnique({
@@ -62,11 +70,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     if (!post) {
-      throw new HttpError(404, '게시글을 찾을 수 없습니다.');
+      throw new NotFoundError('post');
     }
 
     if (!post.userId || post.userId !== session.user.id) {
-      throw new HttpError(403, 'Forbidden');
+      throw new ForbiddenError();
     }
 
     await client.post.delete({
@@ -76,7 +84,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ message: 'successful' });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

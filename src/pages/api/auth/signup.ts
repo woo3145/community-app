@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import bcrypt from 'bcrypt';
 
 import client from '@/libs/server/prismaClient';
 import { User } from 'next-auth';
+import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
 
 interface CreateUserBody {
   email: string;
@@ -20,7 +21,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!!user) {
-      throw new HttpError(401, 'Email is already registed');
+      throw new ValidationError([
+        { field: 'email', message: '이미 가입된 이메일입니다.' },
+      ]);
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -53,7 +56,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       user: loggedInUser,
     });
   }
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

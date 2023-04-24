@@ -1,4 +1,4 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { getServerSession } from 'next-auth';
@@ -10,13 +10,14 @@ import {
   getPostInclude,
   parseFetchPostQueryParams,
 } from '@/libs/server/postUtils/postFetch';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
 
   if (req.method === 'GET') {
     if (!session) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new UnauthorizedError();
     }
     const { page, limit } = parseFetchPostQueryParams(req.query);
 
@@ -47,7 +48,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       .json({ message: 'success', data: recentsWithIsLiked });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

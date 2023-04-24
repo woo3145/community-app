@@ -1,14 +1,15 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import client from '@/libs/server/prismaClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './auth/[...nextauth]';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
   if (!session) {
-    throw new HttpError(401, 'Unauthorized');
+    throw new UnauthorizedError();
   }
   if (req.method === 'GET') {
     const user = await client.user.findUnique({
@@ -26,12 +27,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!user) {
-      throw new HttpError(404, '유저를 찾을 수 없습니다.');
+      throw new NotFoundError('user');
     }
-    return res.status(200).json({ message: 'successful', user });
+    return res.status(200).json({ message: 'successful', data: user });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

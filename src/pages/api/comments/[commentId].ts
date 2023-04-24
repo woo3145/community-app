@@ -1,17 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 
 import client from '@/libs/server/prismaClient';
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
+import {
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { commentId } = req.query as { commentId: string };
   if (req.method === 'DELETE') {
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new UnauthorizedError();
     }
 
     const comment = await client.comment.findUnique({
@@ -19,11 +24,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!comment) {
-      throw new HttpError(404, '댓글을 찾을 수 없습니다.');
+      throw new NotFoundError('comment');
     }
 
     if (comment.userId !== session.user.id) {
-      throw new HttpError(403, '댓글을 삭제 할 권한이 없습니다.');
+      throw new ForbiddenError();
     }
 
     await client.comment.delete({
@@ -33,7 +38,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ message: 'successful' });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

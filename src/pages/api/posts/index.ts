@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
@@ -10,6 +10,7 @@ import {
   parseFetchPostQueryParams,
 } from '@/libs/server/postUtils/postFetch';
 import { CreatePostBody, createPost } from '@/libs/server/postUtils/postHelper';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -27,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'POST') {
     if (!session) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new UnauthorizedError();
     }
 
     const { title, content, published, tags, imageUrl } =
@@ -40,10 +41,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       tags,
       imageUrl,
     });
-    return res.status(200).json({ message: 'successful', postId: newPost.id });
+    return res.status(200).json({ message: 'successful', data: newPost.id });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

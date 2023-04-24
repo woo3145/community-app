@@ -1,15 +1,16 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import client from '@/libs/server/prismaClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
 
 interface EditProfileBody {
   nameType: boolean;
   nickname: string;
   description: string;
-  avatar: string;
+  avatar: string | null;
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -17,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'PUT') {
     if (!session) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new UnauthorizedError();
     }
 
     const { nameType, nickname, description, avatar } =
@@ -27,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { userId: session.user.id },
     });
     if (!profile) {
-      throw new HttpError(404, '프로필을 찾을 수 없습니다.');
+      throw new NotFoundError('profile');
     }
     let isChanged = false;
     const updatedProfile = {
@@ -49,7 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       updatedProfile.description = description;
     }
     // 아바타는 업로드 할때만 들어옴
-    if (avatar) {
+    if (avatar !== null) {
       isChanged = true;
       updatedProfile.avatar = avatar;
     }
@@ -67,7 +68,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ message: 'successful' });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

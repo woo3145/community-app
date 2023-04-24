@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import bcrypt from 'bcrypt';
 
 import client from '@/libs/server/prismaClient';
 import { User } from 'next-auth';
+import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
 
 interface LoginUserBody {
   email: string;
@@ -19,17 +20,34 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         profile: true,
       },
     });
+
+    const errors = [];
     if (!user) {
-      throw new HttpError(401, 'Invalid email or password');
+      throw new ValidationError([
+        {
+          field: 'email or password',
+          message: '이메일 또는 패스워드가 잘못되었습니다.',
+        },
+      ]);
     }
 
     if (user.password == null) {
-      throw new HttpError(401, '비밀번호를 등록하지 않은 계정이에요.');
+      throw new ValidationError([
+        {
+          field: 'password',
+          message: '간편 로그인으로 가입된 계정이 존재합니다.',
+        },
+      ]);
     }
 
     const passwordMatches = await bcrypt.compare(password, user.password);
     if (!passwordMatches) {
-      throw new HttpError(401, 'Invalid email or password');
+      throw new ValidationError([
+        {
+          field: 'email or password',
+          message: '이메일 또는 패스워드가 잘못되었습니다.',
+        },
+      ]);
     }
     const loggedInUser: User = {
       id: user.id,
@@ -43,7 +61,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       user: loggedInUser,
     });
   }
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

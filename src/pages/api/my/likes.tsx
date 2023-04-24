@@ -1,4 +1,4 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { getServerSession } from 'next-auth';
@@ -9,14 +9,14 @@ import {
   addIsLikedAndIsCommented,
   getPostInclude,
 } from '@/libs/server/postUtils/postFetch';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
-
+  if (!session) {
+    throw new UnauthorizedError();
+  }
   if (req.method === 'GET') {
-    if (!session) {
-      throw new HttpError(401, 'Unauthorized');
-    }
     const { page, limit } = req.query as {
       page: string | undefined;
       limit: string | undefined;
@@ -53,7 +53,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       .json({ message: 'success', data: likesPostWithIsLiked });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);

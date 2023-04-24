@@ -1,9 +1,10 @@
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 import { upload } from '@/libs/server/multer';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
-import nextConnect, { NextHandler } from 'next-connect';
+import nextConnect from 'next-connect';
 import { authOptions } from '../auth/[...nextauth]';
+import { UnauthorizedError } from '@/libs/server/customErrors';
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>({
   onError: (err, req, res, next) => {
@@ -18,7 +19,7 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>({
 handler.use(async (req: NextApiRequest, res: NextApiResponse, next) => {
   const session = await getServerSession(req, res, authOptions);
   if (!session) {
-    throw new HttpError(401, 'Unauthorized');
+    throw new UnauthorizedError();
   }
   next();
 });
@@ -27,7 +28,7 @@ handler.use(upload.single('image'));
 
 handler.post((req: NextApiRequest & { file: any }, res: NextApiResponse) => {
   const filePath = req.file.location;
-  return res.status(200).json({ message: 'successful', filePath });
+  return res.status(200).json({ message: 'successful', data: filePath });
 });
 
 export default withErrorHandling(handler);

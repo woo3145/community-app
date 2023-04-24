@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { HttpError, withErrorHandling } from '@/libs/server/errorHandler';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 
 import client from '@/libs/server/prismaClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
 
 interface LikePostBody {
   isLiked: boolean;
@@ -19,13 +20,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const likeCount = await client.likedPost.count({
       where: { postId: parseInt(postId) },
     });
-    return res
-      .status(200)
-      .json({ message: 'successful', likeCount: likeCount });
+    return res.status(200).json({ message: 'successful', data: likeCount });
   }
+
   if (req.method === 'PUT') {
     if (!session) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new UnauthorizedError();
     }
 
     const { isLiked } = req.body as LikePostBody;
@@ -36,14 +36,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         postId: parseInt(postId),
       },
     });
-    let result = false;
     if (isLiked && like) {
       await client.likedPost.delete({
         where: {
           id: like.id,
         },
       });
-      result = false;
     } else if (!isLiked && !like) {
       const newLike = await client.likedPost.create({
         data: {
@@ -64,13 +62,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         },
       });
-      result = true;
     }
 
-    return res.status(200).json({ message: 'successful', isLiked: result });
+    return res.status(200).json({ message: 'successful' });
   }
 
-  throw new HttpError(404, 'Not found');
+  throw new NotFoundError();
 }
 
 export default withErrorHandling(handler);
