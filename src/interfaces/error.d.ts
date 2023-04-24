@@ -3,6 +3,6 @@ interface ClientError {
   field?: string;
 }
 
-interface ErrorResponse {
+interface ApiErrorResponse {
   errors: ClientError[];
 }

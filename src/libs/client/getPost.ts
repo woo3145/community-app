@@ -11,7 +11,7 @@ export const getPost = async (postId: number): Promise<Post> => {
   const session = await getServerSession(authOptions);
 
   const postRes = await fetch(`http://localhost:3000/api/posts/${postId}`);
-  const { post }: GetPostResponse = await postRes.json();
+  const { data: post }: GetPostResponse = await postRes.json();
 
   // 로그인한 경우 좋아요와 댓글 여부 확인
   if (session && session.user) {
@@ -19,7 +19,8 @@ export const getPost = async (postId: number): Promise<Post> => {
     const postIsLikedRes = await fetch(
       `http://localhost:3000/api/user/${session.user.id}/likes/${post.id}`
     );
-    const { isLiked }: GetPostIsLikedResponse = await postIsLikedRes.json();
+    const { data: isLiked }: GetPostIsLikedResponse =
+      await postIsLikedRes.json();
     post.isLiked = isLiked;
 
     // 댓글 여부 확인

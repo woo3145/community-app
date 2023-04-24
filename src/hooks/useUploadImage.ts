@@ -1,3 +1,4 @@
+import { _uploadImage } from '@/libs/client/apis';
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, useState } from 'react';
 
@@ -28,24 +29,11 @@ export const useUploadImage = (callback: () => void) => {
     if (!session) {
       throw new Error('로그인이 필요합니다.');
     }
-    // (이미지 업로드 후 url받아오기)
-    let imagePath = '';
-
-    if (imageFile) {
-      const formData = new FormData();
-      formData.append('image', imageFile);
-
-      const imageResponse = await (
-        await fetch(`/api/upload/image`, {
-          method: 'POST',
-          body: formData,
-        })
-      ).json();
-
-      if (imageResponse.filePath) imagePath = imageResponse.filePath;
+    if (!imageFile) {
+      throw new Error('이미지 파일이 존재하지 않습니다.');
     }
-
-    return imagePath;
+    // (이미지 업로드 후 url받아오기)
+    return await _uploadImage(imageFile);
   };
 
   return {

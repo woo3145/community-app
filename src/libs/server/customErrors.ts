@@ -16,9 +16,9 @@ export abstract class CustomError extends Error {
 
 export class ValidationError extends CustomError {
   statusCode = 400;
-  errors: { fields: string; message: string }[];
+  errors: { field: string; message: string }[];
 
-  constructor(errors: { fields: string; message: string }[]) {
+  constructor(errors: { field: string; message: string }[]) {
     super('Input validation failed');
     this.errors = errors;
     Object.setPrototypeOf(this, ValidationError.prototype);
@@ -57,8 +57,8 @@ export class ForbiddenError extends CustomError {
 export class NotFoundError extends CustomError {
   statusCode = 404;
 
-  constructor(resourceName: string) {
-    super(`Resource not found : ${resourceName}`);
+  constructor(resourceName?: string) {
+    super(resourceName ? `Resource not found : ${resourceName}` : 'Not Found');
     Object.setPrototypeOf(this, NotFoundError.prototype);
   }
 

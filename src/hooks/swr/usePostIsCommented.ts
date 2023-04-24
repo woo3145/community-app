@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/libs/client/apis';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import useSWR from 'swr';
 
@@ -14,14 +15,7 @@ export const usePostIsCommented = (
 ): UsePostIsCommentedResponse => {
   // 임시: 유저의 댓글들을 모두 가져와 postId와 비교
   const { data, error } = useSWR<{ data: Comment[] }>(
-    userId ? `/api/user/${userId}/comments` : null,
-    async (url: string) => {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('좋아요 수를 불러오지 못했습니다.');
-      }
-      return response.json();
-    }
+    userId ? `${API_BASE_URL}/user/${userId}/comments` : null
   );
   if (!userId || !data?.data) {
     return {

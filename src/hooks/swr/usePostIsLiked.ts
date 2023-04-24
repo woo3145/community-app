@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/libs/client/apis';
 import useSWR from 'swr';
 
 interface UsePostIsLikedResponse {
@@ -11,15 +12,8 @@ export const usePostIsLiked = (
   postId: number,
   userId: string | undefined
 ): UsePostIsLikedResponse => {
-  const { data, error } = useSWR<{ isLiked: boolean }>(
-    postId && userId ? `/api/user/${userId}/likes/${postId}` : null,
-    async (url: string) => {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('정보를 불러오지 못했습니다.');
-      }
-      return response.json();
-    }
+  const { data, error } = useSWR<{ data: boolean }>(
+    postId && userId ? `${API_BASE_URL}/user/${userId}/likes/${postId}` : null
   );
   if (!postId) {
     return {
@@ -30,7 +24,7 @@ export const usePostIsLiked = (
   }
 
   return {
-    isLiked: data?.isLiked ? data.isLiked : false,
+    isLiked: data?.data ? data.data : false,
     isLoading: !data && !error,
     isError: error !== undefined,
   };

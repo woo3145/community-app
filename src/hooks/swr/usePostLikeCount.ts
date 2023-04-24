@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/libs/client/apis';
 import useSWR from 'swr';
 
 interface UseCommentsResponse {
@@ -8,15 +9,8 @@ interface UseCommentsResponse {
 
 // 게시물의 좋아요 수
 export const usePostLikeCount = (postId: number): UseCommentsResponse => {
-  const { data, error } = useSWR<{ likeCount: number }>(
-    postId ? `/api/posts/${postId}/like` : null,
-    async (url: string) => {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('좋아요 수를 불러오지 못했습니다.');
-      }
-      return response.json();
-    }
+  const { data, error } = useSWR<{ data: number }>(
+    postId ? `${API_BASE_URL}/posts/${postId}/like` : null
   );
   if (!postId) {
     return {
@@ -27,7 +21,7 @@ export const usePostLikeCount = (postId: number): UseCommentsResponse => {
   }
 
   return {
-    likeCount: data?.likeCount ? data.likeCount : 0,
+    likeCount: data?.data ? data.data : 0,
     isLoading: !data && !error,
     isError: error !== undefined,
   };

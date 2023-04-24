@@ -1,10 +1,11 @@
 import { Post } from '@/libs/server/postUtils/postFetchTypes';
 import { useInfiniteScrollSWR } from './useInfiniteScrollSWR';
+import { API_BASE_URL } from '@/libs/client/apis';
 
 // 유저아이디로 게시물 목록 불러오기(무한 스크롤)
 export const useUserPosts = (userId?: string) => {
   const { data, bottomRef, isReachedEnd, isLoading, isError } =
-    useInfiniteScrollSWR<Post[]>(`/api/user/${userId}/posts`);
+    useInfiniteScrollSWR<Post[]>(`${API_BASE_URL}/user/${userId}/posts`);
 
   return {
     data,

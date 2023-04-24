@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from '../useInfiniteScroll';
-import { HttpError } from '@/libs/server/errorHandler';
+import { isErrorResponse } from '@/libs/typeGuards';
 
 interface UseInfiniteScrollSWRReturn<T> {
   data: { data: T }[];
@@ -15,18 +15,6 @@ interface UseInfiniteScrollSWROption {
   query?: string; // 추가적인 쿼리 ex) tag_id=7&title=test
   revalidateFirstPage?: boolean; // 항상 첫페이지 유효성 재확인
 }
-
-const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    const error = new HttpError(
-      response.status,
-      '데이터를 불러오는중 에러가 발생했습니다.'
-    );
-    throw error;
-  }
-  return response.json();
-};
 
 const DEFAULT_LIMIT = 6;
 
@@ -47,12 +35,15 @@ export const useInfiniteScrollSWR = <T extends any[]>(
 
       return `${url}?page=${pageIndex}&limit=${limit}&${query}`;
     },
-    fetcher,
     {
       revalidateFirstPage: revalidateFirstPage,
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         // Never retry on 404.
-        if (error.status === 404) return;
+        if (isErrorResponse(error)) {
+          if (error.response.status === 404) return;
+        } else {
+          if (error.status === 404) return;
+        }
 
         // Only retry up to 10 times.
         if (retryCount >= 10) return;

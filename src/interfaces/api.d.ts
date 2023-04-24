@@ -3,22 +3,16 @@ import { Post } from '@/libs/server/postUtils/postFetchTypes';
 
 interface ApiResponse {
   message: string;
-  error?: string;
 }
 
 interface GetPostResponse extends ApiResponse {
-  post: Post;
+  data: Post;
 }
 
 interface GetPostIsLikedResponse extends ApiResponse {
-  isLiked: boolean;
+  data: boolean;
 }
 
 interface GetUserCommentsResponse extends ApiResponse {
   data: Comment[];
-}
-
-interface LikePostResponse extends ApiResponse {
-  isLiked: boolean;
-  likeCount: number;
 }

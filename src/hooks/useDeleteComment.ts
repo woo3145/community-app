@@ -1,3 +1,5 @@
+import { API_BASE_URL, _deleteComment } from '@/libs/client/apis';
+import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -18,24 +20,20 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
     }
     const toastId = toast.loading('처리중 입니다.');
     setApiLoading(true);
-    const response = await (
-      await fetch(`/api/comments/${comment.id}`, {
-        method: 'DELETE',
-      })
-    ).json();
 
-    if (response.error) {
-      toast.error('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
+    try {
+      await _deleteComment(comment.id);
+
+      toast.success('성공적으로 업데이트 되었습니다.');
+      mutate(`${API_BASE_URL}/posts/${comment.postId}/comments`);
       toast.dismiss(toastId);
       setApiLoading(false);
-      return;
+      if (callback) callback();
+    } catch (e) {
+      errorHandlerWithToast(e);
+      toast.dismiss(toastId);
+      setApiLoading(false);
     }
-    // 성공
-    toast.dismiss(toastId);
-    setApiLoading(false);
-    toast.success('성공적으로 업데이트 되었습니다.');
-    mutate(`/api/posts/${comment.postId}/comments`);
-    if (callback) callback();
   };
 
   return { onClick, apiLoading };

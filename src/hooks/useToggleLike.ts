@@ -1,4 +1,7 @@
-import { LikePostResponse } from '@/interfaces/api';
+import { ApiResponse } from '@/interfaces/api';
+import { API_BASE_URL, _toggleLike } from '@/libs/client/apis';
+import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
+import { isErrorResponse } from '@/libs/typeGuards';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { mutate } from 'swr';
@@ -11,7 +14,7 @@ export const useToggleLike = (
 ) => {
   const [isApiLoading, setIsApiLoading] = useState(false);
 
-  const toggleLike = async () => {
+  const onClickToggleLike = async () => {
     if (isApiLoading) {
       return;
     }
@@ -20,29 +23,18 @@ export const useToggleLike = (
     }
     const toastId = toast.loading('처리중 입니다.');
     setIsApiLoading(true);
-    const response: LikePostResponse = await (
-      await fetch(`/api/posts/${postId}/like`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          isLiked: isLiked,
-        }),
-      })
-    ).json();
-
-    if (response.error) {
-      toast.error('에러가 발생하였습니다.');
+    try {
+      await _toggleLike(postId, isLiked);
+      mutate(`${API_BASE_URL}/posts/${postId}/like`); // 게시글 좋아요 수 새로고침
+      mutate(`${API_BASE_URL}/user/${userId}/likes/${postId}`); // 게시물 좋아요 여부 새로고침
       toast.dismiss(toastId);
       setIsApiLoading(false);
-      return;
+    } catch (e) {
+      errorHandlerWithToast(e);
+      toast.dismiss(toastId);
+      setIsApiLoading(false);
     }
-    mutate(`/api/posts/${postId}/like`); // 게시글 좋아요 수 새로고침
-    mutate(`/api/user/${userId}/likes/${postId}`); // 게시물 좋아요 여부 새로고침
-    toast.dismiss(toastId);
-    setIsApiLoading(false);
   };
 
-  return { toggleLike, isApiLoading };
+  return { onClickToggleLike, isApiLoading };
 };
