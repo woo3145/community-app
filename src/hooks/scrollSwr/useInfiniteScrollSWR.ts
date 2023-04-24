@@ -1,6 +1,7 @@
 import { MutableRefObject } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from '../useInfiniteScroll';
+import { HttpError } from '@/libs/server/errorHandling';
 
 interface UseInfiniteScrollSWRReturn<T> {
   data: { data: T }[];
@@ -18,7 +19,11 @@ interface UseInfiniteScrollSWROption {
 const fetcher = async (url: string) => {
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error('데이터를 불러오는중 에러가 발생했습니다.');
+    const error = new HttpError(
+      response.status,
+      '데이터를 불러오는중 에러가 발생했습니다.'
+    );
+    throw error;
   }
   return response.json();
 };
@@ -28,14 +33,12 @@ const DEFAULT_LIMIT = 6;
 // 페이지네이션을 지원하는 api에서 무한스크롤로 데이터를 받아오는 훅
 export const useInfiniteScrollSWR = <T extends any[]>(
   url: string,
-  option?: UseInfiniteScrollSWROption
+  {
+    limit = DEFAULT_LIMIT,
+    query = '',
+    revalidateFirstPage = true,
+  }: UseInfiniteScrollSWROption = {}
 ): UseInfiniteScrollSWRReturn<T> => {
-  const limit = option?.limit ? option.limit : DEFAULT_LIMIT;
-  const query = option?.query ? option.query : '';
-  const revalidateFirstPage = option?.revalidateFirstPage
-    ? option.revalidateFirstPage
-    : true;
-
   const { data, error, size, setSize } = useSWRInfinite<{
     data: T;
   }>(
@@ -45,7 +48,20 @@ export const useInfiniteScrollSWR = <T extends any[]>(
       return `${url}?page=${pageIndex}&limit=${limit}&${query}`;
     },
     fetcher,
-    { revalidateFirstPage: revalidateFirstPage }
+    {
+      revalidateFirstPage: revalidateFirstPage,
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        console.log(retryCount);
+        // Never retry on 404.
+        if (error.status === 404) return;
+
+        // Only retry up to 10 times.
+        if (retryCount >= 10) return;
+
+        // Retry after 3 seconds.
+        setTimeout(() => revalidate({ retryCount }), 3000);
+      },
+    }
   );
 
   const isReachedEnd =
@@ -57,7 +73,7 @@ export const useInfiniteScrollSWR = <T extends any[]>(
   // 첫페이지 요청이 아님 && 데이터는 그대로고 사이즈만 증가한 상태
 
   const bottomRef = useInfiniteScroll(data, () => {
-    if (!isReachedEnd) setSize(size + 1);
+    if (!error && !isReachedEnd) setSize(size + 1);
   });
 
   return {

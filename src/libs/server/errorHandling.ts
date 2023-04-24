@@ -12,10 +12,9 @@ export class HttpError extends Error {
 
 export function handleError(error: unknown, res: NextApiResponse) {
   if (error instanceof HttpError) {
-    res.status(error.status).json({ message: 'error', error: error.message });
+    res.status(error.status).json({ ok: false, message: error.message });
   } else {
-    console.error(error);
-    res.status(500).json({ message: 'error', error: 'Internal server error' });
+    res.status(500).json({ ok: false, message: 'Internal server error' });
   }
 }
 
