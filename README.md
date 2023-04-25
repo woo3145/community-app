@@ -68,3 +68,12 @@ AWS_S3_BUCKET=
   - [x] 로딩 컴포넌트 적용
   - [x] react-toastify
   - [x] 댓글 삭제 기능
+
+에러처리
+
+- 백엔드 : 에러상황 시 Custom Error 객체를 반환하고 에러처리 핸들러로 감싸 errors 반환 값을 {message, field?}[] 로 통일하여 응답
+- 프론트 : fetchApi(fetch helper)에서 응답코드를 확인하고 200번대 응답이 아니면 statusCode를 포함하여 errors를 throw 시킴
+  - useSWR : 글로벌에서 fetch helper로 에러 throw
+  - useInfiniteScrollSWR : 에러시 상태코드가 404인지 확인하여 재요청 안함
+  - 클라이언트 에러는 new Error()객체를 사용
+  - try catch단에서 타입가드로 백엔드/클라이언트 에러 구별 후 처리 (errorHandlerWithToast)
