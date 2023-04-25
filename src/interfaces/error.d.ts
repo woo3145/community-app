@@ -5,4 +5,5 @@ interface ClientError {
 
 interface ApiErrorResponse {
   errors: ClientError[];
+  statusCode: number;
 }
