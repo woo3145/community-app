@@ -16,3 +16,12 @@ interface GetPostIsLikedResponse extends ApiResponse {
 interface GetUserCommentsResponse extends ApiResponse {
   data: Comment[];
 }
+
+interface EditProfileBody extends EditProfileFormValue {
+  imagePath: string | null;
+  nameType: boolean;
+}
+
+interface UploadImageResponse extends ApiResponse {
+  data: string;
+}

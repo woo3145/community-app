@@ -2,7 +2,6 @@ import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { API_BASE_URL, _editProfile } from '@/libs/client/apis';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
-import { isErrorResponse } from '@/libs/typeGuards';
 import { toast } from 'react-toastify';
 import { useSWRConfig } from 'swr';
 
@@ -17,24 +16,23 @@ export const useEditProfile = (
   const { mutate } = useSWRConfig();
 
   const onSubmit = async (data: EditProfileFormValue) => {
-    const { nickname, description } = data;
-
-    if (nameType && !nickname) {
-      toast.error('닉네임을 입력해주세요.');
-      return;
-    }
-    if (
-      !imageFile &&
-      description === profile.description &&
-      nameType === profile.nameType &&
-      (!nameType || (nameType && nickname === profile.nickname))
-    ) {
-      // 변경할 내용 없음
-      if (callback) callback();
-      return;
-    }
-
     try {
+      const { nickname, description } = data;
+
+      if (nameType && !nickname) {
+        throw new Error('닉네임을 입력해주세요.');
+      }
+      if (
+        !imageFile &&
+        description === profile.description &&
+        nameType === profile.nameType &&
+        (!nameType || (nameType && nickname === profile.nickname))
+      ) {
+        // 변경할 내용 없음
+        if (callback) callback();
+        return;
+      }
+
       // (이미지 업로드 후 url받아오기)
       const imagePath = imageFile ? await uploadImage() : null;
       await _editProfile({

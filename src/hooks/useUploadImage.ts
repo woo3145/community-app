@@ -1,6 +1,7 @@
 import { _uploadImage } from '@/libs/client/apis';
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, useState } from 'react';
+import { toast } from 'react-toastify';
 
 // 이미지 업로드
 export const useUploadImage = (callback: () => void) => {
@@ -10,7 +11,6 @@ export const useUploadImage = (callback: () => void) => {
 
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length || !event.target.files[0]) {
-      console.log('선택된 이미지가 없습니다.');
       return;
     }
     const file = event.target.files[0];
@@ -32,8 +32,13 @@ export const useUploadImage = (callback: () => void) => {
     if (!imageFile) {
       throw new Error('이미지 파일이 존재하지 않습니다.');
     }
-    // (이미지 업로드 후 url받아오기)
-    return await _uploadImage(imageFile);
+    try {
+      // (이미지 업로드 후 url받아오기)
+      const { data: imagePath } = await _uploadImage(imageFile);
+      return imagePath;
+    } catch (e) {
+      throw new Error('이미지 업로드에 실패하였습니다.');
+    }
   };
 
   return {
