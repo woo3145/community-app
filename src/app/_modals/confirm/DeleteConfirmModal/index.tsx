@@ -20,19 +20,16 @@ const customStyles = {
 
 interface Props {
   modalIsOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  closeModal: () => void;
   comment: Comment;
 }
 
 export const DeleteConfirmModal = ({
   modalIsOpen,
-  setIsOpen,
+  closeModal,
   comment,
 }: Props) => {
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const { apiLoading, onClick } = useDeleteComment(comment, closeModal);
+  const { isApiLoading, onClick } = useDeleteComment(comment, closeModal);
 
   return (
     <ReactModal
@@ -50,7 +47,7 @@ export const DeleteConfirmModal = ({
           </div>
           <div
             className={`${styles.deleteButton} ${
-              apiLoading ? styles.loading : ''
+              isApiLoading ? styles.loading : ''
             }`}
             onClick={onClick}
           >

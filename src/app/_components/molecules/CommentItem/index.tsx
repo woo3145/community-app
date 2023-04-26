@@ -16,6 +16,11 @@ interface Props {
 const PopupMenu = ({ comment }: { comment: Comment }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setIsOpen(false);
+  };
   return (
     <div className={styles.popupMenu}>
       <IoEllipsisHorizontal
@@ -31,7 +36,7 @@ const PopupMenu = ({ comment }: { comment: Comment }) => {
       <DeleteConfirmModal
         comment={comment}
         modalIsOpen={modalIsOpen}
-        setIsOpen={setModalIsOpen}
+        closeModal={closeModal}
       />
     </div>
   );

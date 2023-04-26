@@ -3,38 +3,48 @@ import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+import { Id, toast } from 'react-toastify';
 import { useSWRConfig } from 'swr';
 
 // 댓글 삭제
 export const useDeleteComment = (comment: Comment, callback?: () => void) => {
   const { data: session } = useSession();
   const { mutate } = useSWRConfig();
-  const [apiLoading, setApiLoading] = useState(false);
+  const [isApiLoading, setIsApiLoading] = useState(false);
 
-  const onClick = async () => {
-    if (apiLoading) return;
-    if (!session?.user || session.user.id !== comment.userId) {
-      toast.error('로그인이 필요합니다.');
-      return;
-    }
-    const toastId = toast.loading('처리중 입니다.');
-    setApiLoading(true);
+  const refreshComments = (postId: number, userId: string) => {
+    mutate(`${API_BASE_URL}/posts/${postId}/comments`); // 게시물 댓글 새로고침
+    mutate(`${API_BASE_URL}/user/${userId}/comments`); // 내 댓글여부 새로고침
+  };
 
-    try {
-      await _deleteComment(comment.id);
-
-      toast.success('성공적으로 업데이트 되었습니다.');
-      mutate(`${API_BASE_URL}/posts/${comment.postId}/comments`);
+  const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
+    setIsApiLoading(isLoading);
+    if (toastId) {
       toast.dismiss(toastId);
-      setApiLoading(false);
-      if (callback) callback();
-    } catch (e) {
-      errorHandlerWithToast(e);
-      toast.dismiss(toastId);
-      setApiLoading(false);
     }
   };
 
-  return { onClick, apiLoading };
+  const onClick = async () => {
+    let toastId: Id | null = null;
+    if (isApiLoading) return;
+    try {
+      if (!session?.user) {
+        throw new Error('로그인이 필요합니다.');
+      }
+      toastId = toast.loading('처리중 입니다.');
+      handleApiLoading(true);
+
+      await _deleteComment(comment.id);
+
+      toast.success('성공적으로 업데이트 되었습니다.');
+      if (comment.postId) refreshComments(comment.postId, session.user.id);
+      handleApiLoading(false, toastId);
+      if (callback) callback();
+    } catch (e) {
+      errorHandlerWithToast(e);
+      handleApiLoading(false, toastId);
+    }
+  };
+
+  return { onClick, isApiLoading };
 };

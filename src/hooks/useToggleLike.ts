@@ -1,40 +1,46 @@
-import { ApiResponse } from '@/interfaces/api';
 import { API_BASE_URL, _toggleLike } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
-import { isErrorResponse } from '@/libs/typeGuards';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { mutate } from 'swr';
+import { Id, toast } from 'react-toastify';
+import { useSWRConfig } from 'swr';
 
 // 게시물 좋아요 기능
-export const useToggleLike = (
-  postId: number,
-  isLiked: boolean,
-  userId: string | undefined
-) => {
+export const useToggleLike = (postId: number, isLiked: boolean) => {
+  const { data: session } = useSession();
   const [isApiLoading, setIsApiLoading] = useState(false);
+  const { mutate } = useSWRConfig();
 
-  const onClickToggleLike = async () => {
-    if (isApiLoading) {
-      return;
-    }
-    if (!userId) {
-      return;
-    }
-    const toastId = toast.loading('처리중 입니다.');
-    setIsApiLoading(true);
-    try {
-      await _toggleLike(postId, isLiked);
-      mutate(`${API_BASE_URL}/posts/${postId}/like`); // 게시글 좋아요 수 새로고침
-      mutate(`${API_BASE_URL}/user/${userId}/likes/${postId}`); // 게시물 좋아요 여부 새로고침
+  const refresh = (postId: number, userId: string) => {
+    mutate(`${API_BASE_URL}/posts/${postId}/like`); // 게시글 좋아요 수 새로고침
+    mutate(`${API_BASE_URL}/user/${userId}/likes/${postId}`); // 게시물 좋아요 여부 새로고침
+  };
+
+  const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
+    setIsApiLoading(isLoading);
+    if (toastId) {
       toast.dismiss(toastId);
-      setIsApiLoading(false);
-    } catch (e) {
-      errorHandlerWithToast(e);
-      toast.dismiss(toastId);
-      setIsApiLoading(false);
     }
   };
 
-  return { onClickToggleLike, isApiLoading };
+  const onClick = async () => {
+    let toastId: Id | null = null;
+    if (isApiLoading) return;
+    try {
+      if (!session?.user) {
+        throw new Error('로그인이 필요합니다.');
+      }
+      toastId = toast.loading('처리중 입니다.');
+      handleApiLoading(true);
+
+      await _toggleLike(postId, isLiked);
+      refresh(postId, session.user.id);
+      handleApiLoading(false, toastId);
+    } catch (e) {
+      errorHandlerWithToast(e);
+      handleApiLoading(false, toastId);
+    }
+  };
+
+  return { onClick, isApiLoading };
 };
