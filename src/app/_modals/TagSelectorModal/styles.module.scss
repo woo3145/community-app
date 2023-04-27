@@ -1,5 +1,5 @@
-@import '../mixins';
-@import '../variables';
+@import '../../mixins';
+@import '../../variables';
 
 .container {
   display: flex;
@@ -75,13 +75,5 @@
       color: var(--primary-rgb);
       border-color: var(--primary-rgb);
     }
-  }
-}
-
-.bottom {
-  padding-top: 20px;
-  .submitButton {
-    @include button_md;
-    width: 100%;
   }
 }

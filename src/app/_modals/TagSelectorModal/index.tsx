@@ -4,8 +4,12 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 
-import styles from './tag_selector_modal.module.scss';
 import { toast } from 'react-toastify';
+
+import styles from './styles.module.scss';
+import { ModalFooter } from '@/app/_components/molecules/ModalFooter';
+import { ModalHeader } from '@/app/_components/molecules/ModalHeader';
+import { TagList } from './TagList';
 
 const customStyles = {
   content: {
@@ -20,21 +24,19 @@ const customStyles = {
 
 interface Props {
   modalIsOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  closeModal: () => void;
   selectedTags: SubTag[];
   setSelectedTags: Dispatch<SetStateAction<SubTag[]>>;
 }
 
 export const TagSelectorModal = ({
   modalIsOpen,
-  setIsOpen,
+  closeModal,
   selectedTags,
   setSelectedTags,
 }: Props) => {
   const { tags } = useTags();
-  function closeModal() {
-    setIsOpen(false);
-  }
+
   const [pickedTags, setPickedTags] = useState<SubTag[]>(selectedTags);
 
   const onClickPickTag = (tag: SubTag) => {
@@ -63,53 +65,20 @@ export const TagSelectorModal = ({
       ariaHideApp={false}
     >
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>태그 선택</h2>
-          <span className={styles.titleBadge}>0</span>
-          <button onClick={closeModal} className={styles.closeButton}>
-            <IoCloseOutline />
-          </button>
-        </div>
+        <ModalHeader title="태그 선택" closeModal={closeModal} />
 
         <div className={styles.body}>
           <p className={styles.message}>
             작성글 주제에 맞는 태그를 선택해주세요. (1~3개)
           </p>
-          <ul>
-            {tags.map((tag, idx) => {
-              return (
-                <li key={idx}>
-                  <div className={styles.tagTitle}>
-                    <span>{tag.icon}</span> {tag.title}
-                  </div>
-                  <ul className={styles.subTagList}>
-                    {tag.subTags.map((subTag, idx) => {
-                      return (
-                        <li
-                          className={
-                            pickedTags.find((t) => t.id === subTag.id)
-                              ? styles.selected
-                              : ''
-                          }
-                          key={idx}
-                          onClick={() => onClickPickTag(subTag)}
-                        >
-                          {subTag.title}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
-              );
-            })}
-          </ul>
+          <TagList
+            tags={tags}
+            pickedTags={pickedTags}
+            onClickPickTag={onClickPickTag}
+          />
         </div>
 
-        <div className={styles.bottom}>
-          <button className={styles.submitButton} onClick={onClickSelect}>
-            완료
-          </button>
-        </div>
+        <ModalFooter text="완료" onClick={onClickSelect} />
       </div>
     </ReactModal>
   );

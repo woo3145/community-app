@@ -13,6 +13,9 @@ import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 import styles from './styles.module.scss';
 import { useUploadImage } from '@/hooks/useUploadImage';
 import { useEditProfile } from '@/hooks/useEditProfile';
+import { ModalHeader } from '@/app/_components/molecules/ModalHeader';
+import { ModalFooter } from '@/app/_components/molecules/ModalFooter';
+import { useModalVisible } from '@/hooks/useModalVisible';
 
 const customStyles = {
   content: {
@@ -27,7 +30,7 @@ const customStyles = {
 
 interface Props {
   modalIsOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  closeModal: () => void;
   profile: Exclude<Profile, null>;
 }
 
@@ -38,16 +41,14 @@ export interface EditProfileFormValue {
 
 export const MyProfileModifyModal = ({
   modalIsOpen,
-  setIsOpen,
+  closeModal,
   profile,
 }: Props) => {
-  const [cropModalIsOpen, setCropModalIsOpen] = useState<boolean>(false);
-  const openCropModal = () => {
-    setCropModalIsOpen(true);
-  };
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+  const {
+    modalIsOpen: cropModalIsOpen,
+    openModal: openCropModal,
+    closeModal: closeCropModal,
+  } = useModalVisible();
 
   const {
     preview,
@@ -58,7 +59,7 @@ export const MyProfileModifyModal = ({
     handleImage,
   } = useUploadImage(openCropModal);
 
-  const [nameType, setNameType] = useState<boolean>(profile.nameType);
+  const [nameType, setNameType] = useState<boolean>(profile.nameType); // false: 이름, true: 닉네임
   const {
     register,
     handleSubmit,
@@ -73,7 +74,7 @@ export const MyProfileModifyModal = ({
     mode: 'all',
   });
 
-  const { onSubmit } = useEditProfile(
+  const { onSubmit, isApiLoading } = useEditProfile(
     profile,
     nameType,
     imageFile,
@@ -97,12 +98,7 @@ export const MyProfileModifyModal = ({
       ariaHideApp={false}
     >
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>커뮤니티 프로필</h2>
-          <button onClick={closeModal} className={styles.closeButton}>
-            <IoCloseOutline />
-          </button>
-        </div>
+        <ModalHeader title="커뮤니티 프로필" closeModal={closeModal} />
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.body}>
@@ -126,10 +122,10 @@ export const MyProfileModifyModal = ({
                   />
                 </label>
               </div>
-              {modalIsOpen && (
+              {cropModalIsOpen && preview && (
                 <AvatarCrop
                   modalIsOpen={cropModalIsOpen}
-                  setIsOpen={setCropModalIsOpen}
+                  closeModal={closeCropModal}
                   preview={preview}
                   setPreview={setPreview}
                   setImageFile={setImageFile}
@@ -190,9 +186,7 @@ export const MyProfileModifyModal = ({
             </div>
           </div>
 
-          <div className={styles.bottom}>
-            <Button type="submit" text="완료" wide isValid={isValid} />
-          </div>
+          <ModalFooter text="완료" isValid={!isApiLoading && isValid} />
         </form>
       </div>
     </ReactModal>

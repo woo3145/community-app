@@ -1,13 +1,14 @@
 'use client';
 import { cropImage } from '@/libs/client/imageUtils';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { IoCloseOutline } from 'react-icons/io5';
 import ReactModal from 'react-modal';
 
 import styles from './avatarCrop.module.scss';
 import { CropLayer } from './cropLayer';
 import { PreviewLayer } from './previewLayer';
 import { useImageCrop } from '@/hooks/useImageCrop';
+import { ModalHeader } from '@/app/_components/molecules/ModalHeader';
+import { ModalFooter } from '@/app/_components/molecules/ModalFooter';
 
 const customStyles = {
   content: {
@@ -22,7 +23,7 @@ const customStyles = {
 
 interface Props {
   modalIsOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  closeModal: () => void;
   preview: string;
   setPreview: Dispatch<SetStateAction<string>>;
   setImageFile: Dispatch<SetStateAction<File | null>>;
@@ -30,17 +31,13 @@ interface Props {
 
 export const AvatarCrop = ({
   modalIsOpen,
-  setIsOpen,
+  closeModal,
   preview,
   setPreview,
   setImageFile,
 }: Props) => {
   const { image, imageSize, dragArea, setDragArea, initImage } =
     useImageCrop(preview);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
 
   useEffect(() => {
     initImage();
@@ -65,12 +62,7 @@ export const AvatarCrop = ({
       ariaHideApp={false}
     >
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>프로필 사진 만들기</h2>
-          <button onClick={closeModal} className={styles.closeButton}>
-            <IoCloseOutline />
-          </button>
-        </div>
+        <ModalHeader title="프로필 사진 만들기" closeModal={closeModal} />
 
         <div className={styles.body}>
           <div className={styles.canvasContainer}>
@@ -83,11 +75,7 @@ export const AvatarCrop = ({
           </div>
         </div>
 
-        <div className={styles.bottom}>
-          <button className={styles.submitButton} onClick={onClickCropImage}>
-            완료
-          </button>
-        </div>
+        <ModalFooter text="완료" onClick={onClickCropImage} />
       </div>
     </ReactModal>
   );

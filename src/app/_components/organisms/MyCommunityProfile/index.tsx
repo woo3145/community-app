@@ -8,14 +8,11 @@ import { useState } from 'react';
 import { useMe } from '@/hooks/swr/useMe';
 
 import styles from './styles.module.scss';
+import { useModalVisible } from '@/hooks/useModalVisible';
 
 export const MyCommunityProfile = () => {
   const { me, isLoading } = useMe();
-  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
+  const { modalIsOpen, openModal, closeModal } = useModalVisible();
   if (isLoading || !me) {
     return <div>로딩 ... </div>;
   }
@@ -41,7 +38,7 @@ export const MyCommunityProfile = () => {
       {modalIsOpen && (
         <MyProfileModifyModal
           modalIsOpen={modalIsOpen}
-          setIsOpen={setIsOpen}
+          closeModal={closeModal}
           profile={me.profile}
         />
       )}

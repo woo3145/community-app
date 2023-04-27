@@ -4,6 +4,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  position: relative;
   min-width: $tagModalWidth;
   max-height: $tagModalheight;
 }
@@ -35,12 +36,4 @@
   @include flex-center;
   position: relative;
   background-color: black;
-}
-
-.bottom {
-  padding-top: 20px;
-  .submitButton {
-    @include button_md;
-    width: 100%;
-  }
 }

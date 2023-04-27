@@ -1,3 +1,4 @@
+import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { Post } from '@/libs/server/postUtils/postFetchTypes';
 

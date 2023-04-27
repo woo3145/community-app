@@ -10,6 +10,8 @@ import Button from '../_components/atoms/Button';
 import styles from './page.module.scss';
 import { TagPicker } from '../_components/molecules/TagPicker';
 import { toast } from 'react-toastify';
+import { _uploadImage } from '@/libs/client/apis';
+import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 
 interface PostFormData {
   title: string;
@@ -18,7 +20,7 @@ interface PostFormData {
 
 interface CreatePostResponse {
   message: string;
-  postId: number;
+  data: number;
 }
 
 export default function Write() {
@@ -66,17 +68,9 @@ export default function Write() {
       let imagePath = '';
 
       if (imageFile) {
-        const formData = new FormData();
-        formData.append('image', imageFile);
+        const { data: path } = await _uploadImage(imageFile);
 
-        const imageResponse = await (
-          await fetch(`/api/upload/image`, {
-            method: 'POST',
-            body: formData,
-          })
-        ).json();
-
-        if (imageResponse.filePath) imagePath = imageResponse.filePath;
+        if (path) imagePath = path;
       }
 
       const response = await (
@@ -99,10 +93,10 @@ export default function Write() {
         toast.error('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
         return;
       }
-      const { postId } = response as CreatePostResponse;
+      const { data: postId } = response as CreatePostResponse;
       router.push(`/post/${postId}`);
     } catch (e) {
-      console.log('error : ', e);
+      errorHandlerWithToast(e);
     }
   };
 
@@ -120,9 +114,6 @@ export default function Write() {
         setPreview(e.target.result);
       }
     };
-
-    // const formData = new FormData();
-    // formData.append(event.target.name, file);
     setImageFile(file);
   };
 

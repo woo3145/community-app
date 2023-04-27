@@ -1,10 +1,11 @@
 'use client';
 
-import { TagSelectorModal } from '@/app/_modals/tag_selector_modal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IoAdd, IoCloseOutline } from 'react-icons/io5';
 
 import styles from './styles.module.scss';
+import { TagSelectorModal } from '@/app/_modals/TagSelectorModal';
+import { useModalVisible } from '@/hooks/useModalVisible';
 
 interface Props {
   selectedTags: SubTag[];
@@ -12,10 +13,7 @@ interface Props {
 }
 
 export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
-  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const openModal = () => {
-    setIsOpen(true);
-  };
+  const { modalIsOpen, openModal, closeModal } = useModalVisible();
 
   const onClickExcludeTag = (tagId: number) => {
     setSelectedTags(selectedTags.filter((tag) => tag.id !== tagId));
@@ -44,7 +42,7 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
         {modalIsOpen && (
           <TagSelectorModal
             modalIsOpen={modalIsOpen}
-            setIsOpen={setIsOpen}
+            closeModal={closeModal}
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
           />
