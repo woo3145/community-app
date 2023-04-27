@@ -1,5 +1,7 @@
 import {
   ApiResponse,
+  CreatePostBody,
+  CreatePostResponse,
   EditProfileBody,
   GetPostIsLikedResponse,
   GetPostResponse,
@@ -102,6 +104,30 @@ export const _saveRecentPost = async (
       method: 'PUT',
     }
   );
+  return data;
+};
+
+// 댓글 작성
+export const _createPost = async ({
+  title,
+  content,
+  published,
+  imageUrl,
+  tags,
+}: CreatePostBody): Promise<CreatePostResponse> => {
+  const data = await fetchApi<ApiResponse>(`/api/posts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title,
+      content,
+      published,
+      imageUrl,
+      tags,
+    }),
+  });
   return data;
 };
 

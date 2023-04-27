@@ -1,4 +1,5 @@
 import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
+import { CreatePostFormValue } from '@/app/write/page';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { Post } from '@/libs/server/postUtils/postFetchTypes';
 
@@ -24,5 +25,15 @@ interface EditProfileBody extends EditProfileFormValue {
 }
 
 interface UploadImageResponse extends ApiResponse {
-  data: string;
+  data: string; // imagePath
+}
+
+interface CreatePostBody extends CreatePostFormValue {
+  imageUrl: string;
+  published: boolean;
+  tags: number[];
+}
+
+interface CreatePostResponse extends ApiResponse {
+  data: number; // postId
 }

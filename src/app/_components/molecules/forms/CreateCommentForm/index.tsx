@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useCreateComment } from '@/hooks/useCreateComment';
 
 import styles from './styles.module.scss';
-import { useSession } from 'next-auth/react';
 
 export interface CreateCommentFormValue {
   content: string;

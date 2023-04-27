@@ -1,10 +1,9 @@
 import { _uploadImage } from '@/libs/client/apis';
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
 
 // 이미지 업로드
-export const useUploadImage = (callback: () => void) => {
+export const useUploadImage = (callback?: () => void) => {
   const { data: session } = useSession();
   const [preview, setPreview] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -16,6 +15,7 @@ export const useUploadImage = (callback: () => void) => {
     const file = event.target.files[0];
 
     const reader = new FileReader();
+    setImageFile(file);
     reader.readAsDataURL(file);
     reader.onload = (e: any) => {
       if (reader.readyState === 2) {
@@ -23,6 +23,11 @@ export const useUploadImage = (callback: () => void) => {
       }
     };
     if (callback) callback();
+  };
+
+  const resetImage = () => {
+    setImageFile(null);
+    setPreview('');
   };
 
   const uploadImage = async () => {
@@ -48,5 +53,6 @@ export const useUploadImage = (callback: () => void) => {
     setImageFile,
     uploadImage,
     handleImage,
+    resetImage,
   };
 };
