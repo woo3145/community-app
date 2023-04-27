@@ -1,6 +1,5 @@
 'use client';
 
-import { useMe } from '@/hooks/swr/useMe';
 import { useState } from 'react';
 import { MyCommunityTab } from './MyCommunityTab';
 import { MyPosts } from './MyPosts';
@@ -14,11 +13,6 @@ export type MyCommunityTabType = 'recents' | 'posts' | 'comments' | 'likes';
 
 export const MyCommunityBody = () => {
   const [tab, setTab] = useState<MyCommunityTabType>('recents');
-  const { me, isLoading } = useMe();
-
-  if (isLoading || !me) {
-    return <div>로딩 ... </div>;
-  }
 
   return (
     <div className={styles.wrapper}>

@@ -1,4 +1,4 @@
-import { CreateCommentFormValue } from '@/app/_components/molecules/forms/CreateCommentForm';
+import { CreateCommentFormValue } from '@/app/_components/forms/CreateCommentForm';
 import { API_BASE_URL, _createComment } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { useSession } from 'next-auth/react';

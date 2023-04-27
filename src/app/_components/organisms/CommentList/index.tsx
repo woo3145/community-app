@@ -7,7 +7,7 @@ import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
 
 import styles from './styles.module.scss';
 import { CommentItem } from '../../molecules/CommentItem';
-import { CreateCommentForm } from '../../molecules/forms/CreateCommentForm';
+import { CreateCommentForm } from '../../forms/CreateCommentForm';
 import { CommentItemLoading } from '../../molecules/CommentItem/Loading';
 
 interface Props {

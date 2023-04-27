@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import styles from './page.module.scss';
 import { _uploadImage } from '@/libs/client/apis';
-import { CreatePostForm } from '../_components/molecules/forms/CreatePostForm';
+import { CreatePostForm } from '../_components/forms/CreatePostForm';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 

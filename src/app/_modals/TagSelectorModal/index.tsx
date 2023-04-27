@@ -38,7 +38,6 @@ export const TagSelectorModal = ({
   const { tags } = useTags();
 
   const [pickedTags, setPickedTags] = useState<SubTag[]>(selectedTags);
-
   const onClickPickTag = (tag: SubTag) => {
     if (pickedTags.includes(tag)) {
       setPickedTags(pickedTags.filter((t) => t.id !== tag.id));

@@ -5,16 +5,23 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Id, toast } from 'react-toastify';
 import { useSWRConfig } from 'swr';
+import { useMyComments } from './scrollSwr/useMyComments';
 
 // 댓글 삭제
 export const useDeleteComment = (comment: Comment, callback?: () => void) => {
   const { data: session } = useSession();
   const { mutate } = useSWRConfig();
+  const { mutate: commentsMutate } = useMyComments();
   const [isApiLoading, setIsApiLoading] = useState(false);
 
-  const refreshComments = (postId: number, userId: string) => {
+  const refreshComments = (postId: number) => {
     mutate(`${API_BASE_URL}/posts/${postId}/comments`); // 게시물 댓글 새로고침
-    mutate(`${API_BASE_URL}/user/${userId}/comments`); // 내 댓글여부 새로고침
+    // 삭제한 댓글 캐시 업데이트
+    commentsMutate((curPages) => {
+      return curPages?.filter((page) =>
+        page.data.filter((c) => c.id != comment.id)
+      );
+    });
   };
 
   const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
@@ -37,7 +44,7 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
       await _deleteComment(comment.id);
 
       toast.success('성공적으로 업데이트 되었습니다.');
-      if (comment.postId) refreshComments(comment.postId, session.user.id);
+      if (comment.postId) refreshComments(comment.postId);
       handleApiLoading(false, toastId);
       if (callback) callback();
     } catch (e) {

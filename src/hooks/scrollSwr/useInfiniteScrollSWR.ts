@@ -2,10 +2,16 @@ import { MutableRefObject, createRef } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from '../useInfiniteScroll';
 import { isServerError } from '@/libs/typeGuards';
+import { KeyedMutator } from 'swr';
 
 interface UseInfiniteScrollSWRReturn<T> {
   data: { data: T }[];
   bottomRef: MutableRefObject<null>;
+  mutate: KeyedMutator<
+    {
+      data: T;
+    }[]
+  >;
   isReachedEnd: boolean;
   isLoading: boolean;
   isError: boolean;
@@ -27,7 +33,7 @@ export const useInfiniteScrollSWR = <T extends any[]>(
     revalidateFirstPage = true,
   }: UseInfiniteScrollSWROption = {}
 ): UseInfiniteScrollSWRReturn<T> => {
-  const { data, error, size, setSize } = useSWRInfinite<{
+  const { data, error, size, setSize, mutate } = useSWRInfinite<{
     data: T;
   }>(
     (pageIndex: number, previousPageData: any) => {
@@ -69,6 +75,7 @@ export const useInfiniteScrollSWR = <T extends any[]>(
 
   return {
     data: data ? data : [],
+    mutate,
     bottomRef,
     isReachedEnd: isReachedEnd,
     isLoading,
