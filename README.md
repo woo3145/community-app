@@ -68,6 +68,8 @@ AWS_S3_BUCKET=
   - [x] 로딩 컴포넌트 적용
   - [x] react-toastify
   - [x] 댓글 삭제 기능
+  - [ ] useSWR 변경 데이터 즉시 반영
+  - [ ] SSR 로딩화면 필요
 
 에러처리
 
