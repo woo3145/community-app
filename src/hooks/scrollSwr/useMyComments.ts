@@ -9,10 +9,10 @@ export const useMyComments = () => {
 
   return {
     data,
-    mutate,
     bottomRef,
     isReachedEnd,
     isLoading,
     isError,
+    mutate,
   };
 };

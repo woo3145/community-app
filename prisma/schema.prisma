@@ -72,7 +72,7 @@ model Profile {
   id           Int     @id @default(autoincrement())
   name         String
   nickname     String?
-  avatar       String?
+  avatar       String  @default("")
   nameType     Boolean @default(false) // false: name, true: nickname
   description  String?
   annual       Int     @default(0) // 경력

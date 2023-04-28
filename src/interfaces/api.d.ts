@@ -20,7 +20,7 @@ interface GetUserCommentsResponse extends ApiResponse {
 }
 
 interface EditProfileBody extends EditProfileFormValue {
-  imagePath: string | null;
+  avatar: string;
   nameType: boolean;
 }
 

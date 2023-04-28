@@ -35,7 +35,7 @@ export const _uploadImage = async (
 export const _editProfile = async ({
   nickname,
   description,
-  imagePath,
+  avatar,
   nameType,
 }: EditProfileBody): Promise<ApiResponse> => {
   const data = await fetchApi<ApiResponse>(`${API_BASE_URL}/profile`, {
@@ -47,7 +47,7 @@ export const _editProfile = async ({
       nameType,
       nickname,
       description,
-      avatar: imagePath,
+      avatar,
     }),
   });
   return data;

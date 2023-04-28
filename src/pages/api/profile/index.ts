@@ -10,7 +10,7 @@ interface EditProfileBody {
   nameType: boolean;
   nickname: string;
   description: string;
-  avatar: string | null;
+  avatar: string;
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -49,8 +49,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       isChanged = true;
       updatedProfile.description = description;
     }
-    // 아바타는 업로드 할때만 들어옴
-    if (avatar !== null) {
+    if (avatar !== profile.avatar) {
       isChanged = true;
       updatedProfile.avatar = avatar;
     }

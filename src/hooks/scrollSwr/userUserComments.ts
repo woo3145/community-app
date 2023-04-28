@@ -5,7 +5,7 @@ import { API_BASE_URL } from '@/libs/client/apis';
 
 // 유저아이디로 댓글 목록 불러오기(무한 스크롤)
 export const useUserComments = (userId?: string) => {
-  const { data, bottomRef, isReachedEnd, isLoading, isError } =
+  const { data, bottomRef, isReachedEnd, isLoading, isError, mutate } =
     useInfiniteScrollSWR<Comment[]>(`${API_BASE_URL}/user/${userId}/comments`);
 
   return {
@@ -14,5 +14,6 @@ export const useUserComments = (userId?: string) => {
     isReachedEnd,
     isLoading,
     isError,
+    mutate,
   };
 };
