@@ -2,18 +2,48 @@ import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
 import styles from './styles.module.scss';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
+  isLoading: false;
   profile?: Profile;
   size?: UISize;
 }
 
-export const UserProfile = ({ profile, size = 'md' }: Props) => {
+export const UserProfile = ({
+  profile,
+  size = 'md',
+  isLoading,
+}: Props | IsLoadingProps) => {
+  if (isLoading) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={`${styles.profileBox} ${styles[size]}`}>
+          <Avatar
+            isLoading={isLoading}
+            src={profile.avatar || ''}
+            size={size}
+          />
+
+          <div className={styles.verticleBox}>
+            <div className={styles.user_name}>
+              <Skeleton />
+            </div>
+            <AvatarCareer
+              isLoading={isLoading}
+              job={profile.job?.title}
+              annual={profile.annual}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (!profile) {
     return (
       <div className={styles.wrapper}>
         <div className={`${styles.profileBox} ${styles[size]}`}>
-          <Avatar src={''} size={size} />
+          <Avatar isLoading={isLoading} src={''} size={size} />
 
           <div className={styles.verticleBox}>
             <div className={styles.user_name}>
@@ -28,19 +58,17 @@ export const UserProfile = ({ profile, size = 'md' }: Props) => {
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.profileBox} ${styles[size]}`}>
-        <Avatar src={profile.avatar || ''} size={size} />
+        <Avatar isLoading={isLoading} src={profile.avatar || ''} size={size} />
 
         <div className={styles.verticleBox}>
-          <div className={styles.user_name}>
-            {profile ? (
-              <p className={styles.user_name}>
-                {profile.nameType ? profile.nickname : profile.name}
-              </p>
-            ) : (
-              <p className={styles.user_name}>탈퇴한 사용자</p>
-            )}
-          </div>
-          <AvatarCareer job={profile.job?.title} annual={profile.annual} />
+          <p className={styles.user_name}>
+            {profile.nameType ? profile.nickname : profile.name}
+          </p>
+          <AvatarCareer
+            isLoading={isLoading}
+            job={profile.job?.title}
+            annual={profile.annual}
+          />
         </div>
       </div>
     </div>

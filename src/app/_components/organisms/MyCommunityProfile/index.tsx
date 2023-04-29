@@ -18,15 +18,15 @@ export const MyCommunityProfile = () => {
 
   return (
     <div className={styles.container}>
-      <UserProfile profile={me.profile} size={'lg'} />
+      <UserProfile isLoading={isLoading} profile={me.profile} size={'lg'} />
       <div className={styles.description}>{me.profile.description}</div>
       <div className={styles.tagSection}>
         <p>관심 주제</p>
         <div className={styles.tagList}>
-          <Badge text={'개발'} /> {/* 임시 */}
-          <Badge text={'데이터'} /> {/* 임시 */}
+          <Badge isLoading={isLoading} text={'개발'} /> {/* 임시 */}
+          <Badge isLoading={isLoading} text={'데이터'} /> {/* 임시 */}
           {me.profile.interestTags.map((tag, idx) => {
-            return <Badge key={idx} text={tag.title} />;
+            return <Badge isLoading={isLoading} key={idx} text={tag.title} />;
           })}
         </div>
       </div>

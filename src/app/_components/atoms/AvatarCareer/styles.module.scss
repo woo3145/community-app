@@ -1,15 +1,16 @@
 @import '../../../mixins';
 
 .badge {
+  display: flex;
   font-size: 0.8em;
   line-height: 1rem;
   font-weight: 700;
 
-  span:nth-child(1) {
+  .job {
     color: var(--primary-rgb);
-    margin-right: 8px;
   }
-  span:nth-child(2) {
+
+  .annual {
     color: var(--gray-200);
   }
 }

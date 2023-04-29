@@ -1,10 +1,9 @@
 'use client';
 
 import { PostItem } from '@/app/_components/molecules/PostItem';
-import { PostItemLoading } from '@/app/_components/molecules/PostItem/Loading';
+import { useMyRecents } from '@/hooks/scrollSwr/useMyRecents';
 
 import styles from './styles.module.scss';
-import { useMyRecents } from '@/hooks/scrollSwr/useMyRecents';
 
 export const MyRecents = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyRecents();
@@ -13,12 +12,13 @@ export const MyRecents = () => {
     <div className={styles.container}>
       {data.length === 0 && isLoading
         ? [1, 2, 3, 4].map((i) => {
-            return <PostItemLoading key={i} />;
+            return <PostItem isLoading={isLoading} key={i} />;
           })
         : data.map((page) =>
             page.data.map((recentlyViewdPost) => {
               return (
                 <PostItem
+                  isLoading={isLoading}
                   key={recentlyViewdPost.post.id}
                   post={recentlyViewdPost.post}
                 />
@@ -26,7 +26,7 @@ export const MyRecents = () => {
             })
           )}
       {isLoading ? (
-        <PostItemLoading />
+        <PostItem isLoading={isLoading} />
       ) : (
         !isReachedEnd && <div ref={bottomRef}></div>
       )}

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
+import { UserCommunityTabType } from '..';
 
 import styles from './styles.module.scss';
-import { UserCommunityTabType } from '..';
 
 interface Props {
   tab: UserCommunityTabType;

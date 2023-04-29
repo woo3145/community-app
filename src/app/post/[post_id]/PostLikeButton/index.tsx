@@ -29,13 +29,11 @@ export const PostLikeButton = ({ postId, isLiked, likeCount }: Props) => {
   const curIsLiked = isLoading_isLiked ? isLiked : _isLiked;
   const curLikeCount = isLoading_count ? likeCount : _likeCount;
 
-  const { toggleLike } = useToggleLike(postId, curIsLiked, session?.user.id);
+  const { onClick } = useToggleLike(postId, curIsLiked);
 
   return (
     <div
-      onClick={async () => {
-        await toggleLike();
-      }}
+      onClick={onClick}
       className={`${styles.likeButton} ${curIsLiked ? styles.isLiked : ''}`}
     >
       <AiOutlineLike />

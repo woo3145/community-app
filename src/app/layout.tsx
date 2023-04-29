@@ -3,6 +3,7 @@ import { SessionProviders } from './sessionProviders';
 
 import './globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export default async function RootLayout({
   children,

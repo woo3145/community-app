@@ -22,7 +22,7 @@ export default async function PostDetail({
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>
             <Link href={`/profile/${post.user?.profile?.userId}`}>
-              <UserProfile profile={post.user?.profile} />
+              <UserProfile isLoading={false} profile={post.user?.profile} />
             </Link>
           </div>
           <div className={styles.postCount}>
@@ -50,7 +50,12 @@ export default async function PostDetail({
           <div className={styles.tagList}>
             {post.tags?.map((tag, idx) => {
               return (
-                <Badge key={idx} href={`/post/${tag.id}`} text={tag.title} />
+                <Badge
+                  isLoading={false}
+                  key={idx}
+                  href={`/post/${tag.id}`}
+                  text={tag.title}
+                />
               );
             })}
           </div>

@@ -7,8 +7,10 @@ import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useMe } from '@/hooks/swr/useMe';
 import { useState } from 'react';
 import { DeleteConfirmModal } from '@/app/_modals/confirm/DeleteConfirmModal';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
+  isLoading: false;
   comment: Comment;
   isLink?: boolean; // 해당 댓글의 게시물의 링크를 연결할지
 }
@@ -42,13 +44,32 @@ const PopupMenu = ({ comment }: { comment: Comment }) => {
   );
 };
 
-export const CommentItem = ({ comment, isLink = false }: Props) => {
+export const CommentItem = ({
+  comment,
+  isLink = false,
+  isLoading,
+}: Props | IsLoadingProps) => {
   const { me } = useMe();
+
+  if (isLoading) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <AuthorProfile isLoading={isLoading} />
+          </div>
+
+          <Skeleton width="40%" style={{ marginBottom: 12, marginTop: 12 }} />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.header}>
           <AuthorProfile
+            isLoading={isLoading}
             profile={comment.user?.profile}
             createAt={comment.createAt}
             size="sm"

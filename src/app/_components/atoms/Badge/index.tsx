@@ -1,8 +1,10 @@
 import { CSSProperties } from 'react';
 import styles from './styles.module.scss';
 import Link from 'next/link';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
+  isLoading: false;
   text: string;
   onClick?: () => void;
   size?: UISize;
@@ -10,7 +12,18 @@ interface Props {
   href?: string;
 }
 
-const Badge = ({ text, onClick, size = 'md', style, href }: Props) => {
+const Badge = ({
+  text,
+  onClick,
+  size = 'md',
+  style,
+  href,
+  isLoading,
+}: Props | IsLoadingProps) => {
+  if (isLoading) {
+    return <Skeleton width={60} height={20} />;
+  }
+
   if (href) {
     return (
       <Link

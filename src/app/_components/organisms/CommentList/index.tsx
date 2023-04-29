@@ -2,13 +2,11 @@
 
 import { useComments } from '@/hooks/swr/useComments';
 import { IoChatbubbleOutline } from 'react-icons/io5';
-
 import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
-
-import styles from './styles.module.scss';
 import { CommentItem } from '../../molecules/CommentItem';
 import { CreateCommentForm } from '../../forms/CreateCommentForm';
-import { CommentItemLoading } from '../../molecules/CommentItem/Loading';
+
+import styles from './styles.module.scss';
 
 interface Props {
   postId: number;
@@ -35,7 +33,7 @@ export const CommentList = ({ postId }: Props) => {
       {comments.length === 0 &&
         isLoading &&
         [1, 2, 3, 4].map((i) => {
-          return <CommentItemLoading key={i} />;
+          return <CommentItem key={i} isLoading={isLoading} />;
         })}
 
       {!isLoading && comments.length === 0 && <EmptyCommentMessage />}
@@ -43,7 +41,9 @@ export const CommentList = ({ postId }: Props) => {
       {!isLoading &&
         comments.length > 0 &&
         comments.map((comment, idx) => {
-          return <CommentItem key={idx} comment={comment} />;
+          return (
+            <CommentItem isLoading={isLoading} key={idx} comment={comment} />
+          );
         })}
 
       <div className={styles.commentWrite}>
