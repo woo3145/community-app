@@ -19,21 +19,13 @@ export const UserProfile = ({
     return (
       <div className={styles.wrapper}>
         <div className={`${styles.profileBox} ${styles[size]}`}>
-          <Avatar
-            isLoading={isLoading}
-            src={profile.avatar || ''}
-            size={size}
-          />
+          <Avatar isLoading={isLoading} />
 
           <div className={styles.verticleBox}>
             <div className={styles.user_name}>
               <Skeleton />
             </div>
-            <AvatarCareer
-              isLoading={isLoading}
-              job={profile.job?.title}
-              annual={profile.annual}
-            />
+            <AvatarCareer isLoading={isLoading} />
           </div>
         </div>
       </div>

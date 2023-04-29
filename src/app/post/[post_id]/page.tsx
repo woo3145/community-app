@@ -45,7 +45,7 @@ export default async function PostDetail({
 
       <section className={styles.postDetail}>
         <article className={styles.contentsBox}>
-          <PostContent post={post} />
+          <PostContent isLoading={false} post={post} />
 
           <div className={styles.tagList}>
             {post.tags?.map((tag, idx) => {
