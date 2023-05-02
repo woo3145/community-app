@@ -1,5 +1,5 @@
 import { CreateCommentFormValue } from '@/app/_components/forms/CreateCommentForm';
-import { _createComment } from '@/libs/client/apis';
+import { _createComment, _createPost } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useSession } from 'next-auth/react';
@@ -20,7 +20,7 @@ export const useCreateComment = (postId: number, reset: () => void) => {
     mutateComments((oldData) => {
       if (!oldData) return;
       return {
-        data: [newComment, ...oldData.data],
+        data: [...oldData.data, newComment],
       };
     });
     // 내 댓글여부 새로고침

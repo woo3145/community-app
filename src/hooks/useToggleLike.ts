@@ -1,19 +1,27 @@
-import { API_BASE_URL, _toggleLike } from '@/libs/client/apis';
+import { _toggleLike } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Id, toast } from 'react-toastify';
-import { useSWRConfig } from 'swr';
+import { usePostIsLiked } from './swr/usePostIsLiked';
+import { usePostLikeCount } from './swr/usePostLikeCount';
 
 // 게시물 좋아요 기능
 export const useToggleLike = (postId: number, isLiked: boolean) => {
   const { data: session } = useSession();
   const [isApiLoading, setIsApiLoading] = useState(false);
-  const { mutate } = useSWRConfig();
+  const { mutate: mutatePostIsLiked } = usePostIsLiked(
+    postId,
+    session?.user.id
+  );
+  const { mutate: mutatePostLikeCount } = usePostLikeCount(postId);
 
-  const refresh = (postId: number, userId: string) => {
-    mutate(`${API_BASE_URL}/posts/${postId}/like`); // 게시글 좋아요 수 새로고침
-    mutate(`${API_BASE_URL}/user/${userId}/likes/${postId}`); // 게시물 좋아요 여부 새로고침
+  const refresh = (isLiked: boolean) => {
+    mutatePostIsLiked({ data: !isLiked }); // 게시물 좋아요 여부 새로고침
+    mutatePostLikeCount((oldData) => {
+      if (!oldData) return;
+      return { data: isLiked ? oldData.data - 1 : oldData.data + 1 };
+    }); // 게시글 좋아요 수 새로고침
   };
 
   const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
@@ -34,7 +42,7 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
       handleApiLoading(true);
 
       await _toggleLike(postId, isLiked);
-      refresh(postId, session.user.id);
+      refresh(isLiked);
       handleApiLoading(false, toastId);
     } catch (e) {
       errorHandlerWithToast(e);
