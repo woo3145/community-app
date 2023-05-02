@@ -18,7 +18,7 @@ export const MyLikes = () => {
             page.data.map((likesPost) => {
               return (
                 <PostItem
-                  isLoading={isLoading}
+                  isLoading={false}
                   key={likesPost.post.id}
                   post={likesPost.post}
                 />

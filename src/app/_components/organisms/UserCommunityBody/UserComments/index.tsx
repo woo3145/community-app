@@ -18,7 +18,7 @@ export const UserComments = ({ userId }: { userId: string }) => {
             page.data.map((comment, idx) => {
               return (
                 <CommentItem
-                  isLoading={isLoading}
+                  isLoading={false}
                   key={idx}
                   comment={comment}
                   isLink

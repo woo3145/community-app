@@ -18,7 +18,7 @@ export const MyRecents = () => {
             page.data.map((recentlyViewdPost) => {
               return (
                 <PostItem
-                  isLoading={isLoading}
+                  isLoading={false}
                   key={recentlyViewdPost.post.id}
                   post={recentlyViewdPost.post}
                 />

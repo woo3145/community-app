@@ -27,6 +27,5 @@ export const getPost = async (postId: number): Promise<Post> => {
     // 최근 본 글에 저장
     await _saveRecentPost(session.user.id, post.id);
   }
-
   return post;
 };

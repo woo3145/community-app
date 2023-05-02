@@ -18,9 +18,7 @@ export default function PostList({ category }: Props) {
           })
         : data.map((page) =>
             page.data.map((post) => {
-              return (
-                <PostItem isLoading={isLoading} key={post.id} post={post} />
-              );
+              return <PostItem isLoading={false} key={post.id} post={post} />;
             })
           )}
       {isLoading ? (

@@ -38,13 +38,9 @@ export const CommentList = ({ postId }: Props) => {
 
       {!isLoading && comments.length === 0 && <EmptyCommentMessage />}
 
-      {!isLoading &&
-        comments.length > 0 &&
-        comments.map((comment, idx) => {
-          return (
-            <CommentItem isLoading={isLoading} key={idx} comment={comment} />
-          );
-        })}
+      {comments.map((comment, idx) => {
+        return <CommentItem isLoading={false} key={idx} comment={comment} />;
+      })}
 
       <div className={styles.commentWrite}>
         <div className={styles.commentWrite_top}>
