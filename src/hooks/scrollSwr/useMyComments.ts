@@ -36,15 +36,8 @@ export const useMyComments = () => {
   const updateCreatedCache = (newComment: Comment) => {
     mutate((oldData) => {
       if (!oldData) return;
-      return oldData.map((page, idx) => {
-        if (idx === 0) {
-          return {
-            data: [newComment, ...page.data],
-          };
-        }
-        return page;
-      });
-    }, {});
+      return [{ data: [newComment] }, ...oldData];
+    });
     mutate();
   };
   return {
