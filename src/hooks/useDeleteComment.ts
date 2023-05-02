@@ -11,32 +11,23 @@ import { useUserComments } from './scrollSwr/userUserComments';
 // 댓글 삭제
 export const useDeleteComment = (comment: Comment, callback?: () => void) => {
   const { data: session } = useSession();
-  const { mutate: mutateMyComments } = useMyComments();
-  const { mutate: mutateComments } = useComments(comment.postId);
-  const { mutate: mutateUserComments } = useUserComments(session?.user.id);
+  const { updateDeletedCache: updateDeletedCacheInMyComments } =
+    useMyComments();
+  const { updateDeletedCache: updateDeletedCacheInComments } = useComments(
+    comment.postId
+  );
+  const { updateDeletedCache: updateDeletedCacheInUserComments } =
+    useUserComments(session?.user.id);
   const [isApiLoading, setIsApiLoading] = useState(false);
 
-  const refreshComments = (deletedCommentId: number) => {
-    // 삭제한 댓글 캐시 업데이트
-    mutateMyComments((oldData) => {
-      if (!oldData) return;
-      return oldData.filter((page) =>
-        page.data.filter((c) => c.id != deletedCommentId)
-      );
-    });
-    mutateUserComments((oldData) => {
-      if (!oldData) return;
-      return oldData.filter((page) =>
-        page.data.filter((c) => c.id != deletedCommentId)
-      );
-    });
-    // 게시물 댓글 새로고침
-    mutateComments((oldData) => {
-      if (!oldData) return;
-      return {
-        data: oldData?.data.filter((c) => c.id !== deletedCommentId),
-      };
-    });
+  // 댓글 삭제 캐시 업데이트
+  const updateCache = (deletedCommentId: number) => {
+    // 내 댓글
+    updateDeletedCacheInMyComments(deletedCommentId);
+    // 유저 댓글
+    updateDeletedCacheInUserComments(deletedCommentId);
+    // 게시물 댓글
+    updateDeletedCacheInComments(deletedCommentId);
   };
 
   const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
@@ -59,7 +50,7 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
       await _deleteComment(comment.id);
 
       toast.success('성공적으로 업데이트 되었습니다.');
-      refreshComments(comment.id);
+      updateCache(comment.id);
       handleApiLoading(false, toastId);
       if (callback) callback();
     } catch (e) {

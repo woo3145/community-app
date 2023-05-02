@@ -10,18 +10,16 @@ import { usePostLikeCount } from './swr/usePostLikeCount';
 export const useToggleLike = (postId: number, isLiked: boolean) => {
   const { data: session } = useSession();
   const [isApiLoading, setIsApiLoading] = useState(false);
-  const { mutate: mutatePostIsLiked } = usePostIsLiked(
+  const { updateCache: updatePostIsLiked } = usePostIsLiked(
     postId,
     session?.user.id
   );
-  const { mutate: mutatePostLikeCount } = usePostLikeCount(postId);
+  const { updateCache: updatePostLikeCount } = usePostLikeCount(postId);
 
-  const refresh = (isLiked: boolean) => {
-    mutatePostIsLiked({ data: !isLiked }); // 게시물 좋아요 여부 새로고침
-    mutatePostLikeCount((oldData) => {
-      if (!oldData) return;
-      return { data: isLiked ? oldData.data - 1 : oldData.data + 1 };
-    }); // 게시글 좋아요 수 새로고침
+  // 좋아요 상태 캐시 업데이트
+  const updateCache = (isLiked: boolean) => {
+    updatePostIsLiked(!isLiked); // 게시물 좋아요 여부
+    updatePostLikeCount(isLiked); // 게시물 좋아요 수
   };
 
   const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
@@ -42,7 +40,7 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
       handleApiLoading(true);
 
       await _toggleLike(postId, isLiked);
-      refresh(isLiked);
+      updateCache(isLiked);
       handleApiLoading(false, toastId);
     } catch (e) {
       errorHandlerWithToast(e);

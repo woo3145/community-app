@@ -8,9 +8,7 @@ interface UseMeResponse {
   isLoading: boolean;
   isLoggedIn: boolean;
   isError: boolean;
-  mutate: KeyedMutator<{
-    data: Me;
-  }>;
+  updateCache: (newUser: Me) => void;
 }
 
 // 로그인한 사용자 정보 불러오기
@@ -23,18 +21,22 @@ export const useMe = (): UseMeResponse => {
   if (!session) {
     return {
       me: null,
-      mutate,
       isLoggedIn: false,
       isLoading: false,
       isError: false,
+      updateCache: (newUser: Me) => {},
     };
   }
 
+  const updateCache = (newUser: Me) => {
+    mutate({ data: newUser });
+  };
+
   return {
     me: data?.data || null,
-    mutate,
     isLoading: !data && !error,
     isLoggedIn: !!data?.data,
     isError: error !== undefined,
+    updateCache,
   };
 };

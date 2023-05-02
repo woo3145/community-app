@@ -10,9 +10,8 @@ interface UseCommentsResponse {
   count: number;
   isLoading: boolean;
   isError: boolean;
-  mutate: KeyedMutator<{
-    data: Comment[];
-  }>;
+  updateDeletedCache: (deletedId: number) => void;
+  updateCreatedCache: (newComment: Comment) => void;
 }
 
 // 게시물의 댓글 목록 불러오기
@@ -20,13 +19,32 @@ export const useComments = (postId?: number | null): UseCommentsResponse => {
   const { data, error, mutate } = useSWR<{ data: Comment[] }>(
     postId ? `${API_BASE_URL}/posts/${postId}/comments` : null
   );
+  const updateDeletedCache = (deletedId: number) => {
+    mutate((oldData) => {
+      if (!oldData) return;
+      return {
+        data: oldData?.data.filter((c) => c.id !== deletedId),
+      };
+    });
+  };
+
+  const updateCreatedCache = (newComment: Comment) => {
+    mutate((oldData) => {
+      if (!oldData) return;
+      return {
+        data: [...oldData.data, newComment],
+      };
+    });
+  };
+
   if (!postId) {
     return {
       comments: [],
       count: 0,
       isLoading: false,
       isError: false,
-      mutate,
+      updateDeletedCache,
+      updateCreatedCache,
     };
   }
 
@@ -35,6 +53,7 @@ export const useComments = (postId?: number | null): UseCommentsResponse => {
     count: data?.data ? data.data.length : 0,
     isLoading: !data && !error,
     isError: error !== undefined,
-    mutate,
+    updateDeletedCache,
+    updateCreatedCache,
   };
 };

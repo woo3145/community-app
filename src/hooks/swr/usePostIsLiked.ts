@@ -5,9 +5,7 @@ interface UsePostIsLikedResponse {
   isLiked: boolean;
   isLoading: boolean;
   isError: boolean;
-  mutate: KeyedMutator<{
-    data: boolean;
-  }>;
+  updateCache: (isLiked: boolean) => void;
 }
 
 // 유저가 해당 게시물에 좋아요를 눌렀는지 여부
@@ -23,14 +21,18 @@ export const usePostIsLiked = (
       isLiked: false,
       isLoading: false,
       isError: false,
-      mutate,
+      updateCache: (isLiked: boolean) => {},
     };
   }
+
+  const updateCache = (isLiked: boolean) => {
+    mutate({ data: !isLiked });
+  };
 
   return {
     isLiked: data?.data ? data.data : false,
     isLoading: !data && !error,
     isError: error !== undefined,
-    mutate,
+    updateCache,
   };
 };

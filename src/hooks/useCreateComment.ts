@@ -12,29 +12,17 @@ import { useMyComments } from './scrollSwr/useMyComments';
 export const useCreateComment = (postId: number, reset: () => void) => {
   const { data: session } = useSession();
   const [isApiLoading, setIsApiLoading] = useState(false);
-  const { mutate: mutateComments } = useComments(postId);
-  const { mutate: mutateMyComments } = useMyComments();
+  const { updateCreatedCache: updateCreatedCacheInComments } =
+    useComments(postId);
+  const { updateCreatedCache: updateCreatedCacheInMyComments } =
+    useMyComments();
 
-  const refreshComments = (newComment: Comment) => {
-    // 게시물 댓글 새로고침
-    mutateComments((oldData) => {
-      if (!oldData) return;
-      return {
-        data: [...oldData.data, newComment],
-      };
-    });
-    // 내 댓글여부 새로고침
-    mutateMyComments((oldData) => {
-      if (!oldData) return;
-      return oldData.map((page, idx) => {
-        if (idx === 0) {
-          return {
-            data: [newComment, ...page.data],
-          };
-        }
-        return page;
-      });
-    });
+  // 생성된 댓글 캐시 업데이트
+  const updateCache = (newComment: Comment) => {
+    // 게시물 댓글 캐시
+    updateCreatedCacheInComments(newComment);
+    // 내 댓글 캐시
+    updateCreatedCacheInMyComments(newComment);
   };
 
   const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
@@ -57,7 +45,7 @@ export const useCreateComment = (postId: number, reset: () => void) => {
       const res = await _createComment(postId, data.content);
 
       reset();
-      refreshComments(res.data);
+      updateCache(res.data);
       handleApiLoading(false, toastId);
     } catch (e) {
       errorHandlerWithToast(e);

@@ -8,12 +8,21 @@ export const useUserComments = (userId?: string) => {
   const { data, bottomRef, isReachedEnd, isLoading, isError, mutate } =
     useInfiniteScrollSWR<Comment[]>(`${API_BASE_URL}/user/${userId}/comments`);
 
+  const updateDeletedCache = (deletedId: number) => {
+    mutate((oldData) => {
+      if (!oldData) return;
+      return oldData.filter((page) =>
+        page.data.filter((c) => c.id != deletedId)
+      );
+    });
+  };
+
   return {
     data,
     bottomRef,
     isReachedEnd,
     isLoading,
     isError,
-    mutate,
+    updateDeletedCache,
   };
 };

@@ -21,15 +21,15 @@ export const useEditProfile = (
   uploadImage: () => Promise<string>,
   callback: () => void
 ) => {
-  const { me, mutate: mutateMe } = useMe();
-  const { mutate: mutateMyPosts } = useMyPosts();
-  const { mutate: mutateMyRecents } = useMyRecents();
-  const { mutate: mutateMyComments } = useMyComments();
-  const { mutate: mutateMyLikes } = useMyLikes();
+  const { me, updateCache: updateMe } = useMe();
+  const { updateUserCache: updateUserInMyPosts } = useMyPosts();
+  const { updateUserCache: updateUserInMyRecents } = useMyRecents();
+  const { updateUserCache: updateUserInMyComments } = useMyComments();
+  const { updateUserCache: updateUserInMyLikes } = useMyLikes();
   const { data: session } = useSession();
   const [isApiLoading, setIsApiLoading] = useState(false);
 
-  const refresh = (updatedData: EditProfileBody) => {
+  const updateCache = (updatedData: EditProfileBody) => {
     if (!me) return;
     const newUser: Me = {
       ...me,
@@ -38,55 +38,12 @@ export const useEditProfile = (
         ...updatedData,
       },
     };
-    mutateMe({ data: newUser });
-    mutateMyPosts((oldData) => {
-      if (!oldData) return;
-      return oldData.map((page) => {
-        return {
-          data: page.data.map((post) => {
-            post.user = newUser;
-            return post;
-          }),
-        };
-      });
-    });
-    mutateMyRecents((oldData) => {
-      if (!oldData) return;
-      return oldData.map((page) => {
-        return {
-          data: page.data.map((recentlyviewdPost) => {
-            if (me.id === recentlyviewdPost.post.userId) {
-              recentlyviewdPost.post.user = newUser;
-            }
-            return recentlyviewdPost;
-          }),
-        };
-      });
-    });
-    mutateMyComments((oldData) => {
-      if (!oldData) return;
-      return oldData.map((page) => {
-        return {
-          data: page.data.map((comment) => {
-            comment.user = newUser;
-            return comment;
-          }),
-        };
-      });
-    });
-    mutateMyLikes((oldData) => {
-      if (!oldData) return;
-      return oldData.map((page) => {
-        return {
-          data: page.data.map((likePost) => {
-            if (me.id === likePost.post.userId) {
-              likePost.post.user = newUser;
-            }
-            return likePost;
-          }),
-        };
-      });
-    });
+    // 유저 변경 데이터 캐시 업데이트
+    updateMe(newUser); // 내정보
+    updateUserInMyPosts(newUser); // 내 작성글
+    updateUserInMyRecents(newUser); // 최근에 읽은 글
+    updateUserInMyComments(newUser); // 내 댓글
+    updateUserInMyLikes(newUser); // 내가 좋아요 한 글
   };
 
   const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
@@ -138,7 +95,7 @@ export const useEditProfile = (
 
       // 성공
       toast.success('성공적으로 업데이트 되었습니다.');
-      refresh(updatedData);
+      updateCache(updatedData);
       handleApiLoading(false, toastId);
       if (callback) callback();
     } catch (e) {
