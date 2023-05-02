@@ -22,6 +22,7 @@ export const useMyLikes = () => {
         };
       });
     });
+    mutate();
   };
   return {
     data,

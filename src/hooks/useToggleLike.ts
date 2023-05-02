@@ -18,7 +18,7 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
 
   // 좋아요 상태 캐시 업데이트
   const updateCache = (isLiked: boolean) => {
-    updatePostIsLiked(!isLiked); // 게시물 좋아요 여부
+    updatePostIsLiked(isLiked); // 게시물 좋아요 여부
     updatePostLikeCount(isLiked); // 게시물 좋아요 수
   };
 

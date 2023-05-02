@@ -26,6 +26,7 @@ export const useComments = (postId?: number | null): UseCommentsResponse => {
         data: oldData?.data.filter((c) => c.id !== deletedId),
       };
     });
+    mutate();
   };
 
   const updateCreatedCache = (newComment: Comment) => {
@@ -35,6 +36,7 @@ export const useComments = (postId?: number | null): UseCommentsResponse => {
         data: [...oldData.data, newComment],
       };
     });
+    mutate();
   };
 
   if (!postId) {

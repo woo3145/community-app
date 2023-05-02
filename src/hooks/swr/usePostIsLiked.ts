@@ -16,18 +16,19 @@ export const usePostIsLiked = (
   const { data, error, mutate } = useSWR<{ data: boolean }>(
     postId && userId ? `${API_BASE_URL}/user/${userId}/likes/${postId}` : null
   );
+  const updateCache = (isLiked: boolean) => {
+    mutate({ data: !isLiked });
+    mutate();
+  };
+
   if (!postId) {
     return {
       isLiked: false,
       isLoading: false,
       isError: false,
-      updateCache: (isLiked: boolean) => {},
+      updateCache,
     };
   }
-
-  const updateCache = (isLiked: boolean) => {
-    mutate({ data: !isLiked });
-  };
 
   return {
     isLiked: data?.data ? data.data : false,

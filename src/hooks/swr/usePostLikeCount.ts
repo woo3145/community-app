@@ -13,14 +13,6 @@ export const usePostLikeCount = (postId: number): UseCommentsResponse => {
   const { data, error, mutate } = useSWR<{ data: number }>(
     postId ? `${API_BASE_URL}/posts/${postId}/like` : null
   );
-  if (!postId) {
-    return {
-      likeCount: 0,
-      isLoading: false,
-      isError: false,
-      updateCache: (isLiked: boolean) => {},
-    };
-  }
 
   const updateCache = (isLiked: boolean) => {
     // 현재 좋아요 상태를 기준으로 업데이트
@@ -28,7 +20,17 @@ export const usePostLikeCount = (postId: number): UseCommentsResponse => {
       if (!oldData) return;
       return { data: isLiked ? oldData.data - 1 : oldData.data + 1 };
     });
+    mutate();
   };
+
+  if (!postId) {
+    return {
+      likeCount: 0,
+      isLoading: false,
+      isError: false,
+      updateCache,
+    };
+  }
 
   return {
     likeCount: data?.data ? data.data : 0,

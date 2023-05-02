@@ -17,20 +17,19 @@ export const useMe = (): UseMeResponse => {
   const { data, error, mutate } = useSWR<{ data: Me }>(
     session ? `${API_BASE_URL}/me` : null
   );
-
+  const updateCache = (newUser: Me) => {
+    mutate({ data: newUser });
+    mutate();
+  };
   if (!session) {
     return {
       me: null,
       isLoggedIn: false,
       isLoading: false,
       isError: false,
-      updateCache: (newUser: Me) => {},
+      updateCache,
     };
   }
-
-  const updateCache = (newUser: Me) => {
-    mutate({ data: newUser });
-  };
 
   return {
     me: data?.data || null,

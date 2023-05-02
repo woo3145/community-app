@@ -20,6 +20,7 @@ export const useMyPosts = () => {
         };
       });
     });
+    mutate();
   };
 
   return {

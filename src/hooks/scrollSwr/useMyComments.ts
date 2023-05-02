@@ -20,6 +20,7 @@ export const useMyComments = () => {
         };
       });
     });
+    mutate();
   };
 
   const updateDeletedCache = (deletedId: number) => {
@@ -29,6 +30,7 @@ export const useMyComments = () => {
         page.data.filter((c) => c.id != deletedId)
       );
     });
+    mutate();
   };
 
   const updateCreatedCache = (newComment: Comment) => {
@@ -42,7 +44,8 @@ export const useMyComments = () => {
         }
         return page;
       });
-    });
+    }, {});
+    mutate();
   };
   return {
     data,
