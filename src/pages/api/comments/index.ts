@@ -6,6 +6,7 @@ import client from '@/libs/server/prismaClient';
 import { authOptions } from '../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
+import { getCommentsInclude } from '@/libs/server/commentUtils/commentFetch';
 
 interface CreateCommentBody {
   postId: string;
@@ -34,9 +35,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         },
       },
+      include: getCommentsInclude(),
     });
 
-    return res.status(200).json({ message: 'successful' });
+    return res.status(200).json({ message: 'successful', data: newComment });
   }
 
   throw new NotFoundError();

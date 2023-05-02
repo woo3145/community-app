@@ -1,5 +1,6 @@
 import {
   ApiResponse,
+  CreateCommentResponse,
   CreatePostBody,
   CreatePostResponse,
   EditProfileBody,
@@ -107,7 +108,7 @@ export const _saveRecentPost = async (
   return data;
 };
 
-// 댓글 작성
+// 게시글 작성
 export const _createPost = async ({
   title,
   content,
@@ -115,7 +116,7 @@ export const _createPost = async ({
   imageUrl,
   tags,
 }: CreatePostBody): Promise<CreatePostResponse> => {
-  const data = await fetchApi<ApiResponse>(`/api/posts`, {
+  const data = await fetchApi<CreatePostResponse>(`/api/posts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -149,8 +150,8 @@ export const _deleteComment = async (
 export const _createComment = async (
   postId: number,
   content: string
-): Promise<ApiResponse> => {
-  const data = await fetchApi<ApiResponse>(`/api/comments`, {
+): Promise<CreateCommentResponse> => {
+  const data = await fetchApi<CreateCommentResponse>(`/api/comments`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

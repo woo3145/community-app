@@ -1,6 +1,9 @@
 import { isServerError } from '../typeGuards';
 
-export const fetchApi = async <T>(url: string, option?: RequestInit) => {
+export const fetchApi = async <T>(
+  url: string,
+  option?: RequestInit
+): Promise<T> => {
   try {
     const res = await fetch(url, option);
 
