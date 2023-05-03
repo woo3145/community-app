@@ -21,7 +21,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    const errors = [];
     if (!user) {
       throw new ValidationError([
         {
