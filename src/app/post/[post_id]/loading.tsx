@@ -14,7 +14,6 @@ export default async function Loading() {
           </div>
         </div>
       </aside>
-
       <section className={styles.postDetail}>
         <article className={styles.contentsBox}>
           <PostContent isLoading={true} />
