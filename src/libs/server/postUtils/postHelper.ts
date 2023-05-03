@@ -1,5 +1,4 @@
 import client from '@/libs/server/prismaClient';
-import { FetchedPost } from './postFetchTypes';
 
 export const updatePostViewed = async (userId: string, postId: number) => {
   const viewd = await client.view.findFirst({
@@ -58,68 +57,4 @@ export const createPost = async (
   });
 
   return newPost;
-};
-
-export interface UpdatePostBody {
-  title?: string;
-  content?: string;
-  published?: boolean;
-  tags?: number[];
-}
-
-export const updatePost = async (
-  post: FetchedPost,
-  { title, content, published, tags }: UpdatePostBody
-) => {
-  if (title && post.title !== title) {
-    await client.post.update({
-      where: { id: post.id },
-      data: {
-        title,
-      },
-    });
-  }
-  if (content && post.content !== content) {
-    await client.post.update({
-      where: { id: post.id },
-      data: {
-        content,
-      },
-    });
-  }
-  if (published !== undefined && post.published !== published) {
-    await client.post.update({
-      where: { id: post.id },
-      data: {
-        published: published === true ? true : false,
-      },
-    });
-  }
-  if (tags) {
-    const deleteTags = post.tags.filter((tag) => !tags.includes(tag.id));
-    const addTags = tags.filter(
-      (id) => !post.tags.map((tag) => tag.id).includes(id)
-    );
-    if (deleteTags.length === 0 && addTags.length === 0) return;
-
-    await client.post.update({
-      where: { id: post.id },
-      data: {
-        tags: {
-          disconnect: deleteTags.map((tag) => {
-            return {
-              id: tag.id,
-            };
-          }),
-          connect: addTags.map((tagId) => {
-            return {
-              id: tagId,
-            };
-          }),
-        },
-      },
-    });
-  }
-
-  return;
 };

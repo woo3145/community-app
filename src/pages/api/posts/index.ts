@@ -10,7 +10,11 @@ import {
   parseFetchPostQueryParams,
 } from '@/libs/server/postUtils/postFetch';
 import { CreatePostBody, createPost } from '@/libs/server/postUtils/postHelper';
-import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
+import {
+  NotFoundError,
+  UnauthorizedError,
+  ValidationError,
+} from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -33,6 +37,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const { title, content, published, tags, imageUrl } =
       req.body as CreatePostBody;
+
+    const errors: { field: string; message: string }[] = [];
+
+    if (tags.length === 0 || 3 < tags.length) {
+      errors.push({ field: 'tags', message: '태그의 수가 잘못되었습니다.' });
+    }
+    if (!title) {
+      errors.push({ field: 'title', message: '제목을 입력해 주세요.' });
+    }
+    if (!content) {
+      errors.push({ field: 'content', message: '내용을 입력해 주세요.' });
+    }
+
+    if (errors.length !== 0) {
+      throw new ValidationError(errors);
+    }
 
     const newPost = await createPost(session.user.id, {
       title,

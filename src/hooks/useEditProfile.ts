@@ -62,7 +62,7 @@ export const useEditProfile = (
       }
       const { nickname, description } = data;
       if (nameType && !nickname) {
-        throw new Error('닉네임을 입력해주세요.');
+        throw new Error('닉네임을 입력해 주세요.');
       }
       if (
         !imageFile &&

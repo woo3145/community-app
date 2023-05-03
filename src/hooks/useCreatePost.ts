@@ -36,9 +36,13 @@ export const useCreatePost = (
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
+
       const { title, content } = data;
-      if (!title) throw new Error('제목을 입력해주세요.');
-      if (!content) throw new Error('내용을 입력해주세요.');
+      if (!title) throw new Error('제목을 입력해 주세요.');
+      if (!content) throw new Error('내용을 입력해 주세요.');
+      if (tags.length === 0 || 3 < tags.length) {
+        throw new Error('태그의 수가 잘못되었습니다.');
+      }
 
       toastId = toast.loading('처리중 입니다.');
       handleApiLoading(true);

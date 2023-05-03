@@ -39,6 +39,10 @@ export const useCreateComment = (postId: number, reset: () => void) => {
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
+      if (!data.content) {
+        throw new Error('내용을 입력해 주세요.');
+      }
+
       toastId = toast.loading('처리중 입니다.');
       handleApiLoading(true);
 
