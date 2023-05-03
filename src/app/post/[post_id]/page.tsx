@@ -8,7 +8,6 @@ import { PostLikeButton } from './PostLikeButton';
 import { PostCommentButton } from './CommentButton';
 
 import styles from './page.module.scss';
-import Head from 'next/head';
 
 export default async function PostDetail({
   params: { post_id },
@@ -19,10 +18,6 @@ export default async function PostDetail({
 
   return (
     <main className={styles.main}>
-      <Head>
-        <title>lhsdalkjsdf</title>
-        <meta property="og:title" content="My page title" key="title" />
-      </Head>
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>

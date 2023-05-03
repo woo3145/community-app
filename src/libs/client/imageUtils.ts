@@ -49,6 +49,11 @@ export const cropImage = async (
 
   canvas.width = imageSize.width;
   canvas.height = imageSize.height;
+
+  // 벡터 이미지를 위한 배경
+  context.fillStyle = 'rgb(255,255,255)';
+  context.fillRect(0, 0, imageSize.width, imageSize.height);
+
   context.drawImage(image, 0, 0, imageSize.width, imageSize.height);
 
   const cropedImage = context.getImageData(

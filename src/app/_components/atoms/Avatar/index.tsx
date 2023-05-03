@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import Skeleton from 'react-loading-skeleton';
 
 interface Props {
-  isLoading: false;
+  isLoading?: false;
   src?: string;
   size?: UISize;
   style?: CSSProperties;
@@ -15,7 +15,7 @@ export const Avatar = ({
   src,
   size = 'md',
   style,
-  isLoading,
+  isLoading = false,
 }: Props | IsLoadingProps) => {
   if (isLoading) {
     return (
