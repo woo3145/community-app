@@ -69,7 +69,7 @@ AWS_S3_BUCKET=
     - [x] react-loading-skeleton으로 교체
   - [x] react-toastify
   - [x] 댓글 삭제 기능
-  - [ ] useSWR 변경 데이터 즉시 반영
+  - [x] useSWR 변경 데이터 즉시 반영
   - [x] SSR 로딩화면 필요
   - [ ] E2E Test
 
