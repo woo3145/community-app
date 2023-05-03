@@ -8,19 +8,20 @@ export const updatePostViewed = async (userId: string, postId: number) => {
     },
   });
   if (viewd) {
-    await client.view.delete({
+    await client.view.update({
       where: {
         id: viewd.id,
       },
+      data: {},
+    });
+  } else {
+    await client.view.create({
+      data: {
+        postId: postId,
+        userId: userId,
+      },
     });
   }
-
-  await client.view.create({
-    data: {
-      postId: postId,
-      userId: userId,
-    },
-  });
 };
 
 export interface CreatePostBody {
@@ -47,7 +48,7 @@ export const createPost = async (
         },
       },
       tags: {
-        connect: tags.splice(0, 3).map((tagId: number) => {
+        connect: tags.map((tagId: number) => {
           return {
             id: tagId,
           };
