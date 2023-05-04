@@ -72,7 +72,9 @@ AWS_S3_BUCKET=
   - [x] useSWR 변경 데이터 즉시 반영
   - [x] SSR 로딩화면 필요 (post detail)
     - [ ] 현재 head.tsx에서 api요청을 하면 loading.tsx가 작동을 안함(loading.tsx에서도 head.tsx를 공유하기 때문에 SSR을 위한 로딩페이지마저 SSR이 되어버린듯)
-          -> next 13.2 부터 head.tsx 방식이 삭제된 듯 하여 버전 업그레이드 필요 (현재 문제 버전 13.1.5)
+          -> [x] next 13.2 부터 head.tsx 방식이 삭제된 듯 하여 버전 업그레이드 필요 (현재 문제 버전 13.1.5)
+          -> 업그레이드 해도 loading 파일은 page 파일의 document를 받아온뒤 로드되는 방식이라 헤더에서 api요청을 하면 똑같음
+          -> [ ] global layout에서 post/[post_id]로의 라우터 변경을 감지한 후 loading 컴포넌트를 보여줘야 할듯함
   - [ ] E2E Test
 
 에러처리

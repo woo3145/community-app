@@ -9,6 +9,10 @@ interface Props {
   };
 }
 
+export const metadata = {
+  title: 'Woo3145 - Profile',
+};
+
 export default function ProfilePage({ params: { user_id } }: Props) {
   return (
     <main className={styles.wrapper}>

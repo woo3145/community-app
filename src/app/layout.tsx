@@ -5,6 +5,10 @@ import './globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 
+export const metadata = {
+  title: 'Woo3145 - Community',
+};
+
 export default async function RootLayout({
   children,
 }: {

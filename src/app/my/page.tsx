@@ -6,6 +6,9 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import styles from './page.module.scss';
 import { MyCommunityProfile } from '../_components/organisms/MyCommunityProfile';
 
+export const metadata = {
+  title: 'Woo3145 - My',
+};
 export default async function MyCommunityPage() {
   const session = await getServerSession(authOptions);
 

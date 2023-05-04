@@ -9,7 +9,9 @@ export interface CreatePostFormValue {
   title: string;
   content: string;
 }
-
+export const metadata = {
+  title: 'Woo3145 - Write',
+};
 export default async function Write() {
   const session = await getServerSession(authOptions);
 

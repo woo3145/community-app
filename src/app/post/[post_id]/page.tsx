@@ -9,6 +9,19 @@ import { PostCommentButton } from './CommentButton';
 
 import styles from './page.module.scss';
 
+export async function generateMetadata({
+  params: { post_id },
+}: {
+  params: { post_id: number };
+}) {
+  const post = await getPost(post_id);
+
+  return {
+    title: post.title,
+    description: post.content,
+  };
+}
+
 export default async function PostDetail({
   params: { post_id },
 }: {
@@ -18,6 +31,7 @@ export default async function PostDetail({
 
   return (
     <main className={styles.main}>
+      gg
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>
@@ -42,7 +56,6 @@ export default async function PostDetail({
           </div>
         </div>
       </aside>
-
       <section className={styles.postDetail}>
         <article className={styles.contentsBox}>
           <PostContent isLoading={false} post={post} />
