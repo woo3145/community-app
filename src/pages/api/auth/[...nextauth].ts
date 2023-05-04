@@ -24,7 +24,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials as any;
-        const response = await fetch('http://localhost:3000/api/auth/signin', {
+        const response = await fetch('http://127.0.0.1:3000/api/auth/signin', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export const authOptions: AuthOptions = {
           if (token.type === 'credentials') {
             console.log('credentials 토큰 재발급');
             const response = await fetch(
-              'http://localhost:3000/api/auth/refresh',
+              'http://127.0.0.1:3000/api/auth/refresh',
               {
                 method: 'POST',
                 headers: {

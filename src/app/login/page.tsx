@@ -9,13 +9,13 @@ import { EmailLogin } from './components/emailLogin';
 import { Signup } from './components/signup';
 import styles from './page.module.scss';
 
-export const metadata = {
-  title: 'Woo3145 - Login',
-};
-
 interface CheckEmailResponse {
   registed: boolean;
 }
+
+// export const metadata = {
+//   title: 'Woo3145 - Login',
+// };
 
 export default function LogIn({ providers }: any) {
   const { data: session } = useSession();

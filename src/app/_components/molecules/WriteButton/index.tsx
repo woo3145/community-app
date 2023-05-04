@@ -15,6 +15,9 @@ export const WriteButton = () => {
   const openModal = () => {
     setIsOpen(true);
   };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   const onClick = () => {
     if (!me) {
       router.push('/login');
@@ -45,7 +48,7 @@ export const WriteButton = () => {
       {modalIsOpen && me && (
         <MyProfileModifyModal
           modalIsOpen={modalIsOpen}
-          setIsOpen={setIsOpen}
+          closeModal={closeModal}
           profile={me.profile}
         />
       )}

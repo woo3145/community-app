@@ -15,7 +15,6 @@ export async function generateMetadata({
   params: { post_id: number };
 }) {
   const post = await getPost(post_id);
-
   return {
     title: post.title,
     description: post.content,
@@ -31,7 +30,6 @@ export default async function PostDetail({
 
   return (
     <main className={styles.main}>
-      gg
       <aside className={styles.aside}>
         <div className={styles.aside_container}>
           <div className={styles.aside_container_top}>

@@ -11,7 +11,7 @@ import {
 } from '@/interfaces/api';
 import { fetchApi } from './fetchHelper';
 
-export const API_BASE_URL = 'http://localhost:3000/api';
+export const API_BASE_URL = 'http://127.0.0.1:3000/api';
 
 // @@@@@@@@ 프로필 @@@@@@@@
 // 이미지 업로드 함수
@@ -58,7 +58,7 @@ export const _editProfile = async ({
 // 게시물 하나 가져오기
 export const _getPost = async (postId: number): Promise<GetPostResponse> => {
   const data = await fetchApi<GetPostResponse>(
-    `http://localhost:3000/api/posts/${postId}`
+    `${API_BASE_URL}/posts/${postId}`
   );
   return data;
 };
@@ -89,7 +89,7 @@ export const _getPostIsLiked = async (
   postId: number
 ): Promise<GetPostIsLikedResponse> => {
   const data = await fetchApi<GetPostIsLikedResponse>(
-    `http://localhost:3000/api/user/${userId}/likes/${postId}`
+    `${API_BASE_URL}/user/${userId}/likes/${postId}`
   );
   return data;
 };
@@ -100,7 +100,7 @@ export const _saveRecentPost = async (
   postId: number
 ): Promise<ApiResponse> => {
   const data = await fetchApi<ApiResponse>(
-    `http://localhost:3000/api/user/${userId}/recent/${postId}`,
+    `${API_BASE_URL}/user/${userId}/recent/${postId}`,
     {
       method: 'PUT',
     }
@@ -116,7 +116,7 @@ export const _createPost = async ({
   imageUrl,
   tags,
 }: CreatePostBody): Promise<CreatePostResponse> => {
-  const data = await fetchApi<CreatePostResponse>(`/api/posts`, {
+  const data = await fetchApi<CreatePostResponse>(`${API_BASE_URL}/posts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -151,16 +151,19 @@ export const _createComment = async (
   postId: number,
   content: string
 ): Promise<CreateCommentResponse> => {
-  const data = await fetchApi<CreateCommentResponse>(`/api/comments`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      content: content,
-      postId: postId,
-    }),
-  });
+  const data = await fetchApi<CreateCommentResponse>(
+    `${API_BASE_URL}/comments`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: content,
+        postId: postId,
+      }),
+    }
+  );
   return data;
 };
 
@@ -169,7 +172,7 @@ export const _getUserComments = async (
   userId: string
 ): Promise<GetUserCommentsResponse> => {
   const data = await fetchApi<GetUserCommentsResponse>(
-    `http://localhost:3000/api/user/${userId}/comments`
+    `${API_BASE_URL}/user/${userId}/comments`
   );
   return data;
 };

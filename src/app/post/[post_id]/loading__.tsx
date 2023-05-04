@@ -4,10 +4,6 @@ import { PostContent } from '@/app/_components/molecules/PostContent';
 
 import styles from './page.module.scss';
 
-export const metadata = {
-  title: 'Loading',
-};
-
 export default async function Loading() {
   return (
     <main className={styles.main}>

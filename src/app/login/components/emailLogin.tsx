@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/app/_components/atoms/Button';
 import InputField from '@/app/_components/atoms/InputField';
 import Message from '@/app/_components/atoms/Message';
