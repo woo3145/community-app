@@ -4,7 +4,7 @@ import seedDB from './cypress/tasks/seedDB';
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://127.0.0.1:3000',
+    baseUrl: process.env.NEXT_PUBLIC_APP_URL,
     retries: {
       runMode: 3,
     },

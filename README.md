@@ -1,6 +1,8 @@
 .env
 
 ```
+NEXT_PUBLIC_APP_URL=app_url:port
+
 DATABASE_URL="postgresql://janedoe:mypassword@localhost:5432/mydb?schema=sample"
 
 JWT_TOKEN_SECRET=tasetaseeeee

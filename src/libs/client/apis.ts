@@ -11,7 +11,7 @@ import {
 } from '@/interfaces/api';
 import { fetchApi } from './fetchHelper';
 
-export const API_BASE_URL = 'http://127.0.0.1:3000/api';
+export const API_BASE_URL = `${process.env.NEXT_PUBLIC_APP_URL}/api`;
 
 // @@@@@@@@ 프로필 @@@@@@@@
 // 이미지 업로드 함수

@@ -24,16 +24,19 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials as any;
-        const response = await fetch('http://127.0.0.1:3000/api/auth/signin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/signin`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email,
+              password,
+            }),
+          }
+        );
 
         const responseJson = await response.json();
 
