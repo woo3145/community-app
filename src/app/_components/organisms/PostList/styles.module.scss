@@ -1,3 +1,5 @@
+@import '../../../mixins';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -6,4 +8,19 @@
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 
   background-color: var(--card-color);
+}
+
+.emptyPostContainer {
+  @include flex-center;
+  flex-direction: column;
+  padding: 92px 0;
+  .emptyIcon {
+    @include text_5xl;
+    margin-bottom: 16px;
+  }
+  .emptyPostText {
+    @include flex-center;
+    @include text_sm;
+    flex-direction: column;
+  }
 }
