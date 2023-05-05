@@ -14,6 +14,7 @@ interface Props {
   size?: UISize;
   icon?: React.ReactNode;
   style?: CSSProperties;
+  dataCy?: string;
 }
 
 const Button = ({
@@ -28,9 +29,11 @@ const Button = ({
   size = 'md',
   icon,
   style,
+  dataCy,
 }: Props) => {
   return (
     <button
+      data-cy={dataCy}
       id={id ? id : ''}
       type={type}
       onClick={onClick}

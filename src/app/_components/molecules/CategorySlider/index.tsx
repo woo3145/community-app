@@ -34,7 +34,11 @@ export const CategorySlider = () => {
     <div>
       <div className={styles.container}>
         <div className={styles.flexBox}>
-          <div className={styles.categoryList} ref={handleScrollRef}>
+          <div
+            className={styles.categoryList}
+            ref={handleScrollRef}
+            data-cy="category-list"
+          >
             <Button
               id={`categoryButton_-1`}
               outlined
@@ -43,6 +47,7 @@ export const CategorySlider = () => {
               size="sm"
               onClick={() => onClickCategory(-1)}
               selected={categoryId === -1}
+              dataCy={`category_${-1}`}
             />
             <Button
               id={`categoryButton_0`}
@@ -52,6 +57,7 @@ export const CategorySlider = () => {
               size="sm"
               onClick={() => onClickCategory(0)}
               selected={categoryId === 0}
+              dataCy={`category_${0}`}
             />
             {subTags?.map((category) => {
               return (
@@ -63,6 +69,7 @@ export const CategorySlider = () => {
                   size="sm"
                   onClick={() => onClickCategory(category.id)}
                   selected={categoryId === category.id}
+                  dataCy={`category_${category.id}`}
                 />
               );
             })}
@@ -79,18 +86,23 @@ export const CategorySlider = () => {
             </div>
           )}
         </div>
-        <div className={styles.moreButton} onClick={onClickMoreButton}>
+        <div
+          className={styles.moreButton}
+          onClick={onClickMoreButton}
+          data-cy="more-button"
+        >
           <IoEllipsisHorizontal />
         </div>
       </div>
       {moreVisible && (
-        <div className={styles.moreContainer}>
+        <div className={styles.moreContainer} data-cy="category-list-more">
           <Button
             text="추천"
             outlined
             size="sm"
             onClick={() => onClickCategory(-1)}
             selected={categoryId === -1}
+            dataCy={`category_${-1}`}
           />
           <Button
             text="전체"
@@ -98,6 +110,7 @@ export const CategorySlider = () => {
             size="sm"
             onClick={() => onClickCategory(0)}
             selected={categoryId === 0}
+            dataCy={`category_${0}`}
           />
           {subTags?.map((category) => {
             return (
@@ -108,6 +121,7 @@ export const CategorySlider = () => {
                 size="sm"
                 onClick={() => onClickCategory(category.id)}
                 selected={categoryId === category.id}
+                dataCy={`more-category_${category.id}`}
               />
             );
           })}

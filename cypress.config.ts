@@ -4,7 +4,7 @@ import seedDB from './cypress/tasks/seedDB';
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://127.0.0.1:3000',
     retries: {
       runMode: 3,
     },
