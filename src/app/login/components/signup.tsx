@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import styles from './signup.module.scss';
+import { _signup } from '@/libs/client/apis';
+import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 
 interface Props {
   onPrevPage: () => void;
@@ -43,25 +45,13 @@ export const Signup = ({ onPrevPage, email }: Props) => {
         setMessage('비밀번호가 일치하지 않습니다.');
         return;
       }
-      const response = await (
-        await fetch('/api/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            password,
-            name,
-          }),
-        })
-      ).json();
-      if (response.error) {
-        setValue('password', '');
-        setValue('checkPassword', '');
-        setMessage(response.error);
-        return;
-      }
+
+      await _signup({
+        email,
+        password,
+        name,
+      });
+
       // 가입 성공
       await signIn('credentials', {
         email: email,
@@ -70,7 +60,9 @@ export const Signup = ({ onPrevPage, email }: Props) => {
         callbackUrl: '/',
       });
     } catch (e) {
-      setMessage('에러가 발생하였습니다. 잠시 후 다시 시도해주세요.');
+      setValue('password', '');
+      setValue('checkPassword', '');
+      errorHandlerWithToast(e);
     }
   };
   const password = watch('password');
@@ -80,11 +72,14 @@ export const Signup = ({ onPrevPage, email }: Props) => {
   const checkPasswordValid = password === checkPassword;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-cy={'signup-container'}>
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.left}>
-            <IoChevronBackOutline onClick={onPrevPage} />
+            <IoChevronBackOutline
+              onClick={onPrevPage}
+              data-cy={'prev-button'}
+            />
           </div>
           <div className={styles.center}>회원가입</div>
           <div className={styles.right}></div>
@@ -96,12 +91,14 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             type="email"
             value={email}
             disabled={true}
+            dataCy="signup-email-input"
           />
 
           <InputField
             label="이름"
             type="text"
             placeholder="이름을 입력해주세요."
+            dataCy="signup-name-input"
             {...register('name', {
               required: true,
               minLength: 2,
@@ -113,6 +110,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             label="비밀번호"
             type="password"
             placeholder="비밀번호를 입력해주세요."
+            dataCy="signup-password-input"
             {...register('password', {
               required: true,
               pattern: passwordRegex,
@@ -123,6 +121,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
               text="올바르지 않은 비밀번호입니다."
               type="error"
               position="center"
+              dataCy="signup-wrongPassword-message"
               style={{ marginBottom: '12px' }}
             />
           )}
@@ -130,6 +129,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             label="비밀번호"
             type="password"
             placeholder="비밀번호를 다시 한번 입력해주세요."
+            dataCy="signup-checkPassword-input"
             {...register('checkPassword', {
               required: true,
               pattern: passwordRegex,
@@ -141,6 +141,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
               text="비밀번호가 서로 일치하지 않습니다."
               type="error"
               position="center"
+              dataCy="signup-notMatchPassword-message"
               style={{ marginBottom: '12px' }}
             />
           )}
@@ -149,6 +150,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
               text="사용 가능한 비밀번호입니다."
               type="success"
               position="center"
+              dataCy="signup-successPassword-message"
               style={{ marginBottom: '12px' }}
             />
           )}
@@ -159,21 +161,13 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             style={{ marginBottom: '12px' }}
           />
 
-          {message && (
-            <Message
-              text={message}
-              type="error"
-              position="center"
-              style={{ marginBottom: '12px' }}
-            />
-          )}
-
           <Button
             type="submit"
             text="가입하기"
             isValid={isValid}
             wide
             size="lg"
+            dataCy="signup-submit-button"
           />
         </form>
       </div>

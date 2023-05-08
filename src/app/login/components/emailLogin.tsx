@@ -44,7 +44,7 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
     }
   };
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-cy={'email-login-form'}>
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.left}>

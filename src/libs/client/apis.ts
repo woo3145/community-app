@@ -7,11 +7,33 @@ import {
   GetPostIsLikedResponse,
   GetPostResponse,
   GetUserCommentsResponse,
+  SignupBody,
+  SignupResponse,
   UploadImageResponse,
 } from '@/interfaces/api';
 import { fetchApi } from './fetchHelper';
 
 export const API_BASE_URL = `${process.env.NEXT_PUBLIC_APP_URL}/api`;
+
+export const _signup = async ({
+  email,
+  password,
+  name,
+}: SignupBody): Promise<SignupResponse> => {
+  const data = await fetchApi<SignupResponse>(`${API_BASE_URL}/auth/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      password,
+      name,
+    }),
+  });
+  console.log(data);
+  return data;
+};
 
 // @@@@@@@@ 프로필 @@@@@@@@
 // 이미지 업로드 함수

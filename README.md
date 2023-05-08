@@ -92,6 +92,12 @@ AWS_S3_BUCKET=
       - [ ] : routeChangeStart는 hook으로 어느정도 구현가능해도 routeChangeComplete는 구현방법이 떠오르지 않아서 지원을 기다려야할듯함
 
   - [ ] E2E Test
+    - [x] 메인 (db reset/seed 후 태그 확인)
+    - [x] 회원가입
+    - [ ] 로그인
+    - [ ] 글쓰기
+    - [ ] 댓글달기/삭제
+    - [ ] 프로필 변경
 
 에러처리
 

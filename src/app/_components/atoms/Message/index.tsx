@@ -7,6 +7,7 @@ interface Props {
   size?: UISize;
   position?: 'center' | 'left' | 'right';
   style?: CSSProperties;
+  dataCy?: string;
 }
 const Message = ({
   text,
@@ -14,11 +15,13 @@ const Message = ({
   size = 'md',
   position = 'left',
   style,
+  dataCy,
 }: Props) => {
   return (
     <p
       className={`${styles[size]} ${styles[position]} ${styles[type]}`}
       style={style}
+      data-cy={dataCy}
     >
       {text}
     </p>

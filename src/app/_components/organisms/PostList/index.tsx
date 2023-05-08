@@ -22,7 +22,6 @@ const EmptyPostContainer = () => {
 
 export default function PostList({ category }: Props) {
   const { data, isLoading, bottomRef, isReachedEnd } = usePosts(category);
-  console.log(data);
   return (
     <div className={styles.container}>
       {isLoading &&

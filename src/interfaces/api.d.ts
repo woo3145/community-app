@@ -3,9 +3,20 @@ import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
 import { CreatePostFormValue } from '@/app/write/page';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { Post } from '@/libs/server/postUtils/postFetchTypes';
+import { User } from 'next-auth';
 
 interface ApiResponse {
   message: string;
+}
+
+// 회원가입
+interface SignupBody {
+  email: string;
+  password: string;
+  name: string;
+}
+interface SignupResponse extends ApiResponse {
+  user: User;
 }
 
 // 게시물 하나 불러오기

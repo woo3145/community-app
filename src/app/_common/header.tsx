@@ -16,7 +16,11 @@ const Logo = () => {
 };
 const SignupButton = () => {
   return (
-    <Link href={'/login'} className={styles.signup_button}>
+    <Link
+      href={'/login'}
+      className={styles.signup_button}
+      data-cy={'header-login-link'}
+    >
       회원가입/로그인
     </Link>
   );
@@ -26,7 +30,11 @@ const SignoutButton = () => {
     signOut();
   };
   return (
-    <div onClick={onClick} className={styles.signup_button}>
+    <div
+      onClick={onClick}
+      className={styles.signup_button}
+      data-cy={'header-signout-button'}
+    >
       로그아웃
     </div>
   );

@@ -55,7 +55,7 @@ export default function LogIn({ providers }: any) {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-cy={'login-container'}>
       <div className={styles.container}>
         <div className={styles.title}>
           <span>Woo3145 Community</span>
@@ -68,6 +68,7 @@ export default function LogIn({ providers }: any) {
             type="email"
             placeholder="이메일을 입력해주세요."
             onChange={(e) => setEmail(e.target.value)}
+            dataCy="email-input"
           />
 
           <Button
@@ -76,6 +77,7 @@ export default function LogIn({ providers }: any) {
             isValid={4 < email.length}
             wide
             size="lg"
+            dataCy="continue-button"
           />
         </form>
       </div>
