@@ -1,5 +1,12 @@
 import { Tag, User } from '@prisma/client';
 
+export const TEST_USER = {
+  name: 'testUser',
+  email: 'test@test.test',
+  password: 'qwer1234!',
+  wrongPassword: 'qwer1234',
+};
+
 export const DEFAULT_TAG: Tag[] = [
   {
     id: 1,

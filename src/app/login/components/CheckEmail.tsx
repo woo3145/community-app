@@ -11,7 +11,7 @@ interface CheckEmailResponse {
   registed: boolean;
 }
 
-export default function EmailCheck() {
+export default function CheckEmail() {
   const [email, setEmail] = useState<string>('');
   const [type, setType] = useState<string | null>(null);
 
@@ -45,7 +45,7 @@ export default function EmailCheck() {
   }
 
   return (
-    <div className={styles.wrapper} data-cy={'login-container'}>
+    <div className={styles.wrapper} data-cy={'checkEmail-container'}>
       <div className={styles.container}>
         <div className={styles.title}>
           <span>Woo3145 Community</span>
@@ -60,7 +60,7 @@ export default function EmailCheck() {
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setEmail(e.target.value)
             }
-            dataCy="email-input"
+            dataCy="checkEmail-email-input"
           />
 
           <Button
@@ -69,7 +69,7 @@ export default function EmailCheck() {
             isValid={4 < email.length}
             wide
             size="lg"
-            dataCy="continue-button"
+            dataCy="checkEmail-continue-button"
           />
         </form>
       </div>

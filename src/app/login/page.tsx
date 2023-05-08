@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import EmailCheck from './components/emailCheck';
+import CheckEmail from './components/CheckEmail';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
@@ -14,5 +14,5 @@ export default async function LogIn({ providers }: any) {
     redirect('/');
   }
 
-  return <EmailCheck />;
+  return <CheckEmail />;
 }

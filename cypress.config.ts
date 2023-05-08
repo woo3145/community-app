@@ -23,7 +23,11 @@ export default defineConfig({
     },
     // 테스팅 순서
     // 폴더 내 순서는 01_test.spec.ts 처럼 접두사 사용
-    specPattern: ['cypress/e2e/main.spec.ts', 'cypress/e2e/login/*'],
+    specPattern: [
+      'cypress/e2e/main.spec.ts',
+      'cypress/e2e/login/*',
+      'cypress/e2e/community/*',
+    ],
     env: {
       appUrl: process.env.NEXT_PUBLIC_APP_URL,
     },
