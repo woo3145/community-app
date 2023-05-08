@@ -12,12 +12,10 @@ describe('회원가입 테스트', () => {
     name: 'testUser',
     email: 'test@test.test',
     password: 'qwer1234!',
+    wrongPassword: 'qwer1234',
   };
 
   it('가입되지 않은 이메일을 입력하면 회원가입 페이지가 나타남', () => {
-    const testUser = {
-      email: 'test@test.test',
-    };
     cy.dataCy('email-input').type(testUser.email); // 가입안된 이메일 입력
     cy.dataCy('continue-button').click();
 
@@ -48,14 +46,14 @@ describe('회원가입 테스트', () => {
     cy.dataCy('signup-submit-button').should('be.disabled'); // 버튼클릭 막기
 
     // 패스워드 조건에 맞지 않음
-    cy.dataCy('signup-password-input').type('qwer1234');
+    cy.dataCy('signup-password-input').type(testUser.wrongPassword);
     cy.dataCy('signup-wrongPassword-message').should('exist');
 
     cy.dataCy('signup-submit-button').should('be.disabled'); // 버튼클릭 막기
 
-    cy.dataCy('signup-checkPassword-input').type('qwer123');
+    cy.dataCy('signup-checkPassword-input').type(testUser.wrongPassword + '1');
     cy.dataCy('signup-notMatchPassword-message').should('exist');
-    cy.dataCy('signup-checkPassword-input').type('4');
+    cy.dataCy('signup-checkPassword-input').type('{backspace}');
     cy.dataCy('signup-notMatchPassword-message').should('not.exist'); // 패스워드가 일치하면 에러메세지 사라짐
 
     cy.dataCy('signup-submit-button').should('be.disabled'); // 버튼클릭 막기
@@ -103,7 +101,7 @@ describe('회원가입 테스트', () => {
     cy.dataCy('signup-submit-button').should('be.enabled'); // 버튼클릭 가능
 
     cy.dataCy('signup-submit-button').click();
-    cy.url().should('eq', Cypress.env('appUrl') + '/'); // 메인으로 이동
+    cy.url().should('eq', Cypress.env('appUrl') + '/'); // 메인으로 이동 돼야함
     cy.dataCy('header-signout-button').should('exist'); // 로그아웃 버튼 생김
     cy.dataCy('header-login-link').should('not.exist'); // 로그인 링크 사라짐
   });

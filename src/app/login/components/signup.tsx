@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoChevronBackOutline } from 'react-icons/io5';
-import styles from './signup.module.scss';
+import styles from './styles.module.scss';
 import { _signup } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 

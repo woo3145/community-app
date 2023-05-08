@@ -5,6 +5,16 @@
   padding: 40px 0;
 }
 
+.title {
+  @include flex_center;
+  width: 100%;
+  margin: 20px 0 28px 0;
+  span {
+    @include text_2xl;
+    font-weight: 700;
+  }
+}
+
 .container {
   width: 100%;
   max-width: 400px;
