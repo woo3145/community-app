@@ -8,6 +8,7 @@ import { PostLikeButton } from './PostLikeButton';
 import { PostCommentButton } from './CommentButton';
 
 import styles from './page.module.scss';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({
   params: { post_id },
@@ -15,6 +16,7 @@ export async function generateMetadata({
   params: { post_id: number };
 }) {
   const post = await getPost(post_id);
+
   return {
     title: post.title,
     description: post.content,
@@ -27,6 +29,10 @@ export default async function PostDetail({
   params: { post_id: number };
 }) {
   const post = await getPost(post_id);
+
+  if (!post) {
+    notFound();
+  }
 
   return (
     <main className={styles.main}>

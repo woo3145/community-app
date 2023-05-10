@@ -27,7 +27,12 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
         <span>*</span>
       </div>
       <div className={styles.body}>
-        <button type="button" className={styles.addButton} onClick={openModal}>
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={openModal}
+          data-cy={'tag-add-button_1'}
+        >
           <IoAdd />
         </button>
 
@@ -36,6 +41,7 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
             type="button"
             className={styles.placeholder}
             onClick={openModal}
+            data-cy={'tag-add-button_2'}
           ></button>
         )}
 
@@ -48,12 +54,20 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
           />
         )}
 
-        <div className={styles.selectedTagList}>
+        <div className={styles.selectedTagList} data-cy="selectedTag-container">
           {selectedTags.map((tag, idx) => {
             return (
-              <div key={idx} className={styles.selectedTag}>
+              <div
+                key={idx}
+                className={styles.selectedTag}
+                data-cy={`selectedTag_${tag.id}`}
+              >
                 <span>{tag.title}</span>
-                <button type="button" onClick={() => onClickExcludeTag(tag.id)}>
+                <button
+                  type="button"
+                  onClick={() => onClickExcludeTag(tag.id)}
+                  data-cy={`selectedTag_${tag.id}-remove-button`}
+                >
                   <IoCloseOutline />
                 </button>
               </div>

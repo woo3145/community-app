@@ -58,6 +58,7 @@ export const CreatePostForm = () => {
             type="submit"
             text="등록하기"
             isValid={!isApiLoading && isValid}
+            dataCy="submit-button"
           />
         </div>
       </div>
@@ -73,6 +74,7 @@ export const CreatePostForm = () => {
             {...register('title', { required: true })}
             type="text"
             placeholder="제목을 입력해주세요."
+            data-cy={'title-input'}
           />
         </div>
         {/* 내용 */}
@@ -89,6 +91,7 @@ export const CreatePostForm = () => {
               resize();
             }}
             placeholder="내용을 작성해주세요."
+            data-cy={'content-input'}
           ></textarea>
           <textarea
             className={styles.hiddenTextarea}

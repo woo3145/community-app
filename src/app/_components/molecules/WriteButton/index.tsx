@@ -19,11 +19,7 @@ export const WriteButton = () => {
     setIsOpen(false);
   };
   const onClick = () => {
-    if (!me) {
-      router.push('/login');
-      return;
-    }
-    if (me.profile.nameType === false) {
+    if (me && me.profile.nameType === false) {
       if (
         confirm('해당 이름으로 게시글과 댓글이 등록됩니다. 계속하시겠어요?')
       ) {
@@ -33,6 +29,7 @@ export const WriteButton = () => {
       }
       return;
     }
+
     router.push('/write');
   };
 
@@ -41,7 +38,11 @@ export const WriteButton = () => {
       <div className={styles.avatarWrapper}>
         <Avatar src={me?.profile.avatar || ''} />
       </div>
-      <div onClick={onClick} className={styles.writeButton}>
+      <div
+        onClick={onClick}
+        className={styles.writeButton}
+        data-cy={'postWrite-button'}
+      >
         <span>커리어와 라이프스타일에 대해 자유롭게 이야기 해주세요!</span>
         <HiOutlinePencil size={24} />
       </div>

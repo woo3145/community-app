@@ -17,6 +17,7 @@ export const ModalFooter = ({ text, isValid = true, onClick }: Props) => {
         wide
         isValid={isValid}
         onClick={onClick}
+        dataCy="modal-button"
       />
     </div>
   );

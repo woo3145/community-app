@@ -141,3 +141,6 @@ export const DEFAULT_TAG: Tag[] = [
     parentId: 3,
   },
 ];
+
+// Subtags - ParentTags
+export const SUB_TAG_LENGTH = DEFAULT_TAG.length - 3;

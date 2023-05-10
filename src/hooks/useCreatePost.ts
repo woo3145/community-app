@@ -5,7 +5,6 @@ import { useSWRConfig } from 'swr';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { CreatePostFormValue } from '@/app/write/page';
-import { useRouter } from 'next/navigation';
 
 // 프로필 수정
 export const useCreatePost = (
@@ -16,7 +15,6 @@ export const useCreatePost = (
   const { mutate } = useSWRConfig();
   const { data: session } = useSession();
   const [isApiLoading, setIsApiLoading] = useState(false);
-  const router = useRouter();
 
   const refresh = async () => {
     mutate(`${API_BASE_URL}/my/posts`);
@@ -60,7 +58,8 @@ export const useCreatePost = (
       // 성공
       handleApiLoading(false, toastId);
       refresh();
-      router.push(`/post/${postId}`);
+
+      window.location.href = `/post/${postId}`;
     } catch (e) {
       errorHandlerWithToast(e);
       handleApiLoading(false, toastId);

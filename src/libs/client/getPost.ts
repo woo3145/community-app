@@ -12,8 +12,7 @@ import {
 export const getPost = async (postId: number): Promise<Post> => {
   const session = await getServerSession(authOptions);
 
-  const { data: post }: GetPostResponse = await _getPost(postId);
-
+  const { data: post } = await _getPost(postId);
   // 로그인한 경우 좋아요와 댓글 여부 확인
   if (session && session.user) {
     // 좋아요 여부 확인

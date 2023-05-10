@@ -21,7 +21,7 @@ export const useTags = (): UseTagsReturn => {
 
   return {
     tags: data?.data || [],
-    subTags: subTags || [],
+    subTags: subTags,
     isLoading: !data && !error,
     isError: error !== undefined,
   };

@@ -15,7 +15,7 @@ export const TagList = ({ tags, pickedTags, onClickPickTag }: Props) => {
             <div className={styles.tagTitle}>
               <span>{tag.icon}</span> {tag.title}
             </div>
-            <ul className={styles.subTagList}>
+            <ul className={styles.subTagList} data-cy={'subTags-container'}>
               {tag.subTags.map((subTag, idx) => {
                 return (
                   <li
@@ -26,6 +26,7 @@ export const TagList = ({ tags, pickedTags, onClickPickTag }: Props) => {
                     }
                     key={idx}
                     onClick={() => onClickPickTag(subTag)}
+                    data-cy={`tagList-tag_${subTag.id}`}
                   >
                     {subTag.title}
                   </li>
