@@ -9,14 +9,15 @@ import { PostCommentButton } from './CommentButton';
 
 import styles from './page.module.scss';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { _getPost } from '@/libs/client/apis';
 
 export async function generateMetadata({
   params: { post_id },
 }: {
   params: { post_id: number };
-}) {
-  const post = await getPost(post_id);
-
+}): Promise<Metadata> {
+  const { data: post } = await _getPost(post_id);
   return {
     title: post.title,
     description: post.content,

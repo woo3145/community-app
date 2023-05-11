@@ -113,7 +113,11 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
           </Link>
         </div>
         {post.imageUrl && (
-          <Link href={`/post/${post.id}`} className={styles.imageContainer}>
+          <Link
+            href={`/post/${post.id}`}
+            className={styles.imageContainer}
+            prefetch={false}
+          >
             <Image
               src={post.imageUrl}
               width={200}

@@ -20,7 +20,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   // 게시물 목록 로드
   if (req.method === 'GET') {
     const post = await fetchPost(postId);
-
     if (!post) {
       throw new NotFoundError('post');
     }

@@ -20,9 +20,13 @@ const parseQueryParams = (
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'PUT') {
-    const { userId, postId } = parseQueryParams(req.query);
-    await updatePostViewed(userId, postId);
-    return res.status(200).json({ message: 'success' });
+    try {
+      const { userId, postId } = parseQueryParams(req.query);
+      await updatePostViewed(userId, postId);
+      return res.status(200).json({ message: 'success' });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   throw new NotFoundError();

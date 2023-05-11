@@ -1,4 +1,3 @@
-import { GetPostResponse } from '@/interfaces/api';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 import { Post } from '../server/postUtils/postFetchTypes';
@@ -13,6 +12,7 @@ export const getPost = async (postId: number): Promise<Post> => {
   const session = await getServerSession(authOptions);
 
   const { data: post } = await _getPost(postId);
+
   // 로그인한 경우 좋아요와 댓글 여부 확인
   if (session && session.user) {
     // 좋아요 여부 확인
