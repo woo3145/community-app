@@ -91,6 +91,10 @@ AWS_S3_BUCKET=
 
       - [ ] : routeChangeStart는 hook으로 어느정도 구현가능해도 routeChangeComplete는 구현방법이 떠오르지 않아서 지원을 기다려야할듯함
 
+  - [ ] pages/api -> app/api로 마이그레이션 (최대한 서버컴포넌트 사용, CSR이 필요한 api만 작성)
+
+    - [ ] nextjs가 app directory로 전환되면서 CSS Module이 너무 지저분함 & 불러오는 css파일이 너무많음 -> tailwind css로 마이그레이션
+
   - [ ] E2E Test
 
     - [x] 메인 (db reset/seed 후 태그 확인)
@@ -105,6 +109,7 @@ AWS_S3_BUCKET=
         nextjs 13.4.1 업데이트 후 발생 -> 에러 추적중 https://github.com/vercel/next.js/issues/49169
   - [ ] nextjs 13.4 의 serverActions 활성화 시 metadata 작동안함 (아직 적용하기 이른듯)
         정보가 없어서 next.js에 issue 생성 https://github.com/vercel/next.js/issues/49650
+        canary 업데이트 후 재이슈 생성 https://github.com/vercel/next.js/issues/49679
 
 에러처리
 
