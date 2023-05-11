@@ -5,8 +5,9 @@ import './globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { SWRProvider } from './_providers/swrProvider';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Woo3145 - Community',
 };
 

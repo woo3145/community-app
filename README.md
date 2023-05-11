@@ -100,9 +100,11 @@ AWS_S3_BUCKET=
     - [ ] 댓글달기/삭제
     - [ ] 프로필 변경
 
-  - 에러
+  - 에러 발견
   - [ ] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....
-        next 13.4.1 업데이트 후 발생 -> 에러 추적중 https://github.com/vercel/next.js/issues/49169
+        nextjs 13.4.1 업데이트 후 발생 -> 에러 추적중 https://github.com/vercel/next.js/issues/49169
+  - [ ] nextjs 13.4 의 serverActions 활성화 시 metadata 작동안함 (아직 적용하기 이른듯)
+        정보가 없어서 next.js에 issue 생성 https://github.com/vercel/next.js/issues/49650
 
 에러처리
 

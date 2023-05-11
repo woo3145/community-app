@@ -1,6 +1,11 @@
 import styles from './page.module.scss';
 import { WriteButton } from '@/app/_components/molecules/WriteButton';
 import PostList from '@/app/_components/organisms/PostList';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Woo3145 - Community',
+};
 
 interface Props {
   params: {

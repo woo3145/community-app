@@ -3,14 +3,16 @@ import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
 import { CommentList } from '@/app/_components/organisms/CommentList';
 import Link from 'next/link';
 import { PostContent } from '@/app/_components/molecules/PostContent';
-import { getPost } from '@/libs/client/getPost';
 import { PostLikeButton } from './PostLikeButton';
 import { PostCommentButton } from './CommentButton';
 
-import styles from './page.module.scss';
-import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { _getPost } from '@/libs/client/apis';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+
+import styles from './page.module.scss';
+import { addIsLikedAndIsCommented } from '@/libs/server/postUtils/postFetch';
 
 export async function generateMetadata({
   params: { post_id },
@@ -18,6 +20,7 @@ export async function generateMetadata({
   params: { post_id: number };
 }): Promise<Metadata> {
   const { data: post } = await _getPost(post_id);
+
   return {
     title: post.title,
     description: post.content,
@@ -29,11 +32,9 @@ export default async function PostDetail({
 }: {
   params: { post_id: number };
 }) {
-  const post = await getPost(post_id);
-
-  if (!post) {
-    notFound();
-  }
+  const session = await getServerSession(authOptions);
+  const { data: _post } = await _getPost(post_id);
+  const post = addIsLikedAndIsCommented(_post, session?.user.id);
 
   return (
     <main className={styles.main}>
