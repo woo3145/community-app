@@ -1,4 +1,3 @@
-import styles from './page.module.scss';
 import { WriteButton } from '../_components/molecules/WriteButton';
 import PostList from '../_components/organisms/PostList';
 import { Metadata } from 'next';
@@ -9,11 +8,11 @@ export const metadata: Metadata = {
 
 export default function Community() {
   return (
-    <div className={styles.wrapper}>
-      <section className={styles.writeButtonSection}>
+    <div className="w-full">
+      <section className="w-full">
         <WriteButton />
       </section>
-      <section className={styles.postListSection}>
+      <section className="w-full">
         <PostList category="" />
       </section>
     </div>

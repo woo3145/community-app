@@ -45,11 +45,7 @@ export const MyProfile = ({ arrow = false, size = 'md' }: Props) => {
   return (
     <Link href={'/my'} className={styles.myCommunityButton}>
       <div className={`${styles.authorBox} ${styles[size]}`}>
-        <Avatar
-          isLoading={isLoading}
-          src={me.profile.avatar || ''}
-          size={size}
-        />
+        <Avatar isLoading={isLoading} src={me.profile.avatar || ''} />
 
         <div className={styles.verticleBox}>
           <p className={styles.user_name}>

@@ -1,5 +1,4 @@
 import { CSSProperties } from 'react';
-import styles from './styles.module.scss';
 import Link from 'next/link';
 import Skeleton from 'react-loading-skeleton';
 
@@ -7,7 +6,6 @@ interface Props {
   isLoading: false;
   text: string;
   onClick?: () => void;
-  size?: UISize;
   style?: CSSProperties;
   href?: string;
 }
@@ -15,7 +13,6 @@ interface Props {
 const Badge = ({
   text,
   onClick,
-  size = 'md',
   style,
   href,
   isLoading,
@@ -26,12 +23,7 @@ const Badge = ({
 
   if (href) {
     return (
-      <Link
-        href={href}
-        onClick={onClick}
-        style={style}
-        className={`${styles.badge} ${styles[size]}`}
-      >
+      <Link href={href} onClick={onClick} style={style} className="badge">
         {text}
       </Link>
     );
@@ -41,9 +33,7 @@ const Badge = ({
     <div
       onClick={onClick}
       style={style}
-      className={`${styles.badge} ${styles[size]} ${
-        onClick !== undefined ? styles.cursor : ''
-      }`}
+      className={`badge ${onClick && 'cursor-pointer'}`}
     >
       {text}
     </div>

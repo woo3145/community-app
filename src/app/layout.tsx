@@ -20,7 +20,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>
+      <body className="bg-gray-100 w-full max-w-screen-lg mx-auto">
         <SessionProviders>
           <SWRProvider>
             <Header />

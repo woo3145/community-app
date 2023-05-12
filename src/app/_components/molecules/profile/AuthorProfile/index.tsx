@@ -24,7 +24,7 @@ export const AuthorProfile = ({
     return (
       <Link href={`/profile/${profile?.userId}`} className={styles.wrapper}>
         <div className={`${styles.authorBox} ${styles[size]}`}>
-          <Avatar isLoading={isLoading} size={size} />
+          <Avatar isLoading={isLoading} />
 
           <div className={styles.verticleBox}>
             <div className={styles.userInfo}>
@@ -41,7 +41,7 @@ export const AuthorProfile = ({
     return (
       <div className={styles.wrapper}>
         <div className={`${styles.authorBox} ${styles[size]}`}>
-          <Avatar isLoading={isLoading} src={''} size={size} />
+          <Avatar src={''} />
 
           <div className={styles.verticleBox}>
             <div className={styles.userInfo}>
@@ -59,7 +59,7 @@ export const AuthorProfile = ({
   return (
     <Link href={`/profile/${profile?.userId}`} className={styles.wrapper}>
       <div className={`${styles.authorBox} ${styles[size]}`}>
-        <Avatar isLoading={isLoading} src={profile.avatar || ''} size={size} />
+        <Avatar src={profile.avatar} />
 
         <div className={styles.verticleBox}>
           <div className={styles.userInfo}>

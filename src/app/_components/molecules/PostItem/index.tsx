@@ -94,12 +94,7 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
             <ul className={styles.tagList}>
               {post.tags.map((tag, idx) => {
                 return (
-                  <Badge
-                    isLoading={isLoading}
-                    key={idx}
-                    text={tag.title}
-                    size={'sm'}
-                  />
+                  <Badge isLoading={isLoading} key={idx} text={tag.title} />
                 );
               })}
             </ul>

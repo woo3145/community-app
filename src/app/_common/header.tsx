@@ -4,13 +4,12 @@ import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import styles from './header.module.scss';
 import { ToastContainer } from 'react-toastify';
 
 const Logo = () => {
   return (
-    <Link href="/" className={styles.logo}>
-      <b>Woo3145</b> Community
+    <Link href="/" className="text-lg text-primary">
+      <b className="text-primary">Woo3145</b> Community
     </Link>
   );
 };
@@ -18,7 +17,7 @@ const SignupButton = () => {
   return (
     <Link
       href={'/login'}
-      className={styles.signup_button}
+      className="text-sm font-semibold"
       data-cy={'header-login-link'}
     >
       회원가입/로그인
@@ -32,7 +31,7 @@ const SignoutButton = () => {
   return (
     <div
       onClick={onClick}
-      className={styles.signup_button}
+      className="text-sm font-semibold cursor-pointer"
       data-cy={'header-signout-button'}
     >
       로그아웃
@@ -54,17 +53,15 @@ export const Header = () => {
 
   return (
     <>
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <nav className={styles.nav}>
-            <div>
-              <Logo />
-            </div>
+      <div className="w-full fixed left-0 right-0 border-b border-solid bg-white h-14 z-20 border-gray-200 flex items-center justify-center">
+        <div className="w-full max-w-screen-lg px-6 lg:px-2">
+          <nav className="w-full flex justify-between items-center">
+            <Logo />
             <div>{session?.user ? <SignoutButton /> : <SignupButton />}</div>
           </nav>
         </div>
       </div>
-      <div className={styles.paddingBox}></div>
+      <div className="h-14"></div>
 
       <ToastContainer />
     </>

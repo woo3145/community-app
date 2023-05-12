@@ -31,7 +31,7 @@ export const CategorySlider = () => {
     return <CategorySliderLoading />;
   }
   return (
-    <div>
+    <div className={`w-full lg:w-[748px]`}>
       <div className={styles.container}>
         <div className={styles.flexBox}>
           <div

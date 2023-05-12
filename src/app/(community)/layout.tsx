@@ -1,7 +1,5 @@
 import { CategorySlider } from '../_components/molecules/CategorySlider';
-import { MyProfile } from '../_components/molecules/profile/MyProfile';
-
-import styles from './layout.module.scss';
+import { UserProfile } from './UserProfile';
 
 export default function CommunityLayout({
   children,
@@ -9,21 +7,18 @@ export default function CommunityLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.wrapper}>
-      <aside className={styles.aside}>
-        <div className={styles.aside_container}>
-          <div className={styles.myProfile}>
-            <p className={styles.title}>MY 커뮤니티</p>
-            <MyProfile arrow />
-          </div>
+    <div className="flex w-full max-w-screen-lg relative">
+      <aside className="flex-none w-64 shrink-0 mt-12 mr-5">
+        <div className="fixed w-64">
+          <UserProfile />
         </div>
       </aside>
 
-      <main className={styles.main}>
-        <div className={styles.categories}>
+      <main className="flex-1 flex flex-col">
+        <div className="fixed z-10 bg-gray-100">
           <CategorySlider />
         </div>
-        <div className={styles.contents_wrapper}>{children}</div>
+        <div className="mt-32">{children}</div>
       </main>
     </div>
   );
