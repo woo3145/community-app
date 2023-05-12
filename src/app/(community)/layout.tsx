@@ -1,4 +1,4 @@
-import { CategorySlider } from '../_components/molecules/CategorySlider';
+import { CategoryContainer } from '../_components/molecules/CategoryContainer';
 import { UserProfile } from './UserProfile';
 
 export default function CommunityLayout({
@@ -16,7 +16,7 @@ export default function CommunityLayout({
 
       <main className="flex-1 flex flex-col">
         <div className="fixed z-10 bg-gray-100">
-          <CategorySlider />
+          <CategoryContainer />
         </div>
         <div className="mt-32">{children}</div>
       </main>

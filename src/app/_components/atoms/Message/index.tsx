@@ -1,12 +1,9 @@
-import { CSSProperties, forwardRef } from 'react';
-import styles from './styles.module.scss';
-
 interface Props {
   text: string;
   type?: MessageType;
   size?: UISize;
   position?: 'center' | 'left' | 'right';
-  style?: CSSProperties;
+  className: string;
   dataCy?: string;
 }
 const Message = ({
@@ -14,13 +11,27 @@ const Message = ({
   type = 'guide',
   size = 'md',
   position = 'left',
-  style,
+  className,
   dataCy,
 }: Props) => {
+  const sizes = {
+    sm: 'text-xs',
+    md: 'text-sm',
+    lg: 'text-md',
+  };
+  const positions = {
+    left: 'text-left',
+    center: 'text-center',
+    right: 'text-right',
+  };
+  const types = {
+    guide: 'text-gray-400',
+    error: 'text-red-500',
+    success: 'text-blue-400',
+  };
   return (
     <p
-      className={`${styles[size]} ${styles[position]} ${styles[type]}`}
-      style={style}
+      className={`${sizes[size]} ${positions[position]} ${types[type]} ${className}`}
       data-cy={dataCy}
     >
       {text}

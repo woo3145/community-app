@@ -49,16 +49,12 @@ const Button = ({
       onClick={onClick}
       disabled={!isValid}
       style={style}
-      className={`py-2 px-5 font-bold rounded-full shadow-md shrink-0 ${
-        themes[theme]
-      } ${sizes[size]} ${
-        outlined &&
-        'bg-white border border-solid border-gray-200 text-gray-500 hover:bg-gray-200'
+      className={`font-bold rounded-full shadow-md shrink-0 ${themes[theme]} ${
+        sizes[size]
       } ${
         !isValid &&
         'bg-gray-500 text-black opacity-30 hover:bg-gray-500 cursor-pointer'
-      } ${selected && 'border-primary text-primary'}
-      ${wide && 'w-full'}`}
+      } ${selected && 'border-primary text-primary'} ${wide && 'w-full'}`}
     >
       {icon}
       <span>{text}</span>

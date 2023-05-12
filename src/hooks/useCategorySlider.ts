@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useMountedRef } from './useMountedRef';
 
 export const useCategorySlider = () => {
-  const [categoryId, setCategoryId] = useState<number>();
+  const [categoryId, setCategoryId] = useState<number>(-1);
   const router = useRouter();
 
   const [leftVisible, setLeftVisible] = useState(false); // 슬라이드 왼쪽 버튼
