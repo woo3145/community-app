@@ -1,6 +1,4 @@
 import { CSSProperties } from 'react';
-import styles from './styles.module.scss';
-import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   id?: string;
@@ -15,6 +13,7 @@ interface Props {
   icon?: React.ReactNode;
   style?: CSSProperties;
   dataCy?: string;
+  theme?: 'primary' | 'cancel' | 'error';
 }
 
 const Button = ({
@@ -27,10 +26,21 @@ const Button = ({
   outlined = false,
   selected = false,
   size = 'md',
+  theme = 'primary',
   icon,
   style,
   dataCy,
 }: Props) => {
+  const themes = {
+    primary: 'bg-violet-500 text-white hover:bg-violet-700',
+    cancel: '',
+    error: '',
+  };
+  const sizes = {
+    sm: 'py-2 px-6',
+    md: 'py-2 px-7',
+    lg: 'py-3 px-8',
+  };
   return (
     <button
       data-cy={dataCy}
@@ -39,10 +49,16 @@ const Button = ({
       onClick={onClick}
       disabled={!isValid}
       style={style}
-      className={`${styles.button} ${outlined ? styles.outlined : ''} ${
-        selected ? styles.selected : ''
-      } ${isValid ? styles.valid : ''}
-      ${wide ? styles.wide : ''} ${styles[size]}`}
+      className={`py-2 px-5 font-bold rounded-full shadow-md shrink-0 ${
+        themes[theme]
+      } ${sizes[size]} ${
+        outlined &&
+        'bg-white border border-solid border-gray-200 text-gray-500 hover:bg-gray-200'
+      } ${
+        !isValid &&
+        'bg-gray-500 text-black opacity-30 hover:bg-gray-500 cursor-pointer'
+      } ${selected && 'border-primary text-primary'}
+      ${wide && 'w-full'}`}
     >
       {icon}
       <span>{text}</span>
