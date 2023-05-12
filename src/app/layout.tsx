@@ -7,6 +7,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { SWRProvider } from './_providers/swrProvider';
 import { Metadata } from 'next';
 
+import '@/styles/global.css';
+
 export const metadata: Metadata = {
   title: 'Woo3145 - Community',
 };
