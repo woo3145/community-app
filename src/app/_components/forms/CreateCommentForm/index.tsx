@@ -4,8 +4,6 @@ import Button from '@/app/_components/atoms/Button';
 import { useForm } from 'react-hook-form';
 import { useCreateComment } from '@/hooks/useCreateComment';
 
-import styles from './styles.module.scss';
-
 export interface CreateCommentFormValue {
   content: string;
 }
@@ -24,12 +22,13 @@ export const CreateCommentForm = ({ postId }: Props) => {
   const { onSubmit, isApiLoading } = useCreateComment(postId, reset);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+    <form onSubmit={handleSubmit(onSubmit)} className="card">
       <textarea
         {...register('content', { required: true })}
         placeholder="댓글 남기기"
+        className="w-full resize-none border-none p-4"
       />
-      <div className={styles.button_wrapper}>
+      <div className="flex justify-end pt-5">
         <Button
           text="등록"
           type="submit"

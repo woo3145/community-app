@@ -10,8 +10,6 @@ import { useRef, useState } from 'react';
 import { useUploadImage } from '@/hooks/useUploadImage';
 import { useCreatePost } from '@/hooks/useCreatePost';
 
-import styles from './styles.module.scss';
-
 export const CreatePostForm = () => {
   const {
     register,
@@ -52,8 +50,8 @@ export const CreatePostForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.writeTopWrapper}>
-        <div className={styles.writeTop}>
+      <div className="fixed left-0 top-14 py-2.5 w-full bg-white border-b border-solid border-gray-200 z-20">
+        <div className="w-full max-w-screen-lg mx-auto flex justify-end">
           <Button
             type="submit"
             text="등록하기"
@@ -62,23 +60,24 @@ export const CreatePostForm = () => {
           />
         </div>
       </div>
-      <div className={styles.container}>
+      <div className="w-full max-w-screen-lg card mx-auto p-20">
         {/* 태그 */}
         <TagPicker
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
         />
         {/* 제목 */}
-        <div className={styles.title}>
+        <div className="pb-4 border-b-2 border-solid border-gray-200">
           <input
             {...register('title', { required: true })}
             type="text"
             placeholder="제목을 입력해주세요."
             data-cy={'title-input'}
+            className="text-2xl font-bold w-full"
           />
         </div>
         {/* 내용 */}
-        <div className={styles.content}>
+        <div className="relative pt-8 w-full h-auto">
           <textarea
             {...contentRefRest}
             name="content"
@@ -92,16 +91,20 @@ export const CreatePostForm = () => {
             }}
             placeholder="내용을 작성해주세요."
             data-cy={'content-input'}
+            className="text-lg w-full h-10 border-none overflow-y-hidden z-0"
           ></textarea>
           <textarea
-            className={styles.hiddenTextarea}
+            className={'text-lg w-full h-10 absolute left-0 top-0 invisible'}
             ref={hiddenTextareaRef}
           ></textarea>
 
           {/* 이미지 */}
           {preview && (
-            <div className={styles.imageContainer}>
-              <button onClick={resetImage}>
+            <div className="relative">
+              <button
+                onClick={resetImage}
+                className="absolute right-2.5 top-2.5 w-5 h-5 rounded-full"
+              >
                 <IoClose />
               </button>
 
@@ -112,15 +115,18 @@ export const CreatePostForm = () => {
       </div>
 
       {/* 이미지 추가 버튼 */}
-      <div className={styles.addImageButtonContainer}>
-        <div className={styles.tooltip}>
+      <div className="flex flex-col justify-end items-end fixed top-0 left-0 right-0 py-20 mx-auto w-full h-screen max-w-screen-lg pointer-events-none">
+        <div className="relative text-xs py-1 px-3 mb-2 bg-primary text-white rounded-md font-bold">
           <span>사진을 추가해 보세요!</span>
-          <div className={styles.bubblePoint}></div>
+          <div className={''}></div>
         </div>
-        <label htmlFor="input-image" className={styles.uploadImageButton}>
-          <IoImageOutline />
-          <span>
-            (<em>0</em>/1)
+        <label
+          htmlFor="input-image"
+          className="flex flex-col justify-center items-center w-14 h-14 bg-white border border-solid border-gray-200 rounded-full pointer-events-auto cursor-pointer"
+        >
+          <IoImageOutline className="w-6 h-6" />
+          <span className="text-xs">
+            (<em className="text-primary">0</em>/1)
           </span>
         </label>
         <input

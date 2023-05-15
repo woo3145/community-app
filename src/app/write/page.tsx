@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import styles from './page.module.scss';
 import { _uploadImage } from '@/libs/client/apis';
 import { CreatePostForm } from '../_components/forms/CreatePostForm';
 import { getServerSession } from 'next-auth';
@@ -20,7 +19,7 @@ export default async function Write() {
   }
 
   return (
-    <main className={styles.wrapper}>
+    <main className="pt-20">
       <CreatePostForm />
     </main>
   );

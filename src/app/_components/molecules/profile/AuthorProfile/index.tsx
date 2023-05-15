@@ -5,8 +5,6 @@ import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 import Skeleton from 'react-loading-skeleton';
 
-import styles from './styles.module.scss';
-
 interface Props {
   isLoading: false;
   profile?: Profile;
@@ -22,12 +20,12 @@ export const AuthorProfile = ({
 }: Props | IsLoadingProps) => {
   if (isLoading) {
     return (
-      <Link href={`/profile/${profile?.userId}`} className={styles.wrapper}>
-        <div className={`${styles.authorBox} ${styles[size]}`}>
+      <Link href={`/profile/${profile?.userId}`} className="inline-block">
+        <div className={`flex items-center justify-center`}>
           <Avatar isLoading={isLoading} />
 
-          <div className={styles.verticleBox}>
-            <div className={styles.userInfo}>
+          <div className="ml-3">
+            <div className="flex justify-start items-center">
               <Skeleton width={72} height={16} style={{ marginRight: 8 }} />
               <AvatarCareer isLoading={isLoading} />
             </div>
@@ -39,17 +37,19 @@ export const AuthorProfile = ({
   }
   if (!profile) {
     return (
-      <div className={styles.wrapper}>
-        <div className={`${styles.authorBox} ${styles[size]}`}>
+      <div className="inline-block">
+        <div className={`flex items-center justify-center`}>
           <Avatar src={''} />
 
-          <div className={styles.verticleBox}>
-            <div className={styles.userInfo}>
-              <p className={styles.user_name}>탈퇴한 사용자</p>
+          <div className="ml-3">
+            <div className="flex justify-start items-center">
+              <p className="font-bold text-sm">탈퇴한 사용자</p>
             </div>
 
             {createAt && (
-              <div className={styles.createAt}>{formatDate(createAt)}</div>
+              <div className="text-gray-500 text-xs">
+                {formatDate(createAt)}
+              </div>
             )}
           </div>
         </div>
@@ -57,13 +57,13 @@ export const AuthorProfile = ({
     );
   }
   return (
-    <Link href={`/profile/${profile?.userId}`} className={styles.wrapper}>
-      <div className={`${styles.authorBox} ${styles[size]}`}>
+    <Link href={`/profile/${profile?.userId}`} className="inline-block">
+      <div className={`flex items-center justify-center`}>
         <Avatar src={profile.avatar} />
 
-        <div className={styles.verticleBox}>
-          <div className={styles.userInfo}>
-            <p className={styles.user_name}>
+        <div className="ml-3">
+          <div className="flex justify-start items-center">
+            <p className="font-bold mr-2 text-sm">
               {profile.nameType ? profile.nickname : profile.name}
             </p>
 
@@ -74,7 +74,7 @@ export const AuthorProfile = ({
             />
           </div>
           {createAt && (
-            <div className={styles.createAt}>{formatDate(createAt)}</div>
+            <div className="text-gray-500 text-xs">{formatDate(createAt)}</div>
           )}
         </div>
       </div>

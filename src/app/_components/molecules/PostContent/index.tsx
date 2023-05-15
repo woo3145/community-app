@@ -39,7 +39,7 @@ export const PostContent = ({ post, isLoading }: Props | IsLoadingProps) => {
           />
         </div>
 
-        <h1 className="py-8 text-3xl font-bold">{post.title}</h1>
+        <h1 className="py-8 text-3xl font-bold break-all">{post.title}</h1>
       </div>
 
       <div className="mb-5">{post.content}</div>

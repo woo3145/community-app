@@ -16,7 +16,7 @@ const LikeButton = ({
   count: number;
 }) => {
   return (
-    <div className={isLiked ? 'text-primary' : ''}>
+    <div className={`flex items-center ${isLiked ? 'text-primary' : ''}`}>
       <AiOutlineLike className="text-lg" />
       <span className="text-sm pl-1 pt-1">{count}</span>
     </div>
@@ -31,7 +31,7 @@ const CommentButton = ({
   count: number;
 }) => {
   return (
-    <div className={isCommented ? 'text-primary' : ''}>
+    <div className={`flex items-center ${isCommented ? 'text-primary' : ''}`}>
       <IoChatbubbleOutline className="text-lg" />
       <span className="text-sm pl-1 pt-1">{count}</span>
     </div>
@@ -73,7 +73,7 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
   return (
     <article className="flex px-7 py-5 border-b border-solid border-gray-200">
       <div className="w-full">
-        <div className="mb-3">
+        <div className="mb-1">
           <AuthorProfile
             size={'sm'}
             profile={post.user?.profile}
@@ -83,19 +83,25 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
         </div>
 
         <Link href={`/post/${post.id}`}>
-          <h3 className="text-xl font-bold mb-1">{post.title}</h3>
-          <p className="text-gray-400">{post.content}</p>
-          <ul className="flex pt-2 pb-3 gap-2">
-            {post.tags.map((tag, idx) => {
-              return <Badge isLoading={isLoading} key={idx} text={tag.title} />;
-            })}
-          </ul>
-          <div className="flex w-full gap-2">
-            <LikeButton isLiked={post.isLiked} count={post._count.likes} />
-            <CommentButton
-              isCommented={post.isCommented}
-              count={post._count.comments}
-            />
+          <div className="pl-11">
+            <h3 className="text-xl font-bold break-all line-clamp-2">
+              {post.title}
+            </h3>
+            <p className="text-gray-500">{post.content}</p>
+            <ul className="flex py-2 gap-2">
+              {post.tags.map((tag, idx) => {
+                return (
+                  <Badge isLoading={isLoading} key={idx} text={tag.title} />
+                );
+              })}
+            </ul>
+            <div className="flex w-full gap-3">
+              <LikeButton isLiked={post.isLiked} count={post._count.likes} />
+              <CommentButton
+                isCommented={post.isCommented}
+                count={post._count.comments}
+              />
+            </div>
           </div>
         </Link>
       </div>
@@ -112,7 +118,7 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
             alt="image"
             style={{ objectFit: 'cover' }}
             priority={true}
-            className="rounded-md w-[200px] h-[150px]"
+            className="rounded-md w-[200px] h-[150px] bg-center"
           />
         </Link>
       )}
