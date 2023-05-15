@@ -1,10 +1,10 @@
 'use client';
 import ReactModal from 'react-modal';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
-import { ModalHeader } from '@/app/_components/molecules/ModalHeader';
 import { EditMyProfileForm } from '@/app/_components/forms/EditMyProfileForm';
 
 import styles from './styles.module.scss';
+import { ModalHeader } from '../ModalHeader';
 
 const customStyles = {
   content: {

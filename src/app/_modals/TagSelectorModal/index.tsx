@@ -6,9 +6,9 @@ import ReactModal from 'react-modal';
 import { toast } from 'react-toastify';
 
 import styles from './styles.module.scss';
-import { ModalFooter } from '@/app/_components/molecules/ModalFooter';
-import { ModalHeader } from '@/app/_components/molecules/ModalHeader';
 import { TagList } from './TagList';
+import { ModalFooter } from '../ModalFooter';
+import { ModalHeader } from '../ModalHeader';
 
 const customStyles = {
   content: {

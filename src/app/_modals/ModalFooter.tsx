@@ -1,6 +1,4 @@
-import Button from '../../atoms/Button';
-
-import styles from './styles.module.scss';
+import Button from '../_components/atoms/Button';
 
 interface Props {
   text: string;
@@ -10,7 +8,7 @@ interface Props {
 
 export const ModalFooter = ({ text, isValid = true, onClick }: Props) => {
   return (
-    <div className={styles.bottom}>
+    <div className="w-full">
       <Button
         type={onClick ? 'button' : 'submit'}
         text={text}

@@ -1,13 +1,12 @@
 'use client';
 import { IoEllipsisHorizontal } from 'react-icons/io5';
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
-import styles from './styles.module.scss';
 import Link from 'next/link';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useMe } from '@/hooks/swr/useMe';
-import { useState } from 'react';
-import { DeleteConfirmModal } from '@/app/_modals/confirm/DeleteConfirmModal';
+import { DeleteCommentConfirmModal } from '@/app/_modals/confirm/DeleteCommentConfirmModal';
 import Skeleton from 'react-loading-skeleton';
+import { useModalVisible } from '@/hooks/useModalVisible';
 
 interface Props {
   isLoading: false;
@@ -16,26 +15,24 @@ interface Props {
 }
 
 const PopupMenu = ({ comment }: { comment: Comment }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const { modalIsOpen: popupIsOpen, toggleModal: togglePopup } =
+    useModalVisible(); // 팝업
+  const { modalIsOpen, openModal, closeModal } = useModalVisible(); // deleteComment 모달
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-    setIsOpen(false);
-  };
   return (
-    <div className={styles.popupMenu}>
-      <IoEllipsisHorizontal
-        onClick={() => setIsOpen(!isOpen)}
-        className={styles.icon}
-      />
-      {isOpen && (
-        <div className={styles.popup}>
-          <div className={styles.bubblePoint}></div>
-          <div onClick={() => setModalIsOpen(true)}>삭제하기</div>
+    <div>
+      <IoEllipsisHorizontal onClick={togglePopup} className="cursor-pointer" />
+      {popupIsOpen && (
+        <div className="absolute -right-2 py-2 px-5 bg-white border border-gray-200 border-solid rounded-md">
+          <div
+            onClick={openModal}
+            className="text-red-600 text-sm cursor-pointer"
+          >
+            삭제하기
+          </div>
         </div>
       )}
-      <DeleteConfirmModal
+      <DeleteCommentConfirmModal
         comment={comment}
         modalIsOpen={modalIsOpen}
         closeModal={closeModal}
@@ -53,9 +50,9 @@ export const CommentItem = ({
 
   if (isLoading) {
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <div className={styles.header}>
+      <div className="px-7 pt-5">
+        <div className="border-b border-solid border-gray-200">
+          <div className="flex justify-between">
             <AuthorProfile isLoading={isLoading} />
           </div>
 
@@ -65,9 +62,9 @@ export const CommentItem = ({
     );
   }
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div className={styles.header}>
+    <div className="px-7 pt-5">
+      <div className="border-b border-solid border-gray-200">
+        <div className="flex justify-between">
           <AuthorProfile
             isLoading={isLoading}
             profile={comment.user?.profile}
@@ -79,10 +76,10 @@ export const CommentItem = ({
 
         {isLink ? (
           <Link href={`/post/${comment.postId}`}>
-            <div className={styles.content}>{comment.content}</div>
+            <div className="pt-2 pb-3 px-7">{comment.content}</div>
           </Link>
         ) : (
-          <div className={styles.content}>{comment.content}</div>
+          <div className="pt-2 pb-3 px-7">{comment.content}</div>
         )}
       </div>
     </div>

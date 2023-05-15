@@ -7,8 +7,8 @@ import styles from './avatarCrop.module.scss';
 import { CropLayer } from './cropLayer';
 import { PreviewLayer } from './previewLayer';
 import { useImageCrop } from '@/hooks/useImageCrop';
-import { ModalHeader } from '@/app/_components/molecules/ModalHeader';
-import { ModalFooter } from '@/app/_components/molecules/ModalFooter';
+import { ModalFooter } from '../ModalFooter';
+import { ModalHeader } from '../ModalHeader';
 
 const customStyles = {
   content: {

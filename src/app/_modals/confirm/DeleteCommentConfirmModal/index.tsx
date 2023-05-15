@@ -24,7 +24,7 @@ interface Props {
   comment: Comment;
 }
 
-export const DeleteConfirmModal = ({
+export const DeleteCommentConfirmModal = ({
   modalIsOpen,
   closeModal,
   comment,

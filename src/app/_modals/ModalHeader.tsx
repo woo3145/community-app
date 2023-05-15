@@ -1,5 +1,4 @@
 import { IoCloseOutline } from 'react-icons/io5';
-import styles from './styles.module.scss';
 
 interface Props {
   title: string;
@@ -8,9 +7,9 @@ interface Props {
 
 export const ModalHeader = ({ title, closeModal }: Props) => {
   return (
-    <div className={styles.header}>
-      <h2 className={styles.title}>{title}</h2>
-      <button onClick={closeModal} className={styles.closeButton}>
+    <div className="flex justify-center items-center pb-5 relative">
+      <h2 className="text-lg font-bold">{title}</h2>
+      <button onClick={closeModal} className="text-2xl absolute right-0">
         <IoCloseOutline />
       </button>
     </div>

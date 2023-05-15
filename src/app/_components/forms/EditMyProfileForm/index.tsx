@@ -8,10 +8,10 @@ import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
 import { useForm } from 'react-hook-form';
 import { useEditProfile } from '@/hooks/useEditProfile';
 import { Avatar } from '@/app/_components/atoms/Avatar';
-import { ModalFooter } from '../../molecules/ModalFooter';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 import styles from './styles.module.scss';
+import { ModalFooter } from '@/app/_modals/ModalFooter';
 
 interface Props {
   profile: Exclude<Profile, null>;
