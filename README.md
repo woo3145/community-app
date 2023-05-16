@@ -2,6 +2,7 @@
 
 ```
 NEXT_PUBLIC_APP_URL=app_url:port
+NEXTAUTH_URL=nextAuth 리다이렉션 url
 
 DATABASE_URL="postgresql://janedoe:mypassword@localhost:5432/mydb?schema=sample"
 
