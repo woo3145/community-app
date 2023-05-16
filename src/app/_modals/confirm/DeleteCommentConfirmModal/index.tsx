@@ -1,13 +1,14 @@
 'use client';
-
-import { Dispatch, SetStateAction } from 'react';
 import ReactModal from 'react-modal';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useDeleteComment } from '@/hooks/useDeleteComment';
 
 import styles from './styles.module.scss';
 
-const customStyles = {
+const customStyles: ReactModal.Styles = {
+  overlay: {
+    zIndex: 30,
+  },
   content: {
     top: '50%',
     left: '50%',

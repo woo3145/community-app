@@ -3,10 +3,12 @@ import ReactModal from 'react-modal';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 import { EditMyProfileForm } from '@/app/_components/forms/EditMyProfileForm';
 
-import styles from './styles.module.scss';
 import { ModalHeader } from '../ModalHeader';
 
-const customStyles = {
+const customStyles: ReactModal.Styles = {
+  overlay: {
+    zIndex: 30,
+  },
   content: {
     top: '50%',
     left: '50%',
@@ -39,9 +41,9 @@ export const MyProfileModifyModal = ({
       onRequestClose={closeModal}
       style={customStyles}
       contentLabel="Example Modal"
-      ariaHideApp={false}
+      ariaHideApp={true}
     >
-      <div className={styles.container}>
+      <div className="w-[390px] h-auto">
         <ModalHeader title="커뮤니티 프로필" closeModal={closeModal} />
 
         <EditMyProfileForm profile={profile} closeModal={closeModal} />

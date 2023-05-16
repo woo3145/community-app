@@ -91,7 +91,7 @@ export const CreatePostForm = () => {
             }}
             placeholder="내용을 작성해주세요."
             data-cy={'content-input'}
-            className="text-lg w-full h-10 border-none overflow-y-hidden z-0"
+            className="text-lg w-full h-10 border-none overflow-y-hidden z-0 resize-none"
           ></textarea>
           <textarea
             className={'text-lg w-full h-10 absolute left-0 top-0 invisible'}
@@ -100,15 +100,21 @@ export const CreatePostForm = () => {
 
           {/* 이미지 */}
           {preview && (
-            <div className="relative">
+            <div className="relative mt-4">
               <button
                 onClick={resetImage}
-                className="absolute right-2.5 top-2.5 w-5 h-5 rounded-full"
+                className="absolute right-2.5 top-2.5 flex items-center justify-center w-5 h-5 rounded-full bg-gray-600 text-white"
               >
                 <IoClose />
               </button>
 
-              <Image src={preview} width={800} height={800} alt="image" />
+              <Image
+                src={preview}
+                width={800}
+                height={800}
+                alt="image"
+                className="w-full"
+              />
             </div>
           )}
         </div>

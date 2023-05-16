@@ -1,6 +1,5 @@
 import multer from 'multer';
 import multerS3 from 'multer-s3';
-import aws from 'aws-sdk';
 import { S3Client } from '@aws-sdk/client-s3';
 
 const s3 = new S3Client({
@@ -21,5 +20,5 @@ export const upload = multer({
       cb(null, `${Date.now()}_${Math.random().toString(36).substring(2, 11)}`);
     },
   }),
-  limits: { fileSize: 10 * 1024 * 1024 },
+  limits: { fileSize: 12 * 1024 * 1024 },
 });

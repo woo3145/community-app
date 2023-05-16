@@ -1,8 +1,7 @@
 import { forwardRef } from 'react';
-import styles from './styles.module.scss';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   uiSize?: 'sm' | 'md' | 'lg';
   dataCy?: string;
 }
@@ -20,12 +19,14 @@ const InputField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   };
   return (
     <div className={`w-full flex flex-col ${labelSizes[uiSize]}`}>
-      <label htmlFor="password" className="mb-2.5 font-bold">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor="password" className="mb-2.5 font-bold">
+          {label}
+        </label>
+      )}
       <input
         ref={ref}
-        className={`${className} ${inputSizes[uiSize]} border border-1 border-solid rounded-sm mb-2.5 focus:border-blue-400`}
+        className={`${className} ${inputSizes[uiSize]} border border-1 border-solid rounded-sm mb-2.5 focus:border-primary`}
         data-cy={dataCy}
         {...inputProps}
       />

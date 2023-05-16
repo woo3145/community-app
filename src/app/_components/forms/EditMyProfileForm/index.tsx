@@ -10,8 +10,8 @@ import { useEditProfile } from '@/hooks/useEditProfile';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
-import styles from './styles.module.scss';
 import { ModalFooter } from '@/app/_modals/ModalFooter';
+import InputField from '../../atoms/InputField';
 
 interface Props {
   profile: Exclude<Profile, null>;
@@ -65,11 +65,13 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.body}>
-        <h3>커뮤니티 기본정보</h3>
-        <p>woo3145 커뮤니티에서 사용되는 정보입니다.</p>
-        <div className={styles.avatarContainer}>
-          <div className={styles.avatarPreview}>
+      <div className="py-2">
+        <h3 className="text-lg font-bold">커뮤니티 기본정보</h3>
+        <p className="text-sm text-gray-500">
+          woo3145 커뮤니티에서 사용되는 정보입니다.
+        </p>
+        <div className="flex items-center justify-center py-7">
+          <div className="w-24 h-24">
             <input
               type="file"
               name="image"
@@ -78,10 +80,10 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
               style={{ display: 'none' }}
               onChange={handleImage}
             />
-            <label htmlFor="input-image">
+            <label htmlFor="input-image" className="cursor-pointer">
               <Avatar
                 src={preview ? preview : profile.avatar || ''}
-                size="lg"
+                uiSize="lg"
                 style={{ cursor: 'pointer' }}
               />
             </label>
@@ -96,12 +98,12 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
             />
           )}
         </div>
-        <div className={styles.nameInputBox}>
-          <h4>
-            이름 <span>*</span>
+        <div className="mb-8">
+          <h4 className="text-sm font-bold mb-2 text-gray-400">
+            이름 <span className="text-red-600">*</span>
           </h4>
 
-          <div className={styles.nameTypeRadioBox}>
+          <div className="flex items-center mb-3">
             <input
               type="radio"
               name="userNameType"
@@ -113,8 +115,11 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
                 setValue('nickname', profile.name);
               }}
               readOnly
+              className="w-5 h-5 m-0"
             />
-            <label htmlFor="userNameDefault">기본</label>
+            <label htmlFor="userNameDefault" className="text-sm pl-2 mr-3">
+              기본
+            </label>
             <input
               type="radio"
               name="userNameType"
@@ -126,27 +131,36 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
                 setNameType(true);
                 setValue('nickname', profile.nickname || '');
               }}
+              className="w-5 h-5 m-0"
             />
-            <label htmlFor="userNameNickName">닉네임</label>
+            <label htmlFor="userNameNickName" className="text-sm pl-2">
+              닉네임
+            </label>
           </div>
-
-          <input
+          <InputField
+            id="nickname"
+            type="text"
+            placeholder="한글/영어/숫자만 가능(2~8자)"
+            dataCy="editProfileName-password-input"
             {...register('nickname', {
               maxLength: 8,
               minLength: 2,
             })}
-            placeholder="한글/영어/숫자만 가능(2~8자)"
             disabled={!nameType}
           />
         </div>
 
-        <div className={styles.descriptionInputBox}>
-          <h4>한줄소개</h4>
+        <div>
+          <h4 className="text-sm font-bold mb-2 text-gray-400">한줄소개</h4>
           <textarea
             onKeyDown={PreventEnter}
             {...register('description', { maxLength: 150 })}
+            className="w-full h-[140px] resize-none card rounded-sm focus:border-primary"
+            placeholder="간단한 자기소개 글을 작성해 주세요."
           />
-          <p>{watch().description?.length}/150</p>
+          <p className="text-sm text-right text-gray-400">
+            {watch().description?.length}/150
+          </p>
         </div>
       </div>
 

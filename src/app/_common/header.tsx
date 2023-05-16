@@ -53,7 +53,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="w-full fixed left-0 right-0 border-b border-solid bg-white h-14 z-20 border-gray-200 flex items-center justify-center">
+      <div className="w-full fixed left-0 right-0 border-b border-solid bg-white h-14 z-10 border-gray-200 flex items-center justify-center">
         <div className="w-full max-w-screen-lg px-6 lg:px-2">
           <nav className="w-full flex justify-between items-center">
             <Logo />

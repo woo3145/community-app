@@ -82,7 +82,7 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
               text={message}
               type="error"
               position="center"
-              style={{ marginBottom: '12px' }}
+              className="mb-3"
               dataCy="emailLogin-wrongPassword-message"
             />
           )}

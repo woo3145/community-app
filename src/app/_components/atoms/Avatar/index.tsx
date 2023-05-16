@@ -6,22 +6,34 @@ interface Props {
   isLoading?: false;
   src?: string;
   style?: CSSProperties;
+  uiSize?: UISize;
 }
 
 export const Avatar = ({
   src,
   style,
   isLoading = false,
+  uiSize = 'md',
 }: Props | IsLoadingProps) => {
+  const sizes: { [key: string]: string } = {
+    sm: 'w-8 h-8',
+    md: 'w-8 h-8',
+    lg: 'w-24 h-24',
+  };
+  const iconSizes: { [key: string]: string } = {
+    sm: 'w-10 h-10 -left-1',
+    md: 'w-10 h-10 -left-1',
+    lg: 'w-28 h-28 -left-2',
+  };
   if (isLoading) {
     return (
-      <div className={`rounded-full shrink-0 w-8 h-8`}>
+      <div className={`rounded-full shrink-0 ${sizes[uiSize]}`}>
         <Skeleton circle height="100%" />
       </div>
     );
   }
   return (
-    <div className={`relative rounded-full shrink-0 w-8 h-8`}>
+    <div className={`relative rounded-full shrink-0 ${sizes[uiSize]}`}>
       {src ? (
         <Image
           style={style}
@@ -33,10 +45,10 @@ export const Avatar = ({
         />
       ) : (
         <div
-          className={`rounded-full shrink-0 w-8 h-8 relative overflow-hidden bg-gray-100 dark:bg-gray-600`}
+          className={`rounded-full shrink-0 ${sizes[uiSize]} relative overflow-hidden bg-gray-100 dark:bg-gray-600`}
         >
           <svg
-            className={`absolute w-10 h-10 text-gray-400 -left-1`}
+            className={`absolute ${iconSizes[uiSize]} text-gray-400`}
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"

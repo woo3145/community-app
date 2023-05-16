@@ -10,7 +10,10 @@ import { useImageCrop } from '@/hooks/useImageCrop';
 import { ModalFooter } from '../ModalFooter';
 import { ModalHeader } from '../ModalHeader';
 
-const customStyles = {
+const customStyles: ReactModal.Styles = {
+  overlay: {
+    zIndex: 30,
+  },
   content: {
     top: '50%',
     left: '50%',
