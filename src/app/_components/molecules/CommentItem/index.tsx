@@ -50,7 +50,7 @@ export const CommentItem = ({
 
   if (isLoading) {
     return (
-      <div className="px-7 pt-5">
+      <div className="px-10 pt-5">
         <div className="border-b border-solid border-gray-200">
           <div className="flex justify-between">
             <AuthorProfile isLoading={isLoading} />
@@ -62,7 +62,7 @@ export const CommentItem = ({
     );
   }
   return (
-    <div className="px-7 pt-5">
+    <div className="px-10 pt-5">
       <div className="border-b border-solid border-gray-200">
         <div className="flex justify-between">
           <AuthorProfile
@@ -76,10 +76,10 @@ export const CommentItem = ({
 
         {isLink ? (
           <Link href={`/post/${comment.postId}`}>
-            <div className="pt-2 pb-3 px-7">{comment.content}</div>
+            <div className="pt-2 pb-3 px-10">{comment.content}</div>
           </Link>
         ) : (
-          <div className="pt-2 pb-3 px-7">{comment.content}</div>
+          <div className="pt-2 pb-3 px-10">{comment.content}</div>
         )}
       </div>
     </div>

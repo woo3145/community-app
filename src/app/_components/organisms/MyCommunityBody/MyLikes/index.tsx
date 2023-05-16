@@ -3,13 +3,11 @@
 import { PostItem } from '@/app/_components/molecules/PostItem';
 import { useMyLikes } from '@/hooks/scrollSwr/useMyLikes';
 
-import styles from './styles.module.scss';
-
 export const MyLikes = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyLikes();
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col">
       {data.length === 0 && isLoading
         ? [1, 2, 3, 4].map((i) => {
             return <PostItem isLoading={isLoading} key={i} />;

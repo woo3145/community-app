@@ -9,7 +9,7 @@ export const MyRecents = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyRecents();
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col">
       {data.length === 0 && isLoading
         ? [1, 2, 3, 4].map((i) => {
             return <PostItem isLoading={isLoading} key={i} />;

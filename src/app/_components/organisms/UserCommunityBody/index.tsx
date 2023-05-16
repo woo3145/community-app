@@ -17,7 +17,7 @@ export const UserCommunityBody = ({ userId }: Props) => {
   const [tab, setTab] = useState<UserCommunityTabType>('posts');
 
   return (
-    <div className={styles.wrapper}>
+    <div className="card">
       <UserCommunityTab tab={tab} setTab={setTab} />
       {tab === 'posts' && <UserPosts userId={userId} />}
       {tab === 'comments' && <UserComments userId={userId} />}

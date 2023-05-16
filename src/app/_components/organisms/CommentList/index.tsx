@@ -6,8 +6,6 @@ import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
 import { CommentItem } from '../../molecules/CommentItem';
 import { CreateCommentForm } from '../../forms/CreateCommentForm';
 
-import styles from './styles.module.scss';
-
 interface Props {
   postId: number;
 }
@@ -18,9 +16,9 @@ interface CreateCommentForm {
 
 const EmptyCommentMessage = () => {
   return (
-    <div className={styles.emptyMessage}>
-      <IoChatbubbleOutline />
-      <p>첫 댓글을 남겨주세요.</p>
+    <div className="flex flex-col items-center justify-center py-12">
+      <IoChatbubbleOutline className="text-6xl mb-3 text-primary" />
+      <p className="text-sm text-gray-500">첫 댓글을 남겨주세요.</p>
     </div>
   );
 };
@@ -29,7 +27,7 @@ export const CommentList = ({ postId }: Props) => {
   const { comments, isLoading, isError } = useComments(postId);
 
   return (
-    <div className={styles.commentsContainer}>
+    <div className="w-full">
       {comments.length === 0 &&
         isLoading &&
         [1, 2, 3, 4].map((i) => {
@@ -42,13 +40,13 @@ export const CommentList = ({ postId }: Props) => {
         return <CommentItem isLoading={false} key={idx} comment={comment} />;
       })}
 
-      <div className={styles.commentWrite}>
-        <div className={styles.commentWrite_top}>
-          <div className={styles.profileWrapper}>
+      <div className="mt-3 py-2 px-10">
+        <div className="mb-3">
+          <div className="inline-block">
             <MyProfile size="sm" />
           </div>
         </div>
-        <div className={styles.commentWrite_bottom}>
+        <div className="relative">
           <CreateCommentForm postId={postId} />
         </div>
       </div>

@@ -3,12 +3,10 @@
 import { PostItem } from '@/app/_components/molecules/PostItem';
 import { useUserPosts } from '@/hooks/scrollSwr/useUserPosts';
 
-import styles from './styles.module.scss';
-
 export const UserPosts = ({ userId }: { userId: string }) => {
   const { data, isLoading, bottomRef, isReachedEnd } = useUserPosts(userId);
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col">
       {data.length === 0 && isLoading
         ? [1, 2, 3, 4].map((i) => {
             return <PostItem isLoading={isLoading} key={i} />;
