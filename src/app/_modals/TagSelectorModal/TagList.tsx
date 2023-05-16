@@ -1,4 +1,4 @@
-import styles from './styles.module.scss';
+import { SelectButton } from '@/app/_components/atoms/SelectButton';
 
 interface Props {
   tags: ParentTag[];
@@ -12,24 +12,24 @@ export const TagList = ({ tags, pickedTags, onClickPickTag }: Props) => {
       {tags.map((tag, idx) => {
         return (
           <li key={idx}>
-            <div className={styles.tagTitle}>
-              <span>{tag.icon}</span> {tag.title}
+            <div className="flex items-center mb-3 font-bold">
+              <span className="text-sm mr-2">{tag.icon}</span> {tag.title}
             </div>
-            <ul className={styles.subTagList} data-cy={'subTags-container'}>
+            <ul
+              className="flex flex-wrap gap-2 mb-4"
+              data-cy={'subTags-container'}
+            >
               {tag.subTags.map((subTag, idx) => {
                 return (
-                  <li
-                    className={
-                      pickedTags.find((t) => t.id === subTag.id)
-                        ? styles.selected
-                        : ''
-                    }
+                  <SelectButton
                     key={idx}
+                    text={subTag.title}
                     onClick={() => onClickPickTag(subTag)}
-                    data-cy={`tagList-tag_${subTag.id}`}
-                  >
-                    {subTag.title}
-                  </li>
+                    dataCy={`tagList-tag_${subTag.id}`}
+                    selected={
+                      pickedTags.find((t) => t.id === subTag.id) !== undefined
+                    }
+                  />
                 );
               })}
             </ul>

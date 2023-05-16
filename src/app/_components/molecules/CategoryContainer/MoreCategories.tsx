@@ -1,4 +1,4 @@
-import { CategoryButton } from './CategoryButton';
+import { SelectButton } from '../../atoms/SelectButton';
 
 interface Props {
   categoryId: number;
@@ -16,13 +16,13 @@ export const MoreCategories = ({
       className="flex flex-wrap items-center gap-2 p-6 card absolute top-32 shadow-md"
       data-cy="category-list-more"
     >
-      <CategoryButton
+      <SelectButton
         text="추천"
         onClick={() => onClickCategory(-1)}
         selected={categoryId === -1}
         dataCy={`category_${-1}`}
       />
-      <CategoryButton
+      <SelectButton
         text="전체"
         onClick={() => onClickCategory(0)}
         selected={categoryId === 0}
@@ -30,7 +30,7 @@ export const MoreCategories = ({
       />
       {subTags?.map((category) => {
         return (
-          <CategoryButton
+          <SelectButton
             key={category.id}
             text={category.title}
             onClick={() => onClickCategory(category.id)}

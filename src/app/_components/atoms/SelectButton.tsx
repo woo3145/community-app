@@ -6,7 +6,7 @@ interface Props {
   dataCy: string;
 }
 
-export const CategoryButton = ({
+export const SelectButton = ({
   id,
   text,
   selected,

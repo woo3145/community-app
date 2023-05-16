@@ -1,4 +1,4 @@
-import { CategoryButton } from './CategoryButton';
+import { SelectButton } from '../../atoms/SelectButton';
 
 interface Props {
   handleScrollRef: (node: any) => void;
@@ -19,14 +19,14 @@ export const CategorySlider = ({
       ref={handleScrollRef}
       data-cy="category-list"
     >
-      <CategoryButton
+      <SelectButton
         id={`categoryButton_-1`}
         text="추천"
         onClick={() => onClickCategory(-1)}
         selected={categoryId === -1}
         dataCy={`category_${-1}`}
       />
-      <CategoryButton
+      <SelectButton
         id={`categoryButton_0`}
         text="전체"
         onClick={() => onClickCategory(0)}
@@ -35,7 +35,7 @@ export const CategorySlider = ({
       />
       {subTags?.map((category) => {
         return (
-          <CategoryButton
+          <SelectButton
             id={`categoryButton_${category.id}`}
             key={category.id}
             text={category.title}
