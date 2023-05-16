@@ -1,11 +1,10 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from 'react';
-import { IoAdd, IoCloseOutline } from 'react-icons/io5';
-
-import styles from './styles.module.scss';
+import { Dispatch, SetStateAction } from 'react';
+import { IoAdd } from 'react-icons/io5';
 import { TagSelectorModal } from '@/app/_modals/TagSelectorModal';
 import { useModalVisible } from '@/hooks/useModalVisible';
+import { SelectedTag } from './SelectedTag';
 
 interface Props {
   selectedTags: SubTag[];
@@ -20,16 +19,16 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <span>태그 선택</span>
-        <span>(1~3개)</span>
-        <span>*</span>
+    <div className="mb-5">
+      <div className="mb-3 font-bold">
+        <span className="text-gray-600 mr-1">태그 선택</span>
+        <span className="text-gray-400 mr-1">(1~3개)</span>
+        <span className="text-red-600">*</span>
       </div>
-      <div className={styles.body}>
+      <div className="flex">
         <button
           type="button"
-          className={styles.addButton}
+          className="flex items-center justify-center w-8 h-8 border mr-4"
           onClick={openModal}
           data-cy={'tag-add-button_1'}
         >
@@ -39,7 +38,7 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
         {selectedTags.length === 0 && (
           <button
             type="button"
-            className={styles.placeholder}
+            className="w-20 h-8 border-[3px] border-dotted border-gray-300 rounded-full"
             onClick={openModal}
             data-cy={'tag-add-button_2'}
           ></button>
@@ -54,23 +53,15 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
           />
         )}
 
-        <div className={styles.selectedTagList} data-cy="selectedTag-container">
+        <div className="flex items-center" data-cy="selectedTag-container">
           {selectedTags.map((tag, idx) => {
             return (
-              <div
+              <SelectedTag
                 key={idx}
-                className={styles.selectedTag}
-                data-cy={`selectedTag_${tag.id}`}
-              >
-                <span>{tag.title}</span>
-                <button
-                  type="button"
-                  onClick={() => onClickExcludeTag(tag.id)}
-                  data-cy={`selectedTag_${tag.id}-remove-button`}
-                >
-                  <IoCloseOutline />
-                </button>
-              </div>
+                text={tag.title}
+                dataCy={`selectedTag_${tag.id}`}
+                onClick={() => onClickExcludeTag(tag.id)}
+              />
             );
           })}
         </div>

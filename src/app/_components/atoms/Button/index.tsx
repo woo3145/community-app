@@ -7,13 +7,12 @@ interface Props {
   onClick?: () => void;
   isValid?: boolean;
   wide?: boolean;
-  outlined?: boolean;
   selected?: boolean;
   size?: UISize;
   icon?: React.ReactNode;
   style?: CSSProperties;
   dataCy?: string;
-  theme?: 'primary' | 'cancel' | 'error';
+  theme?: 'primary' | 'cancel' | 'warning';
 }
 
 const Button = ({
@@ -23,7 +22,6 @@ const Button = ({
   type = 'button',
   isValid = true,
   wide = false,
-  outlined = false,
   selected = false,
   size = 'md',
   theme = 'primary',
@@ -33,8 +31,8 @@ const Button = ({
 }: Props) => {
   const themes = {
     primary: 'bg-violet-500 text-white hover:bg-violet-700',
-    cancel: '',
-    error: '',
+    cancel: 'bg-gray-500 text-white hover:bg-gray-400',
+    warning: 'bg-red-600 text-white hover:bg-red-500',
   };
   const sizes = {
     sm: 'py-2 px-6',
@@ -49,12 +47,13 @@ const Button = ({
       onClick={onClick}
       disabled={!isValid}
       style={style}
-      className={`font-bold rounded-full shadow-md shrink-0 ${themes[theme]} ${
-        sizes[size]
-      } ${
-        !isValid &&
-        'bg-gray-500 text-black opacity-30 hover:bg-gray-500 cursor-pointer'
-      } ${selected && 'border-primary text-primary'} ${wide && 'w-full'}`}
+      className={`font-bold rounded-full shadow-md shrink-0 ${
+        isValid && themes[theme]
+      } ${sizes[size]} ${
+        !isValid && 'bg-gray-400 text-white opacity-50 cursor-default'
+      } ${selected && 'border-primary text-primary'} ${
+        wide && 'w-full flex-1'
+      }`}
     >
       {icon}
       <span>{text}</span>

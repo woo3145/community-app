@@ -3,7 +3,6 @@
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { useMe } from '@/hooks/swr/useMe';
-import styles from './styles.module.scss';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MyProfileModifyModal } from '@/app/_modals/MyProfileModifyModal';
@@ -34,13 +33,13 @@ export const WriteButton = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.avatarWrapper}>
+    <div className="flex items-center justify-center p-8 card rounded-none">
+      <div className="mr-4">
         <Avatar src={me?.profile.avatar || ''} />
       </div>
       <div
         onClick={onClick}
-        className={styles.writeButton}
+        className="flex items-center justify-between w-full border border-solid border-gray-200 px-5 py-4 rounded-md cursor-pointer"
         data-cy={'postWrite-button'}
       >
         <span>커리어와 라이프스타일에 대해 자유롭게 이야기 해주세요!</span>

@@ -2,8 +2,7 @@
 import ReactModal from 'react-modal';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useDeleteComment } from '@/hooks/useDeleteComment';
-
-import styles from './styles.module.scss';
+import Button from '@/app/_components/atoms/Button';
 
 const customStyles: ReactModal.Styles = {
   overlay: {
@@ -40,20 +39,28 @@ export const DeleteCommentConfirmModal = ({
       contentLabel="Example Modal"
       ariaHideApp={false}
     >
-      <div className={styles.container}>
-        <div className={styles.message}>댓글을 삭제하시겠습니까?</div>
-        <div className={styles.horizontalBox}>
-          <div className={styles.cancelButton} onClick={closeModal}>
-            취소
-          </div>
-          <div
-            className={`${styles.deleteButton} ${
-              isApiLoading ? styles.loading : ''
-            }`}
+      <div className="w-[390px] h-auto">
+        <div className="text-2xl font-bold py-5 text-center">
+          댓글을 삭제하시겠습니까?
+        </div>
+        <div className="flex items-center justify-center gap-3">
+          <Button
+            type="button"
+            onClick={closeModal}
+            theme="cancel"
+            text="취소"
+            wide
+            size="lg"
+          />
+          <Button
+            type="button"
             onClick={onClick}
-          >
-            삭제하기
-          </div>
+            theme="warning"
+            text="삭제하기"
+            wide
+            size="lg"
+            isValid={!isApiLoading}
+          />
         </div>
       </div>
     </ReactModal>

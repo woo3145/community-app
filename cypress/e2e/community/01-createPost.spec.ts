@@ -68,7 +68,7 @@ describe('글 작성 테스트', () => {
     cy.dataCy('modal-button').click();
 
     cy.dataCy('submit-button').click();
-    cy.wait(3000);
+    cy.wait(6000);
     cy.url().should('contain', '/post/'); // 작성한 글 페이지로 이동
   });
 

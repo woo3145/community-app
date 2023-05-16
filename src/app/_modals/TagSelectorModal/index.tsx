@@ -5,12 +5,14 @@ import ReactModal from 'react-modal';
 
 import { toast } from 'react-toastify';
 
-import styles from './styles.module.scss';
 import { TagList } from './TagList';
 import { ModalFooter } from '../ModalFooter';
 import { ModalHeader } from '../ModalHeader';
 
-const customStyles = {
+const customStyles: ReactModal.Styles = {
+  overlay: {
+    zIndex: 30,
+  },
   content: {
     top: '50%',
     left: '50%',
@@ -62,11 +64,11 @@ export const TagSelectorModal = ({
       contentLabel="Example Modal"
       ariaHideApp={false}
     >
-      <div className={styles.container}>
+      <div className="w-[460px] h-auto">
         <ModalHeader title="태그 선택" closeModal={closeModal} />
 
-        <div className={styles.body}>
-          <p className={styles.message}>
+        <div className="py-2">
+          <p className="mb-8 font-semibold">
             작성글 주제에 맞는 태그를 선택해주세요. (1~3개)
           </p>
           <TagList
