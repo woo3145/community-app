@@ -34,12 +34,20 @@ export async function generateMetadata({
 }: {
   params: { post_id: string };
 }): Promise<Metadata> {
-  const post = await getPost(post_id);
+  // generateMetadata에서 에러를 발생시키면 ErrorBoundary에서 잡아내지 않음
+  try {
+    const post = await getPost(post_id);
 
-  return {
-    title: post.title,
-    description: post.content,
-  };
+    return {
+      title: post.title,
+      description: post.content,
+    };
+  } catch (e) {
+    return {
+      title: 'error',
+      description: 'error',
+    };
+  }
 }
 
 export default async function PostDetail({
