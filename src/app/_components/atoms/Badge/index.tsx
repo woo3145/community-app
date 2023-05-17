@@ -1,40 +1,35 @@
 import { CSSProperties } from 'react';
 import Link from 'next/link';
 import Skeleton from 'react-loading-skeleton';
+import { UrlObject } from 'url';
 
 interface Props {
-  isLoading: false;
   text: string;
   onClick?: () => void;
   style?: CSSProperties;
   href?: string;
+  className?: string;
+  isLoading?: boolean;
 }
 
-const Badge = ({
-  text,
-  onClick,
-  style,
-  href,
-  isLoading,
-}: Props | IsLoadingProps) => {
+const Badge = ({ text, onClick, href, isLoading, className }: Props) => {
+  const baseClassName = `badge ${onClick && 'cursor pointer'}`;
+  const integrationClassName = `${baseClassName} ${className}`;
+
   if (isLoading) {
     return <Skeleton width={60} height={20} />;
   }
 
   if (href) {
     return (
-      <Link href={href} onClick={onClick} style={style} className="badge">
+      <Link href={href} onClick={onClick} className={integrationClassName}>
         {text}
       </Link>
     );
   }
 
   return (
-    <div
-      onClick={onClick}
-      style={style}
-      className={`badge ${onClick && 'cursor-pointer'}`}
-    >
+    <div onClick={onClick} className={integrationClassName}>
       {text}
     </div>
   );

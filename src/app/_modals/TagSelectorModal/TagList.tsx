@@ -26,7 +26,7 @@ export const TagList = ({ tags, pickedTags, onClickPickTag }: Props) => {
                     text={subTag.title}
                     onClick={() => onClickPickTag(subTag)}
                     dataCy={`tagList-tag_${subTag.id}`}
-                    selected={
+                    isSelected={
                       pickedTags.find((t) => t.id === subTag.id) !== undefined
                     }
                   />

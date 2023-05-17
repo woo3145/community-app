@@ -17,16 +17,20 @@ const InputField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     md: 'text-sm',
     lg: 'text-md',
   };
+
+  const labelClassName = `font-bold ${labelSizes[uiSize]}`;
+  const inputClassName = `border border-solid rounded-sm outline-primary ${inputSizes[uiSize]} ${className}`;
+
   return (
-    <div className={`w-full flex flex-col ${labelSizes[uiSize]}`}>
+    <div className="w-full flex flex-col space-y-2.5">
       {label && (
-        <label htmlFor="password" className="mb-2.5 font-bold">
+        <label htmlFor="password" className={labelClassName}>
           {label}
         </label>
       )}
       <input
         ref={ref}
-        className={`${className} ${inputSizes[uiSize]} border border-1 border-solid rounded-sm mb-2.5 focus:border-primary`}
+        className={inputClassName}
         data-cy={dataCy}
         {...inputProps}
       />

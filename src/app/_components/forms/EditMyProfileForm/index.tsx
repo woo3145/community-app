@@ -90,7 +90,7 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
               <Avatar
                 src={preview ? preview : profile.avatar || ''}
                 uiSize="lg"
-                style={{ cursor: 'pointer' }}
+                className="cursor-pointer"
               />
             </label>
           </div>

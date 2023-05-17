@@ -19,13 +19,13 @@ export const MoreCategories = ({
       <SelectButton
         text="추천"
         onClick={() => onClickCategory(-1)}
-        selected={categoryId === -1}
+        isSelected={categoryId === -1}
         dataCy={`category_${-1}`}
       />
       <SelectButton
         text="전체"
         onClick={() => onClickCategory(0)}
-        selected={categoryId === 0}
+        isSelected={categoryId === 0}
         dataCy={`category_${0}`}
       />
       {subTags?.map((category) => {
@@ -34,7 +34,7 @@ export const MoreCategories = ({
             key={category.id}
             text={category.title}
             onClick={() => onClickCategory(category.id)}
-            selected={categoryId === category.id}
+            isSelected={categoryId === category.id}
             dataCy={`more-category_${category.id}`}
           />
         );

@@ -5,33 +5,36 @@ interface Props {
   isLoading: boolean;
   job?: string;
   annual?: number;
-  style?: CSSProperties;
   uiSize?: UISize;
+  className?: string;
 }
 export const AvatarCareer = ({
   job,
   annual,
-  style,
+  className,
   isLoading,
   uiSize = 'md',
 }: Props) => {
-  const sizes = {
+  const avatarCareerSizes = {
     sm: 'text-xs',
     md: 'text-sm',
     lg: 'text-md',
   };
+
+  const integrationClassName = `flex font-semibold ${avatarCareerSizes[uiSize]} ${className}`;
+
   if (isLoading) {
     return (
-      <div style={style} className="flex">
+      <div className={integrationClassName}>
         <Skeleton inline width={36} height={16} />
         <Skeleton inline width={36} height={16} style={{ marginLeft: 8 }} />
       </div>
     );
   }
   return (
-    <div style={style} className={`flex ${sizes[uiSize]} font-semibold`}>
-      {job && <span className="text-primary">{job}</span>}
-      <span style={{ marginLeft: job ? '8px' : 0 }} className="text-gray-400">
+    <div className={integrationClassName}>
+      {job && <span className="text-primary mr-2">{job}</span>}
+      <span className="text-gray-400">
         {!annual || annual === 0 ? '신입' : `${annual}년차`}
       </span>
     </div>

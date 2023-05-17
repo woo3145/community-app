@@ -1,7 +1,7 @@
 interface Props {
   text: string;
   type?: MessageType;
-  size?: UISize;
+  uiSize?: UISize;
   position?: 'center' | 'left' | 'right';
   className: string;
   dataCy?: string;
@@ -9,7 +9,7 @@ interface Props {
 const Message = ({
   text,
   type = 'guide',
-  size = 'md',
+  uiSize = 'md',
   position = 'left',
   className,
   dataCy,
@@ -29,11 +29,10 @@ const Message = ({
     error: 'text-red-500',
     success: 'text-blue-400',
   };
+
+  const integrationClassName = `${sizes[uiSize]} ${positions[position]} ${types[type]} ${className}`;
   return (
-    <p
-      className={`${sizes[size]} ${positions[position]} ${types[type]} ${className}`}
-      data-cy={dataCy}
-    >
+    <p className={integrationClassName} data-cy={dataCy}>
       {text}
     </p>
   );
