@@ -2,9 +2,9 @@
 
 import { useComments } from '@/hooks/swr/useComments';
 import { IoChatbubbleOutline } from 'react-icons/io5';
-import { MyProfile } from '@/app/_components/molecules/profile/MyProfile';
 import { CommentItem } from '../../molecules/CommentItem';
 import { CreateCommentForm } from '../../forms/CreateCommentForm';
+import { MyProfile } from '../../molecules/profile/MyProfile';
 
 interface Props {
   postId: number;
@@ -42,9 +42,7 @@ export const CommentList = ({ postId }: Props) => {
 
       <div className="mt-3 py-2 px-10">
         <div className="mb-3">
-          <div className="inline-block">
-            <MyProfile size="sm" />
-          </div>
+          <MyProfile />
         </div>
         <div className="relative">
           <CreateCommentForm postId={postId} />
