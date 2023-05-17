@@ -2,8 +2,6 @@ import { redirect } from 'next/navigation';
 import { MyCommunityBody } from '@/app/_components/organisms/MyCommunityBody';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-
-import styles from './page.module.scss';
 import { MyCommunityProfile } from '../_components/organisms/MyCommunityProfile';
 
 export const metadata = {
@@ -17,11 +15,11 @@ export default async function MyCommunityPage() {
   }
 
   return (
-    <main className={styles.wrapper}>
-      <div className={styles.profileSection}>
+    <main className="w-full max-w-screen-md mx-auto pt-14">
+      <div className="w-full">
         <MyCommunityProfile />
       </div>
-      <div className={styles.communitySection}>
+      <div className="w-full mt-3">
         <MyCommunityBody />
       </div>
     </main>

@@ -7,7 +7,6 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoChevronBackOutline } from 'react-icons/io5';
-import styles from './styles.module.scss';
 import { useRouter } from 'next/navigation';
 
 interface Props {
@@ -50,17 +49,17 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
     }
   };
   return (
-    <div className={styles.wrapper} data-cy={'emailLogin-container'}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.left}>
+    <div className="w-full py-10" data-cy={'emailLogin-container'}>
+      <div className="w-full max-w-md mx-auto card p-5">
+        <div className="flex items-center justify-between mb-7 text-xl">
+          <div className="w-20">
             <IoChevronBackOutline
               onClick={onPrevPage}
               data-cy={'prev-button'}
             />
           </div>
-          <div className={styles.center}>이메일로 로그인</div>
-          <div className={styles.right}></div>
+          <div className="font-bold">이메일로 로그인</div>
+          <div className="w-20"></div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputField
@@ -94,6 +93,7 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
             wide
             size="lg"
             dataCy="emailLogin-submit-button"
+            className="mt-3"
           />
         </form>
       </div>

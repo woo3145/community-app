@@ -7,7 +7,6 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoChevronBackOutline } from 'react-icons/io5';
-import styles from './styles.module.scss';
 import { _signup } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 
@@ -72,17 +71,18 @@ export const Signup = ({ onPrevPage, email }: Props) => {
   const checkPasswordValid = password === checkPassword;
 
   return (
-    <div className={styles.wrapper} data-cy={'signup-container'}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.left}>
+    <div className="w-full py-10" data-cy={'signup-container'}>
+      <div className="w-full max-w-md mx-auto card p-5">
+        <div className="flex items-center justify-between mb-7 text-xl">
+          <div className="w-20">
             <IoChevronBackOutline
               onClick={onPrevPage}
               data-cy={'prev-button'}
+              className="cursor-pointer"
             />
           </div>
-          <div className={styles.center}>회원가입</div>
-          <div className={styles.right}></div>
+          <div className="font-bold">회원가입</div>
+          <div className="w-20"></div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputField
@@ -122,11 +122,11 @@ export const Signup = ({ onPrevPage, email }: Props) => {
               type="error"
               position="center"
               dataCy="signup-wrongPassword-message"
-              style={{ marginBottom: '12px' }}
+              className="mb-3"
             />
           )}
           <InputField
-            label="비밀번호"
+            label="비밀번호 확인"
             type="password"
             placeholder="비밀번호를 다시 한번 입력해주세요."
             dataCy="signup-checkPassword-input"
@@ -142,7 +142,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
               type="error"
               position="center"
               dataCy="signup-notMatchPassword-message"
-              style={{ marginBottom: '12px' }}
+              className="mb-3"
             />
           )}
           {passwordValid && checkPasswordValid && (
@@ -151,14 +151,14 @@ export const Signup = ({ onPrevPage, email }: Props) => {
               type="success"
               position="center"
               dataCy="signup-successPassword-message"
-              style={{ marginBottom: '12px' }}
+              className="mb-3"
             />
           )}
           <Message
             text="영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상으로 입력해주세요."
             type="guide"
             position="left"
-            style={{ marginBottom: '12px' }}
+            className="mb-3"
           />
 
           <Button
@@ -168,6 +168,7 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             wide
             size="lg"
             dataCy="signup-submit-button"
+            className="mt-3"
           />
         </form>
       </div>

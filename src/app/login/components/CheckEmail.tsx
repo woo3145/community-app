@@ -5,7 +5,6 @@ import { Signup } from './signup';
 import { EmailLogin } from './emailLogin';
 import InputField from '@/app/_components/atoms/InputField';
 import Button from '@/app/_components/atoms/Button';
-import styles from './styles.module.scss';
 
 interface CheckEmailResponse {
   registed: boolean;
@@ -45,9 +44,9 @@ export default function CheckEmail() {
   }
 
   return (
-    <div className={styles.wrapper} data-cy={'checkEmail-container'}>
-      <div className={styles.container}>
-        <div className={styles.title}>
+    <div className="w-full py-10" data-cy={'checkEmail-container'}>
+      <div className="w-full max-w-md mx-auto card p-5">
+        <div className="text-center py-5 text-2xl font-bold">
           <span>Woo3145 Community</span>
         </div>
 
@@ -70,6 +69,7 @@ export default function CheckEmail() {
             wide
             size="lg"
             dataCy="checkEmail-continue-button"
+            className="mt-3"
           />
         </form>
       </div>

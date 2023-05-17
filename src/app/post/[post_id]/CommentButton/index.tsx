@@ -1,8 +1,6 @@
 'use client';
 
 import { IoChatbubbleOutline } from 'react-icons/io5';
-
-import styles from './styles.module.scss';
 import { useComments } from '@/hooks/swr/useComments';
 import { usePostIsCommented } from '@/hooks/swr/usePostIsCommented';
 import { useSession } from 'next-auth/react';
@@ -25,6 +23,7 @@ export const PostCommentButton = ({
   const { isCommented: _isCommented, isLoading: isLoading_isCommented } =
     usePostIsCommented(postId, session?.user.id);
 
+  // 댓글작성 컴포넌트로 스크롤
   const onClick = () => {
     const form = document.querySelector('form');
     if (!form) return;
@@ -37,15 +36,16 @@ export const PostCommentButton = ({
   // 클라이언트에서 받아오기 전에는 서버 컴포넌트에서 받아온 게시물의 데이터 사용
   const curIsCommented = isLoading_isCommented ? isCommented : _isCommented;
   const curCount = isLoading_comments ? commentCount : count;
+
   return (
     <div
       onClick={onClick}
-      className={`${styles.commentButton} ${
-        curIsCommented ? styles.isCommented : ''
+      className={`flex items-center justify-center cursor-pointer text-lg font-bold ${
+        curIsCommented && 'text-primary'
       }`}
     >
-      <IoChatbubbleOutline />
-      <span>{curCount}</span>
+      <IoChatbubbleOutline className="mr-1" />
+      <span className="pt-0.5">{curCount}</span>
     </div>
   );
 };

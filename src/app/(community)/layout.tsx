@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import { CategoryContainer } from '../_components/molecules/CategoryContainer';
 import { UserProfile } from './UserProfile';
+
+export const metadata: Metadata = {
+  title: 'Woo3145 - Community',
+};
 
 export default function CommunityLayout({
   children,

@@ -6,8 +6,6 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { usePostLikeCount } from '@/hooks/swr/usePostLikeCount';
 import { usePostIsLiked } from '@/hooks/swr/usePostIsLiked';
 
-import styles from './styles.module.scss';
-
 interface Props {
   postId: number;
   isLiked: boolean;
@@ -34,10 +32,12 @@ export const PostLikeButton = ({ postId, isLiked, likeCount }: Props) => {
   return (
     <div
       onClick={onClick}
-      className={`${styles.likeButton} ${curIsLiked ? styles.isLiked : ''}`}
+      className={`flex items-center justify-center cursor-pointer text-lg font-bold mr-14 ${
+        curIsLiked && 'text-primary'
+      }`}
     >
-      <AiOutlineLike />
-      <span>{curLikeCount}</span>
+      <AiOutlineLike className="mr-1" />
+      <span className="pt-0.5">{curLikeCount}</span>
     </div>
   );
 };

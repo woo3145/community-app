@@ -20,7 +20,7 @@ export const AuthorProfile = ({
 }: Props | IsLoadingProps) => {
   if (isLoading) {
     return (
-      <Link href={`/profile/${profile?.userId}`} className="inline-block">
+      <div className="inline-block">
         <div className={`flex items-center justify-center`}>
           <Avatar isLoading={isLoading} />
 
@@ -32,7 +32,7 @@ export const AuthorProfile = ({
             <Skeleton style={{ marginTop: 4 }} />
           </div>
         </div>
-      </Link>
+      </div>
     );
   }
   if (!profile) {

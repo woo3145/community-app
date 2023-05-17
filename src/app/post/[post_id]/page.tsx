@@ -1,7 +1,5 @@
 import Badge from '@/app/_components/atoms/Badge';
-import { UserProfile } from '@/app/_components/molecules/profile/UserProfile';
 import { CommentList } from '@/app/_components/organisms/CommentList';
-import Link from 'next/link';
 import { PostContent } from '@/app/_components/molecules/PostContent';
 import { PostLikeButton } from './PostLikeButton';
 import { PostCommentButton } from './CommentButton';
@@ -11,13 +9,13 @@ import { _getPost } from '@/libs/client/apis';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
-import styles from './page.module.scss';
 import { addIsLikedAndIsCommented } from '@/libs/server/postUtils/postFetch';
 import { getPostById } from '@/libs/prisma/post';
 import {
   FetchedPost,
   PostWithIsLikedAndIsCommented,
 } from '@/libs/prisma/dataTypes';
+import { SideSection } from './SideSection';
 
 const getPost = async (postId: string) => {
   const post = await getPostById(parseInt(postId));
@@ -63,36 +61,15 @@ export default async function PostDetail({
   );
 
   return (
-    <main className={styles.main}>
-      <aside className={styles.aside}>
-        <div className={styles.aside_container}>
-          <div className={styles.aside_container_top}>
-            <Link href={`/profile/${post.user?.profile?.userId} `}>
-              <UserProfile isLoading={false} profile={post.user?.profile} />
-            </Link>
-          </div>
-          <div className={styles.postCount}>
-            {/* Like Button */}
-            <PostLikeButton
-              postId={post.id}
-              isLiked={post.isLiked}
-              likeCount={post._count.likes}
-            />
-
-            {/* Comment Button */}
-            <PostCommentButton
-              postId={post.id}
-              isCommented={post.isCommented}
-              commentCount={post._count.comments}
-            />
-          </div>
-        </div>
+    <main className="flex w-full max-w-screen-lg py-20">
+      <aside className="shrink-0 w-[258px] relative">
+        <SideSection post={post} />
       </aside>
-      <section className={styles.postDetail}>
-        <article className={styles.contentsBox}>
+      <section className="relative card">
+        <article className="py-12 px-10">
           <PostContent isLoading={false} post={post} />
 
-          <div className={styles.tagList}>
+          <div className="flex gap-3 mb-3">
             {post.tags?.map((tag, idx) => {
               return (
                 <Badge
@@ -105,7 +82,7 @@ export default async function PostDetail({
             })}
           </div>
 
-          <div className={styles.bottom}>
+          <div className="flex">
             {/* Like Button */}
             <PostLikeButton
               postId={post.id}

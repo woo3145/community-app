@@ -13,6 +13,7 @@ interface Props {
   style?: CSSProperties;
   dataCy?: string;
   theme?: 'primary' | 'cancel' | 'warning';
+  className?: string;
 }
 
 const Button = ({
@@ -28,6 +29,7 @@ const Button = ({
   icon,
   style,
   dataCy,
+  className,
 }: Props) => {
   const themes = {
     primary: 'bg-violet-500 text-white hover:bg-violet-700',
@@ -53,7 +55,7 @@ const Button = ({
         !isValid && 'bg-gray-400 text-white opacity-50 cursor-default'
       } ${selected && 'border-primary text-primary'} ${
         wide && 'w-full flex-1'
-      }`}
+      } ${className}`}
     >
       {icon}
       <span>{text}</span>

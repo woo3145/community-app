@@ -37,7 +37,7 @@ export const Avatar = ({
       {src ? (
         <Image
           style={style}
-          className={`rounded-full object-cover`}
+          className={`rounded-full object-cover ${sizes[uiSize]}`}
           src={src}
           alt="Profile Image"
           width={100}
