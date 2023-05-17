@@ -1,7 +1,7 @@
 'use client';
 import ReactModal from 'react-modal';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
-import { EditMyProfileForm } from '@/app/_components/forms/EditMyProfileForm';
+import { EditMyProfileForm } from '@/app/_components/forms/EditProfileForm';
 
 import { ModalHeader } from '../ModalHeader';
 

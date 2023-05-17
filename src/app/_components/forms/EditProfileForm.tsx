@@ -11,14 +11,14 @@ import { Avatar } from '@/app/_components/atoms/Avatar';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 import { ModalFooter } from '@/app/_modals/ModalFooter';
-import InputField from '../../atoms/InputField';
+import InputField from '../atoms/InputField';
 
 interface Props {
   profile: Exclude<Profile, null>;
   closeModal: () => void;
 }
 
-export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
+export const EditProfileForm = ({ profile, closeModal }: Props) => {
   const {
     modalIsOpen: cropModalIsOpen,
     openModal: openCropModal,
