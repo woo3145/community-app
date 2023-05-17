@@ -12,7 +12,7 @@ export const ModalFooter = ({ text, isValid = true, onClick }: Props) => {
       <Button
         type={onClick ? 'button' : 'submit'}
         text={text}
-        wide
+        isWide
         isValid={isValid}
         onClick={onClick}
         dataCy="modal-button"

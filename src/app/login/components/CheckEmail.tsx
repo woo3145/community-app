@@ -66,8 +66,8 @@ export default function CheckEmail() {
             type="submit"
             text="이메일로 계속하기"
             isValid={4 < email.length}
-            wide
-            size="lg"
+            isWide
+            uiSize="lg"
             dataCy="checkEmail-continue-button"
             className="mt-3"
           />

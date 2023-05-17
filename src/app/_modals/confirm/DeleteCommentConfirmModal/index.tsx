@@ -49,16 +49,16 @@ export const DeleteCommentConfirmModal = ({
             onClick={closeModal}
             theme="cancel"
             text="취소"
-            wide
-            size="lg"
+            isWide
+            uiSize="lg"
           />
           <Button
             type="button"
             onClick={onClick}
             theme="warning"
             text="삭제하기"
-            wide
-            size="lg"
+            isWide
+            uiSize="lg"
             isValid={!isApiLoading}
           />
         </div>

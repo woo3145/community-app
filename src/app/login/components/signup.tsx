@@ -165,8 +165,8 @@ export const Signup = ({ onPrevPage, email }: Props) => {
             type="submit"
             text="가입하기"
             isValid={isValid}
-            wide
-            size="lg"
+            isWide
+            uiSize="lg"
             dataCy="signup-submit-button"
             className="mt-3"
           />

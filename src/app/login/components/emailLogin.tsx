@@ -90,8 +90,8 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
             type="submit"
             text="다음"
             isValid={isValid}
-            wide
-            size="lg"
+            isWide
+            uiSize="lg"
             dataCy="emailLogin-submit-button"
             className="mt-3"
           />

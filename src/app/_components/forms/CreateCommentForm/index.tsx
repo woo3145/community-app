@@ -35,7 +35,7 @@ export const CreateCommentForm = ({ postId }: Props) => {
         <Button
           text="등록"
           type="submit"
-          size="sm"
+          uiSize="sm"
           isValid={isValid && !isApiLoading}
         />
       </div>

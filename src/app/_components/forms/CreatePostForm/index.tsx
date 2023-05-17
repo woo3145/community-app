@@ -102,7 +102,7 @@ export const CreatePostForm = () => {
           {preview && (
             <div className="relative mt-4">
               <button
-                onClick={resetImage}
+                onClick={() => resetImage()}
                 className="absolute right-2.5 top-2.5 flex items-center justify-center w-5 h-5 rounded-full bg-gray-600 text-white"
               >
                 <IoClose />
