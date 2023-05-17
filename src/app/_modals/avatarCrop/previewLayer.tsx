@@ -36,5 +36,5 @@ export const PreviewLayer = ({ image, imageSize }: Props) => {
     };
   }, [image]);
 
-  return <canvas ref={refCallback} style={{ display: 'block' }} />;
+  return <canvas ref={refCallback} className="block" />;
 };

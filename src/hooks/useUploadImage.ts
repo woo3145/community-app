@@ -20,14 +20,15 @@ export const useUploadImage = (callback?: () => void) => {
     reader.onload = (e: any) => {
       if (reader.readyState === 2) {
         setPreview(e.target.result);
+        if (callback) callback();
       }
     };
-    if (callback) callback();
+    event.target.value = ''; // 같은 이미지를 선택 할 수 있도록 값 초기화
   };
 
-  const resetImage = () => {
+  const resetImage = (prevImage?: string) => {
     setImageFile(null);
-    setPreview('');
+    setPreview(prevImage ? prevImage : '');
   };
 
   const uploadImage = async () => {

@@ -25,11 +25,12 @@ export const useImageCrop = (preview: string) => {
     const imageSize = resizeImage(image);
     setImage(image);
     setImageSize(imageSize);
+    const minLength = Math.min(imageSize.width, imageSize.height);
     setDragArea({
-      x: imageSize.width / 4,
-      y: imageSize.width / 4,
-      width: 100,
-      height: 100,
+      x: 0,
+      y: 0,
+      width: minLength,
+      height: minLength,
     });
   }, [preview]);
 

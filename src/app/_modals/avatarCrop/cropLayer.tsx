@@ -88,11 +88,7 @@ export const CropLayer = ({ imageSize, dragArea, setDragArea }: Props) => {
   return (
     <canvas
       ref={refCallback}
-      style={{
-        position: 'absolute',
-        cursor: 'crosshair',
-        top: 0,
-      }}
+      className="absolute top-0 cursor-crosshair"
       onMouseDown={onMouseDownHandler}
       onMouseMove={onMouseMoveHandler}
     />

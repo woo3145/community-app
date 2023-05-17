@@ -3,7 +3,6 @@ import { cropImage } from '@/libs/client/imageUtils';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import ReactModal from 'react-modal';
 
-import styles from './avatarCrop.module.scss';
 import { CropLayer } from './cropLayer';
 import { PreviewLayer } from './previewLayer';
 import { useImageCrop } from '@/hooks/useImageCrop';
@@ -30,6 +29,7 @@ interface Props {
   preview: string;
   setPreview: Dispatch<SetStateAction<string>>;
   setImageFile: Dispatch<SetStateAction<File | null>>;
+  onCancel: () => void;
 }
 
 export const AvatarCrop = ({
@@ -38,6 +38,7 @@ export const AvatarCrop = ({
   preview,
   setPreview,
   setImageFile,
+  onCancel,
 }: Props) => {
   const { image, imageSize, dragArea, setDragArea, initImage } =
     useImageCrop(preview);
@@ -56,6 +57,12 @@ export const AvatarCrop = ({
     closeModal();
   };
 
+  // 닫기 전에 preview 되돌리기
+  const cancelAndCloseModal = () => {
+    onCancel();
+    closeModal();
+  };
+
   return (
     <ReactModal
       isOpen={modalIsOpen}
@@ -63,12 +70,16 @@ export const AvatarCrop = ({
       style={customStyles}
       contentLabel="Example Modal"
       ariaHideApp={false}
+      shouldCloseOnOverlayClick={false} // 오버레이 클릭 시 닫기 막음(오버레이로 닫으면 crop이 안되고 원본으로 저장되기 때문)
     >
-      <div className={styles.container}>
-        <ModalHeader title="프로필 사진 만들기" closeModal={closeModal} />
+      <div className="w-full min-w-[460px] max-h-[630px]">
+        <ModalHeader
+          title="프로필 사진 만들기"
+          closeModal={cancelAndCloseModal}
+        />
 
-        <div className={styles.body}>
-          <div className={styles.canvasContainer}>
+        <div className="py-2">
+          <div className="flex items-center justify-center relative bg-black">
             <PreviewLayer image={image} imageSize={imageSize} />
             <CropLayer
               imageSize={imageSize}

@@ -32,6 +32,7 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
     setImageFile,
     uploadImage,
     handleImage,
+    resetImage,
   } = useUploadImage(openCropModal);
 
   const [nameType, setNameType] = useState<boolean>(profile.nameType); // false: 이름, true: 닉네임
@@ -63,6 +64,11 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
       if (text[text.length - 1] == '\n') event.preventDefault(); // 엔터 2번이상 입력 막기
     }
   };
+
+  // 취소하면 원래 유저 프로필 이미지로 preview 초기화
+  const onCancel = () => {
+    resetImage(profile.avatar);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="py-2">
@@ -88,13 +94,14 @@ export const EditMyProfileForm = ({ profile, closeModal }: Props) => {
               />
             </label>
           </div>
-          {cropModalIsOpen && preview && (
+          {cropModalIsOpen && preview !== profile.avatar && (
             <AvatarCrop
               modalIsOpen={cropModalIsOpen}
               closeModal={closeCropModal}
               preview={preview}
               setPreview={setPreview}
               setImageFile={setImageFile}
+              onCancel={onCancel}
             />
           )}
         </div>
