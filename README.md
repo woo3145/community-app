@@ -120,3 +120,35 @@ AWS_S3_BUCKET=
   - useInfiniteScrollSWR : 에러시 상태코드가 404인지 확인하여 재요청 안함
   - 클라이언트 에러는 new Error()객체를 사용
   - try catch단에서 타입가드로 백엔드/클라이언트 에러 구별 후 처리 (errorHandlerWithToast)
+
+💼 폴더 구조 정리
+
+- app
+
+  - \_component
+
+    - Atoms - 최소단위 컴포넌트(ex. Button)
+    - Molecules - UI만 가진 컴포넌트(ex. PostCard)
+    - Modals - 모달
+    - Forms - post요청을 보내는 컴포넌트
+
+  - (page)
+    - components - 레이아웃을 구성하는 컴포넌트 (ex. postList, categorySlider)
+    - layout.tsx - 공동된 레이아웃, redirect, metadata
+    - page.tsx - 레이아웃, redirect, metadata
+    - error.tsx - page에 ErrorBoundary를 씌움
+    - loading.tsx - page에 Suspense를 씌움
+
+- pages (serverActions 기능 안정화 될때 까지 사용)
+
+  - api - api 레이어
+
+- interfaces - 타입들
+
+- hooks
+
+  - scrollSwr - useSWRInfinite를 이용한 무한 스크롤기능이 포함 된 Data Fetcher hook
+  - swr - useSWR을 사용하는 Data Fetcher hook
+  - ... - 비즈니스 로직 hooks
+
+- libs - 헬퍼 함수
