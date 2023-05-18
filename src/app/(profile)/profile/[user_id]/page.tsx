@@ -1,5 +1,5 @@
-import { UserProfileInfo } from './UserProfileInfo';
-import { UserProfileBody } from './body/UserProfileBody';
+import { UserProfileInfo } from './_components/UserProfileInfo';
+import { UserProfileBody } from './_components/UserProfileBody';
 
 interface Props {
   params: {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { UserProfileTabs } from '../UserProfileTabs';
+import { UserProfileTabs } from './UserProfileTabs';
 import { UserPosts } from './UserPosts';
 import { UserComments } from './UserComments';
 export type UserProfileTabType = 'posts' | 'comments';

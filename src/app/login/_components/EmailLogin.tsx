@@ -49,8 +49,8 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
     }
   };
   return (
-    <div className="w-full card p-5">
-      <div className="flex items-center justify-between mb-7 text-xl">
+    <div className="w-full p-5 card">
+      <div className="flex items-center justify-between text-xl mb-7">
         <div className="w-20">
           <IoChevronBackOutline onClick={onPrevPage} data-cy={'prev-button'} />
         </div>

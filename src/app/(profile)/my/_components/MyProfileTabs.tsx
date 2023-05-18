@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import { ProfileTabItem } from '../ProfileTabItem';
-import { MyProfileTabType } from './body/MyProfileBody';
+import { ProfileTabItem } from '../../../_components/atoms/ProfileTabItem';
+import { MyProfileTabType } from './MyProfileBody';
 
 interface Props {
   tab: MyProfileTabType;
@@ -15,7 +15,7 @@ export const MyProfileTabs = ({ tab, setTab }: Props) => {
     { text: '좋아요', type: 'likes' },
   ];
   return (
-    <div className="p-7 pb-0 border-b border-solid border-gray-200">
+    <div className="pb-0 border-b border-gray-200 border-solid p-7">
       <div className="flex space-x-2.5">
         {routes.map((route, idx) => {
           return (

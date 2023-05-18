@@ -17,13 +17,13 @@ interface CreateCommentForm {
 const EmptyCommentMessage = () => {
   return (
     <div className="flex flex-col items-center justify-center py-12">
-      <IoChatbubbleOutline className="text-6xl mb-3 text-primary" />
+      <IoChatbubbleOutline className="mb-3 text-6xl text-primary" />
       <p className="text-sm text-gray-500">첫 댓글을 남겨주세요.</p>
     </div>
   );
 };
 
-export const CommentList = ({ postId }: Props) => {
+export const CommentListContainer = ({ postId }: Props) => {
   const { comments, isLoading, isError } = useComments(postId);
 
   return (

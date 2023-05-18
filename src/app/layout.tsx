@@ -1,4 +1,3 @@
-import { Header } from './_common/header';
 import { SessionProviders } from './_providers/sessionProviders';
 
 import { SWRProvider } from './_providers/swrProvider';
@@ -7,6 +6,7 @@ import { Metadata } from 'next';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import '@/styles/global.css';
+import { Header } from './_components/molecules/Header';
 
 export const metadata: Metadata = {
   title: 'Woo3145 - Community',
@@ -19,7 +19,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="bg-gray-100 w-full max-w-screen-lg mx-auto">
+      <body className="w-full max-w-screen-lg mx-auto bg-gray-100">
         <SessionProviders>
           <SWRProvider>
             <Header />

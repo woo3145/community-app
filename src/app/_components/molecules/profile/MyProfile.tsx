@@ -1,3 +1,5 @@
+'use client';
+
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import Skeleton from 'react-loading-skeleton';
 import { useMe } from '@/hooks/swr/useMe';
@@ -16,7 +18,7 @@ export const MyProfile = ({ size = 'md' }: Props) => {
           <Avatar isLoading={isLoading} />
 
           <div className="ml-3">
-            <div className="flex justify-start items-center">
+            <div className="flex items-center justify-start">
               <Skeleton width={72} height={16} style={{ marginRight: 8 }} />
             </div>
           </div>
@@ -35,8 +37,8 @@ export const MyProfile = ({ size = 'md' }: Props) => {
         <Avatar src={me.profile.avatar} />
 
         <div className="ml-3">
-          <div className="flex justify-start items-center">
-            <p className="font-bold mr-2 text-sm">
+          <div className="flex items-center justify-start">
+            <p className="mr-2 text-sm font-bold">
               {me.profile.nameType ? me.profile.nickname : me.profile.name}
             </p>
           </div>

@@ -1,8 +1,7 @@
-import { CSSProperties } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 interface Props {
-  isLoading: boolean;
+  isLoading?: boolean;
   job?: string;
   annual?: number;
   uiSize?: UISize;
@@ -33,7 +32,7 @@ export const AvatarCareer = ({
   }
   return (
     <div className={integrationClassName}>
-      {job && <span className="text-primary mr-2">{job}</span>}
+      {job && <span className="mr-2 text-primary">{job}</span>}
       <span className="text-gray-400">
         {!annual || annual === 0 ? '신입' : `${annual}년차`}
       </span>

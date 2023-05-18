@@ -1,38 +1,17 @@
 import Image from 'next/image';
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
-import { Post } from '@/libs/server/postUtils/postFetchTypes';
-import Skeleton from 'react-loading-skeleton';
+import { PostWithIsLikedAndIsCommented } from '@/libs/prisma/dataTypes';
 
 interface Props {
-  isLoading: false;
-  post: Post;
+  post: PostWithIsLikedAndIsCommented;
 }
 
-export const PostContent = ({ post, isLoading }: Props | IsLoadingProps) => {
-  if (isLoading) {
-    return (
-      <div className="pb-8">
-        <div>
-          <div>
-            <AuthorProfile isLoading={isLoading} size={'md'} />
-          </div>
-          <Skeleton
-            width="60%"
-            height={32}
-            style={{ marginTop: 32, marginBottom: 32 }}
-          />
-        </div>
-
-        <Skeleton height={400} />
-      </div>
-    );
-  }
+export const PostContent = ({ post }: Props) => {
   return (
     <div className="pb-8">
       <div>
         <div>
           <AuthorProfile
-            isLoading={isLoading}
             profile={post.user ? post.user.profile : null}
             createAt={post.createAt}
             size={'md'}

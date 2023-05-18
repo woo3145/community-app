@@ -1,7 +1,6 @@
 import { CSSProperties } from 'react';
 import Link from 'next/link';
 import Skeleton from 'react-loading-skeleton';
-import { UrlObject } from 'url';
 
 interface Props {
   text: string;

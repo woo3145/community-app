@@ -125,7 +125,7 @@ AWS_S3_BUCKET=
 
 - app
 
-  - \_component
+  - \_components
 
     - Atoms - 최소단위 컴포넌트(ex. Button)
     - Molecules - UI만 가진 컴포넌트(ex. PostCard)
@@ -133,7 +133,7 @@ AWS_S3_BUCKET=
     - Forms - post요청을 보내는 컴포넌트
 
   - (page)
-    - components - 레이아웃을 구성하는 컴포넌트 (ex. postList, categorySlider)
+    - \_components - 레이아웃을 구성하는 컴포넌트 (ex. postList, categorySlider)
     - layout.tsx - 공동된 레이아웃, redirect, metadata
     - page.tsx - 레이아웃, redirect, metadata
     - error.tsx - page에 ErrorBoundary를 씌움

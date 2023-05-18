@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MyProfileTabs } from '../MyProfileTabs';
+import { MyProfileTabs } from './MyProfileTabs';
 import { MyRecents } from './MyRecents';
 import { MyPosts } from './MyPosts';
 import { MyComments } from './MyComments';

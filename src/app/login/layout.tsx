@@ -19,5 +19,5 @@ export default async function LogIn({
     redirect('/');
   }
 
-  return <div className="w-full max-w-md mx-auto py-10">{children}</div>;
+  return <div className="w-full max-w-md py-10 mx-auto">{children}</div>;
 }

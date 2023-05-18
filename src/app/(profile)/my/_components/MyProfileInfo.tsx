@@ -19,7 +19,7 @@ export const MyProfileInfo = () => {
     <div className="relative card p-7">
       <div className="flex items-center">
         <Avatar src={me.profile.avatar} uiSize="lg" />
-        <div className="pl-8 w-full">
+        <div className="w-full pl-8">
           <div className="text-2xl font-bold">
             {me.profile.nameType ? me.profile.nickname : me.profile.name}
           </div>
@@ -43,10 +43,10 @@ export const MyProfileInfo = () => {
         </div>
       </div>
 
-      <div className="text-sm py-5">{me.profile.description}</div>
+      <div className="py-5 text-sm">{me.profile.description}</div>
 
-      <div className="pt-5 border-t border-solid border-gray-200">
-        <p className="text-sm font-bold mb-3">관심 주제</p>
+      <div className="pt-5 border-t border-gray-200 border-solid">
+        <p className="mb-3 text-sm font-bold">관심 주제</p>
         <div className="flex gap-1">
           <Badge isLoading={isLoading} text={'개발'} /> {/* 임시 */}
           <Badge isLoading={isLoading} text={'데이터'} /> {/* 임시 */}

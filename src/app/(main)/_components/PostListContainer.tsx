@@ -1,18 +1,18 @@
 'use client';
 
 import { usePosts } from '@/hooks/scrollSwr/usePosts';
-import { PostItem } from '../_components/molecules/PostItem';
+import { PostItem } from '../../_components/molecules/PostItem';
 import { EmptyPostContainer } from './EmptyPostContainer';
 
 interface Props {
   category: string;
 }
 
-export default function PostList({ category }: Props) {
+export default function PostListContainer({ category }: Props) {
   const { data, isLoading, bottomRef, isReachedEnd } = usePosts(category);
 
   return (
-    <div className="flex flex-col card border-t-0 rounded-t-none">
+    <div className="flex flex-col border-t-0 rounded-t-none card">
       {isLoading &&
         data.length === 0 &&
         [1, 2, 3, 4].map((i, idx) => {

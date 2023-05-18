@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MyProfileModifyModal } from '@/app/_components/modals/MyProfileModifyModal';
 
-export const WriteButton = () => {
+export const WriteButtonContainer = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
   const { me } = useMe();
@@ -33,13 +33,13 @@ export const WriteButton = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-8 card rounded-none">
+    <div className="flex items-center justify-center p-8 rounded-none card">
       <div className="mr-4">
         <Avatar src={me?.profile.avatar || ''} />
       </div>
       <div
         onClick={onClick}
-        className="flex items-center justify-between w-full border border-solid border-gray-200 px-5 py-4 rounded-md cursor-pointer"
+        className="flex items-center justify-between w-full px-5 py-4 border border-gray-200 border-solid rounded-md cursor-pointer"
         data-cy={'postWrite-button'}
       >
         <span>커리어와 라이프스타일에 대해 자유롭게 이야기 해주세요!</span>

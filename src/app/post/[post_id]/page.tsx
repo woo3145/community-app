@@ -1,7 +1,7 @@
 import Badge from '@/app/_components/atoms/Badge';
 import { PostContent } from '@/app/_components/molecules/PostContent';
-import { PostLikeButton } from './PostLikeButton';
-import { PostCommentButton } from './CommentButton';
+import { PostLikeButton } from './_components/PostLikeButton';
+import { PostCommentButton } from './_components/CommentButton';
 
 import { Metadata } from 'next';
 import { _getPost } from '@/libs/client/apis';
@@ -14,10 +14,10 @@ import {
   FetchedPost,
   PostWithIsLikedAndIsCommented,
 } from '@/libs/prisma/dataTypes';
-import { SideSection } from './SideSection';
-import { useMemo } from 'react';
-import { CreateComment } from './CreateComment';
-import { CommentList } from './CommentList';
+import { SideSection } from './_components/SideSection';
+import { CreateCommentContainer } from './_components/CreateCommentContainer';
+import { CommentListContainer } from './_components/CommentListContainer';
+import { PostContainer } from './_components/PostContainer';
 
 const getPost = async (postId: string) => {
   const post = await getPostById(parseInt(postId));
@@ -58,9 +58,9 @@ export default async function PostDetail({
   const session = await getServerSession(authOptions);
   const _post: FetchedPost = await getPost(post_id);
 
-  const post: PostWithIsLikedAndIsCommented = useMemo(
-    () => addIsLikedAndIsCommented(_post, session?.user.id),
-    [_post, session]
+  const post: PostWithIsLikedAndIsCommented = addIsLikedAndIsCommented(
+    _post,
+    session?.user.id
   );
 
   return (
@@ -69,40 +69,10 @@ export default async function PostDetail({
         <SideSection post={post} />
       </aside>
       <section className="relative card">
-        <article className="py-12 px-10">
-          <PostContent isLoading={false} post={post} />
+        <PostContainer post={post} />
 
-          <div className="flex gap-3 mb-3">
-            {post.tags?.map((tag, idx) => {
-              return (
-                <Badge
-                  isLoading={false}
-                  key={idx}
-                  href={`/post/${tag.id}`}
-                  text={tag.title}
-                />
-              );
-            })}
-          </div>
-
-          <div className="flex">
-            {/* Like Button */}
-            <PostLikeButton
-              postId={post.id}
-              isLiked={post.isLiked}
-              likeCount={post._count.likes}
-            />
-            {/* Comment Button */}
-            <PostCommentButton
-              postId={post.id}
-              isCommented={post.isCommented}
-              commentCount={post._count.comments}
-            />
-          </div>
-        </article>
-
-        <CommentList postId={parseInt(post_id)} />
-        <CreateComment postId={parseInt(post_id)} />
+        <CommentListContainer postId={parseInt(post_id)} />
+        <CreateCommentContainer postId={parseInt(post_id)} />
       </section>
     </main>
   );

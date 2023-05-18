@@ -3,8 +3,8 @@
 import { ChangeEvent, useState } from 'react';
 import InputField from '@/app/_components/atoms/InputField';
 import Button from '@/app/_components/atoms/Button';
-import { Signup } from './Signup';
-import { EmailLogin } from './EmailLogin';
+import { Signup } from './_components/Signup';
+import { EmailLogin } from './_components/EmailLogin';
 
 interface CheckEmailResponse {
   registed: boolean;
@@ -46,8 +46,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full card p-5">
-      <div className="text-center py-5 text-2xl font-bold">
+    <div className="w-full p-5 card">
+      <div className="py-5 text-2xl font-bold text-center">
         <span>Woo3145 Community</span>
       </div>
 

@@ -72,8 +72,8 @@ export const Signup = ({ onPrevPage, email }: Props) => {
 
   return (
     <div className="w-full py-10">
-      <div className="w-full max-w-md mx-auto card p-5">
-        <div className="flex items-center justify-between mb-7 text-xl">
+      <div className="w-full max-w-md p-5 mx-auto card">
+        <div className="flex items-center justify-between text-xl mb-7">
           <div className="w-20">
             <IoChevronBackOutline
               onClick={onPrevPage}

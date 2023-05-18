@@ -1,14 +1,28 @@
 @tailwind base;
 @tailwind components;
-
 @tailwind utilities;
 
 @layer components {
   .card {
-    @apply w-full border border-solid border-gray-200 bg-white rounded-md px-4 py-2;
+    @apply w-full bg-white border border-gray-200 border-solid rounded-md;
   }
 
   .badge {
-    @apply text-xs py-1 px-3 border border-solid rounded-xl border-gray-200 text-gray-500;
+    @apply px-3 py-1 text-xs text-gray-500 border border-gray-200 border-solid rounded-xl;
+  }
+}
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
   }
 }

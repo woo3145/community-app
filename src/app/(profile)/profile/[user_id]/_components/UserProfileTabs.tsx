@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import { UserProfileTabType } from './body/UserProfileBody';
-import { ProfileTabItem } from '../../ProfileTabItem';
+import { UserProfileTabType } from './UserProfileBody';
+import { ProfileTabItem } from '../../../../_components/atoms/ProfileTabItem';
 
 interface Props {
   tab: UserProfileTabType;

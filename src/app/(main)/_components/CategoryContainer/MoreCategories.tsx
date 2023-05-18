@@ -1,4 +1,4 @@
-import { SelectButton } from '../../atoms/SelectButton';
+import { SelectButton } from '../../../_components/atoms/SelectButton';
 
 interface Props {
   categoryId: number;
