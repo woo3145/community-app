@@ -12,13 +12,11 @@ export const SideSection = ({ post }: Props) => {
   return (
     <div className="fixed w-[258px] pr-10">
       <div className="border-b border-gray-200 border-solid pb-7">
-        <Link href={`/profile/${post.user?.profile?.userId} `}>
-          <AuthorProfile
-            isLoading={false}
-            profile={post.user ? post.user.profile : null}
-            size={'md'}
-          />
-        </Link>
+        <AuthorProfile
+          isLoading={false}
+          profile={post.user ? post.user.profile : null}
+          size={'md'}
+        />
       </div>
       <div className="flex mt-3">
         {/* Like Button */}
