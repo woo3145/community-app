@@ -92,9 +92,9 @@ AWS_S3_BUCKET=
 
       - [ ] : routeChangeStart는 hook으로 어느정도 구현가능해도 routeChangeComplete는 구현방법이 떠오르지 않아서 지원을 기다려야할듯함
 
-  - [ ] pages/api -> app/api로 마이그레이션 (최대한 서버컴포넌트 사용, CSR이 필요한 api만 작성)
+  ~~- [ ] pages/api -> app/api로 마이그레이션 (최대한 서버컴포넌트 사용, CSR이 필요한 api만 작성)~~ ServerActions 아직 너무 불안정
 
-    - [ ] nextjs가 app directory로 전환되면서 CSS Module이 너무 지저분함 & 불러오는 css파일이 너무많음 -> tailwind css로 마이그레이션
+  - [x] nextjs가 app directory로 전환되면서 CSS Module이 너무 지저분함 & 불러오는 css파일이 너무많음 -> tailwind css로 마이그레이션
 
   - [ ] E2E Test
 
