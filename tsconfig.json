@@ -30,8 +30,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "prisma/seeds/seed.js",
-    "prisma/seeds/seed.js",
     "cypress/cypress.config"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".next", "cypress"]
 }
