@@ -7,12 +7,15 @@ import { useMe } from '@/hooks/swr/useMe';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
+import Skeleton from 'react-loading-skeleton';
+import { ProfileInfoSkeleton } from '../../_components/ProfileInfoSkeleton';
 
 export const MyProfileInfo = () => {
   const { me, isLoading } = useMe();
   const { modalIsOpen, openModal, closeModal } = useModalVisible();
+
   if (isLoading || !me) {
-    return <div>로딩 ... </div>;
+    return <ProfileInfoSkeleton />;
   }
 
   return (
@@ -28,7 +31,7 @@ export const MyProfileInfo = () => {
               job={me.profile.job?.title}
               annual={me.profile.annual}
               isLoading={isLoading}
-              uiSize="md"
+              uiSize="lg"
             />
           </div>
         </div>
