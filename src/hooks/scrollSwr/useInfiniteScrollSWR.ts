@@ -46,9 +46,9 @@ export const useInfiniteScrollSWR = <T extends any[]>(
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         // Never retry on 404.
         if (isServerError(error)) {
-          if (error.statusCode === 404) return;
+          if (error.statusCode === 404 || error.statusCode === 401) return;
         } else {
-          if (error.status === 404) return;
+          if (error.status === 404 || error.statusCode === 401) return;
         }
 
         // Only retry up to 10 times.
