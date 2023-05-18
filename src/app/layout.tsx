@@ -2,11 +2,11 @@ import { SessionProviders } from './_providers/sessionProviders';
 
 import { SWRProvider } from './_providers/swrProvider';
 import { Metadata } from 'next';
+import { Header } from './_components/molecules/Header';
 
+import '@/styles/global.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
-import '@/styles/global.css';
-import { Header } from './_components/molecules/Header';
 
 export const metadata: Metadata = {
   title: 'Woo3145 - Community',

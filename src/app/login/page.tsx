@@ -21,6 +21,7 @@ export default function LoginPage() {
     setType(null);
   };
 
+  // 이메일의 가입여부를 확인하여 리턴 컴포넌트 변경
   const onSubmitCheckEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

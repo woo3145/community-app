@@ -18,7 +18,7 @@ const LikeButton = ({
   return (
     <div className={`flex items-center ${isLiked ? 'text-primary' : ''}`}>
       <AiOutlineLike className="text-lg" />
-      <span className="text-sm pl-1 pt-1">{count}</span>
+      <span className="pt-1 pl-1 text-sm">{count}</span>
     </div>
   );
 };
@@ -33,7 +33,7 @@ const CommentButton = ({
   return (
     <div className={`flex items-center ${isCommented ? 'text-primary' : ''}`}>
       <IoChatbubbleOutline className="text-lg" />
-      <span className="text-sm pl-1 pt-1">{count}</span>
+      <span className="pt-1 pl-1 text-sm">{count}</span>
     </div>
   );
 };
@@ -46,7 +46,7 @@ interface Props {
 export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
   if (isLoading) {
     return (
-      <div className="px-7 py-5 border-b border-solid border-gray-200">
+      <div className="py-5 border-b border-gray-200 border-solid px-7">
         <div className="mb-3">
           <AuthorProfile size={'sm'} isLoading={isLoading} />
         </div>
@@ -55,14 +55,7 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
           <Skeleton width="100%" count={2} />
           <ul className="flex gap-2">
             {['1', '2'].map((dumy, idx) => {
-              return (
-                <Badge
-                  isLoading={isLoading}
-                  key={idx}
-                  size={'sm'}
-                  text={dumy}
-                />
-              );
+              return <Badge isLoading={isLoading} key={idx} text={dumy} />;
             })}
           </ul>
         </div>
@@ -71,7 +64,7 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
   }
 
   return (
-    <article className="flex px-7 py-5 border-b border-solid border-gray-200">
+    <article className="flex py-5 border-b border-gray-200 border-solid px-7">
       <div className="w-full">
         <div className="mb-1">
           <AuthorProfile
@@ -88,7 +81,7 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
               {post.title}
             </h3>
             <p className="text-gray-500">{post.content}</p>
-            <ul className="flex py-2 gap-2">
+            <ul className="flex gap-2 py-2">
               {post.tags.map((tag, idx) => {
                 return (
                   <Badge isLoading={isLoading} key={idx} text={tag.title} />

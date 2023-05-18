@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 
+// page 컴포넌트 안에서 throw Error가 발생하면 보여짐
 export default function Error({
   error,
   reset,

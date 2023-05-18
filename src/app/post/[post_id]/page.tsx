@@ -1,8 +1,3 @@
-import Badge from '@/app/_components/atoms/Badge';
-import { PostContent } from '@/app/_components/molecules/PostContent';
-import { PostLikeButton } from './_components/PostLikeButton';
-import { PostCommentButton } from './_components/CommentButton';
-
 import { Metadata } from 'next';
 import { _getPost } from '@/libs/client/apis';
 import { getServerSession } from 'next-auth';
@@ -14,7 +9,7 @@ import {
   FetchedPost,
   PostWithIsLikedAndIsCommented,
 } from '@/libs/prisma/dataTypes';
-import { SideSection } from './_components/SideSection';
+import { PostSideSection } from './_components/PostSideSection';
 import { CreateCommentContainer } from './_components/CreateCommentContainer';
 import { CommentListContainer } from './_components/CommentListContainer';
 import { PostContainer } from './_components/PostContainer';
@@ -55,22 +50,22 @@ export default async function PostDetail({
 }: {
   params: { post_id: string };
 }) {
-  const session = await getServerSession(authOptions);
-  const _post: FetchedPost = await getPost(post_id);
+  const session = await getServerSession(authOptions); // 세션 확인
+  const _post: FetchedPost = await getPost(post_id); // SSR요청
 
+  // 세션의 유저아이디로 게시글 좋아요 여부와 댓글 여부 확인하여 필드를 포함한 새 객체 생성
   const post: PostWithIsLikedAndIsCommented = addIsLikedAndIsCommented(
     _post,
     session?.user.id
   );
 
   return (
-    <main className="flex w-full max-w-screen-lg py-20">
+    <main className="container flex max-w-screen-lg py-20">
       <aside className="shrink-0 w-[258px] relative">
-        <SideSection post={post} />
+        <PostSideSection post={post} />
       </aside>
       <section className="relative card">
         <PostContainer post={post} />
-
         <CommentListContainer postId={parseInt(post_id)} />
         <CreateCommentContainer postId={parseInt(post_id)} />
       </section>

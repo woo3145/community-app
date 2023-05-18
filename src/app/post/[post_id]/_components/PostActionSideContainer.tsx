@@ -1,6 +1,6 @@
 import { PostWithIsLikedAndIsCommented } from '@/libs/prisma/dataTypes';
-import { PostCommentButton } from '../CommentButton';
-import { PostLikeButton } from '../PostLikeButton';
+import { PostLikeButton } from './PostLikeButton';
+import { PostCommentButton } from './CommentButton';
 
 interface Props {
   post: PostWithIsLikedAndIsCommented;
@@ -21,8 +21,6 @@ export const PostActionContainer = ({ post }: Props) => {
         isCommented={post.isCommented}
         commentCount={post._count.comments}
       />
-
-      {/* 게시글 삭제 기능 예정*/}
     </div>
   );
 };

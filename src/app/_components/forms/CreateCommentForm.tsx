@@ -24,11 +24,11 @@ export const CreateCommentForm = ({ postId }: Props) => {
   const { onSubmit, isApiLoading } = useCreateComment(postId, reset);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card">
+    <form onSubmit={handleSubmit(onSubmit)} className="p-3 card">
       <textarea
         {...register('content', { required: true })}
         placeholder={me ? '댓글 남기기' : '로그인 후 댓글 남기기'}
-        className="w-full resize-none border-none p-4"
+        className="w-full p-2 border-none resize-none"
         disabled={!me}
       />
       <div className="flex justify-end pt-5">

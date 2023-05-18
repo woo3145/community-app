@@ -1,11 +1,9 @@
-import { CSSProperties } from 'react';
 import Link from 'next/link';
 import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   text: string;
   onClick?: () => void;
-  style?: CSSProperties;
   href?: string;
   className?: string;
   isLoading?: boolean;

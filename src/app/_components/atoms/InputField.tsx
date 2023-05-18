@@ -19,7 +19,7 @@ const InputField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   };
 
   const labelClassName = `font-bold ${labelSizes[uiSize]}`;
-  const inputClassName = `border border-solid rounded-sm outline-primary ${inputSizes[uiSize]} ${className}`;
+  const inputClassName = `border border-solid rounded-sm outline-1 outline-primary ${inputSizes[uiSize]} ${className}`;
 
   return (
     <div className="w-full flex flex-col space-y-2.5">

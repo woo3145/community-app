@@ -32,7 +32,7 @@ export const PostLikeButton = ({ postId, isLiked, likeCount }: Props) => {
   return (
     <div
       onClick={onClick}
-      className={`flex items-center justify-center cursor-pointer text-lg font-bold mr-14 ${
+      className={`flex items-center justify-center cursor-pointer text-lg font-bold ${
         curIsLiked && 'text-primary'
       }`}
     >

@@ -106,7 +106,7 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
           )}
         </div>
         <div className="mb-8">
-          <h4 className="text-sm font-bold mb-2 text-gray-400">
+          <h4 className="mb-2 text-sm font-bold text-gray-400">
             이름 <span className="text-red-600">*</span>
           </h4>
 
@@ -124,7 +124,7 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
               readOnly
               className="w-5 h-5 m-0"
             />
-            <label htmlFor="userNameDefault" className="text-sm pl-2 mr-3">
+            <label htmlFor="userNameDefault" className="pl-2 mr-3 text-sm">
               기본
             </label>
             <input
@@ -140,7 +140,7 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
               }}
               className="w-5 h-5 m-0"
             />
-            <label htmlFor="userNameNickName" className="text-sm pl-2">
+            <label htmlFor="userNameNickName" className="pl-2 text-sm">
               닉네임
             </label>
           </div>
@@ -158,11 +158,11 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
         </div>
 
         <div>
-          <h4 className="text-sm font-bold mb-2 text-gray-400">한줄소개</h4>
+          <h4 className="mb-2 text-sm font-bold text-gray-400">한줄소개</h4>
           <textarea
             onKeyDown={PreventEnter}
             {...register('description', { maxLength: 150 })}
-            className="w-full h-[140px] resize-none card rounded-sm focus:border-primary"
+            className="w-full h-[140px] resize-none card p-3 outline-1 outline-primary"
             placeholder="간단한 자기소개 글을 작성해 주세요."
           />
           <p className="text-sm text-right text-gray-400">

@@ -8,7 +8,7 @@ interface Props {
   post: PostWithIsLikedAndIsCommented;
 }
 
-export const SideSection = ({ post }: Props) => {
+export const PostSideSection = ({ post }: Props) => {
   return (
     <div className="fixed w-[258px] pr-10">
       <div className="border-b border-gray-200 border-solid pb-7">
@@ -18,7 +18,7 @@ export const SideSection = ({ post }: Props) => {
           size={'md'}
         />
       </div>
-      <div className="flex mt-3">
+      <div className="flex mt-3 space-x-14">
         {/* Like Button */}
         <PostLikeButton
           postId={post.id}

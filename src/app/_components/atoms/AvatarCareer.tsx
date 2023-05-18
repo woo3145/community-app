@@ -19,14 +19,24 @@ export const AvatarCareer = ({
     md: 'text-sm',
     lg: 'text-md',
   };
+  const skeletonSizes = {
+    sm: '0.8rem',
+    md: '1rem',
+    lg: '1.5rem',
+  };
 
   const integrationClassName = `flex font-semibold ${avatarCareerSizes[uiSize]} ${className}`;
 
   if (isLoading) {
     return (
       <div className={integrationClassName}>
-        <Skeleton inline width={36} height={16} />
-        <Skeleton inline width={36} height={16} style={{ marginLeft: 8 }} />
+        <Skeleton inline width={40} height={skeletonSizes[uiSize]} />
+        <Skeleton
+          inline
+          width={40}
+          height={skeletonSizes[uiSize]}
+          style={{ marginLeft: 8 }}
+        />
       </div>
     );
   }

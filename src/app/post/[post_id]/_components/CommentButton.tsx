@@ -11,6 +11,7 @@ interface Props {
   commentCount: number;
 }
 
+// 댓글 입력칸으로 스크롤 이동하는 기능을 가짐
 export const PostCommentButton = ({
   isCommented,
   postId,

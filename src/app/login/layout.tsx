@@ -6,6 +6,7 @@ export const metadata = {
   title: 'Woo3145 - Login',
 };
 
+// Server Side에서 세션확인 후 로그인 된 상태면 리다이렉트
 export default async function LogIn({
   providers,
   children,
