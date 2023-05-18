@@ -5,7 +5,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { useMe } from '@/hooks/swr/useMe';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { MyProfileModifyModal } from '@/app/_modals/MyProfileModifyModal';
+import { MyProfileModifyModal } from '@/app/_components/modals/MyProfileModifyModal';
 
 export const WriteButton = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);

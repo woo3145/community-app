@@ -1,16 +1,16 @@
 'use client';
 
-import { AvatarCrop } from '@/app/_modals/avatarCrop/avatarCrop';
+import { AvatarCrop } from '@/app/_components/modals/avatarCrop/avatarCrop';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { useUploadImage } from '@/hooks/useUploadImage';
 import { KeyboardEvent, useState } from 'react';
-import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
+import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
 import { useForm } from 'react-hook-form';
 import { useEditProfile } from '@/hooks/useEditProfile';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
-import { ModalFooter } from '@/app/_modals/ModalFooter';
+import { ModalFooter } from '@/app/_components/modals/ModalFooter';
 import InputField from '../atoms/InputField';
 
 interface Props {

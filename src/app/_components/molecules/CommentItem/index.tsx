@@ -4,7 +4,7 @@ import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile
 import Link from 'next/link';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useMe } from '@/hooks/swr/useMe';
-import { DeleteCommentConfirmModal } from '@/app/_modals/confirm/DeleteCommentConfirmModal';
+import { DeleteCommentConfirmModal } from '@/app/_components/modals/confirm/DeleteCommentConfirmModal';
 import Skeleton from 'react-loading-skeleton';
 import { useModalVisible } from '@/hooks/useModalVisible';
 

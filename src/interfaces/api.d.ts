@@ -1,5 +1,5 @@
 import { CreateCommentFormValue } from '@/app/_components/forms/CreateCommentForm';
-import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
+import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
 import { CreatePostFormValue } from '@/app/write/page';
 import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { Post } from '@/libs/server/postUtils/postFetchTypes';

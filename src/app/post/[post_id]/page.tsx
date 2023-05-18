@@ -1,5 +1,4 @@
 import Badge from '@/app/_components/atoms/Badge';
-import { CommentList } from '@/app/_components/organisms/CommentList';
 import { PostContent } from '@/app/_components/molecules/PostContent';
 import { PostLikeButton } from './PostLikeButton';
 import { PostCommentButton } from './CommentButton';
@@ -16,6 +15,9 @@ import {
   PostWithIsLikedAndIsCommented,
 } from '@/libs/prisma/dataTypes';
 import { SideSection } from './SideSection';
+import { useMemo } from 'react';
+import { CreateComment } from './CreateComment';
+import { CommentList } from './CommentList';
 
 const getPost = async (postId: string) => {
   const post = await getPostById(parseInt(postId));
@@ -55,9 +57,10 @@ export default async function PostDetail({
 }) {
   const session = await getServerSession(authOptions);
   const _post: FetchedPost = await getPost(post_id);
-  const post: PostWithIsLikedAndIsCommented = addIsLikedAndIsCommented(
-    _post,
-    session?.user.id
+
+  const post: PostWithIsLikedAndIsCommented = useMemo(
+    () => addIsLikedAndIsCommented(_post, session?.user.id),
+    [_post, session]
   );
 
   return (
@@ -99,6 +102,7 @@ export default async function PostDetail({
         </article>
 
         <CommentList postId={parseInt(post_id)} />
+        <CreateComment postId={parseInt(post_id)} />
       </section>
     </main>
   );

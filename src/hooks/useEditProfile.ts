@@ -1,4 +1,4 @@
-import { EditProfileFormValue } from '@/app/_modals/MyProfileModifyModal';
+import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { _editProfile } from '@/libs/client/apis';
 import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
