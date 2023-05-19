@@ -23,10 +23,10 @@ const PopupMenu = ({ comment }: { comment: Comment }) => {
     <div>
       <IoEllipsisHorizontal onClick={togglePopup} className="cursor-pointer" />
       {popupIsOpen && (
-        <div className="absolute -right-2 py-2 px-5 bg-white border border-gray-200 border-solid rounded-md">
+        <div className="absolute px-5 py-2 bg-white border border-gray-200 border-solid rounded-md -right-2">
           <div
             onClick={openModal}
-            className="text-red-600 text-sm cursor-pointer"
+            className="text-sm text-red-600 cursor-pointer"
           >
             삭제하기
           </div>
@@ -51,7 +51,7 @@ export const CommentItem = ({
   if (isLoading) {
     return (
       <div className="px-10 pt-5">
-        <div className="border-b border-solid border-gray-200">
+        <div className="border-b border-gray-200 border-solid">
           <div className="flex justify-between">
             <AuthorProfile isLoading={isLoading} />
           </div>
@@ -63,7 +63,7 @@ export const CommentItem = ({
   }
   return (
     <div className="px-10 pt-5">
-      <div className="border-b border-solid border-gray-200">
+      <div className="border-b border-gray-200 border-solid">
         <div className="flex justify-between">
           <AuthorProfile
             isLoading={isLoading}
@@ -76,10 +76,14 @@ export const CommentItem = ({
 
         {isLink ? (
           <Link href={`/post/${comment.postId}`}>
-            <div className="pt-2 pb-3 px-10">{comment.content}</div>
+            <div className="px-10 pt-2 pb-3 whitespace-pre-line">
+              {comment.content}
+            </div>
           </Link>
         ) : (
-          <div className="pt-2 pb-3 px-10">{comment.content}</div>
+          <div className="px-10 pt-2 pb-3 whitespace-pre-line">
+            {comment.content}
+          </div>
         )}
       </div>
     </div>
