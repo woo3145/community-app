@@ -174,7 +174,7 @@ export const _createComment = async (
   content: string
 ): Promise<CreateCommentResponse> => {
   const data = await fetchApi<CreateCommentResponse>(
-    `${API_BASE_URL}/comments`,
+    `${API_BASE_URL}/posts/${postId}/comments`,
     {
       method: 'POST',
       headers: {
@@ -182,7 +182,6 @@ export const _createComment = async (
       },
       body: JSON.stringify({
         content: content,
-        postId: postId,
       }),
     }
   );
