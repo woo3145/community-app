@@ -3,7 +3,7 @@
 import { AvatarCrop } from '@/app/_components/modals/avatarCrop/avatarCrop';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { useUploadImage } from '@/hooks/useUploadImage';
-import { KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
 import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
 import { useForm } from 'react-hook-form';
 import { useEditProfile } from '@/hooks/useEditProfile';
@@ -57,13 +57,6 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
     uploadImage,
     closeModal
   );
-
-  const PreventEnter = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter') {
-      const text = watch().description;
-      if (text[text.length - 1] == '\n') event.preventDefault(); // 엔터 2번이상 입력 막기
-    }
-  };
 
   // 취소하면 원래 유저 프로필 이미지로 preview 초기화
   const onCancel = () => {
@@ -160,7 +153,6 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
         <div>
           <h4 className="mb-2 text-sm font-bold text-gray-400">한줄소개</h4>
           <textarea
-            onKeyDown={PreventEnter}
             {...register('description', { maxLength: 150 })}
             className="w-full h-[140px] resize-none card p-3 outline-1 outline-primary"
             placeholder="간단한 자기소개 글을 작성해 주세요."

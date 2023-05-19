@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { CreatePostFormValue } from '@/app/write/page';
 import { useRouter } from 'next/navigation';
+import { mergeNewlines } from '@/libs/textareaHelper';
 
 // 프로필 수정
 export const useCreatePost = (
@@ -51,7 +52,7 @@ export const useCreatePost = (
       const imageUrl = imageFile ? await uploadImage() : '';
       const { data: postId } = await _createPost({
         title,
-        content,
+        content: mergeNewlines(content),
         imageUrl,
         published: true,
         tags: tags.map((tag) => tag.id),

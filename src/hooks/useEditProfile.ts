@@ -12,6 +12,7 @@ import { useMyPosts } from './scrollSwr/useMyPosts';
 import { useMyRecents } from './scrollSwr/useMyRecents';
 import { useMyComments } from './scrollSwr/useMyComments';
 import { useMyLikes } from './scrollSwr/useMyLikes';
+import { mergeNewlines } from '@/libs/textareaHelper';
 
 // 프로필 수정
 export const useEditProfile = (
@@ -61,12 +62,13 @@ export const useEditProfile = (
         throw new Error('로그인이 필요합니다.');
       }
       const { nickname, description } = data;
+      const mergedDescription = mergeNewlines(description);
       if (nameType && !nickname) {
         throw new Error('닉네임을 입력해 주세요.');
       }
       if (
         !imageFile &&
-        description === profile.description &&
+        mergedDescription === profile.description &&
         nameType === profile.nameType &&
         (!nameType || (nameType && nickname === profile.nickname))
       ) {
@@ -81,14 +83,14 @@ export const useEditProfile = (
       const avatar = imageFile ? await uploadImage() : profile.avatar;
       await _editProfile({
         nickname,
-        description,
+        description: mergedDescription,
         avatar,
         nameType,
       });
 
       const updatedData: EditProfileBody = {
         nickname,
-        description,
+        description: mergedDescription,
         avatar,
         nameType,
       };

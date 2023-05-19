@@ -7,7 +7,7 @@ interface Props {
 export const PostBody = ({ post }: Props) => {
   return (
     <div className="pb-8 space-y-5">
-      <div className="mb-5">{post.content}</div>
+      <div className="mb-5 whitespace-pre-line">{post.content}</div>
 
       {post.imageUrl && (
         <Image src={post.imageUrl} width={800} height={800} alt="image" />

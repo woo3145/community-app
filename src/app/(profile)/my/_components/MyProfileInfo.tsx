@@ -46,7 +46,9 @@ export const MyProfileInfo = () => {
         </div>
       </div>
 
-      <div className="py-5 text-sm">{me.profile.description}</div>
+      <div className="py-5 text-sm whitespace-pre-line">
+        {me.profile.description}
+      </div>
 
       <div className="pt-5 border-t border-gray-200 border-solid">
         <p className="mb-3 text-sm font-bold">관심 주제</p>

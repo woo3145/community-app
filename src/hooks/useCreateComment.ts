@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Id, toast } from 'react-toastify';
 import { useComments } from './swr/useComments';
 import { useMyComments } from './scrollSwr/useMyComments';
+import { mergeNewlines } from '@/libs/textareaHelper';
 
 // 댓글 생성
 export const useCreateComment = (postId: number, reset: () => void) => {
@@ -45,8 +46,8 @@ export const useCreateComment = (postId: number, reset: () => void) => {
 
       toastId = toast.loading('처리중 입니다.');
       handleApiLoading(true);
-
-      const res = await _createComment(postId, data.content);
+      const mergedContents = mergeNewlines(data.content);
+      const res = await _createComment(postId, mergedContents);
 
       reset();
       updateCache(res.data);
