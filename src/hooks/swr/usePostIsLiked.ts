@@ -17,7 +17,7 @@ export const usePostIsLiked = (
     postId && userId ? `${API_BASE_URL}/user/${userId}/likes/${postId}` : null
   );
   const updateCache = (isLiked: boolean) => {
-    mutate({ data: !isLiked });
+    mutate({ data: isLiked });
     mutate();
   };
 

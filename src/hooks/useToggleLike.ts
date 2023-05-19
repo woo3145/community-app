@@ -39,8 +39,8 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
       toastId = toast.loading('처리중 입니다.');
       handleApiLoading(true);
 
-      await _toggleLike(postId, isLiked);
-      updateCache(isLiked);
+      await _toggleLike(postId, !isLiked);
+      updateCache(!isLiked);
       handleApiLoading(false, toastId);
     } catch (e) {
       errorHandlerWithToast(e);

@@ -18,7 +18,7 @@ export const usePostLikeCount = (postId: number): UseCommentsResponse => {
     // 현재 좋아요 상태를 기준으로 업데이트
     mutate((oldData) => {
       if (!oldData) return;
-      return { data: isLiked ? oldData.data - 1 : oldData.data + 1 };
+      return { data: isLiked ? oldData.data + 1 : oldData.data - 1 };
     });
     mutate();
   };
