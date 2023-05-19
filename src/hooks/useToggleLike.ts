@@ -1,4 +1,4 @@
-import { _toggleLike } from '@/libs/client/apis';
+import { _updatePostLikes } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -39,7 +39,7 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
       toastId = toast.loading('처리중 입니다.');
       handleApiLoading(true);
 
-      await _toggleLike(postId, !isLiked);
+      await _updatePostLikes(postId, !isLiked);
       updateCache(!isLiked);
       handleApiLoading(false, toastId);
     } catch (e) {

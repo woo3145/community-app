@@ -86,7 +86,7 @@ export const _getPost = async (postId: number): Promise<GetPostResponse> => {
 };
 
 // 게시글 좋아요/취소
-export const _toggleLike = async (
+export const _updatePostLikes = async (
   postId: number,
   isLiked: boolean
 ): Promise<ApiResponse> => {
@@ -98,7 +98,7 @@ export const _toggleLike = async (
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        isLiked: isLiked,
+        isLiked,
       }),
     }
   );
