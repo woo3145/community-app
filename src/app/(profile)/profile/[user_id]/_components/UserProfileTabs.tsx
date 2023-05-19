@@ -13,8 +13,8 @@ export const UserProfileTabs = ({ tab, setTab }: Props) => {
     { text: '작성댓글', type: 'comments' },
   ];
   return (
-    <div className="p-7 pb-0 border-b border-solid border-gray-200">
-      <div className="flex space-x-2.5">
+    <div className="pb-0 border-b border-gray-200 border-solid p-7">
+      <div className="flex space-x-4">
         {tabs.map((item, idx) => {
           return (
             <ProfileTabItem

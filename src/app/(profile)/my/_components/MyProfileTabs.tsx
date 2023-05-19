@@ -16,7 +16,7 @@ export const MyProfileTabs = ({ tab, setTab }: Props) => {
   ];
   return (
     <div className="pb-0 border-b border-gray-200 border-solid p-7">
-      <div className="flex space-x-2.5">
+      <div className="flex space-x-4">
         {routes.map((route, idx) => {
           return (
             <ProfileTabItem
