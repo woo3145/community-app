@@ -1,9 +1,9 @@
-interface ClientError {
+interface ApiError {
   message: string;
   field?: string;
 }
 
 interface ApiErrorResponse {
-  errors: ClientError[];
+  errors: ApiError[];
   statusCode: number;
 }

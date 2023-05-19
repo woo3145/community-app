@@ -1,7 +1,12 @@
-import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
+import { getProfileByUserId } from '@/libs/prisma/profile';
+
+export type Profile = Exclude<
+  Awaited<ReturnType<typeof getProfileByUserId>>,
+  null
+>;
 
 interface Me {
   id: string;
   email: string;
-  profile: Exclude<Profile, null>;
+  profile: Profile;
 }

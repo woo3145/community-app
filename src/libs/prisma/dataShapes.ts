@@ -33,3 +33,15 @@ export const getPostInclude = () => {
     },
   };
 };
+
+export const getCommentInclude = () => {
+  return {
+    user: {
+      select: {
+        profile: {
+          include: getProfileInclude(),
+        },
+      },
+    },
+  };
+};

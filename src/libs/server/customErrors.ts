@@ -11,14 +11,14 @@ export abstract class CustomError extends Error {
     Object.setPrototypeOf(this, CustomError.prototype);
   }
 
-  abstract serializeErrors(): { message: string; field?: string }[];
+  abstract serializeErrors(): ApiError[];
 }
 
 export class ValidationError extends CustomError {
   statusCode = 400;
-  errors: { field: string; message: string }[];
+  errors: ApiError[];
 
-  constructor(errors: { field: string; message: string }[]) {
+  constructor(errors: ApiError[]) {
     super('Input validation failed');
     this.errors = errors;
     Object.setPrototypeOf(this, ValidationError.prototype);
@@ -60,6 +60,18 @@ export class NotFoundError extends CustomError {
   constructor(resourceName?: string) {
     super(resourceName ? `Resource not found : ${resourceName}` : 'Not Found');
     Object.setPrototypeOf(this, NotFoundError.prototype);
+  }
+
+  serializeErrors() {
+    return [{ message: this.message }];
+  }
+}
+export class MethodNotAllowedError extends CustomError {
+  statusCode = 405;
+
+  constructor() {
+    super('Method Not Allowed');
+    Object.setPrototypeOf(this, MethodNotAllowedError.prototype);
   }
 
   serializeErrors() {

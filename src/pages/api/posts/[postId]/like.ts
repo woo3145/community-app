@@ -36,13 +36,9 @@ async function handleGET(
 async function handlePUT(
   req: NextApiRequest,
   res: NextApiResponse,
-  session: Session | null,
+  session: Session,
   postId: number
 ) {
-  if (!session) {
-    throw new UnauthorizedError();
-  }
-
   // 받아온 값 상태가 되도록 db에 저장
   const { isLiked } = req.body as LikePostBody;
 
@@ -102,6 +98,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   // 게시글 좋아요
   if (req.method === 'PUT') {
+    if (!session) {
+      throw new UnauthorizedError();
+    }
     return handlePUT(req, res, session, postId);
   }
 }

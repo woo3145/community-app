@@ -3,7 +3,6 @@ import { _getPost } from '@/libs/client/apis';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
-import { addIsLikedAndIsCommented } from '@/libs/server/postUtils/postFetch';
 import { getPostById } from '@/libs/prisma/post';
 import {
   FetchedPost,
@@ -13,6 +12,7 @@ import { PostSideSection } from './_components/PostSideSection';
 import { CreateCommentContainer } from './_components/CreateCommentContainer';
 import { CommentListContainer } from './_components/CommentListContainer';
 import { PostContainer } from './_components/PostContainer';
+import { addIsLikedAndIsCommented } from '@/libs/dataHelper';
 
 const getPost = async (postId: string) => {
   const post = await getPostById(parseInt(postId));

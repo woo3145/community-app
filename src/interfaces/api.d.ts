@@ -56,10 +56,14 @@ interface CreatePostResponse extends ApiResponse {
   data: number; // postId
 }
 
-interface CreateCommentBody extends CreateCommentFormValue {
-  postId: number;
-}
+// 댓글 작성 Body
+interface CreateCommentBody extends CreateCommentFormValue {}
 // 댓글 작성 Response
 interface CreateCommentResponse extends ApiResponse {
   data: Comment;
+}
+
+// 게시글 좋아요 Body
+interface LikePostBody {
+  isLiked: boolean;
 }
