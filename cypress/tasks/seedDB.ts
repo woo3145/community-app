@@ -1,4 +1,4 @@
-import client from '../../src/libs/server/prismaClient';
+import client from '../../src/libs/prisma';
 import { DEFAULT_TAG } from '../constants';
 
 export default async function seedDB() {

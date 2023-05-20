@@ -1,4 +1,4 @@
-import client from '../../src/libs/server/prismaClient';
+import client from '../../src/libs/prisma';
 
 export default async function resetDB() {
   await client.post.deleteMany({});
