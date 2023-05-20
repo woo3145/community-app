@@ -40,7 +40,7 @@ export const DeleteCommentConfirmModal = ({
       ariaHideApp={false}
     >
       <div className="w-[390px] h-auto">
-        <div className="text-2xl font-bold py-5 text-center">
+        <div className="py-5 text-2xl font-bold text-center">
           댓글을 삭제하시겠습니까?
         </div>
         <div className="flex items-center justify-center gap-3">

@@ -79,7 +79,7 @@ export const AvatarCrop = ({
         />
 
         <div className="py-2">
-          <div className="flex items-center justify-center relative bg-black">
+          <div className="relative flex items-center justify-center bg-black">
             <PreviewLayer image={image} imageSize={imageSize} />
             <CropLayer
               imageSize={imageSize}

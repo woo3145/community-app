@@ -2,7 +2,7 @@ import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Session, getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]';
+import { authOptions } from '../../auth/[...nextauth]';
 import {
   MethodNotAllowedError,
   UnauthorizedError,

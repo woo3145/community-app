@@ -11,8 +11,6 @@ JWT_TOKEN_SECRET=tasetaseeeee
 JWT_ACCESS_TOKEN_EXPIRATION=15 // minutes
 JWT_REFRESH_TOKEN_EXPIRATION=7 // days
 
-ADMIN_ID=aa12a1e123a123 // ADMIN API를 사용할 수 있는 user id
-
 // AWS-S3 관련
 AWS_ACCESS_KEY=
 AWS_SECRET_KEY=
@@ -106,7 +104,7 @@ AWS_S3_BUCKET=
     - [ ] 프로필 변경
 
   - 에러 발견
-  - [ ] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....
+  - [x] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....
         nextjs 13.4.1 업데이트 후 발생 -> 에러 추적중 https://github.com/vercel/next.js/issues/49169
   - [ ] nextjs 13.4 의 serverActions 활성화 시 metadata 작동안함 (아직 적용하기 이른듯)
         정보가 없어서 next.js에 issue 생성 https://github.com/vercel/next.js/issues/49650

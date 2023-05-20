@@ -61,7 +61,7 @@ export const _editProfile = async ({
   avatar,
   nameType,
 }: EditProfileBody): Promise<ApiResponse> => {
-  const data = await fetchApi<ApiResponse>(`${API_BASE_URL}/profile`, {
+  const data = await fetchApi<ApiResponse>(`${API_BASE_URL}/my/profile`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

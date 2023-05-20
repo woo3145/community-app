@@ -56,6 +56,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
   const { commentId } = parseQuery(req.query);
 
+  // 댓글 삭제
   if (req.method === 'DELETE') {
     if (!session) {
       throw new UnauthorizedError();

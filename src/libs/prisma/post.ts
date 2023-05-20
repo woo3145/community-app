@@ -49,22 +49,36 @@ export const getPostsByTagId = async (
 
 export const getPostsByUserId = async (
   userId: string,
-  page: number,
-  limit: number
+  page?: number,
+  limit?: number
 ) => {
-  const posts = await client.post.findMany({
-    skip: page * limit,
-    take: limit,
-    where: {
-      userId: userId,
-    },
-    orderBy: {
-      createAt: 'desc',
-    },
-    include: getPostInclude(),
-  });
+  if (page !== undefined && limit !== undefined) {
+    const posts = await client.post.findMany({
+      skip: page * limit,
+      take: limit,
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        createAt: 'desc',
+      },
+      include: getPostInclude(),
+    });
 
-  return posts;
+    return posts;
+  } else {
+    const posts = await client.post.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        createAt: 'desc',
+      },
+      include: getPostInclude(),
+    });
+
+    return posts;
+  }
 };
 
 export const createPost = async (
@@ -143,4 +157,28 @@ export const getRecentlyViewedPostsByUserId = async (
   });
 
   return views;
+};
+
+export const updatePostViewed = async (userId: string, postId: number) => {
+  const viewd = await client.view.findFirst({
+    where: {
+      postId: postId,
+      userId: userId,
+    },
+  });
+  if (viewd) {
+    await client.view.update({
+      where: {
+        id: viewd.id,
+      },
+      data: {},
+    });
+  } else {
+    await client.view.create({
+      data: {
+        postId: postId,
+        userId: userId,
+      },
+    });
+  }
 };
