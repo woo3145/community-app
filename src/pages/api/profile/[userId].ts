@@ -1,7 +1,5 @@
 import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-import { fetchProfileByUserId } from '@/libs/server/profileUtils/profileFetch';
 import {
   MethodNotAllowedError,
   NotFoundError,

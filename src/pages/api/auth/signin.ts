@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { withErrorHandling } from '@/libs/server/errorHandler';
 import bcrypt from 'bcrypt';
 
-import client from '@/libs/server/prismaClient';
+import client from '@/libs/prisma';
 import { User } from 'next-auth';
 import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
 

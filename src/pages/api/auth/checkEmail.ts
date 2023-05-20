@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withErrorHandling } from '@/libs/server/errorHandler';
 
-import client from '@/libs/server/prismaClient';
+import client from '@/libs/prisma';
 import { NotFoundError } from '@/libs/server/customErrors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {

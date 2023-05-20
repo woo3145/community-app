@@ -8,3 +8,13 @@ export type FetchedPost = Exclude<
 export type PostWithIsLikedAndIsCommented = ReturnType<
   typeof addIsLikedAndIsCommented
 >;
+
+export interface RecentlyViewdPost {
+  viewdAt: Date;
+  post: Post;
+}
+
+export interface LikedPost {
+  createAt: Date;
+  post: Post;
+}

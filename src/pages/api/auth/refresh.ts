@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withErrorHandling } from '@/libs/server/errorHandler';
 
-import client from '@/libs/server/prismaClient';
+import client from '@/libs/prisma';
 import jwt from 'jsonwebtoken';
 import { issueTokens, jwtTokenSecret } from '@/libs/server/tokenUtils';
 import { NotFoundError, ValidationError } from '@/libs/server/customErrors';

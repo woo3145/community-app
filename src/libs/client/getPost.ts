@@ -1,14 +1,16 @@
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
-import { Post } from '../server/postUtils/postFetchTypes';
 import {
   _getPost,
   _getPostIsLiked,
   _getUserComments,
   _saveRecentPost,
 } from './apis';
+import { PostWithIsLikedAndIsCommented } from '@/interfaces/post';
 
-export const getPost = async (postId: number): Promise<Post> => {
+export const getPost = async (
+  postId: number
+): Promise<PostWithIsLikedAndIsCommented> => {
   const session = await getServerSession(authOptions);
 
   const { data: post } = await _getPost(postId);

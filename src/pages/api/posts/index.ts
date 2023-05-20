@@ -4,14 +4,14 @@ import { withErrorHandling } from '@/libs/server/errorHandler';
 
 import { authOptions } from '../auth/[...nextauth]';
 import { Session, getServerSession } from 'next-auth';
-import { CreatePostBody, createPost } from '@/libs/server/postUtils/postHelper';
 import {
   MethodNotAllowedError,
   UnauthorizedError,
   ValidationError,
 } from '@/libs/server/customErrors';
-import { getPostsByTagId } from '@/libs/prisma/post';
+import { createPost, getPostsByTagId } from '@/libs/prisma/post';
 import { addIsLikedAndIsCommented } from '@/libs/dataHelper';
+import { CreatePostBody } from '@/interfaces/api';
 
 const parseQuery = (query: any) => {
   const { tag_id, page, limit, postId } = query;

@@ -1,7 +1,6 @@
 import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import client from '@/libs/server/prismaClient';
 import { Session, getServerSession } from 'next-auth';
 import { authOptions } from './auth/[...nextauth]';
 import {
@@ -10,6 +9,8 @@ import {
   UnauthorizedError,
 } from '@/libs/server/customErrors';
 import { getProfileInclude } from '@/libs/prisma/dataShapes';
+
+import client from '@/libs/prisma';
 
 const allowedMethods = ['GET'];
 

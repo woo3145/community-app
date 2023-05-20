@@ -2,12 +2,8 @@ import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session, getServerSession } from 'next-auth';
 
-import { parseFetchPostQueryParams } from '@/libs/server/postUtils/postFetch';
 import { authOptions } from '../../auth/[...nextauth]';
-import {
-  MethodNotAllowedError,
-  NotFoundError,
-} from '@/libs/server/customErrors';
+import { MethodNotAllowedError } from '@/libs/server/customErrors';
 import { getPostsByUserId } from '@/libs/prisma/post';
 import { addIsLikedAndIsCommented } from '@/libs/dataHelper';
 

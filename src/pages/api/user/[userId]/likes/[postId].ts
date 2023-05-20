@@ -1,6 +1,6 @@
 import { withErrorHandling } from '@/libs/server/errorHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
-import client from '@/libs/server/prismaClient';
+import client from '@/libs/prisma';
 import { MethodNotAllowedError } from '@/libs/server/customErrors';
 
 const parseQuery = (query: any) => {
