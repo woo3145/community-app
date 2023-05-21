@@ -6,7 +6,7 @@ NEXTAUTH_URL=nextAuth 리다이렉션 url
 
 DATABASE_URL="postgresql://janedoe:mypassword@localhost:5432/mydb?schema=sample"
 
-JWT_TOKEN_SECRET=tasetaseeeee
+NEXTAUTH_SECRET=tasetaseeeee
 
 JWT_ACCESS_TOKEN_EXPIRATION=15 // minutes
 JWT_REFRESH_TOKEN_EXPIRATION=7 // days
@@ -109,6 +109,13 @@ AWS_S3_BUCKET=
   - [ ] nextjs 13.4 의 serverActions 활성화 시 metadata 작동안함 (아직 적용하기 이른듯)
         정보가 없어서 next.js에 issue 생성 https://github.com/vercel/next.js/issues/49650
         canary 업데이트 후 재이슈 생성 https://github.com/vercel/next.js/issues/49679
+
+  - [ ] NextAuth 문제 (app directory에선 refresh 토큰 방식 사용불가) -> 수정 필요
+    - nextJS 13의 app directory(서버컴포넌트)는 요청쿠키의 읽기만 가능하기 때문에 완전한 CSR 페이지가 아니면 쿠키를 변경하지 못해 리프레시가 작동하지 않는다 😿
+      // 참고 https://next-auth.js.org/configuration/nextjs#middleware
+      공식문서에 의하면 위와 같은 문제로 30days로 쿠키가 보내지고 해당 쿠키가 삭제되면 다시 로그인 해야한다고 안내하고있다.
+      - 뭘보내도 app directory에서 라우팅을 한다면 [...nextauth].ts에서 설정한 maxage값으로 보내진 쿠키로만 검증을 하기 때문에 refresh를 할 수 없다.(읽기전용 데이터는 보낼 수 있음)
+        ++ next의 신기능인 serverActions와 RouteHandler에서는 쿠키를 쓸 수 있음으로 추후에는 가능하게 될 것 같다.
 
 에러처리
 
