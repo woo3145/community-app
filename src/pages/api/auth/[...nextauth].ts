@@ -64,7 +64,7 @@ export const authOptions: AuthOptions = {
               Date.now() / 1000 + user.tokens.accessTokenExpires
             ), // Date.now()의 단위를 ms => s로 변경 후 accessTokenExpires 적용
             accessToken: user.tokens.accessToken,
-            refresh_token: user.tokens.refreshToken,
+            refreshToken: user.tokens.refreshToken,
             type: account.type,
           };
         }
@@ -72,9 +72,9 @@ export const authOptions: AuthOptions = {
         // 그외 공급자(ex. google)가 있을 경우 받아온 accessToken, refreshToken 사용
         return {
           ...token,
-          access_token: account.access_token as string,
-          expires_at: account.expires_at as number,
-          refresh_token: account.refresh_token as string,
+          accessToken: account.access_token as string,
+          accessTokenExpires: account.expires_at as number,
+          refreshToken: account.refresh_token as string,
           type: account.type,
         };
 
@@ -128,6 +128,12 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       session.error = token.error;
       session.user.id = token.sub as string;
+      // 클라이언트엔 엑세스토큰만 보냄
+      session.user.tokens = {
+        accessToken: token.accessToken,
+        accessTokenExpires: token.accessTokenExpires,
+      };
+
       return session;
     },
   },
@@ -148,7 +154,7 @@ interface SessionUser extends DefaultUser {
   tokens: {
     accessToken: string;
     accessTokenExpires: number;
-    refreshToken: string;
+    refreshToken?: string;
   };
 }
 
@@ -164,7 +170,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string;
     accessTokenExpires: number;
-    refreshToken: string;
+    refreshToken?: string;
     type: string;
     error?: 'RefreshAccessTokenError';
   }
