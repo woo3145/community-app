@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import client from '@/libs/prisma';
 import { User } from 'next-auth';
 import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
+import { issueTokens } from '@/libs/server/tokenUtils';
 
 interface CreateUserBody {
   email: string;
@@ -42,15 +43,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         profile: true,
       },
     });
-
+    const jwtTokens = issueTokens(newUser.id);
     const loggedInUser: User = {
       id: newUser.id,
       email: newUser.email,
       name: newUser.profile?.name,
       image: newUser.profile?.avatar,
+      tokens: jwtTokens,
     };
 
-    // accessToken은 client 저장
     return res.status(200).json({
       message: 'successful',
       user: loggedInUser,

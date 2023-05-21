@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import client from '@/libs/prisma';
 import { User } from 'next-auth';
 import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
+import { issueTokens } from '@/libs/server/tokenUtils';
 
 interface LoginUserBody {
   email: string;
@@ -48,11 +49,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       ]);
     }
+    const jwtTokens = issueTokens(user.id);
     const loggedInUser: User = {
       id: user.id,
       email: user.email,
       name: user.profile?.name,
       image: user.profile?.avatar,
+      tokens: jwtTokens,
     };
 
     return res.status(200).json({

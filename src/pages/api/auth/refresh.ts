@@ -8,7 +8,7 @@ import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
 import { UnauthorizedError } from '@/libs/server/customErrors';
 
 interface TokenPayload {
-  sub: string;
+  userId: string;
   iat: number;
   exp: number;
 }
@@ -28,8 +28,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
       // refresh 토큰이 유효한지 확인
-      const { sub } = jwt.verify(refreshToken, jwtTokenSecret) as TokenPayload;
-      const user = await client.user.findUnique({ where: { id: sub } });
+      const { userId } = jwt.verify(
+        refreshToken,
+        jwtTokenSecret
+      ) as TokenPayload;
+      const user = await client.user.findUnique({ where: { id: userId } });
 
       if (!user) {
         throw new NotFoundError('user');
@@ -38,12 +41,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const {
         accessToken,
         refreshToken: newRefreshToken,
-        expires_in,
+        accessTokenExpires,
       } = issueTokens(user.id);
 
-      return res
-        .status(200)
-        .json({ accessToken, refreshToken: newRefreshToken, expires_in });
+      return res.status(200).json({
+        accessToken,
+        refreshToken: newRefreshToken,
+        accessTokenExpires,
+      });
     } catch (e) {
       throw new UnauthorizedError();
     }

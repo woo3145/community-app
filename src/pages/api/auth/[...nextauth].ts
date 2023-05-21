@@ -52,23 +52,24 @@ export const authOptions: AuthOptions = {
     error: '/error',
   },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       // https://authjs.dev/guides/basics/refresh-token-rotation
       // 첫 로그인 시 토큰 발행
-      if (account) {
+      if (account && user) {
         // credentials 공급자면 직접 발행
         if (account.type === 'credentials') {
-          const tokens = issueTokens(account.providerAccountId as string);
           return {
             ...token,
-            expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in), // Date.now()의 단위를 ms => s로 변경 후 expires_in 적용
-            access_token: tokens.accessToken,
-            refresh_token: tokens.refreshToken,
+            accessTokenExpires: Math.floor(
+              Date.now() / 1000 + user.tokens.accessTokenExpires
+            ), // Date.now()의 단위를 ms => s로 변경 후 accessTokenExpires 적용
+            accessToken: user.tokens.accessToken,
+            refresh_token: user.tokens.refreshToken,
             type: account.type,
           };
         }
 
-        // 그외 공급자가 있을 경우 받아온 accessToken, refreshToken 사용
+        // 그외 공급자(ex. google)가 있을 경우 받아온 accessToken, refreshToken 사용
         return {
           ...token,
           access_token: account.access_token as string,
@@ -77,15 +78,13 @@ export const authOptions: AuthOptions = {
           type: account.type,
         };
 
-        // 토큰이 아직 유효 할 경우 그대로 반환 (expires_at의 단위를 ms로 변경하여 비교)
-      } else if (Date.now() < token.expires_at * 1000) {
+        // 토큰이 아직 유효 할 경우 그대로 반환 (accessTokenExpires의 단위를 ms로 변경하여 비교)
+      } else if (Date.now() < token.accessTokenExpires * 1000) {
         return token;
       } else {
         try {
           // 만료 되었다면 각 공급자에 맞게 refresh token으로 재발급
-
           if (token.type === 'credentials') {
-            console.log('credentials 토큰 재발급');
             const response = await fetch(
               `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/refresh`,
               {
@@ -105,22 +104,23 @@ export const authOptions: AuthOptions = {
 
             return {
               ...token,
-              access_token: tokens.accessToken,
-              refresh_token: tokens.refreshToken,
-              expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
+              accessToken: tokens.accessToken,
+              refreshToken: tokens.refreshToken,
+              accessTokenExpires: Math.floor(
+                Date.now() / 1000 + tokens.accessTokenExpires
+              ),
             };
           }
 
           // 그외 공급자가 있을경우 공급자에 맞춰 리프레시
           return {
             ...token,
-            access_token: '재발급한 토큰',
-            refresh_token: '재발급한 토큰',
-            expires_at: Math.floor(Date.now() / 1000 + 999999999),
+            accessToken: '재발급한 토큰',
+            refreshToken: '재발급한 토큰',
+            accessTokenExpires: Math.floor(Date.now() / 1000 + 999999999),
           };
         } catch (e) {
           // refreshToken 까지 만료되거나 오류가 발생한 경우
-          console.error('Error refreshing access token');
           return { ...token, error: 'RefreshAccessTokenError' as const };
         }
       }
@@ -132,19 +132,24 @@ export const authOptions: AuthOptions = {
     },
   },
   session: {
-    strategy: 'jwt',
-    maxAge: 60 * 15,
+    strategy: 'jwt', // PrismaAdapter를 사용중임으로 default값이 database로 되어있어서 변경 필요
   },
   jwt: {
-    maxAge: 60 * 15,
+    maxAge: 60 * 60 * 24 * 30, // nextAuth에서 jwt의 최대 만료시간 설정
   },
   secret: process.env.JWT_TOKEN_SECRET,
 };
 
 export default NextAuth(authOptions);
 
+// nextAuth 디폴트 user 필드에 토큰 추가
 interface SessionUser extends DefaultUser {
   id: string;
+  tokens: {
+    accessToken: string;
+    accessTokenExpires: number;
+    refreshToken: string;
+  };
 }
 
 declare module 'next-auth/core/types' {
@@ -152,13 +157,14 @@ declare module 'next-auth/core/types' {
     error?: 'RefreshAccessTokenError';
     user: SessionUser;
   }
+  interface User extends SessionUser {}
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    access_token: string;
-    expires_at: number;
-    refresh_token: string;
+    accessToken: string;
+    accessTokenExpires: number;
+    refreshToken: string;
     type: string;
     error?: 'RefreshAccessTokenError';
   }
