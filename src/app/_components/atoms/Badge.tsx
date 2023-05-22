@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Skeleton from 'react-loading-skeleton';
 
 interface Props {
-  text: string;
+  text?: string;
   onClick?: () => void;
   href?: string;
   className?: string;
