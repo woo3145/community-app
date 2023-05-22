@@ -74,23 +74,18 @@ AWS_S3_BUCKET=
   - [x] useSWR 변경 데이터 즉시 반영
   - [x] SSR 로딩화면 필요 (post detail)
 
-    - [x] ~~현재 head.tsx에서 api요청을 하면 loading.tsx가 작동을 안함~~
+  - [x] ~~현재 head.tsx에서 api요청을 하면 loading.tsx가 작동을 안함~~
 
-      - 문제 추측 : loading.tsx에서도 head.tsx를 공유하기 때문에
-      - 생각 : [x] next 13.2 부터 head.tsx 방식이 삭제된 듯 하여 버전 업그레이드 필요 (현재 문제 버전 13.1.5)
-      - 결과 : 업그레이드 해도 loading 파일은 page 파일의 document를 받아온뒤 로드되는 방식이라 헤더에서 api요청을 하면 똑같음
-        - 1. **SSR page** : SSR 적용 됨
-        - 2. **SSR page + loading** : loading파일이 있으면 page가 Suspense로 감싸져 page를 대체하는 방식으로 작동되어 **CSR이 되어버림**
-        - 3. **SSR page + loading + generateMetadata** : nextjs에서 **같은 api요청은 자동 중복 제거**되기 때문에 loading 컴포넌트 렌더링이 안되서 SSR 적용 됨
-          - Suspense로 감싸져 있어도 page에서 document를 불러올때 metadata에서 api 응답이 캐시되기 때문에 pending상태가 되지 않음 (loading 컴포넌트가 있으나 마나)
-      - 생각 : [x] global layout에서 post/[post_id]로의 라우터 변경 시작과 완료를 감지한 후 global layout에서 loading 컴포넌트를 보여줘야 할듯함
-      - 시행착오1 : Link의 query로 게시물 데이터를 보내고 head에서 query 유무에 따라 metadata에서 api로드 -> 결과를 보니 위의 2번(CSR)과 3번(SSR)경우가 섞이게 됨
-      - 시행착오2 : Route events의 routeChangeStart로 해결해 보려했지만 nextjs 13에서는 아직 지원하지 않음
-        **참고 https://beta.nextjs.org/docs/api-reference/use-router#router-events**
+    1. next 13.2 부터 head.tsx 방식이 삭제된 듯 하여 버전 업그레이드 필요 (현재 문제 버전 13.1.5) : head.tsx -> metadata/generateMetadata
+    2. generateMetadata에서 api 요청시 loading.tsx파일을 무시함 (현재 문제 버전 13.3.4)
+       - 시행착오 : Route events의 routeChangeStart로 해결해 보려했지만 routeChangeComplete가 AppRouter에서 아직 지원하지않아 라우팅 완료시점을 구할 수 없음
+         **참고 https://beta.nextjs.org/docs/api-reference/use-router#router-events**
 
-      - [ ] : routeChangeStart는 hook으로 어느정도 구현가능해도 routeChangeComplete는 구현방법이 떠오르지 않아서 지원을 기다려야할듯함
+    - [x] 해결: 현재 nextjs 13.4 이상부터 App Router가 안정적인 버전으로 변경 되어 loading 파일과 generateMetadata를 함께써도 정상 작동함
+          첫 렌더링 때 generateMetadata와 loading컴포넌트로 document를 만들어 보내주고 page 컴포넌트를 lazy 렌더링 시킴(헤더만 ssr시켜 SEO문제 없음)
+          **참고 https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming**
 
-  ~~- [ ] pages/api -> app/api로 마이그레이션 (최대한 서버컴포넌트 사용, CSR이 필요한 api만 작성)~~ ServerActions 아직 너무 불안정
+  - [ ] pages/api -> app/api로 마이그레이션
 
   - [x] nextjs가 app directory로 전환되면서 CSS Module이 너무 지저분함 & 불러오는 css파일이 너무많음 -> tailwind css로 마이그레이션
 
