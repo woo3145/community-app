@@ -1,8 +1,6 @@
-import { withErrorHandling } from '@/libs/server/errorHandler';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { createComment, getCommentsByPostId } from '@/libs/prisma/comment';
 import { CreateCommentBody } from '@/interfaces/api';
-import { Session, getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import {

@@ -55,24 +55,25 @@ export const _uploadImage = async (
 };
 
 // 프로필 수정
-export const _editProfile = async ({
-  nickname,
-  description,
-  avatar,
-  nameType,
-}: EditProfileBody): Promise<ApiResponse> => {
-  const data = await fetchApi<ApiResponse>(`${API_BASE_URL}/my/profile`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      nameType,
-      nickname,
-      description,
-      avatar,
-    }),
-  });
+export const _editProfile = async (
+  userId: string,
+  { nickname, description, avatar, nameType }: EditProfileBody
+): Promise<ApiResponse> => {
+  const data = await fetchApi<ApiResponse>(
+    `${API_BASE_URL}/user/${userId}/profile`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nameType,
+        nickname,
+        description,
+        avatar,
+      }),
+    }
+  );
   return data;
 };
 

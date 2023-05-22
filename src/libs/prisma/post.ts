@@ -182,3 +182,9 @@ export const updatePostViewed = async (userId: string, postId: number) => {
     });
   }
 };
+
+export const deletePostById = async (postId: number) => {
+  await client.post.delete({
+    where: { id: postId },
+  });
+};

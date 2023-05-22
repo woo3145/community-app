@@ -1,6 +1,16 @@
-import { CreateCommentBody } from '@/interfaces/api';
 import { getCommentInclude } from './dataShapes';
 import client from './index';
+
+// 댓글 하나 가져오기
+export const getCommentById = async (commentId: number) => {
+  const comment = await client.comment.findUnique({
+    where: {
+      id: commentId,
+    },
+  });
+
+  return comment;
+};
 
 // 게시글의 댓글 목록 ( asc )
 export const getCommentsByPostId = async (postId: number) => {
@@ -52,6 +62,7 @@ export const getCommentsByUserId = async (
   }
 };
 
+// 댓글 생성
 export const createComment = async (
   userId: string,
   postId: number,
@@ -71,7 +82,21 @@ export const createComment = async (
         },
       },
     },
+    include: {
+      user: {
+        select: {
+          profile: true,
+        },
+      },
+    },
   });
 
   return newComment;
+};
+
+// 댓글 삭제
+export const deleteComment = async (commentId: number) => {
+  await client.comment.delete({
+    where: { id: commentId },
+  });
 };
