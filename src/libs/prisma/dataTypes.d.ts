@@ -1,4 +1,4 @@
-import { addIsLikedAndIsCommented } from '../server/postUtils/postFetch';
+import { addIsLikedAndIsCommented } from '../dataHelper';
 import { getPostById } from './post';
 
 export type FetchedPost = Exclude<

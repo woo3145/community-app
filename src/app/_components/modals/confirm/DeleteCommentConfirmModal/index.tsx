@@ -1,8 +1,8 @@
 'use client';
 import ReactModal from 'react-modal';
-import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useDeleteComment } from '@/hooks/useDeleteComment';
 import Button from '@/app/_components/atoms/Button';
+import { Comment } from '@/interfaces/comment';
 
 const customStyles: ReactModal.Styles = {
   overlay: {

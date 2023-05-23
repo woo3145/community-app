@@ -34,10 +34,9 @@ export const useCreatePost = (
     let toastId: Id | null = null;
     try {
       if (isApiLoading) return;
-      if (!session?.user) {
+      if (!session) {
         throw new Error('로그인이 필요합니다.');
       }
-
       const { title, content } = data;
       if (!title) throw new Error('제목을 입력해 주세요.');
       if (!content) throw new Error('내용을 입력해 주세요.');

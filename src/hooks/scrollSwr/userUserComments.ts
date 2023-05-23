@@ -1,6 +1,5 @@
-import { Post } from '@/libs/server/postUtils/postFetchTypes';
+import { Comment } from '@/interfaces/comment';
 import { useInfiniteScrollSWR } from './useInfiniteScrollSWR';
-import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { API_BASE_URL } from '@/libs/client/apis';
 
 // 유저아이디로 댓글 목록 불러오기(무한 스크롤)

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 // useRef에서 마운트 완료 유무를 체크하기 위한 Hook
 

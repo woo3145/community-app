@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+// IntersectionObserver로 콜백함수를 실행시키는 Ref를 생성해주는 hook
 export const useInfiniteScroll = (data: any, callback: () => void) => {
   const bottomRef = useRef(null);
 

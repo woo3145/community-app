@@ -1,11 +1,6 @@
-import { Metadata } from 'next';
 import { CategoryContainer } from './_components/CategoryContainer';
 import { MyCommunityCard } from './_components/MyCommunityCard';
 import { WriteButtonContainer } from './_components/WriteButtonContainer';
-
-export const metadata: Metadata = {
-  title: 'Woo3145 - Community',
-};
 
 export default function CommunityLayout({
   children,

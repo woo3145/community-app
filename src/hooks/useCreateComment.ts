@@ -1,13 +1,13 @@
 import { CreateCommentFormValue } from '@/app/_components/forms/CreateCommentForm';
 import { _createComment, _createPost } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
-import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Id, toast } from 'react-toastify';
 import { useComments } from './swr/useComments';
 import { useMyComments } from './scrollSwr/useMyComments';
 import { mergeNewlines } from '@/libs/textareaHelper';
+import { Comment } from '@/interfaces/comment';
 
 // 댓글 생성
 export const useCreateComment = (postId: number, reset: () => void) => {

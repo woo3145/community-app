@@ -1,9 +1,9 @@
 'use client';
 import ReactModal from 'react-modal';
-import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 import { ModalHeader } from '../ModalHeader';
 import { EditProfileForm } from '@/app/_components/forms/EditProfileForm';
+import { Profile } from '@/interfaces/user';
 
 const customStyles: ReactModal.Styles = {
   overlay: {
@@ -22,7 +22,7 @@ const customStyles: ReactModal.Styles = {
 interface Props {
   modalIsOpen: boolean;
   closeModal: () => void;
-  profile: Exclude<Profile, null>;
+  profile: Profile;
 }
 
 export interface EditProfileFormValue {

@@ -8,13 +8,13 @@ import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyMo
 import { useForm } from 'react-hook-form';
 import { useEditProfile } from '@/hooks/useEditProfile';
 import { Avatar } from '@/app/_components/atoms/Avatar';
-import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 
 import { ModalFooter } from '@/app/_components/modals/ModalFooter';
 import InputField from '../atoms/InputField';
+import { Profile } from '@/interfaces/user';
 
 interface Props {
-  profile: Exclude<Profile, null>;
+  profile: Profile;
   closeModal: () => void;
 }
 

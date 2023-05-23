@@ -3,7 +3,7 @@ import { _getPost } from '@/libs/client/apis';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
-import { getPostById } from '@/libs/prisma/post';
+import { getPostById, updatePostViewed } from '@/libs/prisma/post';
 import {
   FetchedPost,
   PostWithIsLikedAndIsCommented,
@@ -52,6 +52,7 @@ export default async function PostDetail({
 }) {
   const session = await getServerSession(authOptions); // 세션 확인
   const _post: FetchedPost = await getPost(post_id); // SSR요청
+  await updatePostViewed(_post.id, session?.user.id); // 서버 컴포넌트에서 방문처리
 
   // 세션의 유저아이디로 게시글 좋아요 여부와 댓글 여부 확인하여 필드를 포함한 새 객체 생성
   const post: PostWithIsLikedAndIsCommented = addIsLikedAndIsCommented(

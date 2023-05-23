@@ -1,10 +1,10 @@
 'use client';
 import { AuthorProfile } from '@/app/_components/molecules/profile/AuthorProfile';
-import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
 import { useMe } from '@/hooks/swr/useMe';
 import { PopupMenu } from './CommentPopup';
 import { CommentSkeleton } from './CommentSkeleton';
 import { CommentContent } from './CommentContent';
+import { Comment } from '@/interfaces/comment';
 
 interface Props {
   isLoading: false;

@@ -8,7 +8,7 @@ export interface IssueTokens extends Tokens {
   accessTokenExpires: number; // 초단위
 }
 
-export const jwtTokenSecret = process.env.JWT_TOKEN_SECRET || 'default';
+export const jwtTokenSecret = process.env.NEXTAUTH_SECRET || 'default';
 
 // accessToken 만료시간 (분단위)
 export const accessTokenExpiration = process.env.JWT_ACCESS_TOKEN_EXPIRATION

@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { formatDate } from '@/libs/client/dateUtils';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
-import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 import Skeleton from 'react-loading-skeleton';
+import { Profile } from '@/interfaces/user';
 
 interface Props {
   isLoading?: boolean;
-  profile?: Profile;
+  profile?: Profile | null;
   createAt?: Date;
   size?: UISize;
 }

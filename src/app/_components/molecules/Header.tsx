@@ -2,8 +2,6 @@
 
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 const Logo = () => {
@@ -41,15 +39,6 @@ const SignoutButton = () => {
 
 export const Header = () => {
   const { data: session } = useSession();
-  const router = useRouter();
-
-  // refreshToken이 만료된 경우
-  useEffect(() => {
-    if (session?.error === 'RefreshAccessTokenError') {
-      signOut();
-      router.push('/login');
-    }
-  }, [session, router]);
 
   return (
     <>

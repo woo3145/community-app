@@ -1,4 +1,4 @@
-import { MutableRefObject, createRef } from 'react';
+import { MutableRefObject } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useInfiniteScroll } from '../useInfiniteScroll';
 import { isServerError } from '@/libs/typeGuards';
@@ -45,6 +45,7 @@ export const useInfiniteScrollSWR = <T extends any[]>(
       revalidateFirstPage: revalidateFirstPage,
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         // Never retry on 404.
+        console.log(error);
         if (isServerError(error)) {
           if (error.statusCode === 404 || error.statusCode === 401) return;
         } else {
@@ -64,11 +65,13 @@ export const useInfiniteScrollSWR = <T extends any[]>(
     error ||
     (Array.isArray(data) && data[data.length - 1]?.data?.length < limit);
   // 마지막으로 가져온 데이터의 크기가 limit보다 적으면 더이상 가져올 데이터 없음
+
   const isLoading =
     (!data && !error) ||
     (0 < size && data !== undefined && data.length !== size);
   // 첫페이지 요청이 아님 && 데이터는 그대로고 사이즈만 증가한 상태
 
+  // IntersectionObserver로 콜백함수를 실행시켜주는 ref
   const bottomRef = useInfiniteScroll(data, () => {
     if (!isReachedEnd) setSize(size + 1);
   });

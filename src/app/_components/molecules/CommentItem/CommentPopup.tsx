@@ -2,7 +2,7 @@ import { IoEllipsisHorizontal } from 'react-icons/io5';
 import { DeleteCommentConfirmModal } from '../../modals/confirm/DeleteCommentConfirmModal';
 import { useEffect } from 'react';
 import { useModalVisible } from '@/hooks/useModalVisible';
-import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
+import { Comment } from '@/interfaces/comment';
 
 export const PopupMenu = ({ comment }: { comment: Comment }) => {
   const {

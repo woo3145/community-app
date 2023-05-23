@@ -1,5 +1,5 @@
+import { Profile } from '@/interfaces/user';
 import { API_BASE_URL } from '@/libs/client/apis';
-import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 import useSWR from 'swr';
 
 interface UseProfileResponse {
@@ -11,7 +11,7 @@ interface UseProfileResponse {
 // 유저 프로필 불러오기
 export const useProfile = (userId?: string): UseProfileResponse => {
   const { data, error } = useSWR<{ data: Profile }>(
-    userId ? `${API_BASE_URL}/profile/${userId}` : null
+    userId ? `${API_BASE_URL}/user/${userId}/profile` : null
   );
   if (!userId) {
     return {

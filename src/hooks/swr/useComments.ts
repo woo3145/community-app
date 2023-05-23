@@ -1,9 +1,6 @@
+import { Comment, Comments } from '@/interfaces/comment';
 import { API_BASE_URL } from '@/libs/client/apis';
-import {
-  Comment,
-  Comments,
-} from '@/libs/server/commentUtils/commentFetchTypes';
-import useSWR, { KeyedMutator } from 'swr';
+import useSWR from 'swr';
 
 interface UseCommentsResponse {
   comments: Comments;

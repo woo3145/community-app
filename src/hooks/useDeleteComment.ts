@@ -1,12 +1,12 @@
 import { _deleteComment } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
-import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Id, toast } from 'react-toastify';
 import { useMyComments } from './scrollSwr/useMyComments';
 import { useComments } from './swr/useComments';
 import { useUserComments } from './scrollSwr/userUserComments';
+import { Comment } from '@/interfaces/comment';
 
 // 댓글 삭제
 export const useDeleteComment = (comment: Comment, callback?: () => void) => {

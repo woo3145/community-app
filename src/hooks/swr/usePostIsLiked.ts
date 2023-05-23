@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '@/libs/client/apis';
-import useSWR, { KeyedMutator } from 'swr';
+import useSWR from 'swr';
 
 interface UsePostIsLikedResponse {
   isLiked: boolean;

@@ -1,7 +1,7 @@
-import { RecentlyViewdPost } from '@/interfaces/community';
 import { useInfiniteScrollSWR } from './useInfiniteScrollSWR';
 import { API_BASE_URL } from '@/libs/client/apis';
 import { Me } from '@/interfaces/user';
+import { RecentlyViewdPost } from '@/interfaces/post';
 
 // 최근 본 게시물
 export const useMyRecents = () => {

@@ -1,4 +1,4 @@
-import { Comment } from '@/libs/server/commentUtils/commentFetchTypes';
+import { Comment } from '@/interfaces/comment';
 import Link from 'next/link';
 
 interface Props {

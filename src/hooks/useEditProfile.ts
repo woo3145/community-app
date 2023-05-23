@@ -1,12 +1,11 @@
 import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { _editProfile } from '@/libs/client/apis';
-import { Profile } from '@/libs/server/profileUtils/profileFetchTypes';
 import { Id, toast } from 'react-toastify';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useMe } from './swr/useMe';
-import { Me } from '@/interfaces/user';
+import { Me, Profile } from '@/interfaces/user';
 import { EditProfileBody } from '@/interfaces/api';
 import { useMyPosts } from './scrollSwr/useMyPosts';
 import { useMyRecents } from './scrollSwr/useMyRecents';
@@ -16,7 +15,7 @@ import { mergeNewlines } from '@/libs/textareaHelper';
 
 // 프로필 수정
 export const useEditProfile = (
-  profile: Exclude<Profile, null>,
+  profile: Profile,
   nameType: boolean,
   imageFile: File | null,
   uploadImage: () => Promise<string>,
@@ -81,7 +80,7 @@ export const useEditProfile = (
 
       // (이미지 업로드 후 url받아오기)
       const avatar = imageFile ? await uploadImage() : profile.avatar;
-      await _editProfile({
+      await _editProfile(session.user.id, {
         nickname,
         description: mergedDescription,
         avatar,
