@@ -1,4 +1,3 @@
-import Badge from '@/app/_components/atoms/Badge';
 import { PostWithIsLikedAndIsCommented } from '@/libs/prisma/dataTypes';
 import { PostHeader } from './PostHeader';
 import { PostBody } from './PostBody';

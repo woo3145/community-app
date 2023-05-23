@@ -39,12 +39,12 @@ const CommentButton = ({
 };
 
 interface Props {
-  isLoading: false;
-  post: PostWithIsLikedAndIsCommented;
+  isLoading: boolean;
+  post?: PostWithIsLikedAndIsCommented;
 }
 
-export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
-  if (isLoading) {
+export const PostItem = ({ post, isLoading }: Props) => {
+  if (isLoading || !post) {
     return (
       <div className="py-5 border-b border-gray-200 border-solid px-7">
         <div className="mb-3">
@@ -108,9 +108,13 @@ export const PostItem = ({ post, isLoading }: Props | IsLoadingProps) => {
             src={post.imageUrl}
             width={200}
             height={150}
+            loading="lazy"
             alt="image"
+            placeholder="blur"
+            blurDataURL={
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8Uw8AAh0BTZud3BwAAAAASUVORK5CYII='
+            }
             style={{ objectFit: 'cover' }}
-            priority={true}
             className="rounded-md w-[200px] h-[150px] bg-center"
           />
         </Link>
