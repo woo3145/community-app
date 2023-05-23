@@ -159,17 +159,20 @@ export const getRecentlyViewedPostsByUserId = async (
   return views;
 };
 
-export const updatePostViewed = async (userId: string, postId: number) => {
-  const viewd = await client.view.findFirst({
+export const updatePostViewed = async (postId: number, userId?: string) => {
+  if (!userId) {
+    return;
+  }
+  const viewed = await client.view.findFirst({
     where: {
       postId: postId,
       userId: userId,
     },
   });
-  if (viewd) {
+  if (viewed) {
     await client.view.update({
       where: {
-        id: viewd.id,
+        id: viewed.id,
       },
       data: {},
     });
