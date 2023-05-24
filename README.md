@@ -85,7 +85,7 @@ AWS_S3_BUCKET=
           첫 렌더링 때 generateMetadata와 loading컴포넌트로 document를 만들어 보내주고 page 컴포넌트를 lazy 렌더링 시킴(헤더만 ssr시켜 SEO문제 없음)
           **참고 https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming**
 
-  - [ ] pages/api -> app/api로 마이그레이션
+  - [x] pages/api -> app/api로 마이그레이션
 
   - [x] nextjs가 app directory로 전환되면서 CSS Module이 너무 지저분함 & 불러오는 css파일이 너무많음 -> tailwind css로 마이그레이션
 

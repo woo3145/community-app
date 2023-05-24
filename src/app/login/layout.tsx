@@ -8,10 +8,8 @@ export const metadata = {
 
 // Server Side에서 세션확인 후 로그인 된 상태면 리다이렉트
 export default async function LogIn({
-  providers,
   children,
 }: {
-  providers: any;
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);

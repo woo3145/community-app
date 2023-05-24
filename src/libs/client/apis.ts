@@ -20,17 +20,20 @@ export const _signup = async ({
   password,
   name,
 }: SignupBody): Promise<SignupResponse> => {
-  const data = await fetchApi<SignupResponse>(`${API_BASE_URL}/auth/signup`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email,
-      password,
-      name,
-    }),
-  });
+  const data = await fetchApi<SignupResponse>(
+    `${API_BASE_URL}/auth/emailSignup`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        name,
+      }),
+    }
+  );
   console.log(data);
   return data;
 };

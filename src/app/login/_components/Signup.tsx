@@ -84,7 +84,11 @@ export const Signup = ({ onPrevPage, email }: Props) => {
           <div className="font-bold">회원가입</div>
           <div className="w-20"></div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} data-cy={'signup-container'}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          data-cy={'signup-container'}
+          className="space-y-3"
+        >
           <InputField
             label="이메일"
             id="email"
