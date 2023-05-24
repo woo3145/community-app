@@ -18,9 +18,10 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   const user = await client.user.findUnique({
     where: { email },
   });
-
+  const isOAuth = user && !user.password;
   return res.status(200).json({
     registed: !!user,
+    isOAuth,
   });
 }
 

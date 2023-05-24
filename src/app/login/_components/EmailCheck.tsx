@@ -7,9 +7,11 @@ import { ChangeEvent, useState } from 'react';
 import Button from '@/app/_components/atoms/Button';
 import { ClientSafeProvider, LiteralUnion, signIn } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
+import { toast } from 'react-toastify';
 
 interface CheckEmailResponse {
   registed: boolean;
+  isOAuth: boolean;
 }
 
 type LoginType = 'emailLogin' | 'signup';
@@ -38,6 +40,12 @@ export const EmailCheck = ({ providers }: Props) => {
       method: 'GET',
     });
     const data: CheckEmailResponse = await response.json();
+
+    if (data.isOAuth) {
+      setEmail('');
+      toast.info('간편로그인된 계정이 존재합니다.');
+      return;
+    }
     if (data.registed) {
       // 기존 유저
       setType('emailLogin');
@@ -91,7 +99,6 @@ export const EmailCheck = ({ providers }: Props) => {
             if (provider.id === 'credentials') {
               return;
             }
-            console.log(provider.id);
             return (
               <div key={provider.name}>
                 <Button
