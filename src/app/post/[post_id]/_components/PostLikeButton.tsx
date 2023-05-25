@@ -35,9 +35,12 @@ export const PostLikeButton = ({ postId, isLiked, likeCount }: Props) => {
       className={`flex items-center justify-center cursor-pointer text-lg font-bold ${
         curIsLiked && 'text-primary'
       }`}
+      data-cy="post-likeButton"
     >
       <AiOutlineLike className="mr-1" />
-      <span className="pt-0.5">{curLikeCount}</span>
+      <span className="pt-0.5" data-cy="post-likeCount">
+        {curLikeCount}
+      </span>
     </div>
   );
 };

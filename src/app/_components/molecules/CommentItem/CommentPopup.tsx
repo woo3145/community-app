@@ -4,7 +4,13 @@ import { useEffect } from 'react';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { Comment } from '@/interfaces/comment';
 
-export const PopupMenu = ({ comment }: { comment: Comment }) => {
+export const PopupMenu = ({
+  comment,
+  dataCy,
+}: {
+  comment: Comment;
+  dataCy?: string;
+}) => {
   const {
     modalIsOpen: popupIsOpen,
     toggleModal: togglePopup,
@@ -25,13 +31,18 @@ export const PopupMenu = ({ comment }: { comment: Comment }) => {
 
   return (
     <div>
-      <IoEllipsisHorizontal onClick={togglePopup} className="cursor-pointer" />
+      <IoEllipsisHorizontal
+        onClick={togglePopup}
+        className="cursor-pointer"
+        data-cy={`${dataCy}-popup-openButton`}
+      />
       {popupIsOpen && (
         <div>
           <div className="absolute z-30 px-5 py-2 bg-white border border-gray-200 border-solid rounded-md -right-2">
             <div
               onClick={openModal}
               className="text-sm text-red-600 cursor-pointer"
+              data-cy={`${dataCy}-popup-deleteButton`}
             >
               삭제하기
             </div>

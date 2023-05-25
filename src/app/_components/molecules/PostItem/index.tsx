@@ -41,9 +41,10 @@ const CommentButton = ({
 interface Props {
   isLoading: boolean;
   post?: PostWithIsLikedAndIsCommented;
+  dataCy?: string;
 }
 
-export const PostItem = ({ post, isLoading }: Props) => {
+export const PostItem = ({ post, isLoading, dataCy }: Props) => {
   if (isLoading || !post) {
     return (
       <div className="py-5 border-b border-gray-200 border-solid px-7">
@@ -64,7 +65,10 @@ export const PostItem = ({ post, isLoading }: Props) => {
   }
 
   return (
-    <article className="flex py-5 border-b border-gray-200 border-solid px-7">
+    <article
+      className="flex py-5 border-b border-gray-200 border-solid px-7"
+      data-cy={dataCy}
+    >
       <div className="w-full">
         <div className="mb-1">
           <AuthorProfile

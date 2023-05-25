@@ -24,12 +24,17 @@ export const CreateCommentForm = ({ postId }: Props) => {
   const { onSubmit, isApiLoading } = useCreateComment(postId, reset);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-3 card">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="p-3 card"
+      data-cy="createComment-form"
+    >
       <textarea
         {...register('content', { required: true })}
         placeholder={me ? '댓글 남기기' : '로그인 후 댓글 남기기'}
         className="w-full p-2 border-none resize-none"
         disabled={!me}
+        data-cy="createComment-input"
       />
       <div className="flex justify-end pt-5">
         <Button
@@ -37,6 +42,7 @@ export const CreateCommentForm = ({ postId }: Props) => {
           type="submit"
           uiSize="sm"
           isValid={isValid && !isApiLoading}
+          dataCy="createComment-submit"
         />
       </div>
     </form>

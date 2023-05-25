@@ -22,7 +22,14 @@ export const CommentListContainer = ({ postId }: Props) => {
       {!isLoading && comments.length === 0 && <EmptyCommentContainer />}
 
       {comments.map((comment, idx) => {
-        return <CommentItem isLoading={false} key={idx} comment={comment} />;
+        return (
+          <CommentItem
+            dataCy={`comment-${idx}`}
+            isLoading={false}
+            key={idx}
+            comment={comment}
+          />
+        );
       })}
     </div>
   );

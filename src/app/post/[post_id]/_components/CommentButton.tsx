@@ -46,7 +46,9 @@ export const PostCommentButton = ({
       }`}
     >
       <IoChatbubbleOutline className="mr-1" />
-      <span className="pt-0.5">{curCount}</span>
+      <span className="pt-0.5" data-cy="post-commentCount">
+        {curCount}
+      </span>
     </div>
   );
 };

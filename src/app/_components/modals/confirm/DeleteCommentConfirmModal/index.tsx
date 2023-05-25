@@ -39,7 +39,7 @@ export const DeleteCommentConfirmModal = ({
       contentLabel="Example Modal"
       ariaHideApp={false}
     >
-      <div className="w-[390px] h-auto">
+      <div className="w-[390px] h-auto" data-cy="deleteComment-modal">
         <div className="py-5 text-2xl font-bold text-center">
           댓글을 삭제하시겠습니까?
         </div>
@@ -51,6 +51,7 @@ export const DeleteCommentConfirmModal = ({
             text="취소"
             isWide
             uiSize="lg"
+            dataCy="deleteComment-modal-cancel"
           />
           <Button
             type="button"
@@ -60,6 +61,7 @@ export const DeleteCommentConfirmModal = ({
             isWide
             uiSize="lg"
             isValid={!isApiLoading}
+            dataCy="deleteComment-modal-confirm"
           />
         </div>
       </div>

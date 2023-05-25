@@ -22,9 +22,16 @@ export default function PostListContainer({ category }: Props) {
         <EmptyPostContainer />
       )}
       {data.length !== 0 &&
-        data.map((page) =>
-          page.data.map((post) => {
-            return <PostItem isLoading={false} key={post.id} post={post} />;
+        data.map((page, i) =>
+          page.data.map((post, j) => {
+            return (
+              <PostItem
+                dataCy={`postCard-${i}-${j}`}
+                isLoading={false}
+                key={post.id}
+                post={post}
+              />
+            );
           })
         )}
 
