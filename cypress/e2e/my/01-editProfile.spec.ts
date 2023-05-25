@@ -105,4 +105,82 @@ describe('프로필 수정 기능 테스트', () => {
 
     cy.dataCy('description').should('have.text', '1\n2\n\n3\n\n4\n\n5');
   });
+
+  it('프로필사진 크롭', () => {
+    cy.dataCy('editProfile-button').should('exist').click();
+    // 이미지 선택
+    cy.dataCy('avatar-input').selectFile(
+      'cypress/fixtures/alexander-andrews--Bq3TeSBRdE-unsplash.jpg',
+      { force: true }
+    );
+
+    cy.wait(1000); // 이미지 대기
+    cy.dataCy('crop-modal').should('exist'); // 크롭 모달 열림
+
+    // 드래그 테스트
+    cy.dataCy('crop-layer')
+      .trigger('mousedown', 60, 60, {
+        eventConstructor: 'MouseEvent',
+        buttons: 1,
+      })
+      .trigger('mousemove', 60, 60, {
+        eventConstructor: 'MouseEvent',
+        buttons: 1,
+      })
+      .trigger('mousemove', 220, 220, {
+        eventConstructor: 'MouseEvent',
+        buttons: 1,
+      })
+      .trigger('mouseup', {
+        eventConstructor: 'MouseEvent',
+        buttons: 0,
+      })
+      .trigger('mousedown', 40, 40, {
+        eventConstructor: 'MouseEvent',
+        buttons: 1,
+      })
+      .trigger('mousemove', 40, 40, {
+        eventConstructor: 'MouseEvent',
+        buttons: 1,
+      })
+      .trigger('mousemove', 160, 160, {
+        eventConstructor: 'MouseEvent',
+        buttons: 1,
+      })
+      .trigger('mouseup', {
+        eventConstructor: 'MouseEvent',
+        buttons: 0,
+      });
+
+    cy.dataCy('crop-button').click(); // 최종 width: 120, height 120 만큼 크롭
+
+    // 크롭된 이미지가 previewAvatar에 등록
+    cy.dataCy('avatarPreview')
+      .should('be.visible')
+      .should((el) => {
+        const img = el[0] as HTMLImageElement;
+        expect(img.naturalWidth).to.equal(120);
+        expect(img.naturalHeight).to.equal(120);
+      });
+
+    // 프로필 모달 완료 클릭시 이미지 업로드 & 프로필 업데이트
+    cy.dataCy('modal-button').click();
+    cy.get('div.Toastify__toast-body')
+      .should('exist')
+      .should('contain', '처리중 입니다.');
+    cy.wait(6000);
+    cy.dataCy('editProfile-modal').should('not.exist'); // 모달 닫힘
+    cy.get('div.Toastify__toast-body')
+      .should('exist')
+      .should('contain', '성공적으로 업데이트 되었습니다.');
+
+    // userinfo의 이미지에 크롭되어 업로드된 이미지를 받아옴
+    cy.dataCy('userinfo-avatar')
+      .should('be.visible')
+      .should((el) => {
+        const img = el[0] as HTMLImageElement;
+        expect(img.naturalWidth).to.equal(120);
+        expect(img.naturalHeight).to.equal(120);
+      });
+  });
 });

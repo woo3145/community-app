@@ -72,7 +72,7 @@ export const AvatarCrop = ({
       ariaHideApp={false}
       shouldCloseOnOverlayClick={false} // 오버레이 클릭 시 닫기 막음(오버레이로 닫으면 crop이 안되고 원본으로 저장되기 때문)
     >
-      <div className="w-full min-w-[460px] max-h-[630px]">
+      <div className="w-full min-w-[460px] max-h-[630px]" data-cy="crop-modal">
         <ModalHeader
           title="프로필 사진 만들기"
           closeModal={cancelAndCloseModal}
@@ -89,7 +89,11 @@ export const AvatarCrop = ({
           </div>
         </div>
 
-        <ModalFooter text="완료" onClick={onClickCropImage} />
+        <ModalFooter
+          text="완료"
+          onClick={onClickCropImage}
+          buttonDataCy="crop-button"
+        />
       </div>
     </ReactModal>
   );

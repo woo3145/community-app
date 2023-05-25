@@ -86,12 +86,14 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
               accept="image/*"
               style={{ display: 'none' }}
               onChange={handleImage}
+              data-cy="avatar-input"
             />
             <label htmlFor="input-image" className="cursor-pointer">
               <Avatar
                 src={preview ? preview : profile.avatar || ''}
                 uiSize="lg"
                 className="cursor-pointer"
+                data-cy="avatarPreview"
               />
             </label>
           </div>

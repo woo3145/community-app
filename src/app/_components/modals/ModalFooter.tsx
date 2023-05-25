@@ -4,9 +4,15 @@ interface Props {
   text: string;
   isValid?: boolean;
   onClick?: () => void;
+  buttonDataCy?: string;
 }
 
-export const ModalFooter = ({ text, isValid = true, onClick }: Props) => {
+export const ModalFooter = ({
+  text,
+  isValid = true,
+  onClick,
+  buttonDataCy,
+}: Props) => {
   return (
     <div className="w-full">
       <Button
@@ -15,7 +21,7 @@ export const ModalFooter = ({ text, isValid = true, onClick }: Props) => {
         isWide
         isValid={isValid}
         onClick={onClick}
-        dataCy="modal-button"
+        dataCy={buttonDataCy ? buttonDataCy : 'modal-button'}
       />
     </div>
   );

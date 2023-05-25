@@ -6,6 +6,7 @@ interface Props {
   src?: string;
   uiSize?: UISize;
   className?: string;
+  dataCy?: string;
 }
 
 export const Avatar = ({
@@ -13,6 +14,7 @@ export const Avatar = ({
   isLoading = false,
   uiSize = 'md',
   className,
+  dataCy,
 }: Props) => {
   const sizes = {
     sm: 'w-8 h-8',
@@ -44,10 +46,12 @@ export const Avatar = ({
       alt="Profile Image"
       width={100}
       height={100}
+      data-cy={dataCy ? dataCy : 'avatar'}
     />
   ) : (
     <div
       className={`${circleClassName} relative overflow-hidden bg-gray-100 dark:bg-gray-600`}
+      data-cy={'defaultAvatar'}
     >
       <svg
         className={`absolute ${iconSizeClassName} text-gray-400`}

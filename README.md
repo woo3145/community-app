@@ -97,7 +97,7 @@ AWS_S3_BUCKET=
     - [x] 글쓰기
     - [x] 댓글달기/삭제
     - [x] 프로필 변경
-      - [ ] 이미지 크롭
+      - [x] 이미지 크롭
 
   - 에러 발견
   - [x] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....

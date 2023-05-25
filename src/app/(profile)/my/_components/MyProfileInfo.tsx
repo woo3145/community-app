@@ -20,7 +20,7 @@ export const MyProfileInfo = () => {
   return (
     <div className="relative card p-7">
       <div className="flex items-center">
-        <Avatar src={me.profile.avatar} uiSize="lg" />
+        <Avatar src={me.profile.avatar} uiSize="lg" dataCy="userinfo-avatar" />
         <div className="w-full pl-8">
           <div className="text-2xl font-bold" data-cy="userName">
             {me.profile.nameType ? me.profile.nickname : me.profile.name}

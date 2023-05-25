@@ -91,6 +91,7 @@ export const CropLayer = ({ imageSize, dragArea, setDragArea }: Props) => {
       className="absolute top-0 cursor-crosshair"
       onMouseDown={onMouseDownHandler}
       onMouseMove={onMouseMoveHandler}
+      data-cy="crop-layer"
     />
   );
 };
