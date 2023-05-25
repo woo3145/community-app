@@ -27,6 +27,7 @@ export default defineConfig({
       'cypress/e2e/main.spec.ts',
       'cypress/e2e/login/*',
       'cypress/e2e/community/*',
+      'cypress/e2e/my/*',
     ],
     env: {
       appUrl: process.env.NEXT_PUBLIC_APP_URL,

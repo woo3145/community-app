@@ -7,7 +7,6 @@ import { useMe } from '@/hooks/swr/useMe';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { Avatar } from '@/app/_components/atoms/Avatar';
 import { AvatarCareer } from '@/app/_components/atoms/AvatarCareer';
-import Skeleton from 'react-loading-skeleton';
 import { ProfileInfoSkeleton } from '../../_components/ProfileInfoSkeleton';
 
 export const MyProfileInfo = () => {
@@ -23,7 +22,7 @@ export const MyProfileInfo = () => {
       <div className="flex items-center">
         <Avatar src={me.profile.avatar} uiSize="lg" />
         <div className="w-full pl-8">
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold" data-cy="userName">
             {me.profile.nameType ? me.profile.nickname : me.profile.name}
           </div>
           <div className="flex">
@@ -40,13 +39,14 @@ export const MyProfileInfo = () => {
             'shrink-0 flex items-center py-2 px-7 border border-solid border-gray-200 rounded-full cursor-pointer'
           }
           onClick={openModal}
+          data-cy={'editProfile-button'}
         >
           <HiOutlinePencil className="mr-2" />
           <span>수정하기</span>
         </div>
       </div>
 
-      <div className="py-5 text-sm whitespace-pre-line">
+      <div className="py-5 text-sm whitespace-pre-line" data-cy="description">
         {me.profile.description}
       </div>
 

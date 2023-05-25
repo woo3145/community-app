@@ -43,7 +43,7 @@ export const MyProfileModifyModal = ({
       contentLabel="Example Modal"
       ariaHideApp={true}
     >
-      <div className="w-[390px] h-auto">
+      <div className="w-[390px] h-auto" data-cy="editProfile-modal">
         <ModalHeader title="커뮤니티 프로필" closeModal={closeModal} />
 
         <EditProfileForm profile={profile} closeModal={closeModal} />

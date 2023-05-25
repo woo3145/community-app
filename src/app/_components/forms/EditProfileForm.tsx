@@ -47,8 +47,16 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
       nickname: nameType && profile.nickname ? profile.nickname : profile.name,
       description: profile.description || '',
     },
-    mode: 'all',
   });
+
+  const onClickDefault = () => {
+    setNameType(false);
+    setValue('nickname', profile.name);
+  };
+  const onClickNickname = () => {
+    setNameType(true);
+    setValue('nickname', profile.nickname ? profile.nickname : '');
+  };
 
   const { onSubmit, isApiLoading } = useEditProfile(
     profile,
@@ -107,33 +115,35 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
             <input
               type="radio"
               name="userNameType"
-              id={'userNameDefault'}
+              id={'nameType-false'}
               value="default"
               checked={nameType === false}
-              onClick={() => {
-                setNameType(false);
-                setValue('nickname', profile.name);
-              }}
+              onClick={onClickDefault}
               readOnly
               className="w-5 h-5 m-0"
             />
-            <label htmlFor="userNameDefault" className="pl-2 mr-3 text-sm">
+            <label
+              htmlFor="nameType-false"
+              className="pl-2 mr-3 text-sm"
+              data-cy="nameType-false"
+            >
               기본
             </label>
             <input
               type="radio"
               name="userNameType"
-              id={'userNameNickName'}
+              id={'nameType-true'}
               value="default"
               checked={nameType === true}
               readOnly
-              onClick={() => {
-                setNameType(true);
-                setValue('nickname', profile.nickname || '');
-              }}
+              onClick={onClickNickname}
               className="w-5 h-5 m-0"
             />
-            <label htmlFor="userNameNickName" className="pl-2 text-sm">
+            <label
+              htmlFor="nameType-true"
+              className="pl-2 text-sm"
+              data-cy="nameType-true"
+            >
               닉네임
             </label>
           </div>
@@ -141,10 +151,11 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
             id="nickname"
             type="text"
             placeholder="한글/영어/숫자만 가능(2~8자)"
-            dataCy="editProfileName-password-input"
+            dataCy="userName-input"
             {...register('nickname', {
               maxLength: 8,
               minLength: 2,
+              required: true,
             })}
             disabled={!nameType}
           />
@@ -156,14 +167,23 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
             {...register('description', { maxLength: 150 })}
             className="w-full h-[140px] resize-none card p-3 outline-1 outline-primary"
             placeholder="간단한 자기소개 글을 작성해 주세요."
+            data-cy="description-input"
           />
-          <p className="text-sm text-right text-gray-400">
+          <p
+            className="text-sm text-right text-gray-400"
+            data-cy="description-length"
+          >
             {watch().description?.length}/150
           </p>
         </div>
       </div>
 
-      <ModalFooter text="완료" isValid={!isApiLoading && isValid} />
+      <ModalFooter
+        text="완료"
+        isValid={
+          !isApiLoading && !(nameType === true && !watch().nickname) && isValid
+        }
+      />
     </form>
   );
 };

@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 export const ProfileInfoSkeleton = () => {
   return (
     <div className="relative card p-7">
-      <div className="flex items-center">
+      <div className="flex items-center mb-2">
         <Avatar isLoading={true} uiSize="lg" />
         <div className="w-full pl-8">
           <Skeleton height={'1.5rem'} width={'50%'} />

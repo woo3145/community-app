@@ -1,4 +1,4 @@
-import { SUB_TAG_LENGTH, TEST_USER } from '../../constants';
+import { TEST_USER } from '../../constants';
 
 describe('댓글 기능 테스트', () => {
   beforeEach(() => {
