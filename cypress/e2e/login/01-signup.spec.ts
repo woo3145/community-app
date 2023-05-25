@@ -59,7 +59,7 @@ describe('회원가입 테스트', () => {
     cy.intercept(
       {
         method: 'POST',
-        url: Cypress.env('appUrl') + '/api/auth/signup',
+        url: Cypress.env('appUrl') + '/api/auth/emailSignup',
       },
       {
         // 클라이언트 에러 핸들러가 statusCode를보고 ok값을 판단하기 때문에 반드시 statusCode 변경 필요
