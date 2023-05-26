@@ -4,7 +4,7 @@ import { LikePostBody } from '@/interfaces/api';
 import { NextResponse } from 'next/server';
 import { getPostById } from '@/libs/prisma/post';
 import { NotFoundError, UnauthorizedError } from '@/libs/server/apiErrors';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from '@/libs/server/auth';
 
 interface Params {
   params: {

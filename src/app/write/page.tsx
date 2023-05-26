@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { _uploadImage } from '@/libs/client/apis';
 import { CreatePostForm } from '../_components/forms/CreatePostForm';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from '@/libs/server/auth';
 
 export interface CreatePostFormValue {
   title: string;

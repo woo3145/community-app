@@ -1,9 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { AuthOptions, DefaultUser } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-
-import { AuthOptions, DefaultUser } from 'next-auth';
-import NextAuth from 'next-auth/next';
 import client from '@/libs/prisma';
 
 export const authOptions: AuthOptions = {
@@ -127,8 +125,6 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
-
-export default NextAuth(authOptions);
 
 // nextAuth 디폴트 user 필드에 userId 추가
 interface SessionUser extends DefaultUser {

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { _getPost } from '@/libs/client/apis';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 import { getPostById, updatePostViewed } from '@/libs/prisma/post';
 import {
@@ -13,6 +12,7 @@ import { CreateCommentContainer } from './_components/CreateCommentContainer';
 import { CommentListContainer } from './_components/CommentListContainer';
 import { PostContainer } from './_components/PostContainer';
 import { addIsLikedAndIsCommented } from '@/libs/dataHelper';
+import { authOptions } from '@/libs/server/auth';
 
 const getPost = async (postId: string) => {
   const post = await getPostById(parseInt(postId));

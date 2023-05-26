@@ -1,8 +1,8 @@
 import { getProviders } from 'next-auth/react';
 import { EmailCheck } from './_components/EmailCheck';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { redirect } from 'next/navigation';
+import { authOptions } from '@/libs/server/auth';
 
 export const metadata = {
   title: 'Woo3145 - Login',

@@ -1,7 +1,6 @@
 import { addIsLikedAndIsCommented } from '@/libs/dataHelper';
-import { getCommentsByUserId } from '@/libs/prisma/comment';
 import { getPostsByUserId } from '@/libs/prisma/post';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from '@/libs/server/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 

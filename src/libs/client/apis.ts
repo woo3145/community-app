@@ -34,7 +34,6 @@ export const _signup = async ({
       }),
     }
   );
-  console.log(data);
   return data;
 };
 

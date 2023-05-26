@@ -3,8 +3,8 @@ import { createPost, getPostsByTagId } from '@/libs/prisma/post';
 import { addIsLikedAndIsCommented } from '@/libs/dataHelper';
 import { CreatePostBody } from '@/interfaces/api';
 import { NextResponse } from 'next/server';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { UnauthorizedError, ValidationError } from '@/libs/server/apiErrors';
+import { authOptions } from '@/libs/server/auth';
 
 const getParams = (req: Request) => {
   const { searchParams } = new URL(req.url);

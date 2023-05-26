@@ -8,7 +8,7 @@ import {
 import { NextResponse } from 'next/server';
 import client from '@/libs/prisma';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from '@/libs/server/auth';
 
 interface Params {
   params: {

@@ -1,8 +1,8 @@
 import { MyProfileInfo } from './_components/MyProfileInfo';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { MyProfileBody } from './_components/MyProfileBody';
+import { authOptions } from '@/libs/server/auth';
 
 export const metadata = {
   title: 'Woo3145 - Profile',

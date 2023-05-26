@@ -6,7 +6,7 @@ import {
   UnauthorizedError,
 } from '@/libs/server/apiErrors';
 import { NextResponse } from 'next/server';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from '@/libs/server/auth';
 
 interface Params {
   params: {

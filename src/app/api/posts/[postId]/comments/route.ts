@@ -2,7 +2,7 @@ import { createComment, getCommentsByPostId } from '@/libs/prisma/comment';
 import { CreateCommentBody } from '@/interfaces/api';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from '@/libs/server/auth';
 import {
   NotFoundError,
   UnauthorizedError,

@@ -2,7 +2,7 @@ import { UnauthorizedError } from '@/libs/server/apiErrors';
 import { NextResponse } from 'next/server';
 import client from '@/libs/prisma';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from '@/libs/server/auth';
 import { getProfileInclude } from '@/libs/prisma/dataShapes';
 
 interface Params {
