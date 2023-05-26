@@ -1,22 +1,31 @@
 .env
 
 ```
-NEXT_PUBLIC_APP_URL=app_url:port
-NEXTAUTH_URL=nextAuth 리다이렉션 url
 
+// 앱의 URL
+NEXT_PUBLIC_APP_URL=app_url:port
+
+// nextAuth의 요청 url
+NEXTAUTH_URL=app_url:port
+
+// db url
 DATABASE_URL="postgresql://janedoe:mypassword@localhost:5432/mydb?schema=sample"
 
+// nextAuth의 jwt 암호화 키
 NEXTAUTH_SECRET=tasetaseeeee
 
-JWT_ACCESS_TOKEN_EXPIRATION=15 // minutes
-JWT_REFRESH_TOKEN_EXPIRATION=7 // days
+// jwt 토큰 지속시간
+JWT_ACCESS_TOKEN_EXPIRATION=30
+
+// 간편 로그인 관련
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 
 // AWS-S3 관련
 AWS_ACCESS_KEY=
 AWS_SECRET_KEY=
 AWS_REGION=
 AWS_S3_BUCKET=
-
 
 ```
 

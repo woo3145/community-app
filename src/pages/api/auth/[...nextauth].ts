@@ -117,7 +117,13 @@ export const authOptions: AuthOptions = {
   },
   session: {
     strategy: 'jwt', // PrismaAdapter를 사용중임으로 default값이 database로 되어있어서 변경 필요
-    maxAge: 60 * 60 * 24 * 30, // 30days
+    maxAge:
+      60 *
+      60 *
+      24 *
+      (process.env.JWT_ACCESS_TOKEN_EXPIRATION
+        ? parseInt(process.env.JWT_ACCESS_TOKEN_EXPIRATION)
+        : 30), // 30days
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
