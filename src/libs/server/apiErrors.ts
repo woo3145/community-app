@@ -15,3 +15,10 @@ export const ForbiddenError = () => {
 export const NotFoundError = () => {
   return NextResponse.json({ message: 'Not Found' }, { status: 404 });
 };
+
+export const InternalServerError = () => {
+  return NextResponse.json(
+    { message: 'Internal Server Error' },
+    { status: 500 }
+  );
+};

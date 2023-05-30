@@ -3,8 +3,8 @@ import { upload } from '@/libs/server/multer';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import nextConnect from 'next-connect';
-import { authOptions } from '../auth/[...nextauth]';
 import { UnauthorizedError } from '@/libs/server/customErrors';
+import { authOptions } from '@/libs/server/auth';
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>({
   onError: (err, req, res, next) => {
