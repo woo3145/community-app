@@ -16,7 +16,6 @@ import { authOptions } from '@/libs/server/auth';
 
 const getPost = async (postId: string) => {
   const post = await getPostById(parseInt(postId));
-
   if (!post) {
     throw new Error('Failed to fetch data');
   }

@@ -13,19 +13,36 @@ export const s3 = new S3Client({
   region: AWS_REGION,
 });
 
+const getContentType = (fileExtension: string): string => {
+  const mimeTypeMap: { [key: string]: string } = {
+    jpeg: 'image/jpeg',
+    jpg: 'image/jpeg',
+    png: 'image/png',
+    gif: 'image/gif',
+  };
+
+  return mimeTypeMap[fileExtension.toLowerCase()] || 'application/octet-stream';
+};
+
 export const upload = async (file: File): Promise<string> => {
   // s3에 업로드 하기 위해 파일 포맷을 변경시켜줌 File => Buffer
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
+  // 파일 확장자 추출
+  const fileExtension = file.name.split('.').pop() || '';
   const fileName = `${Date.now()}_${Math.random()
     .toString(36)
-    .substring(2, 11)}`;
+    .substring(2, 11)}.${fileExtension}`;
 
+  // 확장자를 기반으로 contentType 생성
+  const contentType = getContentType(fileExtension);
+
+  // s3에 업로드
   await s3.send(
     new PutObjectCommand({
       Bucket: AWS_S3_BUCKET,
-      ContentType: 'image/jpeg',
+      ContentType: contentType,
       ACL: 'public-read',
       Key: fileName,
       Body: buffer,

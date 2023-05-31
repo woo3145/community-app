@@ -8,16 +8,6 @@ import { authOptions } from '@/libs/server/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
-const parseQuery = (query: any) => {
-  const { userId, page, limit } = query;
-
-  return {
-    userId: userId ? userId : '',
-    page: page ? parseInt(page) : undefined,
-    limit: limit ? parseInt(limit) : undefined,
-  };
-};
-
 interface Params {
   params: {
     commentId: string;

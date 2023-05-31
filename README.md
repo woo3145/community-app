@@ -109,8 +109,9 @@ AWS_S3_BUCKET=
 
 ### NextJS 13.4.3 에러 모음
 
-- [ ] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....
+- [x] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....
       nextjs 13.4.1 업데이트 후 발생 -> 에러 추적중 https://github.com/vercel/next.js/issues/49169
+      -> 13.4.3에서 해결
 
 - [ ] nextjs 13.4 의 serverActions 활성화 시 metadata 작동안함 (아직 적용하기 이른듯)
       정보가 없어서 next.js에 issue 생성 https://github.com/vercel/next.js/issues/49650
@@ -135,27 +136,27 @@ AWS_S3_BUCKET=
 
     - 따라서 현재 next의 app/ 의 서버 컴포넌트에선 pages/처럼 api요청시 클라이언트의 쿠키를 수정할 방법이 없다.
 
-  - [x] app/의 route handlers에서 multer로 Request 파싱 불가
+- [x] app/의 route handlers에서 multer로 Request 파싱 불가
 
-    - 메세지 : @aws-sdk/signature-v4-crt' 를 찾을 수 없음
+  - 메세지 : @aws-sdk/signature-v4-crt' 를 찾을 수 없음
+    @aws-sdk/signature-v4-crt
+  - 시도: 각 라이브러리 설치 후 아래와 같이 next.config의 webpack 설정으로 모듈 가져오기 시도
 
-    - 시도: 각 라이브러리 설치 후 아래와 같이 next.config의 webpack 설정으로 모듈 가져오기 시도
+    ```
+    webpack: (config, options) => {
+    config.resolve.alias['aws-crt'] = path.join(
+      __dirname,
+      'node_modules/aws-crt'
+    );
+    return config;
+    },
+    ```
 
-      ```
-      webpack: (config, options) => {
-      config.resolve.alias['aws-crt'] = path.join(
-        __dirname,
-        'node_modules/aws-crt'
-      );
-      return config;
-      },
-      ```
-
-    - 결과 : 에러는 사라졌지만 multer가 req를 파싱하여 req를 수정할 수 없음
-    - 원인 : app directory의 route handlers의 Request 객체와 multer가 필요한 Request객체가 다름
-      [참고](https://developer.mozilla.org/en-US/docs/Web/API/Request)
-    - 해결 : app directory의 route handlers에선 formdata를 req.formData()로 얻을 수 있음.
-      따라서 multer를 사용하지 않고 formData에서 file을 얻어서 buffer로 변환시킨 후 s3에 바로 업로드 시킴
+  - 결과 : 에러는 사라졌지만 multer가 req를 파싱하여 req를 수정할 수 없음
+  - 원인 : app directory의 route handlers의 Request 객체와 multer가 받는 Request객체가 다름
+    [참고](https://developer.mozilla.org/en-US/docs/Web/API/Request)
+  - 해결 : app directory의 route handlers에선 formdata를 req.formData()로 얻을 수 있음.
+    따라서 multer를 사용하지 않고 formData에서 file을 얻어서 buffer로 변환시킨 후 s3에 바로 업로드 시킴
 
 ### 💼 디렉토리 구조
 
