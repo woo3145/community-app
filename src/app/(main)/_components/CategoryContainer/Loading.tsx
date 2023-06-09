@@ -6,7 +6,7 @@ import Skeleton from 'react-loading-skeleton';
 
 const CategorySliderLoading = () => {
   return (
-    <div className="w-full flex items-center justify-between relative">
+    <div className="relative flex items-center justify-between w-full">
       <div
         className={'flex gap-2 overflow-x-scroll scroll-smooth no-scrollbar'}
       >
@@ -19,7 +19,7 @@ const CategorySliderLoading = () => {
 };
 const MockMoreButton = () => {
   return (
-    <div className="w-10 h-10 shrink-0 card flex items-center justify-center p-0 ml-5 cursor-pointer">
+    <div className="flex items-center justify-center w-10 h-10 p-0 ml-5 cursor-pointer shrink-0 card">
       <IoEllipsisHorizontal />
     </div>
   );
@@ -28,7 +28,7 @@ const MockMoreButton = () => {
 export const CategoryContainerLoading = () => {
   return (
     <div className={`w-full lg:w-[748px] mt-12`}>
-      <div className="flex py-5 px-7 card rounded-b-none">
+      <div className="flex py-5 rounded-b-none px-7 card">
         <div className="w-[632px] flex items-center shrink">
           <CategorySliderLoading />
         </div>

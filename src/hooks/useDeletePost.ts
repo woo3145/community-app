@@ -1,34 +1,13 @@
-import { _deleteComment } from '@/libs/client/apis';
+import { _deleteComment, _deletePost } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Id, toast } from 'react-toastify';
-import { useMyComments } from './scrollSwr/useMyComments';
-import { useComments } from './swr/useComments';
-import { useUserComments } from './scrollSwr/userUserComments';
-import { Comment } from '@/interfaces/comment';
 
 // 댓글 삭제
-export const useDeleteComment = (comment: Comment, callback?: () => void) => {
+export const useDeletePost = (postId: number, callback?: () => void) => {
   const { data: session } = useSession();
-  const { updateDeletedCache: updateDeletedCacheInMyComments } =
-    useMyComments();
-  const { updateDeletedCache: updateDeletedCacheInComments } = useComments(
-    comment.postId
-  );
-  const { updateDeletedCache: updateDeletedCacheInUserComments } =
-    useUserComments(session?.user.id);
   const [isApiLoading, setIsApiLoading] = useState(false);
-
-  // 댓글 삭제 캐시 업데이트
-  const updateCache = (deletedCommentId: number) => {
-    // 내 댓글
-    updateDeletedCacheInMyComments(deletedCommentId);
-    // 유저 댓글
-    updateDeletedCacheInUserComments(deletedCommentId);
-    // 게시물 댓글
-    updateDeletedCacheInComments(deletedCommentId);
-  };
 
   const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
     setIsApiLoading(isLoading);
@@ -47,10 +26,10 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
       toastId = toast.loading('처리중 입니다.');
       handleApiLoading(true);
 
-      await _deleteComment(comment.id);
+      await _deletePost(postId);
 
       toast.success('성공적으로 업데이트 되었습니다.');
-      updateCache(comment.id);
+
       handleApiLoading(false, toastId);
       if (callback) callback();
     } catch (e) {

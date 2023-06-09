@@ -13,7 +13,7 @@ export const MoreCategories = ({
 }: Props) => {
   return (
     <div
-      className="flex flex-wrap items-center gap-2 p-6 card absolute top-32 shadow-md"
+      className="absolute flex flex-wrap items-center gap-2 p-6 shadow-md card top-32"
       data-cy="category-list-more"
     >
       <SelectButton

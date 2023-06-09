@@ -32,9 +32,9 @@ export const CategoryContainer = () => {
   }
   return (
     <div className={`w-full lg:w-[748px] mt-12`}>
-      <div className="flex py-5 px-7 card rounded-b-none">
+      <div className="flex py-5 rounded-b-none px-7 card">
         <div className="w-[632px] flex items-center shrink">
-          <div className="w-full flex items-center justify-between relative">
+          <div className="relative flex items-center justify-between w-full">
             <CategorySlider
               handleScrollRef={handleScrollRef}
               categoryId={categoryId}
@@ -44,7 +44,7 @@ export const CategoryContainer = () => {
 
             {leftVisible && (
               <div
-                className="absolute left-0 w-11 h-11 card p-0 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100"
+                className="absolute left-0 flex items-center justify-center p-0 rounded-full cursor-pointer w-11 h-11 card hover:bg-gray-100"
                 onClick={onClickLeft}
               >
                 <IoChevronBack />
@@ -52,7 +52,7 @@ export const CategoryContainer = () => {
             )}
             {rightVisible && (
               <div
-                className="absolute right-0 w-11 h-11 card p-0 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100"
+                className="absolute right-0 flex items-center justify-center p-0 rounded-full cursor-pointer w-11 h-11 card hover:bg-gray-100"
                 onClick={onClickRight}
               >
                 <IoChevronForwardSharp />
@@ -61,7 +61,7 @@ export const CategoryContainer = () => {
           </div>
         </div>
         <div
-          className="w-10 h-10 shrink-0 card flex items-center justify-center p-0 ml-5 cursor-pointer"
+          className="flex items-center justify-center w-10 h-10 p-0 ml-5 cursor-pointer shrink-0 card"
           onClick={onClickMoreButton}
           data-cy="more-button"
         >

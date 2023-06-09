@@ -157,6 +157,13 @@ export const _createPost = async ({
   return data;
 };
 
+export const _deletePost = async (postId: number): Promise<ApiResponse> => {
+  const data = await fetchApi<ApiResponse>(`${API_BASE_URL}/posts/${postId}`, {
+    method: 'DELETE',
+  });
+  return data;
+};
+
 // @@@@@@@@ 댓글 @@@@@@@@
 // 댓글 삭제
 export const _deleteComment = async (
