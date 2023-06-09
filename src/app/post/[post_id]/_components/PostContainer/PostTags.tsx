@@ -13,7 +13,7 @@ export const PostTags = ({ post }: Props) => {
           <Badge
             isLoading={false}
             key={idx}
-            href={`/post/${tag.id}`}
+            href={`/${tag.id}`}
             text={tag.title}
           />
         );
