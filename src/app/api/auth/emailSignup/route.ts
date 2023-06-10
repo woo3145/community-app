@@ -1,24 +1,30 @@
 import { NextResponse } from 'next/server';
-import client from '@/libs/prisma';
-import { ValidationError } from '@/libs/server/apiErrors';
-import bcrypt from 'bcrypt';
 import { User } from 'next-auth';
 
-interface CreateUserBody {
-  email: string;
-  password: string;
-  name: string;
-}
+import bcrypt from 'bcrypt';
+import { z } from 'zod';
 
-export const POST = async (req: Request) => {
-  const { email, password, name }: CreateUserBody = await req.json();
+import client from '@/libs/prisma';
+import { ValidationError } from '@/libs/server/customErrors';
+import { withErrorHandling } from '@/libs/server/errorHandler';
+
+const EmailSignupInputSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+  name: z.string().min(2).max(20),
+});
+
+const _POST = async (req: Request) => {
+  const body = await req.json();
+
+  const { email, password, name } = EmailSignupInputSchema.parse(body);
 
   const user = await client.user.findUnique({
     where: { email },
   });
 
   if (!!user) {
-    return ValidationError();
+    throw new ValidationError();
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,3 +56,5 @@ export const POST = async (req: Request) => {
     user: loggedInUser,
   });
 };
+
+export const POST = withErrorHandling(_POST);

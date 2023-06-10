@@ -24,11 +24,11 @@ export function handleError(error: unknown) {
 }
 
 export function withErrorHandling(
-  handler: (req: Request) => Promise<NextResponse>
+  handler: (req: Request, ...rest: any) => Promise<NextResponse>
 ) {
-  return async (req: Request) => {
+  return async (req: Request, ...rest: any) => {
     try {
-      return await handler(req);
+      return await handler(req, rest);
     } catch (e) {
       return handleError(e);
     }

@@ -1,36 +1,45 @@
-import { deleteComment, getCommentById } from '@/libs/prisma/comment';
-import {
-  ForbiddenError,
-  NotFoundError,
-  UnauthorizedError,
-} from '@/libs/server/apiErrors';
-import { authOptions } from '@/libs/server/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
-interface Params {
-  params: {
-    commentId: string;
-  };
-}
+import { z } from 'zod';
 
-export const DELETE = async (req: Request, { params }: Params) => {
+import { authOptions } from '@/libs/server/auth';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
+import { withErrorHandling } from '@/libs/server/errorHandler';
+import { deleteComment, getCommentById } from '@/libs/prisma/comment';
+
+const ParamsSchema = z.object({
+  params: z.object({
+    commentId: z
+      .string()
+      .refine((value) => !isNaN(Number(value)), {
+        message: 'Must be a valid string representation of a number',
+      })
+      .transform((value) => Number(value)),
+  }),
+});
+
+type Params = z.infer<typeof ParamsSchema>;
+
+const _DELETE = async (req: Request, { params }: Params) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return UnauthorizedError();
+    throw new UnauthorizedError();
   }
 
   const { commentId } = params;
-  const comment = await getCommentById(parseInt(commentId));
+  const comment = await getCommentById(commentId);
   if (!comment) {
-    return NotFoundError();
+    throw new NotFoundError();
   }
 
   if (!comment.userId || comment.userId !== session.user.id) {
-    return ForbiddenError();
+    throw new NotFoundError();
   }
 
   await deleteComment(comment.id);
 
   return NextResponse.json({ message: 'successful' });
 };
+
+export const DELETE = withErrorHandling(_DELETE);

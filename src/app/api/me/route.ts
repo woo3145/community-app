@@ -1,21 +1,17 @@
-import { UnauthorizedError } from '@/libs/server/apiErrors';
 import { NextResponse } from 'next/server';
-import client from '@/libs/prisma';
 import { getServerSession } from 'next-auth';
+
+import client from '@/libs/prisma';
 import { authOptions } from '@/libs/server/auth';
 import { getProfileInclude } from '@/libs/prisma/dataShapes';
-
-interface Params {
-  params: {
-    userId: string;
-  };
-}
+import { withErrorHandling } from '@/libs/server/errorHandler';
+import { UnauthorizedError } from '@/libs/server/customErrors';
 
 // 로그인한 사용자 가져오기
-export const GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return UnauthorizedError();
+    throw new UnauthorizedError();
   }
 
   const user = await client.user.findUnique({
@@ -31,3 +27,5 @@ export const GET = async (req: Request, { params }: Params) => {
 
   return NextResponse.json({ data: user });
 };
+
+export const GET = withErrorHandling(_GET);
