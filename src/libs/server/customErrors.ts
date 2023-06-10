@@ -11,21 +11,17 @@ export abstract class CustomError extends Error {
     Object.setPrototypeOf(this, CustomError.prototype);
   }
 
-  abstract serializeErrors(): ApiError[];
+  getMessage(): string {
+    return this.message;
+  }
 }
 
 export class ValidationError extends CustomError {
   statusCode = 400;
-  errors: ApiError[];
 
-  constructor(errors: ApiError[]) {
-    super('Input validation failed');
-    this.errors = errors;
+  constructor(field?: string) {
+    super(field ? `Input validation failed : ${field}` : 'Bad Request');
     Object.setPrototypeOf(this, ValidationError.prototype);
-  }
-
-  serializeErrors() {
-    return this.errors;
   }
 }
 
@@ -36,10 +32,6 @@ export class UnauthorizedError extends CustomError {
     super(`Unauthorized`);
     Object.setPrototypeOf(this, UnauthorizedError.prototype);
   }
-
-  serializeErrors() {
-    return [{ message: this.message }];
-  }
 }
 
 export class ForbiddenError extends CustomError {
@@ -48,9 +40,6 @@ export class ForbiddenError extends CustomError {
   constructor() {
     super(`Forbidden`);
     Object.setPrototypeOf(this, ForbiddenError.prototype);
-  }
-  serializeErrors() {
-    return [{ message: this.message }];
   }
 }
 
@@ -61,10 +50,6 @@ export class NotFoundError extends CustomError {
     super(resourceName ? `Resource not found : ${resourceName}` : 'Not Found');
     Object.setPrototypeOf(this, NotFoundError.prototype);
   }
-
-  serializeErrors() {
-    return [{ message: this.message }];
-  }
 }
 export class MethodNotAllowedError extends CustomError {
   statusCode = 405;
@@ -72,9 +57,5 @@ export class MethodNotAllowedError extends CustomError {
   constructor() {
     super('Method Not Allowed');
     Object.setPrototypeOf(this, MethodNotAllowedError.prototype);
-  }
-
-  serializeErrors() {
-    return [{ message: this.message }];
   }
 }

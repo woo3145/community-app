@@ -37,7 +37,7 @@ export const EmailLogin = ({ onPrevPage, email }: Props) => {
         password: password,
         redirect: false,
       });
-      if (!result?.ok) {
+      if (result?.error) {
         setMessage('비밀번호가 일치하지 않습니다.');
         reset();
       } else {

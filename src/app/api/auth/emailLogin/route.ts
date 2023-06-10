@@ -1,16 +1,36 @@
 import { NextResponse } from 'next/server';
-import client from '@/libs/prisma';
-import { ValidationError } from '@/libs/server/apiErrors';
-import bcrypt from 'bcrypt';
 import { User } from 'next-auth';
 
-interface LoginUserBody {
-  email: string;
-  password: string;
-}
+import bcrypt from 'bcrypt';
+import { z } from 'zod';
 
-export const POST = async (req: Request) => {
-  const { email, password }: LoginUserBody = await req.json();
+import client from '@/libs/prisma';
+import { withErrorHandling } from '@/libs/server/errorHandler';
+import { NotFoundError, ValidationError } from '@/libs/server/customErrors';
+
+const EmailLoginInputSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
+const validateUserPassword = async (
+  password: string,
+  storedPassword: string | null
+) => {
+  if (!storedPassword) {
+    throw new ValidationError('password');
+  }
+
+  const passwordMatches = await bcrypt.compare(password, storedPassword);
+  if (!passwordMatches) {
+    throw new ValidationError('password');
+  }
+};
+
+const _POST = async (req: Request) => {
+  const body = await req.json();
+
+  const { email, password } = EmailLoginInputSchema.parse(body);
 
   const user = await client.user.findUnique({
     where: { email },
@@ -20,17 +40,10 @@ export const POST = async (req: Request) => {
   });
 
   if (!user) {
-    return ValidationError();
+    throw new NotFoundError('user');
   }
+  await validateUserPassword(password, user.password);
 
-  if (user.password == null) {
-    return ValidationError();
-  }
-
-  const passwordMatches = await bcrypt.compare(password, user.password);
-  if (!passwordMatches) {
-    return ValidationError();
-  }
   const loggedInUser: User = {
     id: user.id,
     email: user.email,
@@ -43,3 +56,5 @@ export const POST = async (req: Request) => {
     user: loggedInUser,
   });
 };
+
+export const POST = withErrorHandling(_POST);

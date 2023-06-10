@@ -1,29 +1,36 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { CustomError } from './customErrors';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
 
 // API 에러 핸들러
-export function handleError(error: unknown, res: NextApiResponse) {
-  if (error instanceof CustomError) {
-    res
-      .status(error.statusCode)
-      .json({ message: 'failed', errors: error.serializeErrors() });
+export function handleError(error: unknown) {
+  // zod 에러 핸들링
+  if (error instanceof z.ZodError) {
+    return NextResponse.json({ message: error.message }, { status: 400 });
+
+    // CustomError 핸들링
+  } else if (error instanceof CustomError) {
+    return NextResponse.json(
+      { message: error.message },
+      { status: error.statusCode }
+    );
   } else {
     // 예상치 못한 에러
-    res.status(500).json({
-      message: 'failed',
-      errors: [{ message: 'Internal server error' }],
-    });
+    return NextResponse.json(
+      { message: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
 
 export function withErrorHandling(
-  handler: (req: NextApiRequest, res: NextApiResponse) => Promise<void>
+  handler: (req: Request) => Promise<NextResponse>
 ) {
-  return async (req: NextApiRequest, res: NextApiResponse) => {
+  return async (req: Request) => {
     try {
-      await handler(req, res);
+      return await handler(req);
     } catch (e) {
-      handleError(e, res);
+      return handleError(e);
     }
   };
 }

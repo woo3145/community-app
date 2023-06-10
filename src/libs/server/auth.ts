@@ -50,6 +50,7 @@ export const authOptions: AuthOptions = {
         );
 
         const responseJson = await response.json();
+
         if (response.ok && responseJson.user) {
           return responseJson.user;
         } else {
