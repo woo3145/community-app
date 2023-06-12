@@ -1,46 +1,63 @@
-import { createComment, getCommentsByPostId } from '@/libs/prisma/comment';
-import { CreateCommentBody } from '@/interfaces/api';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
+
+import { z } from 'zod';
+
+import { createComment, getCommentsByPostId } from '@/libs/prisma/comment';
 import { authOptions } from '@/libs/server/auth';
 import {
   NotFoundError,
   UnauthorizedError,
   ValidationError,
-} from '@/libs/server/apiErrors';
+} from '@/libs/server/customErrors';
 import { getPostById } from '@/libs/prisma/post';
+import { withErrorHandling } from '@/libs/server/errorHandler';
 
-interface Params {
-  params: {
-    postId: string;
-  };
-}
+const ParamsSchema = z.object({
+  params: z.object({
+    postId: z
+      .string()
+      .refine((value) => !isNaN(Number(value)), {
+        message: 'Must be a valid string representation of a number',
+      })
+      .transform((value) => Number(value)),
+  }),
+});
 
-export const GET = async (req: Request, { params }: Params) => {
+type Params = z.infer<typeof ParamsSchema>;
+
+const _GET = async (req: Request, { params }: Params) => {
   const { postId } = params;
-  const comments = await getCommentsByPostId(parseInt(postId));
+  const comments = await getCommentsByPostId(postId);
 
   return NextResponse.json({ data: comments });
 };
 
-export const POST = async (req: Request, { params }: Params) => {
+const _POST = async (req: Request, { params }: Params) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return UnauthorizedError();
+    throw new UnauthorizedError();
   }
-
   const { postId } = params;
-  const { content }: CreateCommentBody = await req.json();
 
-  const post = await getPostById(parseInt(postId));
+  const bodySchema = z.object({
+    content: z.string().min(1, { message: 'Content is required' }),
+  });
+  const body = await req.json();
+  const { content } = bodySchema.parse(body);
+
+  const post = await getPostById(postId);
   if (!post) {
-    return NotFoundError();
+    throw new NotFoundError('post');
   }
 
   if (!content) {
-    return ValidationError();
+    throw new ValidationError();
   }
   const newComment = await createComment(session.user.id, post.id, content);
 
   return NextResponse.json({ data: newComment });
 };
+
+export const GET = withErrorHandling(_GET);
+export const POST = withErrorHandling(_POST);

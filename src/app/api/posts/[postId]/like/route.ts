@@ -1,44 +1,58 @@
-import client from '@/libs/prisma';
 import { getServerSession } from 'next-auth';
-import { LikePostBody } from '@/interfaces/api';
 import { NextResponse } from 'next/server';
-import { getPostById } from '@/libs/prisma/post';
-import { NotFoundError, UnauthorizedError } from '@/libs/server/apiErrors';
-import { authOptions } from '@/libs/server/auth';
 
-interface Params {
-  params: {
-    postId: string;
-  };
-}
+import { z } from 'zod';
+
+import client from '@/libs/prisma';
+import { getPostById } from '@/libs/prisma/post';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
+import { authOptions } from '@/libs/server/auth';
+import { withErrorHandling } from '@/libs/server/errorHandler';
+
+const ParamsSchema = z.object({
+  params: z.object({
+    postId: z
+      .string()
+      .refine((value) => !isNaN(Number(value)), {
+        message: 'Must be a valid string representation of a number',
+      })
+      .transform((value) => Number(value)),
+  }),
+});
+
+type Params = z.infer<typeof ParamsSchema>;
 
 // 게시글 좋아요 수 불러오기
-export const GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, { params }: Params) => {
   const { postId } = params;
-  const post = await getPostById(parseInt(postId));
+  const post = await getPostById(postId);
 
   if (!post) {
-    return NotFoundError();
+    throw new NotFoundError();
   }
 
   return NextResponse.json({ data: post._count.likes });
 };
 
 // 좋아요 & 취소
-export const PUT = async (req: Request, { params }: Params) => {
+const _PUT = async (req: Request, { params }: Params) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return UnauthorizedError();
+    throw new UnauthorizedError();
   }
 
   const { postId } = params;
-  const { isLiked }: LikePostBody = await req.json();
+  const bodySchema = z.object({
+    isLiked: z.boolean(),
+  });
+  const body = await req.json();
+  const { isLiked } = bodySchema.parse(body);
 
   // 유저가 좋아요를 누른 상태인지 확인
   const existLike = await client.likedPost.findFirst({
     where: {
       userId: session.user.id,
-      postId: parseInt(postId),
+      postId: postId,
     },
   });
 
@@ -50,7 +64,7 @@ export const PUT = async (req: Request, { params }: Params) => {
           connect: { id: session.user.id },
         },
         post: {
-          connect: { id: parseInt(postId) },
+          connect: { id: postId },
         },
       },
     });
@@ -66,3 +80,6 @@ export const PUT = async (req: Request, { params }: Params) => {
 
   return NextResponse.json({ message: 'successful' });
 };
+
+export const GET = withErrorHandling(_GET);
+export const PUT = withErrorHandling(_PUT);

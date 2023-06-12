@@ -1,15 +1,21 @@
 import { NextResponse } from 'next/server';
-import client from '@/libs/prisma';
 
-interface Params {
-  params: {
-    userId: string;
-    postId: string;
-  };
-}
+import { z } from 'zod';
+
+import client from '@/libs/prisma';
+import { withErrorHandling } from '@/libs/server/errorHandler';
+
+const ParamsSchema = z.object({
+  params: z.object({
+    userId: z.string(),
+    postId: z.string(),
+  }),
+});
+
+type Params = z.infer<typeof ParamsSchema>;
 
 // 유저가 해당 게시글을 좋아하는지 여부
-export const GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, { params }: Params) => {
   const { userId, postId } = params;
 
   const likes = await client.likedPost.findFirst({
@@ -21,3 +27,5 @@ export const GET = async (req: Request, { params }: Params) => {
 
   return NextResponse.json({ data: likes ? true : false });
 };
+
+export const GET = withErrorHandling(_GET);
