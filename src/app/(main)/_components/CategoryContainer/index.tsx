@@ -31,9 +31,9 @@ export const CategoryContainer = () => {
     return <CategoryContainerLoading />;
   }
   return (
-    <div className={`w-full lg:w-[748px] mt-12`}>
-      <div className="flex py-5 rounded-b-none px-7 card">
-        <div className="w-[632px] flex items-center shrink">
+    <div className={`w-full xl:w-[748px] mt-14 xl:mt-12`}>
+      <div className="relative flex items-center h-20 pr-16 border-t-0 rounded-none xl:border xl:rounded-t-md px-7 card">
+        <div className="flex items-center w-full ">
           <div className="relative flex items-center justify-between w-full">
             <CategorySlider
               handleScrollRef={handleScrollRef}
@@ -60,8 +60,9 @@ export const CategoryContainer = () => {
             )}
           </div>
         </div>
+        {/* More Button */}
         <div
-          className="flex items-center justify-center w-10 h-10 p-0 ml-5 cursor-pointer shrink-0 card"
+          className="absolute flex items-center justify-center w-10 h-10 p-0 ml-5 cursor-pointer right-4 shrink-0 card"
           onClick={onClickMoreButton}
           data-cy="more-button"
         >

@@ -42,7 +42,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="fixed left-0 right-0 z-10 flex items-center justify-center w-full bg-white border-b border-gray-200 border-solid h-14">
+      <div className="fixed left-0 right-0 z-20 flex items-center justify-center w-full bg-white border-b border-gray-200 border-solid h-14">
         <div className="container max-w-screen-lg px-6 lg:px-2">
           <nav className="flex items-center justify-between w-full">
             <Logo />

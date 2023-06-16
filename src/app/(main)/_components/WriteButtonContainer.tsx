@@ -33,7 +33,7 @@ export const WriteButtonContainer = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-8 rounded-none card">
+    <div className="flex items-center justify-center p-8 border-t-0 rounded-none card">
       <div className="mr-4 shrink-0">
         <Avatar src={me?.profile.avatar || ''} />
       </div>
