@@ -6,14 +6,14 @@ import Skeleton from 'react-loading-skeleton';
 
 const CategorySliderLoading = () => {
   return (
-    <div className="relative flex items-center justify-between w-full">
-      <div
-        className={'flex gap-2 overflow-x-scroll scroll-smooth no-scrollbar'}
-      >
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
-          return <Skeleton key={i} className="w-20 h-8 rounded-full" />;
-        })}
-      </div>
+    <div
+      className={
+        'flex w-full gap-2 overflow-x-scroll scroll-smooth no-scrollbar'
+      }
+    >
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
+        return <Skeleton key={i} width={80} height={32} borderRadius={100} />;
+      })}
     </div>
   );
 };
@@ -27,11 +27,9 @@ const MockMoreButton = () => {
 
 export const CategoryContainerLoading = () => {
   return (
-    <div className={`w-full lg:w-[748px] mt-12`}>
-      <div className="flex py-5 rounded-b-none px-7 card">
-        <div className="w-[632px] flex items-center shrink">
-          <CategorySliderLoading />
-        </div>
+    <div className={`w-full xl:w-[748px] mt-14 xl:mt-12`}>
+      <div className="relative flex items-center w-full h-20 pr-12 border-t-0 rounded-none xl:border xl:rounded-t-md px-7 card">
+        <CategorySliderLoading />
         <MockMoreButton />
       </div>
     </div>

@@ -66,7 +66,7 @@ export const PostItem = ({ post, isLoading, dataCy }: Props) => {
 
   return (
     <article
-      className="flex py-5 border-b border-gray-200 border-solid px-7"
+      className="flex flex-col py-5 border-b border-gray-200 border-solid xl:flex-row px-7"
       data-cy={dataCy}
     >
       <div className="w-full">
@@ -105,7 +105,7 @@ export const PostItem = ({ post, isLoading, dataCy }: Props) => {
       {post.imageUrl && (
         <Link
           href={`/post/${post.id}`}
-          className={'relative shrink-0 pl-5 z-0'}
+          className={'relative shrink-0 xl:pl-5 z-0'}
           prefetch={false}
         >
           <Image
@@ -119,7 +119,7 @@ export const PostItem = ({ post, isLoading, dataCy }: Props) => {
               'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8Uw8AAh0BTZud3BwAAAAASUVORK5CYII='
             }
             style={{ objectFit: 'cover' }}
-            className="rounded-md w-[200px] h-[150px] bg-center"
+            className="rounded-md mt-4 w-full xl:w-[200px] h-[150px] bg-center"
           />
         </Link>
       )}
