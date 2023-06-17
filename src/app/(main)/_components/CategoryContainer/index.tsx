@@ -31,7 +31,7 @@ export const CategoryContainer = () => {
     return <CategoryContainerLoading />;
   }
   return (
-    <div className={`w-full xl:w-[748px] mt-14 xl:mt-12`}>
+    <div className={`relative w-full xl:w-[748px] mt-14 xl:mt-12`}>
       <div className="relative flex items-center h-20 pr-16 border-t-0 rounded-none xl:border xl:rounded-t-md px-7 card">
         <div className="flex items-center w-full ">
           <div className="relative flex items-center justify-between w-full">
