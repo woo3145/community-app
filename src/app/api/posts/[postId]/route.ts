@@ -26,7 +26,7 @@ const ParamsSchema = z.object({
 type Params = z.infer<typeof ParamsSchema>;
 
 // 게시물 하나 가져오기
-const _GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, params: Params) => {
   const {
     params: { postId },
   } = ParamsSchema.parse(params);
@@ -40,7 +40,7 @@ const _GET = async (req: Request, { params }: Params) => {
 };
 
 // 게시물 삭제
-const _DELETE = async (req: Request, { params }: Params) => {
+const _DELETE = async (req: Request, params: Params) => {
   const {
     params: { postId },
   } = ParamsSchema.parse(params);

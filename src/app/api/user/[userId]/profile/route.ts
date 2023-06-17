@@ -22,7 +22,7 @@ const ParamsSchema = z.object({
 type Params = z.infer<typeof ParamsSchema>;
 
 // 유저 프로필 가져오기
-const _GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, params: Params) => {
   const {
     params: { userId },
   } = ParamsSchema.parse(params);
@@ -37,7 +37,7 @@ const _GET = async (req: Request, { params }: Params) => {
 };
 
 // 유저 프로필 업데이트
-const _PUT = async (req: Request, { params }: Params) => {
+const _PUT = async (req: Request, params: Params) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     throw new UnauthorizedError();

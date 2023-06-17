@@ -36,7 +36,7 @@ const getParams = (req: Request) => {
 };
 
 // 유저가 쓴 댓글목록 가져오기
-const _GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, params: Params) => {
   const {
     params: { userId },
   } = ParamsSchema.parse(params);

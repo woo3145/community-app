@@ -35,7 +35,7 @@ const _GET = async (req: Request, params: Params) => {
   return NextResponse.json({ data: comments });
 };
 
-const _POST = async (req: Request, { params }: Params) => {
+const _POST = async (req: Request, params: Params) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     throw new UnauthorizedError();

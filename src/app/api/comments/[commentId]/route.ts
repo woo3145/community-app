@@ -21,7 +21,7 @@ const ParamsSchema = z.object({
 
 type Params = z.infer<typeof ParamsSchema>;
 
-const _DELETE = async (req: Request, { params }: Params) => {
+const _DELETE = async (req: Request, params: Params) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     throw new UnauthorizedError();

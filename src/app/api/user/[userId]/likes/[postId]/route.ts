@@ -15,7 +15,7 @@ const ParamsSchema = z.object({
 type Params = z.infer<typeof ParamsSchema>;
 
 // 유저가 해당 게시글을 좋아하는지 여부
-const _GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, params: Params) => {
   const {
     params: { userId, postId },
   } = ParamsSchema.parse(params);

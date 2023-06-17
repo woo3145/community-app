@@ -23,7 +23,7 @@ const ParamsSchema = z.object({
 type Params = z.infer<typeof ParamsSchema>;
 
 // 게시글 좋아요 수 불러오기
-const _GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, params: Params) => {
   const {
     params: { postId },
   } = ParamsSchema.parse(params);
@@ -37,7 +37,7 @@ const _GET = async (req: Request, { params }: Params) => {
 };
 
 // 좋아요 & 취소
-const _PUT = async (req: Request, { params }: Params) => {
+const _PUT = async (req: Request, params: Params) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     throw new UnauthorizedError();

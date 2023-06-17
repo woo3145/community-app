@@ -39,7 +39,7 @@ const getParams = (req: Request) => {
 };
 
 // 유저가 쓴 게시물 목록 가져오기
-const _GET = async (req: Request, { params }: Params) => {
+const _GET = async (req: Request, params: Params) => {
   const session = await getServerSession(authOptions);
   const {
     params: { userId },
