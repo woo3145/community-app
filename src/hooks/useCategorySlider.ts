@@ -51,23 +51,41 @@ export const useCategorySlider = () => {
     scrollRef.current.scrollTo({
       left: position,
     });
-    // 왼쪽 끝 도달 시 왼쪽버튼 제거
-    if (position <= 0) {
-      setLeftVisible(false);
-    } else {
-      setLeftVisible(true);
-    }
-
-    // 오른쪽 끝 도달 (최대길이 - 박스길이) 시 오른쪽버튼 제거
-    if (
-      scrollRef.current.scrollWidth - scrollRef.current.offsetWidth <=
-      position
-    ) {
-      setRightVisible(false);
-    } else {
-      setRightVisible(true);
-    }
   }, [categoryId, scrollRef, isMountedScrollRef]);
+
+  // scrollRef의 scroll 위치에 따라 스크롤 버튼 상태를 변경하는 이벤트 핸들러 등록
+  useEffect(() => {
+    if (!scrollRef.current) return;
+    const scrollEvent = (e: Event) => {
+      if (e.target instanceof Element) {
+        // 최대 스크롤 가능한 길이
+        const maxScroll = e.target.scrollWidth - e.target.clientWidth;
+        const pos = e.target.scrollLeft; // 현재 스크롤의 위치
+        // 왼쪽 끝 도달 시 왼쪽버튼 제거
+        if (pos <= 0) {
+          setLeftVisible(false);
+        } else {
+          setLeftVisible(true);
+        }
+
+        // 오른쪽 끝 도달 시 오른쪽버튼 제거
+        if (maxScroll <= pos) {
+          setRightVisible(false);
+        } else {
+          setRightVisible(true);
+        }
+      }
+    };
+
+    // 만약 참조의 current값이 변경되면 이벤트를 지울 때 지워지지 않고 메모리 누수 발생 가능성 때문에 리액트에서 경고발생
+    // 해결: current값을 변수에 저장하여 안전하게 이벤트 제거
+    const currentScrollRef = scrollRef.current;
+    currentScrollRef.addEventListener('scroll', scrollEvent);
+
+    return () => {
+      currentScrollRef.removeEventListener('scroll', scrollEvent);
+    };
+  }, [scrollRef, isMountedScrollRef]);
 
   // 링크 이동
   const onClickCategory = (categoryId: number) => {
@@ -87,10 +105,8 @@ export const useCategorySlider = () => {
     const pos = scrollRef.current.scrollLeft - 200; // 이동 할 위치
     if (pos <= 0) {
       scrollRef.current.scrollTo({ left: 0 });
-      setLeftVisible(false);
     } else {
       scrollRef.current.scrollTo({ left: pos });
-      setRightVisible(true);
     }
   };
   // 슬라이드 오른쪽 이동
@@ -104,10 +120,8 @@ export const useCategorySlider = () => {
 
     if (maxWidth - boxWidth <= pos) {
       scrollRef.current.scrollTo({ left: maxWidth });
-      setRightVisible(false);
     } else {
       scrollRef.current.scrollTo({ left: pos });
-      setLeftVisible(true);
     }
   };
 
@@ -119,9 +133,9 @@ export const useCategorySlider = () => {
     categoryId,
     handleScrollRef,
     scrollRef,
+    moreVisible,
     leftVisible,
     rightVisible,
-    moreVisible,
     onClickCategory,
     onClickLeft,
     onClickRight,
