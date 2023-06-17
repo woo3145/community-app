@@ -37,7 +37,9 @@ const getParams = (req: Request) => {
 
 // 유저가 쓴 댓글목록 가져오기
 const _GET = async (req: Request, { params }: Params) => {
-  const { userId } = params;
+  const {
+    params: { userId },
+  } = ParamsSchema.parse(params);
   const { page, limit } = getParams(req);
 
   const comments = await getCommentsByUserId(userId, page, limit);

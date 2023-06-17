@@ -41,7 +41,9 @@ const getParams = (req: Request) => {
 // 유저가 쓴 게시물 목록 가져오기
 const _GET = async (req: Request, { params }: Params) => {
   const session = await getServerSession(authOptions);
-  const { userId } = params;
+  const {
+    params: { userId },
+  } = ParamsSchema.parse(params);
   const { page, limit } = getParams(req);
 
   const posts = await getPostsByUserId(userId, page, limit);

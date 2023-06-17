@@ -27,7 +27,9 @@ const _DELETE = async (req: Request, { params }: Params) => {
     throw new UnauthorizedError();
   }
 
-  const { commentId } = params;
+  const {
+    params: { commentId },
+  } = ParamsSchema.parse(params);
   const comment = await getCommentById(commentId);
   if (!comment) {
     throw new NotFoundError();

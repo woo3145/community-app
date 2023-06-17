@@ -28,7 +28,7 @@ export function withErrorHandling(
 ) {
   return async (req: Request, ...rest: any) => {
     try {
-      return await handler(req, rest);
+      return await handler(req, ...rest);
     } catch (e) {
       return handleError(e);
     }

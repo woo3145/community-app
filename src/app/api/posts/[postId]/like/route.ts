@@ -24,7 +24,9 @@ type Params = z.infer<typeof ParamsSchema>;
 
 // 게시글 좋아요 수 불러오기
 const _GET = async (req: Request, { params }: Params) => {
-  const { postId } = params;
+  const {
+    params: { postId },
+  } = ParamsSchema.parse(params);
   const post = await getPostById(postId);
 
   if (!post) {
@@ -41,7 +43,10 @@ const _PUT = async (req: Request, { params }: Params) => {
     throw new UnauthorizedError();
   }
 
-  const { postId } = params;
+  const {
+    params: { postId },
+  } = ParamsSchema.parse(params);
+
   const bodySchema = z.object({
     isLiked: z.boolean(),
   });

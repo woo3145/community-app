@@ -27,7 +27,9 @@ type Params = z.infer<typeof ParamsSchema>;
 
 // 게시물 하나 가져오기
 const _GET = async (req: Request, { params }: Params) => {
-  const { postId } = params;
+  const {
+    params: { postId },
+  } = ParamsSchema.parse(params);
   const post = await getPostById(postId);
 
   if (!post) {
@@ -39,7 +41,9 @@ const _GET = async (req: Request, { params }: Params) => {
 
 // 게시물 삭제
 const _DELETE = async (req: Request, { params }: Params) => {
-  const { postId } = params;
+  const {
+    params: { postId },
+  } = ParamsSchema.parse(params);
 
   const session = await getServerSession(authOptions);
   if (!session) {

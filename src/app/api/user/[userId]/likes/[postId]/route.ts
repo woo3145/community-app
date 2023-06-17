@@ -16,7 +16,9 @@ type Params = z.infer<typeof ParamsSchema>;
 
 // 유저가 해당 게시글을 좋아하는지 여부
 const _GET = async (req: Request, { params }: Params) => {
-  const { userId, postId } = params;
+  const {
+    params: { userId, postId },
+  } = ParamsSchema.parse(params);
 
   const likes = await client.likedPost.findFirst({
     where: {

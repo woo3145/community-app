@@ -23,7 +23,9 @@ type Params = z.infer<typeof ParamsSchema>;
 
 // 유저 프로필 가져오기
 const _GET = async (req: Request, { params }: Params) => {
-  const { userId } = params;
+  const {
+    params: { userId },
+  } = ParamsSchema.parse(params);
 
   const profile = await getProfileByUserId(userId);
 
@@ -41,8 +43,9 @@ const _PUT = async (req: Request, { params }: Params) => {
     throw new UnauthorizedError();
   }
 
-  const { userId } = params;
-
+  const {
+    params: { userId },
+  } = ParamsSchema.parse(params);
   const profile = await getProfileByUserId(userId);
   if (!profile) {
     throw new NotFoundError('profile');

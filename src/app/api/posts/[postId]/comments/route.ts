@@ -26,8 +26,10 @@ const ParamsSchema = z.object({
 
 type Params = z.infer<typeof ParamsSchema>;
 
-const _GET = async (req: Request, { params }: Params) => {
-  const { postId } = params;
+const _GET = async (req: Request, params: Params) => {
+  const {
+    params: { postId },
+  } = ParamsSchema.parse(params);
   const comments = await getCommentsByPostId(postId);
 
   return NextResponse.json({ data: comments });
@@ -38,7 +40,9 @@ const _POST = async (req: Request, { params }: Params) => {
   if (!session) {
     throw new UnauthorizedError();
   }
-  const { postId } = params;
+  const {
+    params: { postId },
+  } = ParamsSchema.parse(params);
 
   const bodySchema = z.object({
     content: z.string().min(1, { message: 'Content is required' }),

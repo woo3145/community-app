@@ -60,8 +60,8 @@ export default async function PostDetail({
   );
 
   return (
-    <main className="container flex max-w-screen-lg py-20">
-      <aside className="shrink-0 w-[258px] relative">
+    <main className="flex xl:py-20">
+      <aside className="hidden w-64 mt-12 mr-5 xl:block shrink-0">
         <PostSideSection post={post} />
       </aside>
       <section className="relative card">
