@@ -15,7 +15,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <main className="w-full max-w-screen-md mx-auto pt-14">
+    <main className="mx-auto xl:pt-14">
       <div className="w-full">
         <MyProfileInfo />
       </div>

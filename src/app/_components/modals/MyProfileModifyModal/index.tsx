@@ -4,7 +4,6 @@ import { ModalHeader } from '../ModalHeader';
 import { EditProfileForm } from '@/app/_components/forms/EditProfileForm';
 import { Profile } from '@/interfaces/user';
 import { Modal } from '../Modal';
-import { ModalFooter } from '../ModalFooter';
 
 interface Props {
   closeModal: () => void;

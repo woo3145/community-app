@@ -4,8 +4,8 @@ import Skeleton from 'react-loading-skeleton';
 
 export default async function Loading() {
   return (
-    <main className="container flex max-w-screen-lg py-20">
-      <aside className="shrink-0 w-[258px] relative">
+    <main className="flex xl:py-20">
+      <aside className="hidden w-64 mt-12 mr-5 xl:block shrink-0">
         <div className="fixed w-[258px] pr-10">
           <div className="border-b border-gray-200 border-solid pb-7">
             <AuthorProfile isLoading={true} size={'md'} />

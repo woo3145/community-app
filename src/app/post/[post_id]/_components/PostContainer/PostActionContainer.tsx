@@ -67,11 +67,9 @@ export const PostActionContainer = ({ post }: Props) => {
               </div>
             </div>
           )}
-          <DeletePostConfirmModal
-            postId={post.id}
-            modalIsOpen={modalIsOpen}
-            closeModal={closeModal}
-          />
+          {modalIsOpen && (
+            <DeletePostConfirmModal postId={post.id} closeModal={closeModal} />
+          )}
         </div>
       )}
     </div>

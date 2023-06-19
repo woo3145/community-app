@@ -9,7 +9,7 @@ interface Props {
 export const SelectedTag = ({ dataCy, text, onClick }: Props) => {
   return (
     <div
-      className="flex justify-center items-center px-2 py-1 mr-2 border border-solid border-primary rounded-full text-primary font-bold"
+      className="flex items-center justify-center px-2 py-1 font-bold border border-solid rounded-full border-primary text-primary"
       data-cy={dataCy}
     >
       <span className="text-sm">{text}</span>

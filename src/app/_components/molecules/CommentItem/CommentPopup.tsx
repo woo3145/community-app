@@ -49,11 +49,9 @@ export const PopupMenu = ({
           </div>
         </div>
       )}
-      <DeleteCommentConfirmModal
-        comment={comment}
-        modalIsOpen={modalIsOpen}
-        closeModal={closeModal}
-      />
+      {modalIsOpen && (
+        <DeleteCommentConfirmModal comment={comment} closeModal={closeModal} />
+      )}
     </div>
   );
 };

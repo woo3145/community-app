@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function ProfilePage({ params: { user_id } }: Props) {
   return (
-    <main className="container max-w-screen-md mx-auto pt-14">
+    <main className="mx-auto xl:pt-14">
       <div className="w-full">
         <UserProfileInfo userId={user_id} />
       </div>

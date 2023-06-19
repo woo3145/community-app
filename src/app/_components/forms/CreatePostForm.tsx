@@ -51,7 +51,7 @@ export const CreatePostForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="fixed left-0 top-14 py-2.5 w-full bg-white border-b border-solid border-gray-200 z-20">
-        <div className="flex justify-end w-full max-w-screen-lg mx-auto">
+        <div className="flex justify-end w-full max-w-screen-lg px-4 mx-auto xl:px-0">
           <Button
             type="submit"
             text="등록하기"
@@ -60,7 +60,7 @@ export const CreatePostForm = () => {
           />
         </div>
       </div>
-      <div className="w-full max-w-screen-lg p-20 mx-auto card">
+      <div className="w-full max-w-screen-lg p-4 mx-auto xl:p-20 card">
         {/* 태그 */}
         <TagPicker
           selectedTags={selectedTags}
@@ -119,10 +119,9 @@ export const CreatePostForm = () => {
       </div>
 
       {/* 이미지 추가 버튼 */}
-      <div className="fixed top-0 left-0 right-0 flex flex-col items-end justify-end w-full h-screen max-w-screen-lg py-20 mx-auto pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 flex flex-col items-end justify-end w-full h-screen max-w-screen-lg px-4 py-20 mx-auto pointer-events-none xl:px-0">
         <div className="relative px-3 py-1 mb-2 text-xs font-bold text-white rounded-md bg-primary">
           <span>사진을 추가해 보세요!</span>
-          <div className={''}></div>
         </div>
         <label
           htmlFor="input-image"

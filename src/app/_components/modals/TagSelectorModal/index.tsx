@@ -8,20 +8,7 @@ import { toast } from 'react-toastify';
 import { TagList } from './TagList';
 import { ModalFooter } from '../ModalFooter';
 import { ModalHeader } from '../ModalHeader';
-
-const customStyles: ReactModal.Styles = {
-  overlay: {
-    zIndex: 30,
-  },
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
+import { Modal } from '../Modal';
 
 interface Props {
   modalIsOpen: boolean;
@@ -57,14 +44,8 @@ export const TagSelectorModal = ({
     closeModal();
   };
   return (
-    <ReactModal
-      isOpen={modalIsOpen}
-      onRequestClose={closeModal}
-      style={customStyles}
-      contentLabel="Example Modal"
-      ariaHideApp={false}
-    >
-      <div className="w-[460px] h-auto">
+    <Modal onRequestClose={closeModal}>
+      <div className="w-full min-w-[460px] max-h-[630px]">
         <ModalHeader title="태그 선택" closeModal={closeModal} />
 
         <div className="py-2">
@@ -80,6 +61,6 @@ export const TagSelectorModal = ({
 
         <ModalFooter text="완료" onClick={onClickSelect} />
       </div>
-    </ReactModal>
+    </Modal>
   );
 };

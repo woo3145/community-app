@@ -6,7 +6,6 @@ import { EmptyMyPosts } from '../../_components/EmptyBodyContainer';
 
 export const MyPosts = () => {
   const { data, isLoading, bottomRef, isReachedEnd } = useMyPosts();
-  console.log(isLoading);
   return (
     <div className="flex flex-col">
       {isLoading &&

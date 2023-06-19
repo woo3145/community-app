@@ -21,14 +21,14 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
   return (
     <div className="mb-5">
       <div className="mb-3 font-bold">
-        <span className="text-gray-600 mr-1">태그 선택</span>
-        <span className="text-gray-400 mr-1">(1~3개)</span>
+        <span className="mr-1 text-gray-600">태그 선택</span>
+        <span className="mr-1 text-gray-400">(1~3개)</span>
         <span className="text-red-600">*</span>
       </div>
       <div className="flex">
         <button
           type="button"
-          className="flex items-center justify-center w-8 h-8 border mr-4"
+          className="flex items-center justify-center w-8 h-8 mr-4 border"
           onClick={openModal}
           data-cy={'tag-add-button_1'}
         >
@@ -53,7 +53,10 @@ export const TagPicker = ({ selectedTags, setSelectedTags }: Props) => {
           />
         )}
 
-        <div className="flex items-center" data-cy="selectedTag-container">
+        <div
+          className="flex flex-wrap items-center gap-2"
+          data-cy="selectedTag-container"
+        >
           {selectedTags.map((tag, idx) => {
             return (
               <SelectedTag

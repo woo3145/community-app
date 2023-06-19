@@ -66,7 +66,7 @@ export const PostItem = ({ post, isLoading, dataCy }: Props) => {
 
   return (
     <article
-      className="flex flex-col py-5 border-b border-gray-200 border-solid xl:flex-row px-7"
+      className="flex flex-col px-3 py-5 border-b border-gray-200 border-solid xl:flex-row md:px-6 xl:px-7"
       data-cy={dataCy}
     >
       <div className="w-full">

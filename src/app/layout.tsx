@@ -19,13 +19,15 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="w-full mx-auto bg-gray-100 xl:max-w-screen-lg max-xl:no-scrollbar">
-        <SessionProviders>
-          <SWRProvider>
-            <Header />
-            {children}
-          </SWRProvider>
-        </SessionProviders>
+      <body className="mx-auto bg-gray-100">
+        <div className="w-full mx-auto xl:max-w-screen-lg">
+          <SessionProviders>
+            <SWRProvider>
+              <Header />
+              {children}
+            </SWRProvider>
+          </SessionProviders>
+        </div>
       </body>
     </html>
   );

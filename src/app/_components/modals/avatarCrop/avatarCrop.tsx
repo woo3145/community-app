@@ -8,23 +8,9 @@ import { PreviewLayer } from './previewLayer';
 import { useImageCrop } from '@/hooks/useImageCrop';
 import { ModalFooter } from '../ModalFooter';
 import { ModalHeader } from '../ModalHeader';
-
-const customStyles: ReactModal.Styles = {
-  overlay: {
-    zIndex: 30,
-  },
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
+import { Modal } from '../Modal';
 
 interface Props {
-  modalIsOpen: boolean;
   closeModal: () => void;
   preview: string;
   setPreview: Dispatch<SetStateAction<string>>;
@@ -33,7 +19,6 @@ interface Props {
 }
 
 export const AvatarCrop = ({
-  modalIsOpen,
   closeModal,
   preview,
   setPreview,
@@ -64,20 +49,15 @@ export const AvatarCrop = ({
   };
 
   return (
-    <ReactModal
-      isOpen={modalIsOpen}
+    <Modal
       onRequestClose={closeModal}
-      style={customStyles}
-      contentLabel="Example Modal"
-      ariaHideApp={false}
       shouldCloseOnOverlayClick={false} // 오버레이 클릭 시 닫기 막음(오버레이로 닫으면 crop이 안되고 원본으로 저장되기 때문)
     >
+      <ModalHeader
+        title="프로필 사진 만들기"
+        closeModal={cancelAndCloseModal}
+      />
       <div className="w-full min-w-[460px] max-h-[630px]" data-cy="crop-modal">
-        <ModalHeader
-          title="프로필 사진 만들기"
-          closeModal={cancelAndCloseModal}
-        />
-
         <div className="py-2">
           <div className="relative flex items-center justify-center bg-black">
             <PreviewLayer image={image} imageSize={imageSize} />
@@ -88,13 +68,12 @@ export const AvatarCrop = ({
             />
           </div>
         </div>
-
-        <ModalFooter
-          text="완료"
-          onClick={onClickCropImage}
-          buttonDataCy="crop-button"
-        />
       </div>
-    </ReactModal>
+      <ModalFooter
+        text="완료"
+        onClick={onClickCropImage}
+        buttonDataCy="crop-button"
+      />
+    </Modal>
   );
 };

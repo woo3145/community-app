@@ -1,5 +1,5 @@
 'use client';
-import React, { MouseEvent, useCallback, useRef } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useRef } from 'react';
 
 interface Props {
   children: React.ReactNode;
@@ -29,6 +29,22 @@ export const Modal = ({
     [closeModal, shouldCloseOnOverlayClick, overlay, wrapper]
   );
 
+  // 모달창 존재 시 body 스크롤 막기
+  useEffect(() => {
+    document.body.style.cssText = `
+        position: fixed;
+        top: -${window.scrollY}px;
+        left:0;
+        overflow-y: scroll;
+        width: 100%;
+    `;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    };
+  }, []);
+
   return (
     <div
       ref={overlay}
@@ -37,7 +53,7 @@ export const Modal = ({
     >
       <div
         ref={wrapper}
-        className="w-full h-full px-6 bg-white rounded-md xl:py-12 py-14 xl:w-auto xl:h-auto xl:rounded-md xl:-translate-y-1/2 xl:-translate-x-1/2 xl:absolute left-1/2 top-1/2"
+        className="w-full h-full px-6 bg-white rounded-md shadow-md xl:py-12 py-14 xl:w-auto xl:h-auto xl:rounded-md xl:-translate-y-1/2 xl:-translate-x-1/2 xl:absolute left-1/2 top-1/2"
       >
         {children}
       </div>
