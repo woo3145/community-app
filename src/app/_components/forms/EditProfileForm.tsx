@@ -72,111 +72,119 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="py-2">
-        <h3 className="text-lg font-bold">커뮤니티 기본정보</h3>
-        <p className="text-sm text-gray-500">
-          woo3145 커뮤니티에서 사용되는 정보입니다.
-        </p>
-        <div className="flex items-center justify-center py-7">
-          <div className="w-24 h-24">
-            <input
-              type="file"
-              name="image"
-              id="input-image"
-              accept="image/*"
-              style={{ display: 'none' }}
-              onChange={handleImage}
-              data-cy="avatar-input"
-            />
-            <label htmlFor="input-image" className="cursor-pointer">
-              <Avatar
-                src={preview ? preview : profile.avatar || ''}
-                uiSize="lg"
-                className="cursor-pointer"
-                data-cy="avatarPreview"
-              />
-            </label>
-          </div>
-          {cropModalIsOpen && preview !== profile.avatar && (
-            <AvatarCrop
-              modalIsOpen={cropModalIsOpen}
-              closeModal={closeCropModal}
-              preview={preview}
-              setPreview={setPreview}
-              setImageFile={setImageFile}
-              onCancel={onCancel}
-            />
-          )}
-        </div>
-        <div className="mb-8">
-          <h4 className="mb-2 text-sm font-bold text-gray-400">
-            이름 <span className="text-red-600">*</span>
-          </h4>
-
-          <div className="flex items-center mb-3">
-            <input
-              type="radio"
-              name="userNameType"
-              id={'nameType-false'}
-              value="default"
-              checked={nameType === false}
-              onClick={onClickDefault}
-              readOnly
-              className="w-5 h-5 m-0"
-            />
-            <label
-              htmlFor="nameType-false"
-              className="pl-2 mr-3 text-sm"
-              data-cy="nameType-false"
-            >
-              기본
-            </label>
-            <input
-              type="radio"
-              name="userNameType"
-              id={'nameType-true'}
-              value="default"
-              checked={nameType === true}
-              readOnly
-              onClick={onClickNickname}
-              className="w-5 h-5 m-0"
-            />
-            <label
-              htmlFor="nameType-true"
-              className="pl-2 text-sm"
-              data-cy="nameType-true"
-            >
-              닉네임
-            </label>
-          </div>
-          <InputField
-            id="nickname"
-            type="text"
-            placeholder="한글/영어/숫자만 가능(2~8자)"
-            dataCy="userName-input"
-            {...register('nickname', {
-              maxLength: 8,
-              minLength: 2,
-              required: true,
-            })}
-            disabled={!nameType}
-          />
-        </div>
-
-        <div>
-          <h4 className="mb-2 text-sm font-bold text-gray-400">한줄소개</h4>
-          <textarea
-            {...register('description', { maxLength: 150 })}
-            className="w-full h-[140px] resize-none card p-3 outline-1 outline-primary"
-            placeholder="간단한 자기소개 글을 작성해 주세요."
-            data-cy="description-input"
-          />
-          <p
-            className="text-sm text-right text-gray-400"
-            data-cy="description-length"
-          >
-            {watch().description?.length}/150
+      <div
+        className="w-full h-full py-4 xl:w-[390px] xl:max-h-[680px] relative overflow-y-scroll no-scrollbar"
+        data-cy="editProfile-modal"
+      >
+        <div className="">
+          <h3 className="text-lg font-bold">커뮤니티 기본정보</h3>
+          <p className="text-sm text-gray-500">
+            woo3145 커뮤니티에서 사용되는 정보입니다.
           </p>
+          {/* 프로필 이미지 */}
+          <div className="flex items-center justify-center py-7">
+            <div className="w-24 h-24">
+              <input
+                type="file"
+                name="image"
+                id="input-image"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleImage}
+                data-cy="avatar-input"
+              />
+              <label htmlFor="input-image" className="cursor-pointer">
+                <Avatar
+                  src={preview ? preview : profile.avatar || ''}
+                  uiSize="lg"
+                  className="cursor-pointer"
+                  data-cy="avatarPreview"
+                />
+              </label>
+            </div>
+            {cropModalIsOpen && preview !== profile.avatar && (
+              <AvatarCrop
+                modalIsOpen={cropModalIsOpen}
+                closeModal={closeCropModal}
+                preview={preview}
+                setPreview={setPreview}
+                setImageFile={setImageFile}
+                onCancel={onCancel}
+              />
+            )}
+          </div>
+          {/* 프로필 정보 */}
+          <div className="mb-8">
+            {/* 이름 or 닉네임*/}
+            <h4 className="mb-2 text-sm font-bold text-gray-400">
+              이름 <span className="text-red-600">*</span>
+            </h4>
+
+            <div className="flex items-center mb-3">
+              <input
+                type="radio"
+                name="userNameType"
+                id={'nameType-false'}
+                value="default"
+                checked={nameType === false}
+                onClick={onClickDefault}
+                readOnly
+                className="w-5 h-5 m-0"
+              />
+              <label
+                htmlFor="nameType-false"
+                className="pl-2 mr-3 text-sm"
+                data-cy="nameType-false"
+              >
+                기본
+              </label>
+              <input
+                type="radio"
+                name="userNameType"
+                id={'nameType-true'}
+                value="default"
+                checked={nameType === true}
+                readOnly
+                onClick={onClickNickname}
+                className="w-5 h-5 m-0"
+              />
+              <label
+                htmlFor="nameType-true"
+                className="pl-2 text-sm"
+                data-cy="nameType-true"
+              >
+                닉네임
+              </label>
+            </div>
+            <InputField
+              id="nickname"
+              type="text"
+              placeholder="한글/영어/숫자만 가능(2~8자)"
+              dataCy="userName-input"
+              {...register('nickname', {
+                maxLength: 8,
+                minLength: 2,
+                required: true,
+              })}
+              disabled={!nameType}
+            />
+          </div>
+          {/* 한줄소개 */}
+          <div>
+            <h4 className="mb-2 text-sm font-bold text-gray-400">한줄소개</h4>
+            <textarea
+              {...register('description', { maxLength: 150 })}
+              className="w-full h-[140px] resize-none card p-3 outline-1 outline-primary"
+              placeholder="간단한 자기소개 글을 작성해 주세요."
+              data-cy="description-input"
+            />
+            <p
+              className="text-sm text-right text-gray-400"
+              data-cy="description-length"
+            >
+              {watch().description?.length}/150
+            </p>
+          </div>
         </div>
       </div>
 

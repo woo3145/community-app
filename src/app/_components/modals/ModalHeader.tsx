@@ -7,9 +7,9 @@ interface Props {
 
 export const ModalHeader = ({ title, closeModal }: Props) => {
   return (
-    <div className="flex justify-center items-center pb-5 relative">
+    <div className="absolute top-0 left-0 z-30 flex items-center justify-center w-full bg-white border-b xl:border-none xl:rounded-t-md h-14">
       <h2 className="text-lg font-bold">{title}</h2>
-      <button onClick={closeModal} className="text-2xl absolute right-0">
+      <button onClick={closeModal} className="absolute text-2xl right-4">
         <IoCloseOutline />
       </button>
     </div>

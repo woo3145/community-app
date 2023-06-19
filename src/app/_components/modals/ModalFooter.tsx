@@ -14,7 +14,7 @@ export const ModalFooter = ({
   buttonDataCy,
 }: Props) => {
   return (
-    <div className="w-full">
+    <div className="absolute bottom-0 left-0 z-30 flex items-center justify-center w-full px-4 bg-white border-t h-14 xl:border-none xl:rounded-b-md">
       <Button
         type={onClick ? 'button' : 'submit'}
         text={text}
