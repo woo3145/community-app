@@ -1,7 +1,6 @@
 'use client';
 import { cropImage } from '@/libs/client/imageUtils';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import ReactModal from 'react-modal';
 
 import { CropLayer } from './cropLayer';
 import { PreviewLayer } from './previewLayer';

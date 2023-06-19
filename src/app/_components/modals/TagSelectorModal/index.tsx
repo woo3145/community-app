@@ -1,7 +1,6 @@
 'use client';
 import { useTags } from '@/hooks/swr/useTags';
 import { Dispatch, SetStateAction, useState } from 'react';
-import ReactModal from 'react-modal';
 
 import { toast } from 'react-toastify';
 
