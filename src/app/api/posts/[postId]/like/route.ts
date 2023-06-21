@@ -30,7 +30,7 @@ const _GET = async (req: Request, params: Params) => {
   const post = await getPostById(postId);
 
   if (!post) {
-    throw new NotFoundError();
+    throw new NotFoundError({ message: '게시글을 찾을 수 없습니다.' });
   }
 
   return NextResponse.json({ data: post._count.likes });

@@ -45,19 +45,16 @@ const _POST = async (req: Request, params: Params) => {
   } = ParamsSchema.parse(params);
 
   const bodySchema = z.object({
-    content: z.string().min(1, { message: 'Content is required' }),
+    content: z.string().min(1, { message: '내용을 입력해주세요.' }),
   });
   const body = await req.json();
   const { content } = bodySchema.parse(body);
 
   const post = await getPostById(postId);
   if (!post) {
-    throw new NotFoundError('post');
+    throw new NotFoundError({ message: '게시글을 찾을 수 없습니다.' });
   }
 
-  if (!content) {
-    throw new ValidationError();
-  }
   const newComment = await createComment(session.user.id, post.id, content);
 
   return NextResponse.json({ data: newComment });

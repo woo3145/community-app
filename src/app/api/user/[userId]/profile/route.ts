@@ -30,7 +30,7 @@ const _GET = async (req: Request, params: Params) => {
   const profile = await getProfileByUserId(userId);
 
   if (!profile) {
-    throw new NotFoundError();
+    throw new NotFoundError({});
   }
 
   return NextResponse.json({ data: profile });
@@ -48,7 +48,7 @@ const _PUT = async (req: Request, params: Params) => {
   } = ParamsSchema.parse(params);
   const profile = await getProfileByUserId(userId);
   if (!profile) {
-    throw new NotFoundError('profile');
+    throw new NotFoundError({ resourceName: 'profile' });
   }
 
   if (profile.userId !== session.user.id) {

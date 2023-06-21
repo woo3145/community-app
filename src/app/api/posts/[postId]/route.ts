@@ -33,7 +33,7 @@ const _GET = async (req: Request, params: Params) => {
   const post = await getPostById(postId);
 
   if (!post) {
-    throw new NotFoundError();
+    throw new NotFoundError({});
   }
 
   return NextResponse.json({ data: post });
@@ -52,7 +52,7 @@ const _DELETE = async (req: Request, params: Params) => {
 
   const post = await getPostById(postId);
   if (!post) {
-    throw new NotFoundError('post');
+    throw new NotFoundError({ resourceName: 'post' });
   }
 
   if (!post.userId || post.userId !== session.user.id) {

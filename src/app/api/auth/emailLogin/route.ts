@@ -18,12 +18,14 @@ const validateUserPassword = async (
   storedPassword: string | null
 ) => {
   if (!storedPassword) {
-    throw new ValidationError('password');
+    throw new ValidationError({ message: '간편로그인 계정이 존재합니다.' });
   }
 
   const passwordMatches = await bcrypt.compare(password, storedPassword);
   if (!passwordMatches) {
-    throw new ValidationError('password');
+    throw new ValidationError({
+      message: '아이디나 패스워드가 일치하지 않습니다.',
+    });
   }
 };
 
@@ -40,7 +42,9 @@ const _POST = async (req: Request) => {
   });
 
   if (!user) {
-    throw new NotFoundError('user');
+    throw new NotFoundError({
+      message: '아이디나 패스워드가 일치하지 않습니다.',
+    });
   }
   await validateUserPassword(password, user.password);
 

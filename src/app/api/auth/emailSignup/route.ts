@@ -24,7 +24,7 @@ const _POST = async (req: Request) => {
   });
 
   if (!!user) {
-    throw new ValidationError();
+    throw new ValidationError({});
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);

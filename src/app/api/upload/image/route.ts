@@ -11,7 +11,7 @@ const _POST = async (req: Request) => {
   const file = formData.get('image') as File;
 
   if (!file) {
-    throw new NotFoundError('file');
+    throw new NotFoundError({ resourceName: 'file' });
   }
 
   const filePath = await upload(file);

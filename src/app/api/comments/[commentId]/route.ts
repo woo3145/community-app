@@ -32,11 +32,11 @@ const _DELETE = async (req: Request, params: Params) => {
   } = ParamsSchema.parse(params);
   const comment = await getCommentById(commentId);
   if (!comment) {
-    throw new NotFoundError();
+    throw new NotFoundError({ message: '댓글을 찾을 수 없습니다.' });
   }
 
   if (!comment.userId || comment.userId !== session.user.id) {
-    throw new NotFoundError();
+    throw new NotFoundError({ message: '댓글을 삭제할 권한이 없습니다.' });
   }
 
   await deleteComment(comment.id);

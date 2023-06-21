@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { getCommentsByUserId } from '@/libs/prisma/comment';
 import { authOptions } from '@/libs/server/auth';
 import { withErrorHandling } from '@/libs/server/errorHandler';
-import { UnauthorizedError } from '@/libs/server/customErrors';
+import { UnauthorizedError, ValidationError } from '@/libs/server/customErrors';
 
 const QueryParamsSchema = z.object({
   page: z
@@ -39,7 +39,6 @@ const _GET = async (req: Request) => {
   const { page, limit } = getParams(req);
 
   const comments = await getCommentsByUserId(session.user.id, page, limit);
-
   return NextResponse.json({ data: comments });
 };
 
