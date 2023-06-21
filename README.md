@@ -88,12 +88,12 @@ AWS_S3_BUCKET=
 
       2. generateMetadata에서 api 요청시 loading.tsx파일을 무시함 (현재 문제 버전 13.3.4)
 
-      - 시행착오 : Route events의 routeChangeStart로 해결해 보려했지만 routeChangeComplete가 AppRouter에서 아직 지원하지않아 라우팅 완료시점을 구할 수 없음
+      - 시행착오 : Route events의 routeChangeStart로 해결해 보려했지만 routeChangeComplete가 AppRouter에서 아직 지원하지않아 라우팅 완료시점을 구할 수 없음  
         **참고 https://beta.nextjs.org/docs/api-reference/use-router#router-events**
 
-      - [x] 해결: 현재 nextjs 13.4 이상부터 App Router가 안정적인 버전으로 변경 되어 loading 파일과 generateMetadata를 함께써도 정상 작동함
-            첫 렌더링 때 generateMetadata와 loading컴포넌트로 document를 만들어 보내주고 page 컴포넌트를 lazy 렌더링 시킴(헤더만 ssr시켜 SEO문제 없음)
-            **참고 https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#seo**
+      - [x] 해결: 현재 nextjs 13.4 이상부터 App Router가 안정적인 버전으로 변경 되어 loading 파일과 generateMetadata를 함께써도 정상 작동함  
+             첫 렌더링 때 generateMetadata와 loading컴포넌트로 document를 만들어 보내주고 page 컴포넌트를 lazy 렌더링 시킴(헤더만 ssr시켜 SEO문제 없음)  
+             **참고 https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#seo**
 
   - [x] 이미지 placeholder 단색 blur 추가
 
@@ -109,37 +109,42 @@ AWS_S3_BUCKET=
 
 ### NextJS 13.4.3 에러 모음
 
-- [x] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....
-      nextjs 13.4.1 업데이트 후 발생 -> 에러 추적중 https://github.com/vercel/next.js/issues/49169
-      -> 13.4.3에서 해결
+- [x] Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './server.edge' is not defined by "exports" in ....  
+       nextjs 13.4.1 업데이트 후 발생  
+       -> 에러 추적중 https://github.com/vercel/next.js/issues/49169  
+       -> 13.4.3에서 해결
 
 - [ ] nextjs 13.4 의 serverActions 활성화 시 metadata 작동안함 (아직 적용하기 이른듯)
-      정보가 없어서 next.js에 issue 생성 https://github.com/vercel/next.js/issues/49650
-      canary 업데이트 후 재이슈 생성 https://github.com/vercel/next.js/issues/49679
+
+  - 정보가 없어서 next.js에 issue 생성 https://github.com/vercel/next.js/issues/49650
+
+  - canary 업데이트 후 재이슈 생성 https://github.com/vercel/next.js/issues/49679
+
+  - ~ 13.4.6 아직 해결안됨
 
 - [ ] NextAuth 문제 (app directory에선 refresh 토큰 방식 사용불가)
 
-  - nextJS 13의 app directory(서버컴포넌트)는 요청쿠키의 읽기만 가능하기 때문에 리프레시가 작동하지 않는다 😿
-    // 참고 https://next-auth.js.org/configuration/nextjs#middleware
+  - nextJS 13의 app directory(서버컴포넌트)는 요청쿠키의 읽기만 가능하기 때문에 리프레시가 작동하지 않는다 😿  
+    // 참고 https://next-auth.js.org/configuration/nextjs#middleware  
     공식문서에 의하면 위와 같은 문제로 30days로 쿠키가 보내지고 해당 쿠키가 삭제되면 다시 로그인 해야한다고 안내하고있다.
 
     - getServerSession의 내부코드를 살펴보면
 
-    1. app/ : 서버 컴포넌트에서 getServerSession(authOptions) 호출
+    1. app/ : 서버 컴포넌트에서 getServerSession(authOptions) 호출  
        pages/ : getServerSideProps()에서 getServerSession(req,res,authOption) 호출
     2. next/headers의 cookies를 가져와서 쿠키를 읽음
     3. authOptions의 jwt callback에서 리프레시 토큰 발급받아 새 쿠키를 리턴함
-    4. res.setHeader를 이용해 받아온 쿠키를 수정함
-       ㄴ 여기서 app/ 에서는 res를 넘겨주는 방법이 없기 때문에 쿠키를 수정할 수 없음
+    4. res.setHeader를 이용해 받아온 쿠키를 수정함  
+       ㄴ 여기서 app/ 에서는 res를 넘겨주는 방법이 없기 때문에 쿠키를 수정할 수 없음  
        ㄴ (getServerSession은 서버컴포넌트에서 실행되어 리프레시 토큰을 받아와 클라이언트에게 응답을 주기전에 수정하도록 설계되어있음)
-    5. 즉 pages/ 에선 getServerSideProps()가 미들웨어처럼 구현되어 있어서 중간에 응답 수정이 가능했지만 app/ 에선 컴포넌트 자체가 서버 컴포넌트라 수정이 불가함
+    5. 즉 pages/ 에선 getServerSideProps()가 미들웨어처럼 구현되어 있어서 중간에 응답 수정이 가능했지만  
+       app/ 에선 컴포넌트 자체가 서버 컴포넌트라 수정이 불가함
 
-    - 따라서 현재 next의 app/ 의 서버 컴포넌트에선 pages/처럼 api요청시 클라이언트의 쿠키를 수정할 방법이 없다.
+    - 정리하면 현재 next의 app/ 에서 SSR시 요청한 API들의 쿠키를 SSR응답에 다시 세팅할 수 없다.
 
 - [x] app/의 route handlers에서 multer로 Request 파싱 불가
 
   - 메세지 : @aws-sdk/signature-v4-crt' 를 찾을 수 없음
-    @aws-sdk/signature-v4-crt
   - 시도: 각 라이브러리 설치 후 아래와 같이 next.config의 webpack 설정으로 모듈 가져오기 시도
 
     ```
@@ -155,7 +160,7 @@ AWS_S3_BUCKET=
   - 결과 : 에러는 사라졌지만 multer가 req를 파싱하여 req를 수정할 수 없음
   - 원인 : app directory의 route handlers의 Request 객체와 multer가 받는 Request객체가 다름
     [참고](https://developer.mozilla.org/en-US/docs/Web/API/Request)
-  - 해결 : app directory의 route handlers에선 formdata를 req.formData()로 얻을 수 있음.
+  - 해결 : app directory의 route handlers에선 formdata를 req.formData()로 얻을 수 있음.  
     따라서 multer를 사용하지 않고 formData에서 file을 얻어서 buffer로 변환시킨 후 s3에 바로 업로드 시킴
 
 ### 💼 디렉토리 구조
@@ -176,7 +181,7 @@ AWS_S3_BUCKET=
     ㄴ loading.tsx - page에 Suspense를 씌움
   ㄴ api : next 13.2 버전에서 추가된 api 라우터
 ㄴ pages
-  ㄴ api : next 13.2 이전의 api 레이어
+  ㄴ api : next 13.2 이전의 api 레이어 // app/api로 마이그레이션
 ㄴ interfaces - 타입들
 ㄴ hooks
   ㄴ scrollSwr : useSWRInfinite를 이용한 무한 스크롤기능이 포함 된 Data Fetcher hook
