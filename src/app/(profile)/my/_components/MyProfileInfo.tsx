@@ -62,11 +62,7 @@ export const MyProfileInfo = () => {
       </div>
 
       {modalIsOpen && (
-        <MyProfileModifyModal
-          modalIsOpen={modalIsOpen}
-          closeModal={closeModal}
-          profile={me.profile}
-        />
+        <MyProfileModifyModal closeModal={closeModal} profile={me.profile} />
       )}
     </div>
   );
