@@ -5,9 +5,7 @@ import { isError, isServerError } from '../typeGuards';
 export const errorHandlerWithToast = (e: unknown) => {
   // 서버에서 발생시킨 에러
   if (isServerError(e)) {
-    e.errors.forEach((error) => {
-      toast.error(error.message);
-    });
+    toast.error(e.message);
     // 클라이언트에서 발생시킨 에러
   } else if (isError(e)) {
     toast.error(e.message);

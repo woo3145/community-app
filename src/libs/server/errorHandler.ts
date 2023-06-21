@@ -1,23 +1,25 @@
-import { CustomError } from './customErrors';
 import { NextResponse } from 'next/server';
-import { z } from 'zod';
+import { isCustomError, isZodError } from '../typeGuards';
 
 // API 에러 핸들러
 export function handleError(error: unknown) {
   // zod 에러 핸들링
-  if (error instanceof z.ZodError) {
-    return NextResponse.json({ message: error.message }, { status: 400 });
+  if (isZodError(error)) {
+    return NextResponse.json(
+      { message: error.message, statusCode: 400 },
+      { status: 400 }
+    );
 
     // CustomError 핸들링
-  } else if (error instanceof CustomError) {
+  } else if (isCustomError(error)) {
     return NextResponse.json(
-      { message: error.message },
+      { message: error.message, statusCode: error.statusCode },
       { status: error.statusCode }
     );
   } else {
     // 예상치 못한 에러
     return NextResponse.json(
-      { message: 'Internal Server Error' },
+      { message: 'Internal Server Error', statusCode: 500 },
       { status: 500 }
     );
   }
