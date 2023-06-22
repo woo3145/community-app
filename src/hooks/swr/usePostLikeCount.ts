@@ -19,8 +19,7 @@ export const usePostLikeCount = (postId: number): UseCommentsResponse => {
     mutate((oldData) => {
       if (!oldData) return;
       return { data: isLiked ? oldData.data + 1 : oldData.data - 1 };
-    });
-    mutate();
+    }); // 캐시 업데이트 후 재검증된 데이터 적용
   };
 
   if (!postId) {

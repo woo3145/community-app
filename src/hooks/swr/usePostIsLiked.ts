@@ -17,8 +17,7 @@ export const usePostIsLiked = (
     postId && userId ? `${API_BASE_URL}/user/${userId}/likes/${postId}` : null
   );
   const updateCache = (isLiked: boolean) => {
-    mutate({ data: isLiked });
-    mutate();
+    mutate({ data: isLiked }); // 캐시 업데이트 후 재검증된 데이터 적용
   };
 
   if (!postId) {

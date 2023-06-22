@@ -20,7 +20,6 @@ export const useMyComments = () => {
         };
       });
     });
-    mutate();
   };
 
   const updateDeletedCache = (deletedId: number) => {
@@ -29,16 +28,14 @@ export const useMyComments = () => {
       return oldData.filter((page) =>
         page.data.filter((c) => c.id != deletedId)
       );
-    });
-    mutate();
+    }); // 캐시 업데이트 후 재검증된 데이터 적용
   };
 
   const updateCreatedCache = (newComment: Comment) => {
     mutate((oldData) => {
       if (!oldData) return;
       return [{ data: [newComment] }, ...oldData];
-    });
-    mutate();
+    }); // 캐시 업데이트 후 재검증된 데이터 적용
   };
   return {
     data,

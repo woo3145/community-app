@@ -21,8 +21,7 @@ export const useMyRecents = () => {
           }),
         };
       });
-    });
-    mutate();
+    }, false);
   };
 
   return {

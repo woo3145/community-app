@@ -60,8 +60,7 @@ export const useCreatePost = (
       // 성공
       handleApiLoading(false, toastId);
       refresh();
-      router.push(`/post/${postId}`);
-      // window.location.href = `/post/${postId}`;
+      router.replace(`/post/${postId}`);
     } catch (e) {
       errorHandlerWithToast(e);
       handleApiLoading(false, toastId);

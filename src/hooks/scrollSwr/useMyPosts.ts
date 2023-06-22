@@ -21,8 +21,7 @@ export const useMyPosts = () => {
           }),
         };
       });
-    });
-    mutate();
+    }, false);
   };
 
   return {

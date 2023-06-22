@@ -18,8 +18,7 @@ export const useMe = (): UseMeResponse => {
     session ? `${API_BASE_URL}/me` : null
   );
   const updateCache = (newUser: Me) => {
-    mutate({ data: newUser });
-    mutate();
+    mutate({ data: newUser }, false);
   };
   if (!session) {
     return {

@@ -21,8 +21,7 @@ export const useMyLikes = () => {
           }),
         };
       });
-    });
-    mutate();
+    }, false);
   };
 
   return {

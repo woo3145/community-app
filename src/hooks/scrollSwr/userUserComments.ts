@@ -13,8 +13,7 @@ export const useUserComments = (userId?: string) => {
       return oldData.filter((page) =>
         page.data.filter((c) => c.id != deletedId)
       );
-    });
-    mutate();
+    }, false);
   };
 
   return {
