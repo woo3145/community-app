@@ -20,6 +20,7 @@ export const isServerError = (
     'statusCode' in error
   );
 };
+
 // 클라이언트에선 throw new Error("에러 메세지") 로 에러를 발생시킴
 export const isError = (error: unknown): error is Error => {
   return error instanceof Error;

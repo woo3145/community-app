@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMountedRef } from './useMountedRef';
 
 export const useCategorySlider = () => {
@@ -88,18 +88,21 @@ export const useCategorySlider = () => {
   }, [scrollRef, isMountedScrollRef]);
 
   // 링크 이동
-  const onClickCategory = (categoryId: number) => {
-    setCategoryId(categoryId);
-    setMoreVisible(false);
-    if (categoryId === -1 || categoryId === 0) {
-      router.push(`/`);
-    } else {
-      router.push(`/${categoryId}`);
-    }
-  };
+  const onClickCategory = useCallback(
+    (categoryId: number) => {
+      setCategoryId(categoryId);
+      setMoreVisible(false);
+      if (categoryId === -1 || categoryId === 0) {
+        router.push(`/`);
+      } else {
+        router.push(`/${categoryId}`);
+      }
+    },
+    [router]
+  );
 
   // 슬라이드 왼쪽이동
-  const onClickLeft = () => {
+  const onClickLeft = useCallback(() => {
     if (!scrollRef.current) return;
 
     const pos = scrollRef.current.scrollLeft - 200; // 이동 할 위치
@@ -108,9 +111,10 @@ export const useCategorySlider = () => {
     } else {
       scrollRef.current.scrollTo({ left: pos });
     }
-  };
+  }, [scrollRef]);
+
   // 슬라이드 오른쪽 이동
-  const onClickRight = () => {
+  const onClickRight = useCallback(() => {
     if (!scrollRef.current) return;
 
     const maxWidth = scrollRef.current.scrollWidth; // 스크롤 총 길이
@@ -123,11 +127,11 @@ export const useCategorySlider = () => {
     } else {
       scrollRef.current.scrollTo({ left: pos });
     }
-  };
+  }, [scrollRef]);
 
-  const onClickMoreButton = () => {
+  const onClickMoreButton = useCallback(() => {
     setMoreVisible(!moreVisible);
-  };
+  }, [moreVisible]);
 
   return {
     categoryId,

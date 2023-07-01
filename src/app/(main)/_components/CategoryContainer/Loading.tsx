@@ -28,7 +28,7 @@ const MockMoreButton = () => {
 export const CategoryContainerLoading = () => {
   return (
     <div className={`w-full xl:w-[748px] mt-14 xl:mt-12`}>
-      <div className="relative flex items-center w-full h-20 pr-12 border-t-0 rounded-none xl:border xl:rounded-t-md px-7 card">
+      <div className="relative flex items-center w-full h-20 border-t-0 rounded-none xl:border xl:rounded-t-md px-7 card">
         <CategorySliderLoading />
         <MockMoreButton />
       </div>

@@ -43,17 +43,17 @@ export const useCreateComment = (postId: number, reset: () => void) => {
       if (!data.content) {
         throw new Error('내용을 입력해 주세요.');
       }
-
       toastId = toast.loading('처리중 입니다.');
       handleApiLoading(true);
+
       const mergedContents = mergeNewlines(data.content);
       const res = await _createComment(postId, mergedContents);
 
       reset();
       updateCache(res.data);
-      handleApiLoading(false, toastId);
     } catch (e) {
       errorHandlerWithToast(e);
+    } finally {
       handleApiLoading(false, toastId);
     }
   };

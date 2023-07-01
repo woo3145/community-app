@@ -5,11 +5,7 @@ import { z } from 'zod';
 
 import { createComment, getCommentsByPostId } from '@/libs/prisma/comment';
 import { authOptions } from '@/libs/server/auth';
-import {
-  NotFoundError,
-  UnauthorizedError,
-  ValidationError,
-} from '@/libs/server/customErrors';
+import { NotFoundError, UnauthorizedError } from '@/libs/server/customErrors';
 import { getPostById } from '@/libs/prisma/post';
 import { withErrorHandling } from '@/libs/server/errorHandler';
 
