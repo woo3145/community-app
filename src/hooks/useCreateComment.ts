@@ -1,18 +1,21 @@
+import { useSession } from 'next-auth/react';
+
 import { CreateCommentFormValue } from '@/app/_components/forms/CreateCommentForm';
 import { _createComment, _createPost } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
-import { Id, toast } from 'react-toastify';
-import { useComments } from './swr/useComments';
-import { useMyComments } from './scrollSwr/useMyComments';
 import { mergeNewlines } from '@/libs/textareaHelper';
 import { Comment } from '@/interfaces/comment';
+import { useComments } from './swr/useComments';
+import { useMyComments } from './scrollSwr/useMyComments';
+import { useApiLoading } from './useApiLoading';
 
 // 댓글 생성
 export const useCreateComment = (postId: number, reset: () => void) => {
   const { data: session } = useSession();
-  const [isApiLoading, setIsApiLoading] = useState(false);
+  const { startLoading, finishLoading, isLoading } = useApiLoading({
+    showToast: true,
+  });
+
   const { updateCreatedCache: updateCreatedCacheInComments } =
     useComments(postId);
   const { updateCreatedCache: updateCreatedCacheInMyComments } =
@@ -26,16 +29,9 @@ export const useCreateComment = (postId: number, reset: () => void) => {
     updateCreatedCacheInMyComments(newComment);
   };
 
-  const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
-    setIsApiLoading(isLoading);
-    if (toastId) {
-      toast.dismiss(toastId);
-    }
-  };
-
   const onSubmit = async (data: CreateCommentFormValue) => {
-    let toastId: Id | null = null;
-    if (isApiLoading) return;
+    if (isLoading) return;
+
     try {
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
@@ -43,8 +39,7 @@ export const useCreateComment = (postId: number, reset: () => void) => {
       if (!data.content) {
         throw new Error('내용을 입력해 주세요.');
       }
-      toastId = toast.loading('처리중 입니다.');
-      handleApiLoading(true);
+      startLoading();
 
       const mergedContents = mergeNewlines(data.content);
       const res = await _createComment(postId, mergedContents);
@@ -54,9 +49,9 @@ export const useCreateComment = (postId: number, reset: () => void) => {
     } catch (e) {
       errorHandlerWithToast(e);
     } finally {
-      handleApiLoading(false, toastId);
+      finishLoading();
     }
   };
 
-  return { onSubmit, isApiLoading };
+  return { onSubmit, isApiLoading: isLoading };
 };

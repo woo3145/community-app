@@ -1,9 +1,10 @@
-import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+
+import { useRouter } from 'next/navigation';
 import { useMountedRef } from './useMountedRef';
 
 export const useCategorySlider = () => {
-  const [categoryId, setCategoryId] = useState<number>(-1);
+  const [categoryId, setCategoryId] = useState<number>();
   const router = useRouter();
 
   const [leftVisible, setLeftVisible] = useState(false); // 슬라이드 왼쪽 버튼
@@ -17,20 +18,24 @@ export const useCategorySlider = () => {
     ref: scrollRef,
     isMounted: isMountedScrollRef,
     handleRef: handleScrollRef,
-  } = useMountedRef<any>();
+  } = useMountedRef<HTMLElement>();
 
-  // 첫 로딩시 현재 페이지의 param으로 categoryId 설정
+  // 첫 로딩시(새로고침) 현재 페이지의 param으로 categoryId 설정
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (categoryId === undefined) {
-      const pathname = window.location.pathname.slice(1);
-      if (pathname === '') {
-        setCategoryId(-1);
-      } else if (pathname === 'all') {
-        setCategoryId(0);
-      } else {
-        setCategoryId(parseInt(pathname));
+    try {
+      if (categoryId === undefined) {
+        const pathname = window.location.pathname.slice(1);
+        if (pathname === '') {
+          setCategoryId(-1);
+        } else if (pathname === 'all') {
+          setCategoryId(0);
+        } else {
+          setCategoryId(parseInt(pathname));
+        }
       }
+    } catch (e) {
+      setCategoryId(0);
     }
   }, [categoryId]);
 

@@ -1,7 +1,9 @@
-import { SessionProviders } from './_providers/sessionProviders';
-
-import { SWRProvider } from './_providers/swrProvider';
 import { Metadata } from 'next';
+
+import { ToastContainer } from 'react-toastify';
+
+import { SessionProviders } from './_providers/sessionProviders';
+import { SWRProvider } from './_providers/swrProvider';
 import { Header } from './_components/molecules/Header';
 
 import '@/styles/global.css';
@@ -25,6 +27,7 @@ export default async function RootLayout({
             <SWRProvider>
               <Header />
               {children}
+              <ToastContainer />
             </SWRProvider>
           </SessionProviders>
         </div>

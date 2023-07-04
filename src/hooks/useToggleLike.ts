@@ -1,20 +1,22 @@
+import { useSession } from 'next-auth/react';
+
 import { _updatePostLikes } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
-import { Id, toast } from 'react-toastify';
 import { usePostIsLiked } from './swr/usePostIsLiked';
 import { usePostLikeCount } from './swr/usePostLikeCount';
+import { useApiLoading } from './useApiLoading';
 
 // 게시물 좋아요 기능
 export const useToggleLike = (postId: number, isLiked: boolean) => {
   const { data: session } = useSession();
-  const [isApiLoading, setIsApiLoading] = useState(false);
   const { updateCache: updatePostIsLiked } = usePostIsLiked(
     postId,
     session?.user.id
   );
   const { updateCache: updatePostLikeCount } = usePostLikeCount(postId);
+  const { startLoading, finishLoading, isLoading } = useApiLoading({
+    showToast: true,
+  });
 
   // 좋아요 상태 캐시 업데이트
   const updateCache = (isLiked: boolean) => {
@@ -22,31 +24,23 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
     updatePostLikeCount(isLiked); // 게시물 좋아요 수
   };
 
-  const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
-    setIsApiLoading(isLoading);
-    if (toastId) {
-      toast.dismiss(toastId);
-    }
-  };
-
   const onClick = async () => {
-    let toastId: Id | null = null;
-    if (isApiLoading) return;
+    if (isLoading) return;
+
     try {
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
-      toastId = toast.loading('처리중 입니다.');
-      handleApiLoading(true);
+      startLoading();
 
       await _updatePostLikes(postId, !isLiked);
       updateCache(!isLiked);
-      handleApiLoading(false, toastId);
     } catch (e) {
       errorHandlerWithToast(e);
-      handleApiLoading(false, toastId);
+    } finally {
+      finishLoading();
     }
   };
 
-  return { onClick, isApiLoading };
+  return { onClick, isApiLoading: isLoading };
 };

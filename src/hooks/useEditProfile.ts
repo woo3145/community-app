@@ -1,9 +1,9 @@
+import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
+
 import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { _editProfile } from '@/libs/client/apis';
-import { Id, toast } from 'react-toastify';
-import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useMe } from './swr/useMe';
 import { Me, Profile } from '@/interfaces/user';
 import { EditProfileBody } from '@/interfaces/api';
@@ -12,6 +12,7 @@ import { useMyRecents } from './scrollSwr/useMyRecents';
 import { useMyComments } from './scrollSwr/useMyComments';
 import { useMyLikes } from './scrollSwr/useMyLikes';
 import { mergeNewlines } from '@/libs/textareaHelper';
+import { useApiLoading } from './useApiLoading';
 
 // 프로필 수정
 export const useEditProfile = (
@@ -27,7 +28,9 @@ export const useEditProfile = (
   const { updateUserCache: updateUserInMyComments } = useMyComments();
   const { updateUserCache: updateUserInMyLikes } = useMyLikes();
   const { data: session } = useSession();
-  const [isApiLoading, setIsApiLoading] = useState(false);
+  const { startLoading, finishLoading, isLoading } = useApiLoading({
+    showToast: true,
+  });
 
   const updateCache = (updatedData: EditProfileBody) => {
     if (!me) return;
@@ -46,17 +49,10 @@ export const useEditProfile = (
     updateUserInMyLikes(newUser); // 내가 좋아요 한 글
   };
 
-  const handleApiLoading = (isLoading: boolean, toastId?: Id | null) => {
-    setIsApiLoading(isLoading);
-    if (toastId) {
-      toast.dismiss(toastId);
-    }
-  };
-
   const onSubmit = async (data: EditProfileFormValue) => {
-    let toastId: Id | null = null;
+    if (isLoading) return;
+
     try {
-      if (isApiLoading) return;
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
@@ -75,8 +71,7 @@ export const useEditProfile = (
         if (callback) callback();
         return;
       }
-      toastId = toast.loading('처리중 입니다.');
-      handleApiLoading(true);
+      startLoading();
 
       // (이미지 업로드 후 url받아오기)
       const avatar = imageFile ? await uploadImage() : profile.avatar;
@@ -97,13 +92,13 @@ export const useEditProfile = (
       // 성공
       toast.success('성공적으로 업데이트 되었습니다.');
       updateCache(updatedData);
-      handleApiLoading(false, toastId);
       if (callback) callback();
     } catch (e) {
       errorHandlerWithToast(e);
-      handleApiLoading(false, toastId);
+    } finally {
+      finishLoading();
     }
   };
 
-  return { onSubmit, isApiLoading };
+  return { onSubmit, isApiLoading: isLoading };
 };
