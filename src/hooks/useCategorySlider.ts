@@ -3,13 +3,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMountedRef } from './useMountedRef';
 
+// 카테고리 슬라이더의 상태와 관련 기능을 가진 hook
 export const useCategorySlider = () => {
   const [categoryId, setCategoryId] = useState<number>();
   const router = useRouter();
 
   const [leftVisible, setLeftVisible] = useState(false); // 슬라이드 왼쪽 버튼
   const [rightVisible, setRightVisible] = useState(true); // 슬라이드 오른쪽 버튼
-  const [moreVisible, setMoreVisible] = useState(false); // 카테고리 펼치기 버튼
 
   // 문제 : 새로고침 시 categoryId가 세팅되고 useRef는 아직 세팅되지 않아서 스크롤링 useEffect 작동안함
   // (deps를 없애서 매번 실행시키기 보다는 다른 방법 탐색)
@@ -96,7 +96,6 @@ export const useCategorySlider = () => {
   const onClickCategory = useCallback(
     (categoryId: number) => {
       setCategoryId(categoryId);
-      setMoreVisible(false);
       if (categoryId === -1 || categoryId === 0) {
         router.push(`/`);
       } else {
@@ -134,20 +133,14 @@ export const useCategorySlider = () => {
     }
   }, [scrollRef]);
 
-  const onClickMoreButton = useCallback(() => {
-    setMoreVisible(!moreVisible);
-  }, [moreVisible]);
-
   return {
-    categoryId,
-    handleScrollRef,
-    scrollRef,
-    moreVisible,
+    categoryId, // 현재 설정된 카테고리
+    handleScrollRef, // 다음 글을 불러올 트리거 ref를 설정하는 함수
+    scrollRef, // 다음 글을 불러올 트리거 ref
     leftVisible,
     rightVisible,
     onClickCategory,
     onClickLeft,
     onClickRight,
-    onClickMoreButton,
   };
 };

@@ -9,8 +9,9 @@ import { useMyComments } from './scrollSwr/useMyComments';
 import { useComments } from './swr/useComments';
 import { useUserComments } from './scrollSwr/userUserComments';
 import { useApiLoading } from './useApiLoading';
+import { useCallback } from 'react';
 
-// 댓글 삭제
+// 내 댓글을 삭제하는 hook
 export const useDeleteComment = (comment: Comment, callback?: () => void) => {
   const { data: session } = useSession();
   const { updateDeletedCache: updateDeletedCacheInMyComments } =
@@ -25,16 +26,23 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
   });
 
   // 댓글 삭제 캐시 업데이트
-  const updateCache = (deletedCommentId: number) => {
-    // 내 댓글
-    updateDeletedCacheInMyComments(deletedCommentId);
-    // 유저 댓글
-    updateDeletedCacheInUserComments(deletedCommentId);
-    // 게시물 댓글
-    updateDeletedCacheInComments(deletedCommentId);
-  };
+  const updateCache = useCallback(
+    (deletedCommentId: number) => {
+      // 내 댓글
+      updateDeletedCacheInMyComments(deletedCommentId);
+      // 유저 댓글
+      updateDeletedCacheInUserComments(deletedCommentId);
+      // 게시물 댓글
+      updateDeletedCacheInComments(deletedCommentId);
+    },
+    [
+      updateDeletedCacheInMyComments,
+      updateDeletedCacheInUserComments,
+      updateDeletedCacheInComments,
+    ]
+  );
 
-  const onClick = async () => {
+  const onClick = useCallback(async () => {
     if (isLoading) return;
 
     try {
@@ -53,7 +61,15 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
     } finally {
       finishLoading();
     }
-  };
+  }, [
+    callback,
+    comment,
+    updateCache,
+    finishLoading,
+    startLoading,
+    isLoading,
+    session,
+  ]);
 
   return { onClick, isApiLoading: isLoading };
 };

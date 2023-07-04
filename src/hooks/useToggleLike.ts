@@ -5,6 +5,7 @@ import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { usePostIsLiked } from './swr/usePostIsLiked';
 import { usePostLikeCount } from './swr/usePostLikeCount';
 import { useApiLoading } from './useApiLoading';
+import { useCallback } from 'react';
 
 // 게시물 좋아요 기능
 export const useToggleLike = (postId: number, isLiked: boolean) => {
@@ -19,12 +20,16 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
   });
 
   // 좋아요 상태 캐시 업데이트
-  const updateCache = (isLiked: boolean) => {
-    updatePostIsLiked(isLiked); // 게시물 좋아요 여부
-    updatePostLikeCount(isLiked); // 게시물 좋아요 수
-  };
+  const updateCache = useCallback(
+    (isLiked: boolean) => {
+      updatePostIsLiked(isLiked); // 게시물 좋아요 여부
+      updatePostLikeCount(isLiked); // 게시물 좋아요 수
+    },
+    [updatePostIsLiked, updatePostLikeCount]
+  );
 
-  const onClick = async () => {
+  // 현재 게시글 좋아요 상태에서 반전 시킴(toggle)
+  const onClick = useCallback(async () => {
     if (isLoading) return;
 
     try {
@@ -40,7 +45,15 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
     } finally {
       finishLoading();
     }
-  };
+  }, [
+    isLoading,
+    session,
+    isLiked,
+    postId,
+    updateCache,
+    startLoading,
+    finishLoading,
+  ]);
 
   return { onClick, isApiLoading: isLoading };
 };

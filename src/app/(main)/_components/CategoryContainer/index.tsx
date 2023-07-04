@@ -11,8 +11,8 @@ import { useCategorySlider } from '@/hooks/useCategorySlider';
 import { CategoryContainerLoading } from './Loading';
 import { MoreCategories } from './MoreCategories';
 import { CategorySlider } from './CategorySlider';
-import { Avatar } from '@/app/_components/atoms/Avatar';
 import { MyAvatar } from './MyAvatar';
+import { useCallback, useState } from 'react';
 
 export const CategoryContainer = () => {
   const {
@@ -20,14 +20,18 @@ export const CategoryContainer = () => {
     handleScrollRef,
     leftVisible,
     rightVisible,
-    moreVisible,
     onClickLeft,
     onClickRight,
     onClickCategory,
-    onClickMoreButton,
   } = useCategorySlider();
 
   const { subTags, isLoading } = useTags();
+
+  const [moreVisible, setMoreVisible] = useState(false);
+
+  const onClickMoreButton = useCallback(() => {
+    setMoreVisible(!moreVisible);
+  }, [moreVisible]);
 
   if (isLoading) {
     return <CategoryContainerLoading />;

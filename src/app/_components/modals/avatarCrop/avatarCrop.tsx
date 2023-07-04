@@ -24,7 +24,7 @@ export const AvatarCrop = ({
   setImageFile,
   onCancel,
 }: Props) => {
-  const { image, imageSize, dragArea, setDragArea, initImage } =
+  const { image, imageSize, dragArea, setDragArea, initImage, crop } =
     useImageCrop(preview);
 
   useEffect(() => {
@@ -32,12 +32,11 @@ export const AvatarCrop = ({
   }, [initImage]);
 
   const onClickCropImage = async () => {
-    if (!image) return;
-    const croppedImage = await cropImage(image, imageSize, dragArea);
-    if (!croppedImage) return;
-    const imageFile = new File([croppedImage], 'avatar.jpeg');
-    setImageFile(imageFile);
-    setPreview(URL.createObjectURL(croppedImage));
+    const imageFile = await crop();
+    if (imageFile) {
+      setImageFile(imageFile);
+      setPreview(URL.createObjectURL(imageFile));
+    }
     closeModal();
   };
 
@@ -49,7 +48,7 @@ export const AvatarCrop = ({
 
   return (
     <Modal
-      onRequestClose={closeModal}
+      onRequestClose={cancelAndCloseModal}
       shouldCloseOnOverlayClick={false} // 오버레이 클릭 시 닫기 막음(오버레이로 닫으면 crop이 안되고 원본으로 저장되기 때문)
     >
       <ModalHeader

@@ -1,7 +1,7 @@
 import { SelectButton } from '../../../_components/atoms/SelectButton';
 
 interface Props {
-  categoryId: number;
+  categoryId?: number;
   onClickCategory: (categoryId: number) => void;
   subTags: SubTag[];
 }

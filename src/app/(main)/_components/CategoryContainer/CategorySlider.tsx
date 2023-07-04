@@ -2,7 +2,7 @@ import { SelectButton } from '../../../_components/atoms/SelectButton';
 
 interface Props {
   handleScrollRef: (node: any) => void;
-  categoryId: number;
+  categoryId?: number;
   onClickCategory: (categoryId: number) => void;
   subTags: SubTag[];
 }

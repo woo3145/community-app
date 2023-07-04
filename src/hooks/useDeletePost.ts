@@ -4,15 +4,16 @@ import { toast } from 'react-toastify';
 import { _deleteComment, _deletePost } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { useApiLoading } from './useApiLoading';
+import { useCallback } from 'react';
 
-// 댓글 삭제
+// 내 게시글을 삭제하는 hook
 export const useDeletePost = (postId: number, callback?: () => void) => {
   const { data: session } = useSession();
   const { startLoading, finishLoading, isLoading } = useApiLoading({
     showToast: true,
   });
 
-  const onClick = async () => {
+  const onClick = useCallback(async () => {
     if (isLoading) return;
 
     try {
@@ -31,7 +32,7 @@ export const useDeletePost = (postId: number, callback?: () => void) => {
     } finally {
       finishLoading();
     }
-  };
+  }, [startLoading, finishLoading, isLoading, session, callback, postId]);
 
   return { onClick, isApiLoading: isLoading };
 };
