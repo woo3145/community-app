@@ -44,7 +44,7 @@ export const TagSelectorModal = ({
   };
   return (
     <Modal onRequestClose={closeModal}>
-      <div className="w-full min-w-[460px] max-h-[630px]">
+      <div className="w-full xl:max-w-[460px] xl:max-h-[630px]">
         <ModalHeader title="태그 선택" closeModal={closeModal} />
 
         <div className="py-2">
