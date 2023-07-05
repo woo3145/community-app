@@ -4,7 +4,6 @@ import useSWRInfinite from 'swr/infinite';
 import { KeyedMutator } from 'swr';
 
 import { useInfiniteScroll } from '../useInfiniteScroll';
-import { isServerError } from '@/libs/typeGuards';
 
 interface UseInfiniteScrollSWRReturn<T> {
   data: { data: T }[];
@@ -45,20 +44,6 @@ export const useInfiniteScrollSWR = <T extends any[]>(
     },
     {
       revalidateFirstPage: revalidateFirstPage,
-      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        // Never retry on 404 / 401.
-        if (isServerError(error)) {
-          if (error.statusCode === 404 || error.statusCode === 401) return;
-        } else {
-          if (error?.status === 404 || error?.status === 401) return;
-        }
-
-        // Only retry up to 10 times.
-        if (retryCount >= 5) return;
-
-        // Retry after 3 seconds.
-        setTimeout(() => revalidate({ retryCount }), 3000);
-      },
     }
   );
 
