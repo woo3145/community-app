@@ -7,15 +7,14 @@ import { mergeNewlines } from '@/libs/textareaHelper';
 import { Comment } from '@/interfaces/comment';
 import { useComments } from './swr/useComments';
 import { useMyComments } from './scrollSwr/useMyComments';
-import { useApiLoading } from './useApiLoading';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { useLoadingToast } from './useLoadingToast';
 
 // 댓글을 작성하는 hook
 export const useCreateComment = (postId: number, reset: () => void) => {
   const { data: session } = useSession();
-  const { startLoading, finishLoading, isLoading } = useApiLoading({
-    showToast: true,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { showLoadingToast, removeLoadingToast } = useLoadingToast();
 
   const { updateCreatedCache: updateCreatedCacheInComments } =
     useComments(postId);
@@ -44,7 +43,8 @@ export const useCreateComment = (postId: number, reset: () => void) => {
         if (!data.content) {
           throw new Error('내용을 입력해 주세요.');
         }
-        startLoading();
+        setIsLoading(true);
+        showLoadingToast();
 
         const mergedContents = mergeNewlines(data.content);
         const res = await _createComment(postId, mergedContents);
@@ -54,19 +54,20 @@ export const useCreateComment = (postId: number, reset: () => void) => {
       } catch (e) {
         errorHandlerWithToast(e);
       } finally {
-        finishLoading();
+        setIsLoading(false);
+        removeLoadingToast();
       }
     },
     [
-      startLoading,
-      finishLoading,
+      isLoading,
+      showLoadingToast,
+      removeLoadingToast,
       reset,
       session,
-      isLoading,
       postId,
       updateCache,
     ]
   );
 
-  return { onSubmit, isApiLoading: isLoading };
+  return { onSubmit, isLoading };
 };

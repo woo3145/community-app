@@ -7,8 +7,8 @@ import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { API_BASE_URL, _createPost, _editProfile } from '@/libs/client/apis';
 import { CreatePostFormValue } from '@/app/write/page';
 import { mergeNewlines } from '@/libs/textareaHelper';
-import { useApiLoading } from './useApiLoading';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { useLoadingToast } from './useLoadingToast';
 
 // 게시글을 작성하는 hook
 export const useCreatePost = (
@@ -18,9 +18,8 @@ export const useCreatePost = (
 ) => {
   const { data: session } = useSession();
   const { mutate } = useSWRConfig();
-  const { startLoading, finishLoading, isLoading } = useApiLoading({
-    showToast: true,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { showLoadingToast, removeLoadingToast } = useLoadingToast();
 
   const router = useRouter();
 
@@ -42,7 +41,8 @@ export const useCreatePost = (
         if (tags.length === 0 || 3 < tags.length) {
           throw new Error('태그의 수가 잘못되었습니다.');
         }
-        startLoading();
+        setIsLoading(true);
+        showLoadingToast();
 
         // (이미지 업로드 후 url받아오기)
         const imageUrl = imageFile ? await uploadImage() : '';
@@ -60,13 +60,14 @@ export const useCreatePost = (
       } catch (e) {
         errorHandlerWithToast(e);
       } finally {
-        finishLoading();
+        setIsLoading(false);
+        removeLoadingToast();
       }
     },
     [
-      startLoading,
-      finishLoading,
       isLoading,
+      showLoadingToast,
+      removeLoadingToast,
       imageFile,
       refresh,
       router,
@@ -76,5 +77,5 @@ export const useCreatePost = (
     ]
   );
 
-  return { onSubmit, isApiLoading: isLoading };
+  return { onSubmit, isLoading };
 };

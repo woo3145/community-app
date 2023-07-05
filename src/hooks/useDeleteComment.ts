@@ -8,8 +8,8 @@ import { Comment } from '@/interfaces/comment';
 import { useMyComments } from './scrollSwr/useMyComments';
 import { useComments } from './swr/useComments';
 import { useUserComments } from './scrollSwr/userUserComments';
-import { useApiLoading } from './useApiLoading';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { useLoadingToast } from './useLoadingToast';
 
 // 내 댓글을 삭제하는 hook
 export const useDeleteComment = (comment: Comment, callback?: () => void) => {
@@ -21,9 +21,8 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
   );
   const { updateDeletedCache: updateDeletedCacheInUserComments } =
     useUserComments(session?.user.id);
-  const { startLoading, finishLoading, isLoading } = useApiLoading({
-    showToast: true,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { showLoadingToast, removeLoadingToast } = useLoadingToast();
 
   // 댓글 삭제 캐시 업데이트
   const updateCache = useCallback(
@@ -49,7 +48,8 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
-      startLoading();
+      setIsLoading(true);
+      showLoadingToast();
 
       await _deleteComment(comment.id);
 
@@ -59,17 +59,18 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
     } catch (e) {
       errorHandlerWithToast(e);
     } finally {
-      finishLoading();
+      setIsLoading(false);
+      removeLoadingToast();
     }
   }, [
+    isLoading,
+    showLoadingToast,
+    removeLoadingToast,
     callback,
     comment,
     updateCache,
-    finishLoading,
-    startLoading,
-    isLoading,
     session,
   ]);
 
-  return { onClick, isApiLoading: isLoading };
+  return { onClick, isLoading };
 };

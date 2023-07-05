@@ -4,8 +4,8 @@ import { _updatePostLikes } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { usePostIsLiked } from './swr/usePostIsLiked';
 import { usePostLikeCount } from './swr/usePostLikeCount';
-import { useApiLoading } from './useApiLoading';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { useLoadingToast } from './useLoadingToast';
 
 // 게시물 좋아요 기능
 export const useToggleLike = (postId: number, isLiked: boolean) => {
@@ -15,9 +15,8 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
     session?.user.id
   );
   const { updateCache: updatePostLikeCount } = usePostLikeCount(postId);
-  const { startLoading, finishLoading, isLoading } = useApiLoading({
-    showToast: true,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { showLoadingToast, removeLoadingToast } = useLoadingToast();
 
   // 좋아요 상태 캐시 업데이트
   const updateCache = useCallback(
@@ -36,24 +35,26 @@ export const useToggleLike = (postId: number, isLiked: boolean) => {
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
-      startLoading();
+      setIsLoading(true);
+      showLoadingToast();
 
       await _updatePostLikes(postId, !isLiked);
       updateCache(!isLiked);
     } catch (e) {
       errorHandlerWithToast(e);
     } finally {
-      finishLoading();
+      setIsLoading(false);
+      removeLoadingToast();
     }
   }, [
     isLoading,
+    showLoadingToast,
+    removeLoadingToast,
     session,
     isLiked,
     postId,
     updateCache,
-    startLoading,
-    finishLoading,
   ]);
 
-  return { onClick, isApiLoading: isLoading };
+  return { onClick, isLoading };
 };

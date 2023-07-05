@@ -58,7 +58,7 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
     setValue('nickname', profile.nickname ? profile.nickname : '');
   };
 
-  const { onSubmit, isApiLoading } = useEditProfile(
+  const { onSubmit, isLoading } = useEditProfile(
     profile,
     nameType,
     imageFile,
@@ -182,9 +182,7 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
         <ModalFooter
           text="완료"
           isValid={
-            !isApiLoading &&
-            !(nameType === true && !watch().nickname) &&
-            isValid
+            !isLoading && !(nameType === true && !watch().nickname) && isValid
           }
         />
       </form>

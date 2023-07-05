@@ -10,10 +10,10 @@ interface Props {
 }
 
 export const DeleteCommentConfirmModal = ({ closeModal, comment }: Props) => {
-  const { isApiLoading, onClick } = useDeleteComment(comment, closeModal);
+  const { isLoading, onClick } = useDeleteComment(comment, closeModal);
 
   return (
-    <Modal onRequestClose={closeModal}>
+    <Modal onRequestClose={closeModal} shouldCloseOnOverlayClick={false}>
       <div className="mx-auto w-[390px] h-auto" data-cy="deleteComment-modal">
         <div className="py-5 text-2xl font-bold text-center">
           댓글을 삭제하시겠습니까?
@@ -26,6 +26,7 @@ export const DeleteCommentConfirmModal = ({ closeModal, comment }: Props) => {
             text="취소"
             isWide
             uiSize="lg"
+            isValid={!isLoading}
             dataCy="deleteComment-modal-cancel"
           />
           <Button
@@ -35,7 +36,7 @@ export const DeleteCommentConfirmModal = ({ closeModal, comment }: Props) => {
             text="삭제하기"
             isWide
             uiSize="lg"
-            isValid={!isApiLoading}
+            isValid={!isLoading}
             dataCy="deleteComment-modal-confirm"
           />
         </div>

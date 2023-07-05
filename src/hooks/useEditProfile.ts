@@ -12,8 +12,8 @@ import { useMyRecents } from './scrollSwr/useMyRecents';
 import { useMyComments } from './scrollSwr/useMyComments';
 import { useMyLikes } from './scrollSwr/useMyLikes';
 import { mergeNewlines } from '@/libs/textareaHelper';
-import { useApiLoading } from './useApiLoading';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { useLoadingToast } from './useLoadingToast';
 
 // 내 프로필을 수정하는 hook
 export const useEditProfile = (
@@ -29,9 +29,8 @@ export const useEditProfile = (
   const { updateUserCache: updateUserInMyComments } = useMyComments();
   const { updateUserCache: updateUserInMyLikes } = useMyLikes();
   const { data: session } = useSession();
-  const { startLoading, finishLoading, isLoading } = useApiLoading({
-    showToast: true,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { showLoadingToast, removeLoadingToast } = useLoadingToast();
 
   const updateCache = useCallback(
     (updatedData: EditProfileBody) => {
@@ -83,7 +82,8 @@ export const useEditProfile = (
           if (callback) callback();
           return;
         }
-        startLoading();
+        setIsLoading(true);
+        showLoadingToast();
 
         // (이미지 업로드 후 url받아오기)
         const avatar = imageFile ? await uploadImage() : profile.avatar;
@@ -108,13 +108,14 @@ export const useEditProfile = (
       } catch (e) {
         errorHandlerWithToast(e);
       } finally {
-        finishLoading();
+        setIsLoading(false);
+        removeLoadingToast();
       }
     },
     [
-      finishLoading,
       isLoading,
-      startLoading,
+      showLoadingToast,
+      removeLoadingToast,
       session,
       callback,
       imageFile,
@@ -125,5 +126,5 @@ export const useEditProfile = (
     ]
   );
 
-  return { onSubmit, isApiLoading: isLoading };
+  return { onSubmit, isLoading };
 };

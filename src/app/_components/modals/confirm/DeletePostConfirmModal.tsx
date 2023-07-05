@@ -15,11 +15,11 @@ export const DeletePostConfirmModal = ({ closeModal, postId }: Props) => {
     closeModal();
     router.replace('/');
   };
-  const { isApiLoading, onClick } = useDeletePost(postId, callback);
+  const { isLoading, onClick } = useDeletePost(postId, callback);
 
   return (
-    <Modal onRequestClose={closeModal}>
-      <div className="mx-auto w-[390px] h-auto" data-cy="deleteComment-modal">
+    <Modal onRequestClose={closeModal} shouldCloseOnOverlayClick={false}>
+      <div className="mx-auto w-[390px] h-auto" data-cy="deletePost-modal">
         <div className="py-5 text-2xl font-bold text-center">
           게시글을 삭제하시겠습니까?
         </div>
@@ -31,7 +31,8 @@ export const DeletePostConfirmModal = ({ closeModal, postId }: Props) => {
             text="취소"
             isWide
             uiSize="lg"
-            dataCy="deleteComment-modal-cancel"
+            isValid={!isLoading}
+            dataCy="deletePost-modal-cancel"
           />
           <Button
             type="button"
@@ -40,8 +41,8 @@ export const DeletePostConfirmModal = ({ closeModal, postId }: Props) => {
             text="삭제하기"
             isWide
             uiSize="lg"
-            isValid={!isApiLoading}
-            dataCy="deleteComment-modal-confirm"
+            isValid={!isLoading}
+            dataCy="deletePost-modal-confirm"
           />
         </div>
       </div>

@@ -21,7 +21,7 @@ export const CreateCommentForm = ({ postId }: Props) => {
     formState: { isValid },
   } = useForm<CreateCommentFormValue>();
   const { me } = useMe();
-  const { onSubmit, isApiLoading } = useCreateComment(postId, reset);
+  const { onSubmit, isLoading } = useCreateComment(postId, reset);
 
   return (
     <form
@@ -41,7 +41,7 @@ export const CreateCommentForm = ({ postId }: Props) => {
           text="등록"
           type="submit"
           uiSize="sm"
-          isValid={isValid && !isApiLoading}
+          isValid={isValid && !isLoading}
           dataCy="createComment-submit"
         />
       </div>

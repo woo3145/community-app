@@ -21,7 +21,7 @@ export const CreatePostForm = () => {
   const { preview, imageFile, resetImage, uploadImage, handleImage } =
     useUploadImage();
 
-  const { onSubmit, isApiLoading } = useCreatePost(
+  const { onSubmit, isLoading } = useCreatePost(
     selectedTags,
     imageFile,
     uploadImage
@@ -55,7 +55,7 @@ export const CreatePostForm = () => {
           <Button
             type="submit"
             text="등록하기"
-            isValid={!isApiLoading && isValid}
+            isValid={!isLoading && isValid}
             dataCy="submit-button"
           />
         </div>

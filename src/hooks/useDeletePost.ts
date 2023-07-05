@@ -3,15 +3,14 @@ import { toast } from 'react-toastify';
 
 import { _deleteComment, _deletePost } from '@/libs/client/apis';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
-import { useApiLoading } from './useApiLoading';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { useLoadingToast } from './useLoadingToast';
 
 // 내 게시글을 삭제하는 hook
 export const useDeletePost = (postId: number, callback?: () => void) => {
   const { data: session } = useSession();
-  const { startLoading, finishLoading, isLoading } = useApiLoading({
-    showToast: true,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { showLoadingToast, removeLoadingToast } = useLoadingToast();
 
   const onClick = useCallback(async () => {
     if (isLoading) return;
@@ -20,7 +19,8 @@ export const useDeletePost = (postId: number, callback?: () => void) => {
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
-      startLoading();
+      setIsLoading(true);
+      showLoadingToast();
 
       await _deletePost(postId);
 
@@ -30,9 +30,17 @@ export const useDeletePost = (postId: number, callback?: () => void) => {
     } catch (e) {
       errorHandlerWithToast(e);
     } finally {
-      finishLoading();
+      setIsLoading(false);
+      removeLoadingToast();
     }
-  }, [startLoading, finishLoading, isLoading, session, callback, postId]);
+  }, [
+    isLoading,
+    showLoadingToast,
+    removeLoadingToast,
+    session,
+    callback,
+    postId,
+  ]);
 
-  return { onClick, isApiLoading: isLoading };
+  return { onClick, isLoading };
 };
