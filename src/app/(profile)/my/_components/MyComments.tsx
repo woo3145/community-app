@@ -1,7 +1,7 @@
 'use client';
 
 import { useMyComments } from '@/hooks/scrollSwr/useMyComments';
-import { CommentItem } from '@/app/_components/molecules/CommentItem';
+import { CommentItem } from '@/app/_components/molecules/CommentItem/CommentItem';
 import { EmptyMyComments } from '../../_components/EmptyBodyContainer';
 
 export const MyComments = () => {

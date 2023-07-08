@@ -48,6 +48,9 @@ export const useDeleteComment = (comment: Comment, callback?: () => void) => {
       if (!session?.user) {
         throw new Error('로그인이 필요합니다.');
       }
+      if (session.user.id !== comment.userId) {
+        throw new Error('댓글을 삭제할 권한이 없습니다.');
+      }
       setIsLoading(true);
       showLoadingToast();
 

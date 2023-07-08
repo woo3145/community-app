@@ -1,6 +1,6 @@
 'use client';
 
-import { PostItem } from '@/app/_components/molecules/PostItem/PostListItem';
+import { PostListItem } from '@/app/_components/molecules/PostItem/PostListItem';
 import { useMyLikes } from '@/hooks/scrollSwr/useMyLikes';
 import { EmptyMyLikes } from '../../_components/EmptyBodyContainer';
 
@@ -12,14 +12,14 @@ export const MyLikes = () => {
       {isLoading &&
         data.length === 0 &&
         [1, 2, 3, 4].map((i) => {
-          return <PostItem isLoading={isLoading} key={i} />;
+          return <PostListItem isLoading={isLoading} key={i} />;
         })}
       {data.length === 1 && data[0].data.length === 0 && <EmptyMyLikes />}
       {data.length !== 0 &&
         data.map((page) =>
           page.data.map((likesPost) => {
             return (
-              <PostItem
+              <PostListItem
                 isLoading={false}
                 key={likesPost.post.id}
                 post={likesPost.post}
@@ -28,7 +28,7 @@ export const MyLikes = () => {
           })
         )}
       {isLoading ? (
-        <PostItem isLoading={isLoading} />
+        <PostListItem isLoading={isLoading} />
       ) : (
         !isReachedEnd && <div ref={bottomRef}></div>
       )}

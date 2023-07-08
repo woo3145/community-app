@@ -1,6 +1,6 @@
 'use client';
 
-import { CommentItem } from '@/app/_components/molecules/CommentItem';
+import { CommentItem } from '@/app/_components/molecules/CommentItem/CommentItem';
 import { useComments } from '@/hooks/swr/useComments';
 import { EmptyCommentContainer } from './EmptyCommentContainer';
 

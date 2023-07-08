@@ -1,7 +1,7 @@
 'use client';
 
 import { EmptyUserComments } from '@/app/(profile)/_components/EmptyBodyContainer';
-import { CommentItem } from '@/app/_components/molecules/CommentItem';
+import { CommentItem } from '@/app/_components/molecules/CommentItem/CommentItem';
 import { useUserComments } from '@/hooks/scrollSwr/userUserComments';
 
 export const UserComments = ({ userId }: { userId: string }) => {
