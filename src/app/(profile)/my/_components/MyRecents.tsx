@@ -1,6 +1,6 @@
 'use client';
 
-import { PostItem } from '@/app/_components/molecules/PostItem';
+import { PostItem } from '@/app/_components/molecules/PostItem/PostListItem';
 import { useMyRecents } from '@/hooks/scrollSwr/useMyRecents';
 import { EmptyMyRecents } from '../../_components/EmptyBodyContainer';
 

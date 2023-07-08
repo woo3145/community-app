@@ -1,7 +1,7 @@
 'use client';
 
 import { EmptyUserPosts } from '@/app/(profile)/_components/EmptyBodyContainer';
-import { PostItem } from '@/app/_components/molecules/PostItem';
+import { PostItem } from '@/app/_components/molecules/PostItem/PostListItem';
 import { useUserPosts } from '@/hooks/scrollSwr/useUserPosts';
 
 export const UserPosts = ({ userId }: { userId: string }) => {

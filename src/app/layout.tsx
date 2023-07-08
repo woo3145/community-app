@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { SessionProviders } from './_providers/sessionProviders';
 import { SWRProvider } from './_providers/swrProvider';
-import { Header } from './_components/molecules/Header';
+import { Header } from './_components/molecules/Header/Header';
 
 import '@/styles/global.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +21,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="mx-auto bg-gray-100">
+      <body className="w-full mx-auto bg-gray-100">
         <div className="w-full mx-auto xl:max-w-screen-lg">
           <SessionProviders>
             <SWRProvider>

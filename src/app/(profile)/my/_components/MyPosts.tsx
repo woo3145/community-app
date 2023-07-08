@@ -1,6 +1,6 @@
 'use client';
 
-import { PostItem } from '@/app/_components/molecules/PostItem';
+import { PostItem } from '@/app/_components/molecules/PostItem/PostListItem';
 import { useMyPosts } from '@/hooks/scrollSwr/useMyPosts';
 import { EmptyMyPosts } from '../../_components/EmptyBodyContainer';
 

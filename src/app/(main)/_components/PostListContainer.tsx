@@ -1,8 +1,8 @@
 'use client';
 
 import { usePosts } from '@/hooks/scrollSwr/usePosts';
-import { PostItem } from '../../_components/molecules/PostItem';
 import { EmptyPostContainer } from './EmptyPostContainer';
+import { PostListItem } from '@/app/_components/molecules/PostItem/PostListItem';
 
 interface Props {
   category: string;
@@ -16,7 +16,7 @@ export default function PostListContainer({ category }: Props) {
       {isLoading &&
         data.length === 0 &&
         [1, 2, 3, 4].map((i, idx) => {
-          return <PostItem isLoading={isLoading} key={idx} />;
+          return <PostListItem isLoading={isLoading} key={idx} />;
         })}
       {!isLoading && data.length !== 0 && data[0].data.length === 0 && (
         <EmptyPostContainer />
@@ -25,7 +25,7 @@ export default function PostListContainer({ category }: Props) {
         data.map((page, i) =>
           page.data.map((post, j) => {
             return (
-              <PostItem
+              <PostListItem
                 dataCy={`postCard-${i}-${j}`}
                 isLoading={false}
                 key={post.id}
@@ -36,7 +36,7 @@ export default function PostListContainer({ category }: Props) {
         )}
 
       {isLoading ? (
-        <PostItem isLoading={isLoading} />
+        <PostListItem isLoading={isLoading} />
       ) : (
         !isReachedEnd && <div ref={bottomRef}></div>
       )}
