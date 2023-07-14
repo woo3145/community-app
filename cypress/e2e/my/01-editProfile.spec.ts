@@ -62,9 +62,10 @@ describe('프로필 수정 기능 테스트', () => {
 
     cy.dataCy('userName').should('have.text', '1234');
 
-    // type: 이름 으로 변경
+    // type: 이름 으로 변경 && (+description 초기화)
     cy.dataCy('editProfile-button').should('exist').click();
     cy.dataCy('nameType-false').click();
+    cy.dataCy('description-input').clear();
     cy.dataCy('modal-button').click();
 
     cy.dataCy('modal-button').should('be.disabled');
@@ -84,7 +85,7 @@ describe('프로필 수정 기능 테스트', () => {
     cy.dataCy('editProfile-button').should('exist').click();
 
     // 한줄소개 길이
-    cy.dataCy('description-input').type('123456789');
+    cy.dataCy('description-input').clear().type('123456789');
     cy.dataCy('description-length').should('have.text', '9/150');
 
     // 개행문자 여러개 있으면 2개만 빼고 제거 && 개행문자와 공백을 섞어써도 잘 제거됨
