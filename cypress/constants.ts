@@ -1,8 +1,8 @@
-import { Tag, User } from '@prisma/client';
+import { Tag } from '@prisma/client';
 
 export const TEST_USER = {
   name: 'testUser',
-  email: 'test@test.test',
+  email: 'test@test.com',
   password: 'qwer1234!',
   wrongPassword: 'qwer1234',
 };
