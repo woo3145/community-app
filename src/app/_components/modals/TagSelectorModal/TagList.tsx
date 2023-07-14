@@ -13,7 +13,7 @@ export const TagList = ({ tags, pickedTags, onClickPickTag }: Props) => {
         return (
           <li key={idx}>
             <div className="flex items-center mb-3 font-bold">
-              <span className="text-sm mr-2">{tag.icon}</span> {tag.title}
+              <span className="mr-2 text-sm">{tag.icon}</span> {tag.title}
             </div>
             <ul
               className="flex flex-wrap gap-2 mb-4"

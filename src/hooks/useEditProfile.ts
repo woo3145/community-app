@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 
-import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
+import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal/MyProfileModifyModal';
 import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { _editProfile } from '@/libs/client/apis';
 import { useMe } from './swr/useMe';

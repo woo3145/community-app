@@ -4,7 +4,7 @@ import { AvatarCrop } from '@/app/_components/modals/avatarCrop/avatarCrop';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { useUploadImage } from '@/hooks/useUploadImage';
 import { useState } from 'react';
-import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal';
+import { EditProfileFormValue } from '@/app/_components/modals/MyProfileModifyModal/MyProfileModifyModal';
 import { useForm } from 'react-hook-form';
 import { useEditProfile } from '@/hooks/useEditProfile';
 import { Avatar } from '@/app/_components/atoms/Avatar';

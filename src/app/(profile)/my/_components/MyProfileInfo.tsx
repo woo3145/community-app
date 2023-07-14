@@ -2,7 +2,7 @@
 
 import Badge from '@/app/_components/atoms/Badge';
 import { HiOutlinePencil } from 'react-icons/hi';
-import { MyProfileModifyModal } from '@/app/_components/modals/MyProfileModifyModal';
+import { MyProfileModifyModal } from '@/app/_components/modals/MyProfileModifyModal/MyProfileModifyModal';
 import { useMe } from '@/hooks/swr/useMe';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { Avatar } from '@/app/_components/atoms/Avatar';

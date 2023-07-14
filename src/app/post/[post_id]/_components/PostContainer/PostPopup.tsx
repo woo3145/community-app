@@ -1,33 +1,40 @@
 import { IoEllipsisHorizontal } from 'react-icons/io5';
 import { useEffect, useRef } from 'react';
 import { useModalVisible } from '@/hooks/useModalVisible';
-import { Comment } from '@/interfaces/comment';
-import { useDeleteComment } from '@/hooks/useDeleteComment';
-import ConfirmModal from '../../modals/confirm/ConfirmModal';
+import ConfirmModal from '@/app/_components/modals/confirm/ConfirmModal';
+import { useDeletePost } from '@/hooks/useDeletePost';
+import { PostWithIsLikedAndIsCommented } from '@/interfaces/post';
+import { useRouter } from 'next/navigation';
 
-export const PopupMenu = ({
-  comment,
+export const PostPopup = ({
+  post,
   dataCy,
 }: {
-  comment: Comment;
+  post: PostWithIsLikedAndIsCommented;
   dataCy?: string;
 }) => {
+  const router = useRouter();
   const popupRef = useRef<HTMLUListElement>(null);
   const {
     modalIsOpen: popupIsOpen,
     toggleModal: togglePopup,
     closeModal: closePopup,
-  } = useModalVisible(); // 팝업
+  } = useModalVisible(); // 팝업 메뉴
 
-  // Delete 관련
+  // Delete Post
   const {
     modalIsOpen: deleteModalIsOpen,
     openModal: openDeleteModal,
     closeModal: closeDeleteModal,
-  } = useModalVisible(); // deleteComment 모달
-  const { onClick: onDelete, isLoading: onDeleteLoading } = useDeleteComment(
-    comment,
-    closeDeleteModal
+  } = useModalVisible(); // deletePost 모달
+
+  const closeDeleteModalAndRedirect = () => {
+    closeDeleteModal();
+    router.push('/');
+  };
+  const { onClick: onDelete, isLoading: onDeleteLoading } = useDeletePost(
+    post.id,
+    closeDeleteModalAndRedirect
   );
 
   // 팝업 메뉴 이외 클릭 시 팝업 닫기
@@ -75,7 +82,7 @@ export const PopupMenu = ({
       )}
       {deleteModalIsOpen && (
         <ConfirmModal
-          message="댓글을 삭제하시겠습니까?"
+          message="게시글을 삭제하시겠습니까?"
           closeModal={closeDeleteModal}
           isLoading={onDeleteLoading}
           onSubmit={onDelete}

@@ -1,4 +1,4 @@
-import { CategoryContainer } from './_components/CategoryContainer';
+import { CategoryContainer } from './_components/CategoryContainer/CategoryContainer';
 import { MyCommunityCard } from './_components/MyCommunityCard';
 import { WriteButtonContainer } from './_components/WriteButtonContainer';
 

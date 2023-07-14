@@ -10,7 +10,7 @@ import {
 import { PostSideSection } from './_components/PostSideSection';
 import { CreateCommentContainer } from './_components/CreateCommentContainer';
 import { CommentListContainer } from './_components/CommentListContainer';
-import { PostContainer } from './_components/PostContainer';
+import { PostContainer } from './_components/PostContainer/PostContainer';
 import { addIsLikedAndIsCommented } from '@/libs/dataHelper';
 import { authOptions } from '@/libs/server/auth';
 

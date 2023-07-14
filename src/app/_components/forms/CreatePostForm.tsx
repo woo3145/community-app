@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/app/_components/atoms/Button';
-import { TagPicker } from '../molecules/TagPicker';
+import { TagPicker } from '../molecules/TagPicker/TagPicker';
 import { IoClose, IoImageOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import { CreatePostFormValue } from '@/app/write/page';

@@ -6,6 +6,11 @@ import { errorHandlerWithToast } from '@/libs/client/clientErrorHandler';
 import { useCallback, useState } from 'react';
 import { useLoadingToast } from './useLoadingToast';
 
+interface Props {
+  postId: number;
+  onClick: () => void; // 게시글을 삭제한 후 수행 할 로직
+}
+
 // 내 게시글을 삭제하는 hook
 export const useDeletePost = (postId: number, callback?: () => void) => {
   const { data: session } = useSession();

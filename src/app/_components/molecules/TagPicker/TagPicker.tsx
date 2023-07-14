@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction } from 'react';
 import { IoAdd } from 'react-icons/io5';
-import { TagSelectorModal } from '@/app/_components/modals/TagSelectorModal';
+import { TagSelectorModal } from '@/app/_components/modals/TagSelectorModal/TagSelectorModal';
 import { useModalVisible } from '@/hooks/useModalVisible';
 import { SelectedTag } from './SelectedTag';
 
