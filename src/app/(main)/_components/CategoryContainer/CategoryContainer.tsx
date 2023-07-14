@@ -68,14 +68,14 @@ export const CategoryContainer = () => {
         <div
           className="absolute items-center justify-center hidden w-10 h-10 p-0 ml-5 cursor-pointer xl:flex right-4 card"
           onClick={onClickMoreButton}
-          data-cy="more-button"
+          data-cy="more-button-desktop"
         >
           <IoEllipsisHorizontal />
         </div>
         {/* User Profile (Mobile)*/}
         <div
           className="absolute flex items-center justify-center w-10 h-10 p-0 pl-5 ml-5 border-l cursor-pointer right-4 xl:hidden"
-          data-cy="more-button"
+          data-cy="more-button-mobile"
         >
           <MyAvatar />
         </div>

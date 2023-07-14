@@ -16,12 +16,12 @@ describe('DB 초기화 테스트', () => {
     // '카테고리 more 버튼이 정상작동함'
     cy.dataCy('category-list-more').should('not.exist');
 
-    cy.dataCy('more-button').click();
+    cy.dataCy('more-button-desktop').click();
     cy.dataCy('category-list-more')
       .children()
       .should('have.length', SUB_TAG_LENGTH + 2); // + 전체, 추천
 
-    cy.dataCy('more-button').click();
+    cy.dataCy('more-button-desktop').click();
     cy.dataCy('category-list-more').should('not.exist');
 
     // EmptyPostContainer 가 표시되어야함

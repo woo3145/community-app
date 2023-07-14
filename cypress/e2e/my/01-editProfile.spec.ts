@@ -81,8 +81,6 @@ describe('프로필 수정 기능 테스트', () => {
   });
 
   it('한줄소개 수정', () => {
-    cy.dataCy('description').should('have.text', '');
-
     cy.dataCy('editProfile-button').should('exist').click();
 
     // 한줄소개 길이

@@ -99,7 +99,7 @@ export const EditProfileForm = ({ profile, closeModal }: Props) => {
                     src={preview ? preview : profile.avatar || ''}
                     uiSize="lg"
                     className="cursor-pointer"
-                    data-cy="avatarPreview"
+                    dataCy="avatarPreview"
                   />
                 </label>
               </div>
